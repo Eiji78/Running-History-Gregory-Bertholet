@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Running History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-cyan: #00fff9;
+            --neon-purple: #bc13fe;
+            --neon-orange: #ff6b35;
+            --neon-pink: #ff006e;
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(15, 15, 25, 0.8);
+        }
+        
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 249, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.03;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Neon Border Animation */
+        .neon-border {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--neon-cyan) 0%, 
+                var(--neon-purple) 25%,
+                var(--neon-pink) 50%,
+                var(--neon-orange) 75%,
+                var(--neon-cyan) 100%);
+            background-size: 200% 100%;
+            animation: gradientSlide 4s linear infinite;
+            z-index: 1000;
+            box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-purple);
+        }
+
+        @keyframes gradientSlide {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        /* Main Title */
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00fff9 0%, #bc13fe 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px rgba(0, 255, 249, 0.5);
+            letter-spacing: 0.1em;
+            position: relative;
+            animation: titleGlow 3s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                filter: drop-shadow(0 0 20px rgba(0, 255, 249, 0.8)) 
+                        drop-shadow(0 0 40px rgba(188, 19, 254, 0.6));
+            }
+            50% { 
+                filter: drop-shadow(0 0 30px rgba(0, 255, 249, 1)) 
+                        drop-shadow(0 0 60px rgba(188, 19, 254, 0.8));
+            }
+        }
+
+        .subtitle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(0, 255, 249, 0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: subtitleShake 4s ease-in-out infinite;
+        }
+
+        @keyframes subtitleShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-1px); }
+            20%, 40%, 60%, 80% { transform: translateX(1px); }
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 249, 0.1), transparent);
+            transition: left 0.7s;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-12px) scale(1.03);
+            border-color: rgba(0, 255, 249, 0.5);
+            box-shadow: 
+                0 30px 80px rgba(0, 255, 249, 0.3),
+                0 0 40px rgba(188, 19, 254, 0.2),
+                inset 0 0 40px rgba(0, 255, 249, 0.05);
+        }
+
+        .glass-card.clickable {
+            cursor: pointer;
+        }
+
+        .glass-card.clickable:active {
+            transform: translateY(-8px) scale(1.01);
+        }
+
+        /* Stat Numbers */
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00fff9, #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 249, 0.5);
+            line-height: 1;
+        }
+
+        /* Filters */
+        .filter-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.875rem 2rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 249, 0.3), transparent);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .filter-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 249, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 255, 249, 0.3);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, rgba(0, 255, 249, 0.3), rgba(188, 19, 254, 0.3));
+            border-color: var(--neon-cyan);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 0 30px rgba(0, 255, 249, 0.5), inset 0 0 20px rgba(0, 255, 249, 0.2);
+        }
+
+        /* Table */
+        .data-table {
+            background: linear-gradient(135deg, rgba(15, 15, 25, 0.6), rgba(10, 10, 15, 0.8));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, rgba(0, 255, 249, 0.15), rgba(188, 19, 254, 0.15));
+            border-bottom: 2px solid rgba(0, 255, 249, 0.3);
+        }
+
+        .table-row {
+            border-left: 3px solid transparent;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .table-row:hover {
+            background: linear-gradient(90deg, rgba(0, 255, 249, 0.08), rgba(188, 19, 254, 0.05));
+            border-left-color: var(--neon-cyan);
+            transform: translateX(12px);
+            box-shadow: inset 0 0 20px rgba(0, 255, 249, 0.1);
+        }
+
+        .record-row {
+            position: relative;
+            animation: recordPulse 2.5s ease-in-out infinite;
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.05), rgba(255, 107, 53, 0.05));
+        }
+
+        @keyframes recordPulse {
+            0%, 100% { 
+                box-shadow: 
+                    inset 0 0 20px rgba(255, 215, 0, 0.1),
+                    0 0 20px rgba(255, 215, 0, 0.2);
+            }
+            50% { 
+                box-shadow: 
+                    inset 0 0 30px rgba(255, 215, 0, 0.2),
+                    0 0 40px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        /* Badges */
+        .record-badge {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #0a0a0f;
+            font-weight: 800;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            box-shadow: 
+                0 4px 15px rgba(255, 215, 0, 0.4),
+                inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 4px 15px rgba(255, 215, 0, 0.4),
+                    inset 0 1px 3px rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 
+                    0 6px 25px rgba(255, 215, 0, 0.6),
+                    inset 0 1px 3px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .distance-badge {
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .distance-10k { 
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 150, 255, 0.3));
+            color: #00d9ff;
+            border: 1px solid rgba(0, 217, 255, 0.4);
+        }
+        .distance-21k { 
+            background: linear-gradient(135deg, rgba(247, 184, 1, 0.2), rgba(255, 150, 0, 0.3));
+            color: #f7b801;
+            border: 1px solid rgba(247, 184, 1, 0.4);
+        }
+        .distance-42k { 
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2), rgba(255, 50, 50, 0.3));
+            color: #ff6b35;
+            border: 1px solid rgba(255, 107, 53, 0.4);
+        }
+        .distance-other { 
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 200, 100, 0.3));
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.4);
+        }
+
+        /* Pulse Indicator */
+        .pulse-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.4);
+                opacity: 0.7;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, rgba(0, 255, 249, 0.5), rgba(188, 19, 254, 0.5));
+            border-radius: 10px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 249, 0.8), rgba(188, 19, 254, 0.8));
+        }
+
+        /* Fade In Animation */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            .main-title {
+                font-size: 2rem;
+                letter-spacing: 0.05em;
+            }
+        }
+
+        .filter-indicator {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 255, 249, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="grain"></div>
+    <div class="neon-border"></div>
+
+    <div id="root"></div>
+
+    <script>
+        const racesData = [
+            {date: "2025-05-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
+            {date: "2025-09-28", course: "Semi-Marathon - Route Du Vin", ville: "Luxembourg", dept: "0", km: "21.1", classement: "145/2499", indice: "5.8", perf: "01:23:48", tempsMoyenKm: "3:58", record: true},
+            {date: "2025-05-31", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "181/8646", indice: "2.09", perf: "01:29:51", tempsMoyenKm: "4:14"},
+            {date: "2025-04-27", course: "Marathon du lac d'Annecy", ville: "Annecy", dept: "74", km: "42.195", classement: "583/3845", indice: "15.16", perf: "03:26:08", tempsMoyenKm: "4:53"},
+            {date: "2025-03-16", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Rosselange", dept: "57", km: "21.1", classement: "35/538", indice: "6.51", perf: "01:25:34", tempsMoyenKm: "4:03"},
+            {date: "2024-06-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "217/2734", indice: "7.94", perf: "01:40:51", tempsMoyenKm: "4:16"},
+            {date: "2024-09-29", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "178/1895", indice: "9.39", perf: "01:26:33", tempsMoyenKm: "4:06"},
+            {date: "2024-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "11.8", classement: "59/433", indice: "13.63", perf: "01:00:59", tempsMoyenKm: "5:10"},
+            {date: "2024-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "20/161", indice: "12.42", perf: "00:38:18", tempsMoyenKm: "3:50"},
+            {date: "2024-11-05", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "176/6909", indice: "2.55", perf: "01:31:20", tempsMoyenKm: "4:19"},
+            {date: "2024-08-05", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true},
+            {date: "2024-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56"},
+            {date: "2024-04-21", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "80/1089", indice: "7.35", perf: "01:25:30", tempsMoyenKm: "4:03"},
+            {date: "2024-07-04", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true},
+            {date: "2024-03-17", course: "Semi-Marathon Intercommunal de la Vallée de l'Orne", ville: "Moyeuvre-Grande", dept: "57", km: "21.1", classement: "34/416", indice: "8.17", perf: "01:30:06", tempsMoyenKm: "4:16"},
+            {date: "2024-10-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02"},
+            {date: "2023-10-14", course: "Haard Trail Dudelange", ville: "Dudelange", dept: "0", km: "15", classement: "27/94", indice: "28.72", perf: "01:11:15", tempsMoyenKm: "4:45"},
+            {date: "2023-01-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "259/2171", indice: "11.93", perf: "01:48:54", tempsMoyenKm: "4:36"},
+            {date: "2023-09-24", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "179/1370", indice: "13.07", perf: "01:30:39", tempsMoyenKm: "4:17"},
+            {date: "2023-09-07", course: "La Forestière", ville: "Moyeuvre-Grande", dept: "57", km: "10", classement: "39/164", indice: "23.78", perf: "00:50:30", tempsMoyenKm: "5:03"},
+            {date: "2023-06-25", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "24/169", indice: "14.2", perf: "00:41:37", tempsMoyenKm: "4:10"},
+            {date: "2023-02-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "18/119", indice: "15.13", perf: "00:40:17", tempsMoyenKm: "4:02"},
+            {date: "2023-05-20", course: "Ing Night Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "42.195", classement: "222/1046", indice: "21.22", perf: "03:47:13", tempsMoyenKm: "5:23"},
+            {date: "2023-04-23", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "82/690", indice: "11.88", perf: "01:27:20", tempsMoyenKm: "4:08"},
+            {date: "2023-03-19", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Rombas", dept: "57", km: "21.1", classement: "33/395", indice: "8.35", perf: "01:28:36", tempsMoyenKm: "4:12"},
+            {date: "2023-12-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "142/2067", indice: "6.87", perf: "00:42:44", tempsMoyenKm: "4:16"},
+            {date: "2022-10-16", course: "Tcs Amsterdam Marathon", ville: "Amsterdam", dept: "0", km: "42.195", classement: "1630/12658", indice: "12.88", perf: "03:13:45", tempsMoyenKm: "4:35"},
+            {date: "2022-09-18", course: "Semi-Marathon Fensch et Moselle", ville: "Uckange", dept: "57", km: "21.1", classement: "30/124", indice: "24.19", perf: "01:32:20", tempsMoyenKm: "4:23"},
+            {date: "2022-06-26", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "21/147", indice: "14.29", perf: "00:41:27", tempsMoyenKm: "4:09"},
+            {date: "2022-03-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "28/100", indice: "28", perf: "00:40:05", tempsMoyenKm: "4:01"},
+            {date: "2022-05-28", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "456/4498", indice: "10.14", perf: "01:37:46", tempsMoyenKm: "4:38"},
+            {date: "2022-05-15", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "289/798", indice: "36.22", perf: "01:51:28", tempsMoyenKm: "5:17"},
+            {date: "2022-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "21/136", indice: "15.44", perf: "00:40:34", tempsMoyenKm: "4:03"},
+            {date: "2022-03-27", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "77/325", indice: "23.69", perf: "00:40:16", tempsMoyenKm: "4:02"},
+            {date: "2022-03-20", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Gandrange", dept: "57", km: "21.1", classement: "82/309", indice: "26.54", perf: "01:33:58", tempsMoyenKm: "4:27"},
+            {date: "2021-10-17", course: "Schneider Electric Marathon de Paris", ville: "Paris", dept: "75", km: "42.195", classement: "4587/27071", indice: "16.94", perf: "03:29:02", tempsMoyenKm: "4:57"},
+            {date: "2021-09-19", course: "Semi-Marathon du Val de Fensch", ville: "Uckange", dept: "57", km: "21.1", classement: "60/188", indice: "31.91", perf: "01:33:14", tempsMoyenKm: "4:25"},
+            {date: "2021-04-07", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "78/250", indice: "31.2", perf: "00:40:49", tempsMoyenKm: "4:05"},
+            {date: "2020-12-24", course: "5Km Athlé - Open de France virtuel", ville: "Partout", dept: "75", km: "5", classement: "1666/11608", indice: "14.35", perf: "00:20:25", tempsMoyenKm: "4:05"},
+            {date: "2020-07-14", course: "5km Athlé - Open de France Virtuel", ville: "Partout", dept: "56", km: "5", classement: "1413/7990", indice: "17.68", perf: "00:21:15", tempsMoyenKm: "4:15"},
+            {date: "2020-01-03", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Vitry-Sur-Orne", dept: "57", km: "21.1", classement: "247/582", indice: "42.44", perf: "01:42:59", tempsMoyenKm: "4:53"},
+            {date: "2019-03-11", course: "Course Marcel Kiefer", ville: "Hussigny-Godbrange", dept: "54", km: "21", classement: "41/102", indice: "40.2", perf: "01:52:47", tempsMoyenKm: "5:22"},
+            {date: "2019-10-21", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "2083/7623", indice: "27.33", perf: "01:59:38", tempsMoyenKm: "5:04"},
+            {date: "2019-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "15", classement: "96/289", indice: "33.22", perf: "01:15:11", tempsMoyenKm: "5:01"},
+            {date: "2019-06-30", course: "Les Foulées de Saint Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "73/234", indice: "31.2", perf: "00:46:42", tempsMoyenKm: "4:40"},
+            {date: "2019-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "58/131", indice: "44.27", perf: "00:45:11", tempsMoyenKm: "4:31"},
+            {date: "2019-01-06", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "1564/6470", indice: "24.17", perf: "01:55:51", tempsMoyenKm: "5:29"},
+            {date: "2019-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "121/248", indice: "48.79", perf: "00:49:03", tempsMoyenKm: "4:54"},
+            {date: "2019-04-28", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "521/987", indice: "52.79", perf: "01:49:48", tempsMoyenKm: "5:12"},
+            {date: "2019-03-17", course: "Semi-Marathon de La Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "314/456", indice: "68.86", perf: "01:53:04", tempsMoyenKm: "5:22"}
+        ];
+
+        let distanceFilter = 'all';
+        let yearFilter = 'all';
+        let recordFilter = false;
+        let bestRankFilter = false;
+
+        function getDistanceCategory(km) {
+            const distance = parseFloat(km);
+            if (distance <= 10) return '10K';
+            if (distance > 10 && distance < 21) return '15K-20K';
+            if (distance >= 21 && distance < 22) return '21K';
+            if (distance > 22 && distance < 30) return '23K-25K';
+            if (distance >= 42) return '42K';
+            return 'Autre';
+        }
+
+        function getDistanceClass(km) {
+            const distance = parseFloat(km);
+            if (distance <= 10) return 'distance-10k';
+            if (distance >= 21 && distance < 22) return 'distance-21k';
+            if (distance >= 42) return 'distance-42k';
+            return 'distance-other';
+        }
+
+        function calculatePercentage(classement) {
+            const parts = classement.split('/');
+            if (parts.length !== 2) return 'N/A';
+            const position = parseInt(parts[0]);
+            const total = parseInt(parts[1]);
+            if (isNaN(position) || isNaN(total) || total === 0) return 'N/A';
+            return ((position / total) * 100).toFixed(1) + '%';
+        }
+
+        function calculateRaceVMA(tempsMoyenKm) {
+            const parts = tempsMoyenKm.split(':');
+            if (parts.length !== 2) return 'N/A';
+            const minutes = parseInt(parts[0]);
+            const seconds = parseInt(parts[1]);
+            if (isNaN(minutes) || isNaN(seconds)) return 'N/A';
+            const totalMinutes = minutes + (seconds / 60);
+            const vma = 60 / totalMinutes;
+            return vma.toFixed(2);
+        }
+
+        function filterRaces() {
+            let filtered = racesData.filter(race => {
+                const distCat = getDistanceCategory(race.km);
+                const year = race.date.split('-')[0];
+                
+                const distMatch = distanceFilter === 'all' || distCat === distanceFilter;
+                const yearMatch = yearFilter === 'all' || year === yearFilter;
+                const recordMatch = !recordFilter || race.record === true;
+                
+                return distMatch && yearMatch && recordMatch;
+            });
+
+            if (bestRankFilter) {
+                const bestRank = Math.min(...filtered.map(r => {
+                    const [pos] = r.classement.split('/');
+                    return parseInt(pos);
+                }));
+                filtered = filtered.filter(r => {
+                    const [pos] = r.classement.split('/');
+                    return parseInt(pos) === bestRank;
+                });
+            }
+
+            return filtered;
+        }
+
+        function calculateStats() {
+            const filtered = filterRaces();
+            const totalRaces = filtered.length;
+            const avgPace = filtered.reduce((sum, race) => {
+                const [min, sec] = race.tempsMoyenKm.split(':');
+                return sum + parseInt(min) * 60 + parseInt(sec);
+            }, 0) / totalRaces / 60;
+
+            const bestRank = Math.min(...filtered.map(r => {
+                const [pos] = r.classement.split('/');
+                return parseInt(pos);
+            }));
+
+            // Calcul VMA moyenne (km/h) basée sur l'allure moyenne
+            // VMA = 60 / temps_par_km (en minutes)
+            const vma = 60 / avgPace;
+
+            // Calcul moyenne des pourcentages
+            const avgPercentage = filtered.reduce((sum, race) => {
+                const parts = race.classement.split('/');
+                if (parts.length === 2) {
+                    const position = parseInt(parts[0]);
+                    const total = parseInt(parts[1]);
+                    if (!isNaN(position) && !isNaN(total) && total !== 0) {
+                        return sum + ((position / total) * 100);
+                    }
+                }
+                return sum;
+            }, 0) / totalRaces;
+
+            return { totalRaces, avgPace, bestRank, vma, avgPercentage };
+        }
+
+        function render() {
+            const stats = calculateStats();
+            const filtered = filterRaces();
+            const years = [...new Set(racesData.map(r => r.date.split('-')[0]))].sort().reverse();
+
+            document.getElementById('root').innerHTML = `
+                <div class="container py-20">
+                    <div class="text-center mb-20 fade-in">
+                        <h1 class="main-title mb-6">RUNNING HISTORY</h1>
+                        <p class="subtitle mb-8">Courses Officielles de Greg</p>
+                        <div class="flex items-center justify-center gap-4">
+                            <div class="pulse-indicator"></div>
+                            <span class="text-xl font-bold tracking-wider" style="color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 255, 249, 0.8);">50 COURSES</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.1s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Total Courses</div>
+                            <div class="stat-number mb-2">${stats.totalRaces}</div>
+                        </div>
+                        
+                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.2s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Allure Moyenne</div>
+                            <div class="stat-number mb-2">${Math.floor(stats.avgPace)}:${String(Math.round((stats.avgPace % 1) * 60)).padStart(2, '0')}</div>
+                            <div class="text-xs text-gray-500 mt-1">min/km</div>
+                        </div>
+
+                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.25s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">VMA Moyenne</div>
+                            <div class="stat-number mb-2">${stats.vma.toFixed(2)}</div>
+                            <div class="text-xs text-gray-500 mt-1">km/h</div>
+                        </div>
+                        
+                        <div class="glass-card clickable p-8 fade-in" onclick="toggleBestRankFilter()" style="animation-delay: 0.3s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Meilleur Classement</div>
+                            <div class="stat-number mb-2">${stats.bestRank}</div>
+                            <div class="text-xs text-gray-500 mt-1">position</div>
+                            ${bestRankFilter ? '<div class="filter-indicator mt-2">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-2">Cliquer pour filtrer</div>'}
+                        </div>
+
+                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.35s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Moyenne %</div>
+                            <div class="stat-number mb-2">${stats.avgPercentage.toFixed(1)}%</div>
+                            <div class="text-xs text-gray-500 mt-1">classement moyen</div>
+                        </div>
+                        
+                        <div class="glass-card clickable p-8 fade-in" onclick="toggleRecordFilter()" style="animation-delay: 0.4s">
+                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Records Perso</div>
+                            <div class="stat-number mb-2">3</div>
+                            <div class="text-xs text-gray-500 mt-1">10K • 21K • 42K</div>
+                            ${recordFilter ? '<div class="filter-indicator mt-2">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-2">Cliquer pour filtrer</div>'}
+                        </div>
+                    </div>
+
+                    <div class="mb-10 flex flex-wrap gap-3">
+                        <button onclick="setDistanceFilter('all')" class="filter-btn ${distanceFilter === 'all' ? 'active' : ''}">
+                            TOUTES
+                        </button>
+                        <button onclick="setDistanceFilter('10K')" class="filter-btn ${distanceFilter === '10K' ? 'active' : ''}">
+                            10K
+                        </button>
+                        <button onclick="setDistanceFilter('21K')" class="filter-btn ${distanceFilter === '21K' ? 'active' : ''}">
+                            SEMI 21K
+                        </button>
+                        <button onclick="setDistanceFilter('42K')" class="filter-btn ${distanceFilter === '42K' ? 'active' : ''}">
+                            MARATHON 42K
+                        </button>
+                        
+                        <div class="ml-auto flex gap-2 flex-wrap">
+                            ${years.map(year => `
+                                <button onclick="setYearFilter('${year}')" class="filter-btn ${yearFilter === year ? 'active' : ''}">
+                                    ${year}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="data-table">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Date</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Course</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Ville</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Distance</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Classement</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">%</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Temps</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Allure</th>
+                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">VMA</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${filtered.map(race => `
+                                        <tr class="${race.record ? 'record-row table-row' : 'table-row'}">
+                                            <td class="px-6 py-4 font-medium text-gray-300 text-sm">${race.date}</td>
+                                            <td class="px-6 py-4 text-sm">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="text-white font-medium">${race.course}</span>
+                                                    ${race.record ? '<span class="record-badge">RP</span>' : ''}
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 text-gray-400 text-sm">${race.ville}</td>
+                                            <td class="px-6 py-4">
+                                                <span class="distance-badge ${getDistanceClass(race.km)}">
+                                                    ${race.km}km
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 font-bold text-sm" style="color: var(--neon-cyan);">${race.classement}</td>
+                                            <td class="px-6 py-4 font-semibold text-sm" style="color: var(--neon-purple);">${calculatePercentage(race.classement)}</td>
+                                            <td class="px-6 py-4 font-bold text-sm" style="color: var(--neon-orange);">${race.perf}</td>
+                                            <td class="px-6 py-4 text-sm" style="color: rgba(255, 215, 0, 0.8);">${race.tempsMoyenKm}/km</td>
+                                            <td class="px-6 py-4 font-bold text-sm" style="color: var(--neon-pink);">${calculateRaceVMA(race.tempsMoyenKm)} km/h</td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-16 text-center">
+                        <p class="text-gray-500 text-sm font-light tracking-wide">
+                            VMA 17.70 km/h • Record 10K: <span style="color: var(--neon-cyan);">00:37:41</span> • 
+                            Record 21.1K: <span style="color: var(--neon-cyan);">01:23:48</span> • 
+                            Record 42.195K: <span style="color: var(--neon-cyan);">03:06:21</span>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.setDistanceFilter = function(filter) {
+            distanceFilter = filter;
+            render();
+        };
+
+        window.setYearFilter = function(year) {
+            yearFilter = yearFilter === year ? 'all' : year;
+            render();
+        };
+
+        window.toggleRecordFilter = function() {
+            recordFilter = !recordFilter;
+            render();
+        };
+
+        window.toggleBestRankFilter = function() {
+            bestRankFilter = !bestRankFilter;
+            render();
+        };
+
+        render();
+    </script>
+</body>
+</html>
