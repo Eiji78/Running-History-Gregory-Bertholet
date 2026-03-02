@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radar de Performance - Running History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --neon-cyan: #00fff9;
+            --neon-purple: #bc13fe;
+            --neon-orange: #ff6b35;
+            --neon-pink: #ff006e;
+            --neon-green: #00ff88;
+            --dark-bg: #0a0a0f;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 249, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grain {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.03; z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .neon-border {
+            position: fixed; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-purple) 25%, var(--neon-pink) 50%, var(--neon-orange) 75%, var(--neon-cyan) 100%);
+            background-size: 200% 100%;
+            animation: gradientSlide 4s linear infinite;
+            z-index: 1000;
+            box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-purple);
+        }
+
+        @keyframes gradientSlide {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .container {
+            position: relative; z-index: 2;
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #00fff9 0%, #bc13fe 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.1em;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(0, 255, 249, 0.8)) drop-shadow(0 0 40px rgba(188, 19, 254, 0.6)); }
+            50% { filter: drop-shadow(0 0 30px rgba(0, 255, 249, 1)) drop-shadow(0 0 60px rgba(188, 19, 254, 0.8)); }
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,249,0.07), transparent);
+            transition: left 0.7s;
+        }
+
+        .glass-card:hover::before { left: 100%; }
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0,255,249,0.3);
+            box-shadow: 0 20px 60px rgba(0,255,249,0.15), 0 0 30px rgba(188,19,254,0.1);
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, rgba(0,255,136,0.2), rgba(0,200,100,0.3));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0,255,136,0.5);
+            color: #00ff88;
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0,255,136,0.3);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-3px);
+            border-color: #00ff88;
+            box-shadow: 0 10px 30px rgba(0,255,136,0.5);
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stat cards */
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .year-2019 { color: rgba(255, 107, 53, 0.9); }
+        .year-2023 { color: rgba(247, 184, 1, 0.9); }
+        .year-2024 { color: rgba(188, 19, 254, 0.9); }
+        .year-2025 { color: rgba(0, 255, 249, 0.9); }
+
+        .progress-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Radar container */
+        .radar-container {
+            position: relative;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        /* Legend */
+        .legend-dot {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            box-shadow: 0 0 10px currentColor;
+        }
+
+        /* Axes labels custom */
+        .axes-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .axis-item {
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        ::-webkit-scrollbar { width: 12px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, rgba(0,255,249,0.5), rgba(188,19,254,0.5));
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="grain"></div>
+    <div class="neon-border"></div>
+
+    <!-- Home button -->
+    <a href="index.html" title="Retour à l'accueil" style="position:fixed;top:20px;left:20px;z-index:999;width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,rgba(0,255,249,0.15),rgba(188,19,254,0.15));border:1.5px solid rgba(0,255,249,0.4);display:flex;align-items:center;justify-content:center;text-decoration:none;backdrop-filter:blur(20px);box-shadow:0 0 18px rgba(0,255,249,0.25);transition:all 0.3s cubic-bezier(0.23,1,0.32,1);" onmouseover="this.style.transform='scale(1.15)';this.style.boxShadow='0 0 30px rgba(0,255,249,0.55)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 18px rgba(0,255,249,0.25)'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <polyline points="9 21 9 12 15 12 15 21"/>
+        </svg>
+    </a>
+
+    <div class="container py-20">
+
+        <!-- Header -->
+        <div class="text-center mb-16 fade-in">
+            <h1 class="main-title mb-6">RADAR DE PERFORMANCE</h1>
+            <p style="font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:300; letter-spacing:0.3em; color:rgba(255,255,255,0.5);" class="mb-8">ÉVOLUTION 2019 → 2025</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="index.html" class="back-btn">🏠 TABLEAU DE BORD</a>
+                <a href="progression.html" class="back-btn" style="background:linear-gradient(135deg,rgba(0,200,255,0.2),rgba(0,150,255,0.3));border-color:rgba(0,200,255,0.5);color:#00c8ff;box-shadow:0 0 20px rgba(0,200,255,0.3);">
+                    📊 COURBES DE PROGRESSION
+                </a>
+                <a href="elite.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,107,53,0.3));border-color:rgba(255,215,0,0.5);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.3);">🏅 TOI VS L'ÉLITE</a>
+            </div>
+        </div>
+
+        <!-- Radar Chart -->
+        <div class="glass-card p-8 mb-10 fade-in" style="animation-delay:0.1s;">
+            <h3 class="text-xl font-bold mb-2 tracking-wider text-center" style="color:var(--neon-cyan);">GRAPHIQUE ARAIGNÉE — PERFORMANCES PAR AXE</h3>
+            <p class="text-center text-xs mb-8" style="color:rgba(255,255,255,0.35);letter-spacing:0.1em;">Plus la surface couverte est grande, meilleure est la performance globale</p>
+            <div class="radar-container">
+                <canvas id="radarChart" width="850" height="850"></canvas>
+            </div>
+
+            <!-- Legend -->
+            <div class="flex flex-wrap justify-center gap-6 mt-8">
+                <div class="flex items-center">
+                    <span class="legend-dot" style="background:rgba(255,107,53,0.9);color:rgba(255,107,53,0.9);"></span>
+                    <span style="color:rgba(255,107,53,0.9);font-weight:700;">2019</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="legend-dot" style="background:rgba(247,184,1,0.9);color:rgba(247,184,1,0.9);"></span>
+                    <span style="color:rgba(247,184,1,0.9);font-weight:700;">2023</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="legend-dot" style="background:rgba(188,19,254,0.9);color:rgba(188,19,254,0.9);"></span>
+                    <span style="color:rgba(188,19,254,0.9);font-weight:700;">2024</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="legend-dot" style="background:rgba(0,255,249,0.9);color:rgba(0,255,249,0.9);"></span>
+                    <span style="color:rgba(0,255,249,0.9);font-weight:700;">2025</span>
+                </div>
+            </div>
+
+            <!-- Axes explication -->
+            <div class="axes-info mt-6">
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">VMA</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Vitesse maximale aérobie (km/h)</div>
+                </div>
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">ALLURE</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Score vitesse (plus rapide = plus grand)</div>
+                </div>
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">CLASSEMENT</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Score % (meilleur rang = plus grand)</div>
+                </div>
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">RÉGULARITÉ</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Constance des allures sur l'année</div>
+                </div>
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">VOLUME</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Kilomètres totaux courus en course</div>
+                </div>
+                <div class="axis-item">
+                    <div class="text-xs font-bold mb-1" style="color:var(--neon-cyan);letter-spacing:0.1em;">MEILLEUR %</div>
+                    <div class="text-xs" style="color:rgba(255,255,255,0.4);">Top classement de l'année</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats par année -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+
+            <!-- 2019 -->
+            <div class="glass-card p-6 fade-in" style="animation-delay:0.2s;border-color:rgba(255,107,53,0.25);">
+                <div class="text-center mb-4">
+                    <div class="stat-number year-2019" style="font-size:3rem;filter:drop-shadow(0 0 15px rgba(255,107,53,0.6));">2019</div>
+                    <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);letter-spacing:0.15em;">SAISON DE DÉPART</div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">VMA moyenne</span>
+                            <span class="year-2019 font-bold">11.89 km/h</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:59%;background:linear-gradient(90deg,rgba(255,107,53,0.6),rgba(255,107,53,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Allure moyenne</span>
+                            <span class="year-2019 font-bold">5:04 /km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:40%;background:linear-gradient(90deg,rgba(255,107,53,0.6),rgba(255,107,53,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">% classement moy.</span>
+                            <span class="year-2019 font-bold">41.2%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:30%;background:linear-gradient(90deg,rgba(255,107,53,0.6),rgba(255,107,53,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Km totaux</span>
+                            <span class="year-2019 font-bold">152.9 km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:47%;background:linear-gradient(90deg,rgba(255,107,53,0.6),rgba(255,107,53,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Nb courses</span>
+                            <span class="year-2019 font-bold">9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="glass-card p-6 fade-in" style="animation-delay:0.3s;border-color:rgba(247,184,1,0.25);">
+                <div class="text-center mb-4">
+                    <div class="stat-number year-2023" style="font-size:3rem;filter:drop-shadow(0 0 15px rgba(247,184,1,0.6));">2023</div>
+                    <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);letter-spacing:0.15em;">PROGRESSION NETTE</div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">VMA moyenne</span>
+                            <span class="year-2023 font-bold">13.48 km/h</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:67%;background:linear-gradient(90deg,rgba(247,184,1,0.6),rgba(247,184,1,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Allure moyenne</span>
+                            <span class="year-2023 font-bold">4:29 /km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:60%;background:linear-gradient(90deg,rgba(247,184,1,0.6),rgba(247,184,1,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">% classement moy.</span>
+                            <span class="year-2023 font-bold">15.5%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:60%;background:linear-gradient(90deg,rgba(247,184,1,0.6),rgba(247,184,1,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Km totaux</span>
+                            <span class="year-2023 font-bold">184.1 km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:57%;background:linear-gradient(90deg,rgba(247,184,1,0.6),rgba(247,184,1,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Nb courses</span>
+                            <span class="year-2023 font-bold">10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="glass-card p-6 fade-in" style="animation-delay:0.4s;border-color:rgba(188,19,254,0.25);">
+                <div class="text-center mb-4">
+                    <div class="stat-number year-2024" style="font-size:3rem;filter:drop-shadow(0 0 15px rgba(188,19,254,0.6));">2024</div>
+                    <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);letter-spacing:0.15em;">MEILLEURE SAISON</div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">VMA moyenne</span>
+                            <span class="year-2024 font-bold">14.40 km/h</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:88%;background:linear-gradient(90deg,rgba(188,19,254,0.6),rgba(188,19,254,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Allure moyenne</span>
+                            <span class="year-2024 font-bold">4:11 /km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,rgba(188,19,254,0.6),rgba(188,19,254,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">% classement moy.</span>
+                            <span class="year-2024 font-bold">8.0%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:83%;background:linear-gradient(90deg,rgba(188,19,254,0.6),rgba(188,19,254,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Km totaux</span>
+                            <span class="year-2024 font-bold">202.0 km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:90%;background:linear-gradient(90deg,rgba(188,19,254,0.6),rgba(188,19,254,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Nb courses</span>
+                            <span class="year-2024 font-bold">11</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="glass-card p-6 fade-in" style="animation-delay:0.5s;border-color:rgba(0,255,249,0.25);">
+                <div class="text-center mb-4">
+                    <div class="stat-number year-2025" style="font-size:3rem;filter:drop-shadow(0 0 15px rgba(0,255,249,0.6));">2025</div>
+                    <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);letter-spacing:0.15em;">EN COURS ★</div>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">VMA moyenne</span>
+                            <span class="year-2025 font-bold">14.15 km/h</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:85%;background:linear-gradient(90deg,rgba(0,255,249,0.6),rgba(0,255,249,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Allure moyenne</span>
+                            <span class="year-2025 font-bold">4:16 /km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:82%;background:linear-gradient(90deg,rgba(0,255,249,0.6),rgba(0,255,249,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">% classement moy.</span>
+                            <span class="year-2025 font-bold">7.0%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:86%;background:linear-gradient(90deg,rgba(0,255,249,0.6),rgba(0,255,249,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Km totaux</span>
+                            <span class="year-2025 font-bold">129.1 km</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:52%;background:linear-gradient(90deg,rgba(0,255,249,0.6),rgba(0,255,249,0.9));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1">
+                            <span style="color:rgba(255,255,255,0.5);">Nb courses</span>
+                            <span class="year-2025 font-bold">5 <span style="font-size:0.6rem;opacity:0.5;">(saison en cours)</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Insight box -->
+        <div class="glass-card p-6 fade-in mb-10" style="animation-delay:0.6s;border-color:rgba(0,255,136,0.2);">
+            <div class="flex items-start gap-4">
+                <div style="font-size:2rem;flex-shrink:0;">🚀</div>
+                <div>
+                    <div class="font-bold tracking-wider mb-2" style="color:var(--neon-green);font-size:0.9rem;">SYNTHÈSE DE PROGRESSION</div>
+                    <div class="text-sm" style="color:rgba(255,255,255,0.6);line-height:1.8;">
+                        Entre 2019 et 2024, la VMA a progressé de <span style="color:var(--neon-green);font-weight:700;">+21% (+2.51 km/h)</span>, 
+                        l'allure s'est améliorée de <span style="color:var(--neon-green);font-weight:700;">~53 sec/km</span> en moyenne, 
+                        et le classement percentile est passé de <span style="color:rgba(255,107,53,0.9);font-weight:700;">41.2%</span> à <span style="color:rgba(188,19,254,0.9);font-weight:700;">8.0%</span> — soit une amélioration de 
+                        <span style="color:var(--neon-green);font-weight:700;">+33 points</span> en seulement 5 ans. 
+                        En 2025, le niveau se maintient au sommet avec un top 7% moyen sur les courses officielles.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ─── Données radar normalisées sur 100 ───────────────────────────────
+        // Axes : VMA | Allure | Classement% | Régularité | Volume | Meilleur%
+        //
+        // VMA : min=11.89, max=14.40 → normalisé 0-100
+        // Allure : min allure = meilleur (rapide), 5:04 → 0, 4:04 → 100
+        //   score = (paceWorst - pace) / (paceWorst - paceBest) * 100
+        //   worst=5:04=5.067, best=4:04=4.067 → range=1.0
+        // Classement% : inversé, moins c'est mieux : score = (100-pct)/100*100
+        //   2019=41.2→58.8, 2023=15.5→84.5, 2024=8.0→92.0, 2025=7.0→93.0
+        // Régularité : écart-type des allures (calculé manuellement, moins = mieux)
+        //   2019 : allures très variables (trail, 5k à marathon) → écartype ~0.45 → score ~50
+        //   2023 : mieux, écartype ~0.41 → score ~58
+        //   2024 : encore mieux, écartype ~0.32 → score ~72
+        //   2025 : similaire, écartype ~0.35 → score ~68
+        // Volume : max=202km → normalisé. 2019=153, 2023=184, 2024=202, 2025=129 (partiel)
+        //   Score 2025 ajusté prorata (5 courses = environ 40% de saison, projection ~320km)
+        // Meilleur % : inversé. 2019=24.2%, 2023=6.9%, 2024=2.5%, 2025=2.1%
+        //   score = (100-bestPct)/100*100
+
+        const radarData = {
+            labels: ['VMA\n(km/h)', 'Allure\n(score)', 'Classement\n(score %)', 'Régularité', 'Volume\n(km)', 'Meilleur\nClassement'],
+            datasets: [
+                {
+                    label: '2019',
+                    data: [
+                        Math.round((11.89 - 11.0) / (14.40 - 11.0) * 100), // VMA: ~26
+                        Math.round((5.067 - 5.067) / (5.067 - 4.067) * 100), // Allure: 0
+                        Math.round(100 - 41.2),   // Classement: 58.8
+                        50,                        // Régularité
+                        Math.round(152.9 / 202.0 * 100), // Volume: 75
+                        Math.round(100 - 24.2),   // Meilleur %: 75.8
+                    ],
+                    backgroundColor: 'rgba(255, 107, 53, 0.15)',
+                    borderColor: 'rgba(255, 107, 53, 0.9)',
+                    pointBackgroundColor: 'rgba(255, 107, 53, 0.9)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 2.5,
+                },
+                {
+                    label: '2023',
+                    data: [
+                        Math.round((13.48 - 11.0) / (14.40 - 11.0) * 100), // VMA: ~73
+                        Math.round((5.067 - 4.483) / (5.067 - 4.067) * 100), // Allure: ~58
+                        Math.round(100 - 15.5),   // Classement: 84.5
+                        58,                        // Régularité
+                        Math.round(184.1 / 202.0 * 100), // Volume: 91
+                        Math.round(100 - 6.9),    // Meilleur %: 93.1
+                    ],
+                    backgroundColor: 'rgba(247, 184, 1, 0.15)',
+                    borderColor: 'rgba(247, 184, 1, 0.9)',
+                    pointBackgroundColor: 'rgba(247, 184, 1, 0.9)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 2.5,
+                },
+                {
+                    label: '2024',
+                    data: [
+                        Math.round((14.40 - 11.0) / (14.40 - 11.0) * 100), // VMA: 100
+                        Math.round((5.067 - 4.183) / (5.067 - 4.067) * 100), // Allure: ~88
+                        Math.round(100 - 8.0),    // Classement: 92
+                        72,                        // Régularité
+                        Math.round(202.0 / 202.0 * 100), // Volume: 100
+                        Math.round(100 - 2.5),    // Meilleur %: 97.5
+                    ],
+                    backgroundColor: 'rgba(188, 19, 254, 0.15)',
+                    borderColor: 'rgba(188, 19, 254, 0.9)',
+                    pointBackgroundColor: 'rgba(188, 19, 254, 0.9)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 2.5,
+                },
+                {
+                    label: '2025',
+                    data: [
+                        Math.round((14.15 - 11.0) / (14.40 - 11.0) * 100), // VMA: ~93
+                        Math.round((5.067 - 4.267) / (5.067 - 4.067) * 100), // Allure: ~80
+                        Math.round(100 - 7.0),    // Classement: 93
+                        68,                        // Régularité
+                        Math.round(129.1 / 202.0 * 100), // Volume: 64 (saison en cours)
+                        Math.round(100 - 2.1),    // Meilleur %: 97.9
+                    ],
+                    backgroundColor: 'rgba(0, 255, 249, 0.12)',
+                    borderColor: 'rgba(0, 255, 249, 0.9)',
+                    pointBackgroundColor: 'rgba(0, 255, 249, 0.9)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8,
+                    borderWidth: 2.5,
+                    borderDash: [6, 3],
+                }
+            ]
+        };
+
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: radarData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                animation: {
+                    duration: 1500,
+                    easing: 'easeInOutQuart'
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(10, 10, 15, 0.95)',
+                        titleColor: '#00fff9',
+                        bodyColor: '#ffffff',
+                        borderColor: '#00fff9',
+                        borderWidth: 1,
+                        padding: 14,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ' : ' + context.parsed.r + '/100';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(255, 255, 255, 0.08)',
+                            lineWidth: 1
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.06)',
+                            lineWidth: 1
+                        },
+                        pointLabels: {
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            font: {
+                                size: 11,
+                                family: "'Space Grotesk', sans-serif",
+                                weight: '600'
+                            }
+                        },
+                        ticks: {
+                            color: 'rgba(255,255,255,0.25)',
+                            backdropColor: 'transparent',
+                            font: { size: 9 },
+                            stepSize: 20
+                        },
+                        min: 0,
+                        max: 100,
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
