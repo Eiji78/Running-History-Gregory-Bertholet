@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparaison Élite — Running History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --neon-cyan: #00fff9;
+            --neon-purple: #bc13fe;
+            --neon-orange: #ff6b35;
+            --neon-pink: #ff006e;
+            --neon-green: #00ff88;
+            --neon-gold: #ffd700;
+            --dark-bg: #0a0a0f;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed; width: 100%; height: 100%;
+            top: 0; left: 0; z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute; width: 200%; height: 200%;
+            top: -50%; left: -50%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188,19,254,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0,255,249,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 60% 10%, rgba(255,215,0,0.08) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .grain {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.03; z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        .neon-border {
+            position: fixed; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-purple) 25%, var(--neon-pink) 50%, var(--neon-orange) 75%, var(--neon-cyan) 100%);
+            background-size: 200% 100%;
+            animation: gradientSlide 4s linear infinite;
+            z-index: 1000;
+            box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-purple);
+        }
+
+        @keyframes gradientSlide {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .container {
+            position: relative; z-index: 2;
+            max-width: 1400px; margin: 0 auto; padding: 0 2rem;
+        }
+
+        .main-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.8rem, 5vw, 3.8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffd700 0%, #ff6b35 50%, #ff006e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.08em;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px rgba(255,215,0,0.7)) drop-shadow(0 0 40px rgba(255,107,53,0.5)); }
+            50% { filter: drop-shadow(0 0 30px rgba(255,215,0,1)) drop-shadow(0 0 60px rgba(255,107,53,0.8)); }
+        }
+
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.05), transparent);
+            transition: left 0.7s;
+        }
+
+        .glass-card:hover::before { left: 100%; }
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,215,0,0.25);
+            box-shadow: 0 20px 60px rgba(255,215,0,0.1), 0 0 30px rgba(255,107,53,0.1);
+        }
+
+        /* Nav buttons */
+        .nav-btn {
+            background: linear-gradient(135deg, rgba(0,255,249,0.15), rgba(188,19,254,0.15));
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(0,255,249,0.4);
+            color: #00fff9;
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 20px rgba(0,255,249,0.3);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            border-color: #00fff9;
+            box-shadow: 0 10px 30px rgba(0,255,249,0.5);
+        }
+
+        /* Home button fixed */
+        .home-btn-fixed {
+            position: fixed; top: 20px; left: 20px; z-index: 999;
+            width: 46px; height: 46px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(0,255,249,0.15), rgba(188,19,254,0.15));
+            border: 1.5px solid rgba(0,255,249,0.4);
+            display: flex; align-items: center; justify-content: center;
+            text-decoration: none;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 18px rgba(0,255,249,0.25);
+            transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+        }
+
+        .home-btn-fixed:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 30px rgba(0,255,249,0.55);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.9s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Distance tab */
+        .dist-tab {
+            padding: 0.7rem 2rem;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1.5px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.03);
+        }
+
+        .dist-tab:hover { border-color: rgba(255,215,0,0.4); color: rgba(255,215,0,0.8); }
+
+        .dist-tab.active {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,107,53,0.2));
+            border-color: rgba(255,215,0,0.6);
+            color: #ffd700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        /* Bar comparison */
+        .compare-bar {
+            height: 14px;
+            border-radius: 7px;
+            position: relative;
+            overflow: visible;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 7px;
+            transition: width 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+        }
+
+        .bar-fill::after {
+            content: '';
+            position: absolute;
+            top: -3px; right: -3px; bottom: -3px; left: -3px;
+            border-radius: 9px;
+            background: inherit;
+            filter: blur(6px);
+            opacity: 0.4;
+        }
+
+        /* Level tier */
+        .tier-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* Speed meter */
+        .speed-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        /* Country flag emoji */
+        .flag { font-size: 1.1rem; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, rgba(255,215,0,0.5), rgba(255,107,53,0.5));
+            border-radius: 8px;
+        }
+
+        /* Podium style */
+        .podium-row {
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.2rem;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transition: all 0.3s;
+            margin-bottom: 6px;
+        }
+
+        .podium-row:hover {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.08);
+        }
+
+        .podium-row.greg-row {
+            background: linear-gradient(90deg, rgba(0,255,249,0.08), rgba(188,19,254,0.08));
+            border-color: rgba(0,255,249,0.3);
+            box-shadow: 0 0 20px rgba(0,255,249,0.1);
+        }
+
+        .rank-num {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        /* Tooltip info */
+        .info-pill {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.3);
+            letter-spacing: 0.08em;
+            margin-top: 2px;
+        }
+    
+        /* ── MOBILE RESPONSIVE ─────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            body { overflow-x: hidden; }
+            .main-title { font-size: 1.5rem !important; letter-spacing: 0.02em !important; }
+            .glass-card { border-radius: 16px; }
+            .back-btn { font-size: 0.7rem; padding: 0.45rem 0.9rem; letter-spacing: 0.04em; }
+            .py-20 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+            .mb-14, .mb-12, .mb-10 { margin-bottom: 1.5rem !important; }
+            .p-8 { padding: 1rem !important; }
+            .p-7 { padding: 0.9rem !important; }
+
+            /* Top 4 stat cards : 2 colonnes */
+            .grid.grid-cols-2.md\:grid-cols-4 { grid-template-columns: 1fr 1fr !important; gap: 0.6rem !important; }
+
+            /* Les 3 cases ÉCART → 1 colonne */
+            .grid.grid-cols-3 { grid-template-columns: 1fr !important; gap: 0.5rem !important; }
+
+            /* Taille police dans les cases écart */
+            .grid.grid-cols-3 .font-bold[style*="Orbitron"] { font-size: 1rem !important; }
+            .grid.grid-cols-3 .text-xs { font-size: 0.6rem !important; }
+
+            /* Barres de comparaison */
+            .compare-bar { height: 10px; }
+            .space-y-5 > div .text-sm { font-size: 0.7rem; }
+            .flex.justify-between.items-center { flex-wrap: wrap; gap: 3px; }
+
+            /* Podium rows */
+            .podium-row { grid-template-columns: 28px 1fr auto; gap: 0.5rem; padding: 0.6rem 0.7rem; }
+            .podium-row .font-bold.text-sm { font-size: 0.75rem; }
+            .podium-row [style*="Orbitron"] { font-size: 0.85rem !important; }
+
+            /* Cards vitesse records */
+            .speed-number { font-size: 1.2rem !important; }
+
+            /* Grille 2 colonnes générique */
+            .grid.md\:grid-cols-2 { grid-template-columns: 1fr !important; }
+
+            .home-btn-fixed { top: 12px; left: 12px; width: 40px; height: 40px; }
+
+            /* Onglets distance */
+            .dist-tab { padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+
+            /* Insight box */
+            .flex.items-start.gap-4 { gap: 0.7rem; }
+        }
+        @media (max-width: 480px) {
+            .main-title { font-size: 1.1rem !important; }
+            .back-btn { font-size: 0.62rem; padding: 0.38rem 0.65rem; }
+            .speed-number { font-size: 1rem !important; }
+            .grid.grid-cols-2.md\:grid-cols-4 { gap: 0.4rem !important; }
+        }
+</style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7JZPPYNEK');
+    </script>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="grain"></div>
+    <div class="neon-border"></div>
+
+    <!-- Home icon -->
+    <a href="index.html" title="Tableau de bord" class="home-btn-fixed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <polyline points="9 21 9 12 15 12 15 21"/>
+        </svg>
+    </a>
+
+    <div class="container py-20">
+
+        <!-- Header -->
+        <div class="text-center mb-14 fade-in">
+            <h1 class="main-title mb-3">TOI vs L'ÉLITE MONDIALE</h1>
+            <p style="font-family:'Montserrat',sans-serif;font-size:0.9rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">RECORDS FRANCE · EUROPE · MONDE — ACTUALISÉS 2026</p>
+            <div class="flex flex-wrap justify-center gap-3">
+                <a href="index.html" class="nav-btn">🏠 TABLEAU DE BORD</a>
+                <a href="progression.html" class="nav-btn" style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,200,100,0.2));border-color:rgba(0,255,136,0.4);color:#00ff88;box-shadow:0 0 20px rgba(0,255,136,0.25);">📊 PROGRESSION</a>
+                <a href="radar.html" class="nav-btn" style="background:linear-gradient(135deg,rgba(188,19,254,0.15),rgba(255,0,110,0.2));border-color:rgba(188,19,254,0.4);color:#bc13fe;box-shadow:0 0 20px rgba(188,19,254,0.25);">🕸️ RADAR</a>
+            </div>
+        </div>
+
+        <!-- Distance selector -->
+        <div class="flex flex-wrap justify-center gap-3 mb-10 fade-in" style="animation-delay:0.1s;">
+            <button class="dist-tab active" onclick="showDistance('10k')">🏃 10 KM</button>
+            <button class="dist-tab" onclick="showDistance('21k')">🏃 SEMI-MARATHON</button>
+            <button class="dist-tab" onclick="showDistance('42k')">🏃 MARATHON</button>
+        </div>
+
+        <!-- === 10 KM PANEL === -->
+        <div id="panel-10k" class="fade-in" style="animation-delay:0.15s;">
+            <!-- Top stats row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
+                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'38"</div>
+                    <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">J. Cheptegei 🇺🇬</div>
+                    <div class="info-pill">Valence · 2019</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'43"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">Y. Schrub 🇫🇷</div>
+                    <div class="info-pill">Castellon · fév. 2026</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'43"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">Y. Schrub 🇫🇷</div>
+                    <div class="info-pill">Castellon · fév. 2026</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,249,0.35);box-shadow:0 0 25px rgba(0,255,249,0.12);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">37'41"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
+                    <div class="info-pill">Vitry-sur-Orne · 2024</div>
+                </div>
+            </div>
+
+            <!-- Bar comparaison -->
+            <div class="glass-card p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">VISUALISATION — ÉCART EN % PAR RAPPORT AU RECORD MONDE</h3>
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">🌍</span>
+                                <span class="font-bold text-sm" style="color:#ffd700;">Record Monde — J. Cheptegei</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:#ffd700;">26'38" — 2'40"/km</span>
+                        </div>
+                        <div class="compare-bar">
+                            <div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">🇪🇺</span>
+                                <span class="font-bold text-sm" style="color:#00c8ff;">Record Europe — Y. Schrub</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:#00c8ff;">26'43" — 2'40"/km (+0.3%)</span>
+                        </div>
+                        <div class="compare-bar">
+                            <div class="bar-fill" style="width:99.7%;background:linear-gradient(90deg,#0044cc,#00c8ff);"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">🏃</span>
+                                <span class="font-bold text-sm" style="color:rgba(255,255,255,0.6);">Coureur élite amateur (&lt;30')</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.5);">30'00" — 3'00"/km (+12.6%)</span>
+                        </div>
+                        <div class="compare-bar">
+                            <div class="bar-fill" style="width:88.7%;background:linear-gradient(90deg,rgba(255,255,255,0.3),rgba(255,255,255,0.5));"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">⚡</span>
+                                <span class="font-bold text-sm" style="color:#00fff9;">Greg — Record Personnel</span>
+                                <span class="tier-badge" style="background:rgba(0,255,249,0.15);border:1px solid rgba(0,255,249,0.4);color:#00fff9;">TOP 8% COUREUR</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:#00fff9;">37'41" — 3'46"/km (+41.5%)</span>
+                        </div>
+                        <div class="compare-bar">
+                            <div class="bar-fill" style="width:70.7%;background:linear-gradient(90deg,rgba(0,255,249,0.8),rgba(188,19,254,0.8));"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">👤</span>
+                                <span class="font-bold text-sm" style="color:rgba(255,255,255,0.35);">Runner amateur moyen (47')</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.3);">47'00" — 4'42"/km (+76.4%)</span>
+                        </div>
+                        <div class="compare-bar">
+                            <div class="bar-fill" style="width:56.7%;background:rgba(255,255,255,0.12);"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Écart en temps absolu -->
+                <div class="mt-8 grid grid-cols-3 gap-4">
+                    <div class="p-4 rounded-16 text-center" style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(255,215,0,0.5);">ÉCART vs MONDE</div>
+                        <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:1.3rem;">+11'03"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">663 secondes</div>
+                    </div>
+                    <div class="p-4 rounded-16 text-center" style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,200,255,0.5);">ÉCART vs EUROPE</div>
+                        <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;font-size:1.3rem;">+10'58"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">658 secondes</div>
+                    </div>
+                    <div class="p-4 rounded-16 text-center" style="background:rgba(0,255,249,0.05);border:1px solid rgba(0,255,249,0.2);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,255,249,0.5);">TON ALLURE</div>
+                        <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;font-size:1.3rem;">3'46"/km</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">vs 2'40" Monde</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Podium classement -->
+            <div class="glass-card p-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">TABLEAU DE RÉFÉRENCE — 10 KM</h3>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(255,215,0,0.08),transparent);border-color:rgba(255,215,0,0.3);">
+                    <div class="rank-num" style="color:#ffd700;">🥇</div>
+                    <div><div class="font-bold text-sm">Joshua Cheptegei <span class="flag">🇺🇬</span> <span style="font-size:0.65rem;color:rgba(255,215,0,0.6);letter-spacing:0.1em;">RECORD MONDE</span></div><div class="info-pill">Valence · 1er déc. 2019</div></div>
+                    <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;">26'38"</div>
+                </div>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(0,200,255,0.06),transparent);border-color:rgba(0,200,255,0.2);">
+                    <div class="rank-num" style="color:#00c8ff;">🥈</div>
+                    <div><div class="font-bold text-sm">Yann Schrub <span class="flag">🇫🇷</span> <span style="font-size:0.65rem;color:rgba(0,200,255,0.6);letter-spacing:0.1em;">RECORD EUROPE & FRANCE</span></div><div class="info-pill">Castellon · 22 fév. 2026</div></div>
+                    <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;">26'43"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.7;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.4);">🥉</div>
+                    <div><div class="font-bold text-sm text-gray-400">Étienne Daguinos <span class="flag">🇫🇷</span> <span style="font-size:0.65rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;">ex-RECORD EUROPE</span></div><div class="info-pill">Lille · 16 nov. 2024</div></div>
+                    <div class="font-bold text-gray-400" style="font-family:'Orbitron',sans-serif;">27'04"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.6;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.3);">4</div>
+                    <div><div class="font-bold text-sm text-gray-500">Jimmy Gressier <span class="flag">🇫🇷</span></div><div class="info-pill">Lille · 2024 (ex-record Europe)</div></div>
+                    <div class="font-bold text-gray-500" style="font-family:'Orbitron',sans-serif;">27'07"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.5;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.25);">5</div>
+                    <div><div class="font-bold text-sm text-gray-600">Coureur élite amateur</div><div class="info-pill">Objectif sous 30'</div></div>
+                    <div class="font-bold text-gray-600" style="font-family:'Orbitron',sans-serif;">&lt;30'00"</div>
+                </div>
+                <div class="podium-row greg-row">
+                    <div class="rank-num" style="color:#00fff9;">⚡</div>
+                    <div>
+                        <div class="font-bold text-sm" style="color:#00fff9;">Greg <span class="flag">🔥</span> <span style="font-size:0.65rem;background:linear-gradient(135deg,rgba(0,255,249,0.2),rgba(188,19,254,0.2));border:1px solid rgba(0,255,249,0.4);color:#00fff9;padding:2px 8px;border-radius:10px;letter-spacing:0.08em;">TON RECORD PERSO</span></div>
+                        <div class="info-pill">Vitry-sur-Orne · 5 août 2024</div>
+                    </div>
+                    <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;">37'41"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.4;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.2);">~</div>
+                    <div><div class="font-bold text-sm text-gray-700">Runner amateur moyen</div><div class="info-pill">Source : enquête running 2024 (12 000 coureurs)</div></div>
+                    <div class="font-bold text-gray-700" style="font-family:'Orbitron',sans-serif;">47'00"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === 21 KM PANEL === -->
+        <div id="panel-21k" class="fade-in" style="display:none;animation-delay:0.15s;">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
+                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">57'30"</div>
+                    <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">Y. Kejelcha 🇪🇹</div>
+                    <div class="info-pill">Valence · oct. 2024</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">59'13"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">J. Wanders 🇨🇭🇫🇷</div>
+                    <div class="info-pill">Ras el-Khaïmah · 2019</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">59'13"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">J. Wanders 🇫🇷</div>
+                    <div class="info-pill">Ras el-Khaïmah · 2019</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,249,0.35);box-shadow:0 0 25px rgba(0,255,249,0.12);">
+                    <div class="text-xs font-bold tracking-widets mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">1h23'48"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
+                    <div class="info-pill">Luxembourg · sept. 2025</div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">VISUALISATION — ÉCART EN % PAR RAPPORT AU RECORD MONDE</h3>
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🌍</span><span class="font-bold text-sm" style="color:#ffd700;">Record Monde — Y. Kejelcha</span></div>
+                            <span class="text-sm font-bold" style="color:#ffd700;">57'30" — 2'44"/km</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🇪🇺</span><span class="font-bold text-sm" style="color:#00c8ff;">Record Europe — J. Wanders</span></div>
+                            <span class="text-sm font-bold" style="color:#00c8ff;">59'13" — 2'48"/km (+3.0%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:97.1%;background:linear-gradient(90deg,#0044cc,#00c8ff);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🏃</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.6);">Elite amateur (&lt;1h10)</span></div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.5);">1h10'00" — 3'19"/km (+21.7%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:82.1%;background:rgba(255,255,255,0.25);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">⚡</span>
+                                <span class="font-bold text-sm" style="color:#00fff9;">Greg — Record Personnel</span>
+                                <span class="tier-badge" style="background:rgba(0,255,249,0.15);border:1px solid rgba(0,255,249,0.4);color:#00fff9;">TOP 6% COUREUR</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:#00fff9;">1h23'48" — 3'58"/km (+45.7%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:68.6%;background:linear-gradient(90deg,rgba(0,255,249,0.8),rgba(188,19,254,0.8));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">👤</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.35);">Runner amateur moyen (1h45)</span></div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.3);">1h45'00" — 4'58"/km (+82.6%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:54.8%;background:rgba(255,255,255,0.1);"></div></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-3 gap-4">
+                    <div class="p-4 text-center" style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(255,215,0,0.5);">ÉCART vs MONDE</div>
+                        <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:1.3rem;">+26'18"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">1 578 secondes</div>
+                    </div>
+                    <div class="p-4 text-center" style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,200,255,0.5);">ÉCART vs EUROPE</div>
+                        <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;font-size:1.3rem;">+24'35"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">1 475 secondes</div>
+                    </div>
+                    <div class="p-4 text-center" style="background:rgba(0,255,249,0.05);border:1px solid rgba(0,255,249,0.2);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,255,249,0.5);">TON ALLURE</div>
+                        <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;font-size:1.3rem;">3'58"/km</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">vs 2'44" Monde</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">TABLEAU DE RÉFÉRENCE — SEMI-MARATHON</h3>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(255,215,0,0.08),transparent);border-color:rgba(255,215,0,0.3);">
+                    <div class="rank-num" style="color:#ffd700;">🥇</div>
+                    <div><div class="font-bold text-sm">Yomif Kejelcha <span class="flag">🇪🇹</span> <span style="font-size:0.65rem;color:rgba(255,215,0,0.6);letter-spacing:0.1em;">RECORD MONDE</span></div><div class="info-pill">Valence · 27 oct. 2024</div></div>
+                    <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;">57'30"</div>
+                </div>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(0,200,255,0.06),transparent);border-color:rgba(0,200,255,0.2);">
+                    <div class="rank-num" style="color:#00c8ff;">🥈</div>
+                    <div><div class="font-bold text-sm">Julien Wanders <span class="flag">🇨🇭🇫🇷</span> <span style="font-size:0.65rem;color:rgba(0,200,255,0.6);letter-spacing:0.1em;">RECORD EUROPE & FRANCE</span></div><div class="info-pill">Ras el-Khaïmah · fév. 2019</div></div>
+                    <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;">59'13"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.65;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.4);">3</div>
+                    <div><div class="font-bold text-sm text-gray-400">Morhad Amdouni <span class="flag">🇫🇷</span></div><div class="info-pill">Gdynia · oct. 2020 — 2e perf française</div></div>
+                    <div class="font-bold text-gray-400" style="font-family:'Orbitron',sans-serif;">59'40"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.55;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.3);">4</div>
+                    <div><div class="font-bold text-sm text-gray-500">Jimmy Gressier <span class="flag">🇫🇷</span> <span style="font-size:0.65rem;color:rgba(255,255,255,0.3);">Champion Europe 2025</span></div><div class="info-pill">Bruxelles · avr. 2025 — 59'45"</div></div>
+                    <div class="font-bold text-gray-500" style="font-family:'Orbitron',sans-serif;">59'45"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.4;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.2);">~</div>
+                    <div><div class="font-bold text-sm text-gray-600">Élite amateur (&lt; 1h10)</div><div class="info-pill">Objectif top runner régional</div></div>
+                    <div class="font-bold text-gray-600" style="font-family:'Orbitron',sans-serif;">&lt;1h10"</div>
+                </div>
+                <div class="podium-row greg-row">
+                    <div class="rank-num" style="color:#00fff9;">⚡</div>
+                    <div>
+                        <div class="font-bold text-sm" style="color:#00fff9;">Greg <span class="flag">🔥</span> <span style="font-size:0.65rem;background:linear-gradient(135deg,rgba(0,255,249,0.2),rgba(188,19,254,0.2));border:1px solid rgba(0,255,249,0.4);color:#00fff9;padding:2px 8px;border-radius:10px;letter-spacing:0.08em;">TOP 6% COURSE</span></div>
+                        <div class="info-pill">Luxembourg · 28 sept. 2025 — Route du Vin</div>
+                    </div>
+                    <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;">1h23'48"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.4;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.2);">~</div>
+                    <div><div class="font-bold text-sm text-gray-700">Runner amateur moyen</div><div class="info-pill">Source : enquête running 2024 (12 000 coureurs)</div></div>
+                    <div class="font-bold text-gray-700" style="font-family:'Orbitron',sans-serif;">1h45'00"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- === 42 KM PANEL === -->
+        <div id="panel-42k" class="fade-in" style="display:none;animation-delay:0.15s;">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
+                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h00'35"</div>
+                    <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">K. Kiptum 🇰🇪</div>
+                    <div class="info-pill">Chicago · oct. 2023</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h03'36"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">B. Abdi 🇧🇪</div>
+                    <div class="info-pill">Rotterdam · oct. 2021</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                    <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h03'47"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">M. Amdouni 🇫🇷</div>
+                    <div class="info-pill">Séville · fév. 2024</div>
+                </div>
+                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,249,0.35);box-shadow:0 0 25px rgba(0,255,249,0.12);">
+                    <div class="text-xs font-bold tracking-widets mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">3h06'21"</div>
+                    <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
+                    <div class="info-pill">Paris · avr. 2024</div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8 mb-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">VISUALISATION — ÉCART EN % PAR RAPPORT AU RECORD MONDE</h3>
+                <div class="space-y-5">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🌍</span><span class="font-bold text-sm" style="color:#ffd700;">Record Monde — K. Kiptum</span></div>
+                            <span class="text-sm font-bold" style="color:#ffd700;">2h00'35" — 2'51"/km</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🇪🇺</span><span class="font-bold text-sm" style="color:#00c8ff;">Record Europe — B. Abdi</span></div>
+                            <span class="text-sm font-bold" style="color:#00c8ff;">2h03'36" — 2'56"/km (+2.9%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:97.2%;background:linear-gradient(90deg,#0044cc,#00c8ff);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🇫🇷</span><span class="font-bold text-sm" style="color:rgba(0,255,136,0.8);">Record France — M. Amdouni</span></div>
+                            <span class="text-sm font-bold" style="color:rgba(0,255,136,0.7);">2h03'47" — 2'56"/km (+3.0%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:97.0%;background:linear-gradient(90deg,rgba(0,200,100,0.8),rgba(0,255,136,0.8));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">🏃</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.6);">Elite amateur (&lt;2h30)</span></div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.5);">2h30'00" — 3'33"/km (+24.5%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:80.3%;background:rgba(255,255,255,0.25);"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="flag">⚡</span>
+                                <span class="font-bold text-sm" style="color:#00fff9;">Greg — Record Personnel</span>
+                                <span class="tier-badge" style="background:rgba(0,255,249,0.15);border:1px solid rgba(0,255,249,0.4);color:#00fff9;">TOP 6% COURSE</span>
+                            </div>
+                            <span class="text-sm font-bold" style="color:#00fff9;">3h06'21" — 4'25"/km (+54.5%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:64.7%;background:linear-gradient(90deg,rgba(0,255,249,0.8),rgba(188,19,254,0.8));"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="flex items-center gap-2"><span class="flag">👤</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.35);">Runner amateur moyen (4h13)</span></div>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.3);">4h13'00" — 5'59"/km (+110%)</span>
+                        </div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:47.7%;background:rgba(255,255,255,0.1);"></div></div>
+                    </div>
+                </div>
+
+                <div class="mt-8 grid grid-cols-3 gap-4">
+                    <div class="p-4 text-center" style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(255,215,0,0.5);">ÉCART vs MONDE</div>
+                        <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:1.2rem;">+1h05'46"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">3 946 secondes</div>
+                    </div>
+                    <div class="p-4 text-center" style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,200,255,0.5);">ÉCART vs EUROPE</div>
+                        <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;font-size:1.2rem;">+1h02'45"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">3 765 secondes</div>
+                    </div>
+                    <div class="p-4 text-center" style="background:rgba(0,255,249,0.05);border:1px solid rgba(0,255,249,0.2);border-radius:14px;">
+                        <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,255,249,0.5);">TON ALLURE</div>
+                        <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;font-size:1.2rem;">4'25"/km</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">vs 2'51" Monde</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card p-8">
+                <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">TABLEAU DE RÉFÉRENCE — MARATHON</h3>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(255,215,0,0.08),transparent);border-color:rgba(255,215,0,0.3);">
+                    <div class="rank-num" style="color:#ffd700;">🥇</div>
+                    <div><div class="font-bold text-sm">Kelvin Kiptum <span class="flag">🇰🇪</span> <span style="font-size:0.65rem;color:rgba(255,215,0,0.6);letter-spacing:0.1em;">RECORD MONDE</span></div><div class="info-pill">Chicago · 8 oct. 2023 (†)</div></div>
+                    <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;">2h00'35"</div>
+                </div>
+                <div class="podium-row" style="background:linear-gradient(90deg,rgba(0,200,255,0.06),transparent);border-color:rgba(0,200,255,0.2);">
+                    <div class="rank-num" style="color:#00c8ff;">🥈</div>
+                    <div><div class="font-bold text-sm">Bashir Abdi <span class="flag">🇧🇪</span> <span style="font-size:0.65rem;color:rgba(0,200,255,0.6);letter-spacing:0.1em;">RECORD EUROPE</span></div><div class="info-pill">Rotterdam · 24 oct. 2021</div></div>
+                    <div class="font-bold" style="color:#00c8ff;font-family:'Orbitron',sans-serif;">2h03'36"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.7;background:linear-gradient(90deg,rgba(0,200,100,0.04),transparent);border-color:rgba(0,200,100,0.15);">
+                    <div class="rank-num" style="color:rgba(0,255,136,0.7);">🥉</div>
+                    <div><div class="font-bold text-sm" style="color:rgba(0,255,136,0.8);">Morhad Amdouni <span class="flag">🇫🇷</span> <span style="font-size:0.65rem;color:rgba(0,255,136,0.5);letter-spacing:0.1em;">RECORD FRANCE</span></div><div class="info-pill">Séville · 18 fév. 2024</div></div>
+                    <div class="font-bold" style="color:rgba(0,255,136,0.8);font-family:'Orbitron',sans-serif;">2h03'47"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.55;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.3);">4</div>
+                    <div><div class="font-bold text-sm text-gray-500">Élite amateur (&lt; 2h30)</div><div class="info-pill">Objectif top runner régional</div></div>
+                    <div class="font-bold text-gray-500" style="font-family:'Orbitron',sans-serif;">&lt;2h30"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.45;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.25);">5</div>
+                    <div><div class="font-bold text-sm text-gray-600">Sub-3h — Objectif emblématique</div><div class="info-pill">Référence runner confirmé</div></div>
+                    <div class="font-bold text-gray-600" style="font-family:'Orbitron',sans-serif;">&lt;3h00"</div>
+                </div>
+                <div class="podium-row greg-row">
+                    <div class="rank-num" style="color:#00fff9;">⚡</div>
+                    <div>
+                        <div class="font-bold text-sm" style="color:#00fff9;">Greg <span class="flag">🔥</span> <span style="font-size:0.65rem;background:linear-gradient(135deg,rgba(0,255,249,0.2),rgba(188,19,254,0.2));border:1px solid rgba(0,255,249,0.4);color:#00fff9;padding:2px 8px;border-radius:10px;letter-spacing:0.08em;">TOP 6% COURSE</span></div>
+                        <div class="info-pill">Paris · avr. 2024 · Schneider Electric</div>
+                    </div>
+                    <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;">3h06'21"</div>
+                </div>
+                <div class="podium-row" style="opacity:0.35;">
+                    <div class="rank-num" style="color:rgba(255,255,255,0.15);">~</div>
+                    <div><div class="font-bold text-sm text-gray-700">Runner amateur moyen</div><div class="info-pill">Source : enquête running 2024 (12 000 coureurs)</div></div>
+                    <div class="font-bold text-gray-700" style="font-family:'Orbitron',sans-serif;">4h13'00"</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Fun fact box -->
+        <div class="glass-card p-6 mt-8 fade-in" style="animation-delay:0.5s;border-color:rgba(255,215,0,0.2);">
+            <div class="flex items-start gap-4">
+                <div style="font-size:2rem;flex-shrink:0;">🏅</div>
+                <div>
+                    <div class="font-bold tracking-wider mb-2" style="color:var(--neon-gold);font-size:0.9rem;">LA MISE EN PERSPECTIVE</div>
+                    <div class="text-sm" style="color:rgba(255,255,255,0.6);line-height:1.9;">
+                        Sur le semi-marathon, ton record de <span style="color:#00fff9;font-weight:700;">1h23'48"</span> te place dans le <span style="color:#00fff9;font-weight:700;">top 6%</span> des coureurs officiels. 
+                        L'écart avec le record du monde (<span style="color:#ffd700;font-weight:700;">57'30"</span>) est de <span style="color:#ffd700;font-weight:700;">26 minutes</span>, 
+                        mais tu cours <span style="color:var(--neon-green);font-weight:700;">21 minutes plus vite</span> que la moyenne des runners amateurs. 
+                        Les athlètes élites mondiaux courent à <span style="color:#ffd700;font-weight:700;">22+ km/h</span> en moyenne sur ces distances — soit environ <span style="color:rgba(255,255,255,0.5);">la vitesse d'un scooter en ville</span>. 
+                        Toi, tu maintiens <span style="color:#00fff9;font-weight:700;">~15 km/h</span> pendant 21 km : une performance très solide pour un athlète amateur.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const tabs = document.querySelectorAll('.dist-tab');
+        const panels = { '10k': 'panel-10k', '21k': 'panel-21k', '42k': 'panel-42k' };
+
+        function showDistance(dist) {
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            Object.values(panels).forEach(id => document.getElementById(id).style.display = 'none');
+            document.getElementById(panels[dist]).style.display = 'block';
+        }
+    </script>
+</body>
+</html>
