@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Météo & Perfs — Running History</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg:#07070e; --cyan:#00fff9; --purple:#bc13fe;
+            --orange:#ff6b35; --pink:#ff006e; --green:#00ff88; --gold:#ffd700;
+            --cold:#6af; --warm:#fa6; --rain:#48f; --wind:#c8f;
+        }
+        body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:#fff; min-height:100vh; overflow-x:hidden; }
+
+        .bg { position:fixed; inset:0; z-index:0; pointer-events:none;
+            background: radial-gradient(ellipse 70% 50% at 15% 0%,rgba(0,255,249,.06),transparent 60%),
+                        radial-gradient(ellipse 60% 50% at 85% 100%,rgba(188,19,254,.06),transparent 60%); }
+        .grain { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.025;
+            background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+        .neon-line { position:fixed; top:0; left:0; right:0; height:3px; z-index:1000;
+            background:linear-gradient(90deg,var(--cyan),var(--purple),var(--pink),var(--cyan));
+            background-size:200%; animation:slide 4s linear infinite;
+            box-shadow:0 0 12px rgba(0,255,249,.5); }
+        @keyframes slide { to { background-position:-200% 0; } }
+
+        .wrap { position:relative; z-index:2; max-width:1300px; margin:0 auto; padding:0 1.5rem 6rem; }
+
+        /* Header */
+        .header { padding:4.5rem 0 2rem; text-align:center; }
+        .title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:clamp(1.8rem,4.5vw,3rem);
+            letter-spacing:.04em; background:linear-gradient(120deg,var(--cyan),var(--purple) 60%,var(--pink));
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+            filter:drop-shadow(0 0 24px rgba(0,255,249,.4)); margin-bottom:.4rem; }
+        .subtitle { font-family:'Barlow Condensed',sans-serif; font-size:.85rem; letter-spacing:.25em;
+            color:rgba(255,255,255,.3); text-transform:uppercase; margin-bottom:1.8rem; }
+        .nav-pills { display:flex; flex-wrap:wrap; justify-content:center; gap:.5rem; }
+        .npill { padding:.45rem 1rem; border-radius:10px; font-size:.72rem; font-weight:700;
+            letter-spacing:.07em; text-decoration:none; border:1.5px solid; transition:all .3s; }
+        .npill:hover { transform:translateY(-2px); filter:brightness(1.2); }
+        .npill.home  { color:#00fff9; border-color:rgba(0,255,249,.35); background:rgba(0,255,249,.07); }
+        .npill.prog  { color:#00c8ff; border-color:rgba(0,200,255,.35); background:rgba(0,200,255,.07); }
+        .npill.radar { color:#bc13fe; border-color:rgba(188,19,254,.35); background:rgba(188,19,254,.07); }
+        .npill.elite { color:#ffd700; border-color:rgba(255,215,0,.35); background:rgba(255,215,0,.07); }
+        .npill.carte { color:#00ff88; border-color:rgba(0,255,136,.35); background:rgba(0,255,136,.07); }
+        .npill.comp  { color:#ffd700; border-color:rgba(255,215,0,.35); background:rgba(255,215,0,.07); }
+
+        /* Loading */
+        #loading-bar-wrap { margin:2rem auto; max-width:500px; }
+        .load-label { font-family:'Barlow Condensed',sans-serif; font-size:.72rem; letter-spacing:.18em;
+            text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.6rem; text-align:center; }
+        .load-bar-bg { height:4px; background:rgba(255,255,255,.06); border-radius:4px; overflow:hidden; }
+        .load-bar-fill { height:100%; background:linear-gradient(90deg,var(--cyan),var(--purple));
+            border-radius:4px; transition:width .3s; width:0%; }
+        #load-status { font-size:.7rem; color:rgba(255,255,255,.3); text-align:center; margin-top:.5rem; }
+
+        /* Glass card */
+        .card { background:linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+            border:1px solid rgba(255,255,255,.09); border-radius:20px; }
+
+        /* Section title */
+        .sec-title { font-family:'Barlow Condensed',sans-serif; font-size:.72rem; letter-spacing:.18em;
+            text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:1rem; }
+
+        /* ── Insight banner ── */
+        .insights { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.5rem; }
+        .insight-card { padding:1.2rem 1rem; border-radius:16px; text-align:center;
+            background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); }
+        .insight-val { font-family:'Orbitron',sans-serif; font-size:1.5rem; font-weight:800; line-height:1; margin-bottom:.3rem; }
+        .insight-label { font-size:.6rem; color:rgba(255,255,255,.3); letter-spacing:.1em; text-transform:uppercase; }
+        .insight-sub { font-size:.65rem; color:rgba(255,255,255,.4); margin-top:.25rem; }
+
+        /* ── Filter bar ── */
+        .filter-row { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.2rem; }
+        .fbtn { padding:.4rem .85rem; border-radius:9px; font-size:.7rem; font-weight:700; letter-spacing:.06em;
+            cursor:pointer; border:1.5px solid rgba(255,255,255,.12); background:rgba(255,255,255,.04);
+            color:rgba(255,255,255,.45); transition:all .25s; white-space:nowrap; }
+        .fbtn:hover { border-color:rgba(0,255,249,.3); color:rgba(255,255,255,.8); }
+        .fbtn.active { border-color:var(--cyan); color:var(--cyan); background:rgba(0,255,249,.1); }
+
+        /* ── Race table ── */
+        .race-table { width:100%; border-collapse:collapse; }
+        .race-table th { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; letter-spacing:.15em;
+            text-transform:uppercase; color:rgba(255,255,255,.3); padding:.6rem 1rem; text-align:left;
+            border-bottom:1px solid rgba(255,255,255,.06); white-space:nowrap; }
+        .race-table td { padding:.65rem 1rem; border-bottom:1px solid rgba(255,255,255,.04); font-size:.82rem; vertical-align:middle; }
+        .race-table tr:hover td { background:rgba(255,255,255,.025); }
+        .race-table tr.best-perf td { background:rgba(0,255,136,.03); }
+
+        .pill { display:inline-block; padding:2px 8px; border-radius:6px; font-size:.62rem; font-weight:700; }
+        .pill-10k  { background:rgba(0,255,136,.15); color:#00ff88; }
+        .pill-21k  { background:rgba(0,255,249,.15); color:#00fff9; }
+        .pill-42k  { background:rgba(188,19,254,.2); color:#cc66ff; }
+        .pill-other{ background:rgba(255,107,53,.15); color:#ff8855; }
+
+        /* Weather cell */
+        .weather-cell { display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+        .w-tag { display:inline-flex; align-items:center; gap:3px; font-size:.68rem; font-weight:600;
+            padding:2px 7px; border-radius:6px; white-space:nowrap; }
+        .w-temp-cold { background:rgba(102,170,255,.15); color:#6af; }
+        .w-temp-cool { background:rgba(100,200,255,.12); color:#7cf; }
+        .w-temp-warm { background:rgba(255,200,100,.15); color:#fc8; }
+        .w-temp-hot  { background:rgba(255,100,50,.2); color:#fa6; }
+        .w-rain      { background:rgba(80,130,255,.15); color:#7af; }
+        .w-wind      { background:rgba(200,150,255,.15); color:#c8f; }
+        .w-loading   { color:rgba(255,255,255,.2); font-size:.65rem; font-style:italic; }
+        .w-error     { color:rgba(255,100,50,.5); font-size:.65rem; }
+
+        /* Performance cell */
+        .perf-wrap { display:flex; align-items:center; gap:.5rem; }
+        .perf-time { font-family:'Orbitron',sans-serif; font-size:.88rem; font-weight:700; color:var(--orange); }
+        .perf-pct  { font-size:.68rem; color:rgba(255,255,255,.35); }
+        .perf-allure { font-size:.68rem; color:rgba(255,215,0,.7); }
+
+        /* ── Correlation charts ── */
+        .charts-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+        .chart-card { padding:1.5rem; }
+        .chart-sub { font-size:.65rem; color:rgba(255,255,255,.25); margin-bottom:1rem; letter-spacing:.05em; }
+
+        /* ── Conditions summary ── */
+        .conditions-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1.5rem; }
+        .cond-card { padding:1.2rem; border-radius:16px; }
+        .cond-title { font-family:'Barlow Condensed',sans-serif; font-size:.65rem; letter-spacing:.15em;
+            text-transform:uppercase; margin-bottom:.8rem; }
+        .cond-row { display:flex; justify-content:space-between; align-items:center;
+            padding:.35rem 0; border-bottom:1px solid rgba(255,255,255,.04); font-size:.75rem; }
+        .cond-row:last-child { border-bottom:none; }
+        .cond-val { font-family:'Orbitron',sans-serif; font-size:.78rem; font-weight:700; }
+
+        /* Home btn */
+        .home-btn { position:fixed; top:18px; left:18px; z-index:999; width:44px; height:44px;
+            border-radius:13px; background:rgba(0,255,249,.1); border:1.5px solid rgba(0,255,249,.35);
+            display:flex; align-items:center; justify-content:center; text-decoration:none;
+            backdrop-filter:blur(20px); transition:all .3s; }
+        .home-btn:hover { transform:scale(1.12); box-shadow:0 0 24px rgba(0,255,249,.4); }
+
+        /* Mobile */
+        @media(max-width:900px) {
+            .insights { grid-template-columns:1fr 1fr; }
+            .charts-grid { grid-template-columns:1fr; }
+            .conditions-grid { grid-template-columns:1fr; }
+        }
+        @media(max-width:600px) {
+            .wrap { padding:0 .8rem 4rem; }
+            .insights { grid-template-columns:1fr 1fr; gap:.6rem; }
+            .insight-val { font-size:1.1rem; }
+            .race-table th:nth-child(4),
+            .race-table td:nth-child(4) { display:none; }
+        }
+
+        /* Scroll table on mobile */
+        .table-wrap { overflow-x:auto; }
+        .table-wrap::-webkit-scrollbar { height:3px; }
+        .table-wrap::-webkit-scrollbar-thumb { background:rgba(0,255,249,.2); border-radius:4px; }
+
+        /* Strava link */
+        .strava-ic { display:inline-flex; align-items:center; justify-content:center;
+            width:24px; height:24px; border-radius:50%;
+            background:rgba(252,76,2,.15); border:1px solid rgba(252,76,2,.3); text-decoration:none; transition:.2s; }
+        .strava-ic:hover { background:rgba(252,76,2,.3); }
+        .record-star { color:var(--gold); font-size:.75rem; margin-left:3px; }
+
+        /* Weather icon */
+        .wi { font-size:1rem; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F7JZPPYNEK');</script>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="grain"></div>
+    <div class="neon-line"></div>
+
+    <a href="index.html" class="home-btn" title="Tableau de bord">
+        <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+    </a>
+
+    <div class="wrap">
+        <div class="header">
+            <h1 class="title">MÉTÉO & PERFORMANCES</h1>
+            <p class="subtitle">Données climatiques réelles · Corrélation avec tes résultats</p>
+            <nav class="nav-pills">
+                <a href="index.html"       class="npill home" >🏠 Tableau de bord</a>
+                <a href="progression.html" class="npill prog" >📊 Progression</a>
+                <a href="radar.html"       class="npill radar">🕸️ Radar</a>
+                <a href="elite.html"       class="npill elite">🏅 Vs l'élite</a>
+                <a href="carte.html"       class="npill carte">🗺️ Carte</a>
+                <a href="comparaison.html" class="npill comp" >⚡ Comparer</a>
+            </nav>
+        </div>
+
+        <!-- Loading bar -->
+        <div id="loading-bar-wrap">
+            <div class="load-label">Récupération des données météo via Open-Meteo</div>
+            <div class="load-bar-bg"><div class="load-bar-fill" id="load-bar"></div></div>
+            <div id="load-status">Initialisation…</div>
+        </div>
+
+        <!-- Main content, hidden until loaded -->
+        <div id="main-content" style="display:none;">
+
+            <!-- Insight cards -->
+            <div class="insights" id="insights"></div>
+
+            <!-- Correlation charts -->
+            <div class="charts-grid" style="margin-bottom:1.5rem;">
+                <div class="card chart-card">
+                    <div class="sec-title">Allure vs Température ressentie</div>
+                    <div class="chart-sub">Chaque point = une course. Allure en secondes/km (axe Y).</div>
+                    <canvas id="chartTemp" height="200"></canvas>
+                </div>
+                <div class="card chart-card">
+                    <div class="sec-title">Allure vs Vitesse du vent</div>
+                    <div class="chart-sub">Chaque point = une course. Points plus grands = plus de pluie.</div>
+                    <canvas id="chartWind" height="200"></canvas>
+                </div>
+            </div>
+
+            <!-- Conditions summary -->
+            <div class="conditions-grid" id="conditions-grid" style="margin-bottom:1.5rem;"></div>
+
+            <!-- Filter bar -->
+            <div class="filter-row" id="filter-row"></div>
+
+            <!-- Race table -->
+            <div class="card" style="padding:0; overflow:hidden; margin-bottom:1.5rem;">
+                <div class="table-wrap">
+                    <table class="race-table" id="race-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Course</th>
+                                <th>Dist.</th>
+                                <th>Performance</th>
+                                <th>Météo</th>
+                                <th>Temp.</th>
+                                <th>Vent</th>
+                                <th>Pluie</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// ── RACE DATA ────────────────────────────────────────────────────────────────
+// Each race: date, course, ville, km, classement, perf, allure, lat, lng, strava, record
+// Hour is estimated: most road races start 9h-10h
+const RACES = [
+  {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",lat:49.2662,lng:6.0894,hour:9,strava:"https://www.strava.com/activities/17561583056"},
+  {date:"2025-09-28",course:"Route du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/15961102163",record:true},
+  {date:"2025-05-31",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",perf:"01:29:51",allure:"4:14",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/14654980086"},
+  {date:"2025-05-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",perf:"01:38:50",allure:"4:11",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/16041281275"},
+  {date:"2025-04-27",course:"Marathon Annecy",ville:"Annecy",km:42.195,classement:"583/3845",perf:"03:26:08",allure:"4:53",lat:45.8992,lng:6.1294,hour:8,strava:"https://www.strava.com/activities/14299457228"},
+  {date:"2025-03-16",course:"Semi Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",perf:"01:25:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/13895827191"},
+  {date:"2024-11-05",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"176/6909",perf:"01:31:20",allure:"4:19",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/11387709862"},
+  {date:"2024-10-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"144/2440",perf:"00:40:29",allure:"4:02",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/10928040300"},
+  {date:"2024-09-29",course:"Route du Vin",ville:"Remich",km:21.1,classement:"178/1895",perf:"01:26:33",allure:"4:06",lat:49.5474,lng:6.3624,hour:9,strava:"https://www.strava.com/activities/12530152817"},
+  {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",perf:"01:00:59",allure:"5:10",lat:49.2754,lng:6.2055,hour:9,strava:"https://www.strava.com/activities/12235936176"},
+  {date:"2024-08-05",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",perf:"00:37:41",allure:"3:46",lat:49.2687,lng:6.1055,hour:9,strava:"https://www.strava.com/activities/11359052509",record:true},
+  {date:"2024-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",lat:49.2662,lng:6.0894,hour:21,strava:"https://www.strava.com/activities/11597795067"},
+  {date:"2024-07-04",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"3058/54175",perf:"03:06:21",allure:"4:24",lat:48.8575,lng:2.3514,hour:7,strava:"https://www.strava.com/activities/11124704539",record:true},
+  {date:"2024-06-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",perf:"01:40:51",allure:"4:16",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/12589698929"},
+  {date:"2024-04-21",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"80/1089",perf:"01:25:30",allure:"4:03",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/11229080745"},
+  {date:"2024-03-17",course:"Semi Vallée de l'Orne",ville:"Moyeuvre-Grande",km:21.1,classement:"34/416",perf:"01:30:06",allure:"4:16",lat:49.2513,lng:6.0452,hour:9,strava:"https://www.strava.com/activities/10977086066"},
+  {date:"2024-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"14/199",perf:"00:39:17",allure:"3:56",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/11304839621"},
+  {date:"2023-12-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"142/2067",perf:"00:42:44",allure:"4:16",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/8700435543"},
+  {date:"2023-10-14",course:"Haard Trail Dudelange",ville:"Dudelange",km:15,classement:"27/94",perf:"01:11:15",allure:"4:45",lat:49.4785,lng:6.0859,hour:9,strava:"https://www.strava.com/activities/10037221696"},
+  {date:"2023-09-24",course:"Route du Vin",ville:"Remich",km:21.1,classement:"179/1370",perf:"01:30:39",allure:"4:17",lat:49.5474,lng:6.3624,hour:9,strava:"https://www.strava.com/activities/9909962182"},
+  {date:"2023-09-07",course:"La Forestière",ville:"Moyeuvre-Grande",km:10,classement:"39/164",perf:"00:50:30",allure:"5:03",lat:49.2513,lng:6.0452,hour:9,strava:"https://www.strava.com/activities/9416504602"},
+  {date:"2023-06-25",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"24/169",perf:"00:41:37",allure:"4:10",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/9330053741"},
+  {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",perf:"03:47:13",allure:"5:23",lat:49.6106,lng:6.1299,hour:20,strava:"https://www.strava.com/activities/9108818382"},
+  {date:"2023-04-23",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"82/690",perf:"01:27:20",allure:"4:08",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/8940931342"},
+  {date:"2023-03-19",course:"Semi Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",perf:"01:28:36",allure:"4:12",lat:49.2513,lng:6.0934,hour:9,strava:"https://www.strava.com/activities/8739505302"},
+  {date:"2023-02-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/9189866875"},
+  {date:"2023-01-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",perf:"01:48:54",allure:"4:36",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/9955737974"},
+  {date:"2022-10-16",course:"Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",perf:"03:13:45",allure:"4:35",lat:52.3676,lng:4.9041,hour:9,strava:"https://www.strava.com/activities/7970754505"},
+  {date:"2022-09-18",course:"Semi Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",perf:"01:32:20",allure:"4:23",lat:49.3038,lng:6.1540,hour:9,strava:"https://www.strava.com/activities/7826241352"},
+  {date:"2022-06-26",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"21/147",perf:"00:41:27",allure:"4:09",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/7369943097"},
+  {date:"2022-05-28",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"456/4498",perf:"01:37:46",allure:"4:38",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/7217953463"},
+  {date:"2022-05-15",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"289/798",perf:"01:51:28",allure:"5:17",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/7145622553"},
+  {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"77/325",perf:"00:40:16",allure:"4:02",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/6889279481"},
+  {date:"2022-03-20",course:"Semi Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",perf:"01:33:58",allure:"4:27",lat:49.2722,lng:6.1353,hour:9,strava:"https://www.strava.com/activities/6852262326"},
+  {date:"2022-03-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/7249627360"},
+  {date:"2022-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",perf:"00:40:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/7068557851"},
+  {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",perf:"03:29:02",allure:"4:57",lat:48.8575,lng:2.3514,hour:8,strava:"https://www.strava.com/activities/6125599297"},
+  {date:"2021-09-19",course:"Semi Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",perf:"01:33:14",allure:"4:25",lat:49.3038,lng:6.1540,hour:9,strava:"https://www.strava.com/activities/5983824622"},
+  {date:"2021-04-07",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"78/250",perf:"00:40:49",allure:"4:05",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/5572013481"},
+  {date:"2020-01-03",course:"Semi Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",perf:"01:42:59",allure:"4:53",lat:49.2687,lng:6.1055,hour:9,strava:"https://www.strava.com/activities/3144210898"},
+  {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",perf:"01:59:38",allure:"5:04",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/2767774831"},
+  {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",perf:"01:15:11",allure:"5:01",lat:49.2754,lng:6.2055,hour:9,strava:"https://www.strava.com/activities/2649386092"},
+  {date:"2019-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",lat:49.2662,lng:6.0894,hour:21,strava:"https://www.strava.com/activities/2431537538"},
+  {date:"2019-06-30",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"73/234",perf:"00:46:42",allure:"4:40",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/2491818770"},
+  {date:"2019-04-28",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"521/987",perf:"01:49:48",allure:"5:12",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/2325102723"},
+  {date:"2019-03-17",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",perf:"01:53:04",allure:"5:22",lat:49.2662,lng:6.0894,hour:9,strava:"https://www.strava.com/activities/2220974946"},
+  {date:"2019-03-11",course:"Course Marcel Kiefer",ville:"Hussigny-Godbrange",km:21,classement:"41/102",perf:"01:52:47",allure:"5:22",lat:49.4927,lng:5.8734,hour:9,strava:"https://www.strava.com/activities/2838102426"},
+  {date:"2019-01-06",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"1564/6470",perf:"01:55:51",allure:"5:29",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/2415438474"},
+  {date:"2019-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"121/248",perf:"00:49:03",allure:"4:54",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/2332583576"},
+];
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function allureToSec(a) { const [m,s]=a.split(':').map(Number); return m*60+s; }
+function secToAllure(s) { const m=Math.floor(s/60), ss=s%60; return `${m}:${String(ss).padStart(2,'0')}`; }
+function pct(cl) { const [p,t]=cl.split('/').map(Number); return p/t*100; }
+
+// WMO weather code → emoji + label
+function wmoIcon(code) {
+    if(code===0) return {icon:'☀️',label:'Dégagé'};
+    if(code<=2)  return {icon:'🌤️',label:'Peu nuageux'};
+    if(code<=3)  return {icon:'☁️',label:'Nuageux'};
+    if(code<=48) return {icon:'🌫️',label:'Brouillard'};
+    if(code<=55) return {icon:'🌦️',label:'Bruine'};
+    if(code<=65) return {icon:'🌧️',label:'Pluie'};
+    if(code<=77) return {icon:'🌨️',label:'Neige'};
+    if(code<=82) return {icon:'🌧️',label:'Averses'};
+    if(code<=99) return {icon:'⛈️',label:'Orage'};
+    return {icon:'❓',label:'Inconnu'};
+}
+function tempClass(t) {
+    if(t<5)  return 'w-temp-cold';
+    if(t<14) return 'w-temp-cool';
+    if(t<22) return 'w-temp-warm';
+    return 'w-temp-hot';
+}
+function distPill(km) {
+    if(km<=10) return `<span class="pill pill-10k">${km}km</span>`;
+    if(km>=42) return `<span class="pill pill-42k">42.2km</span>`;
+    if(km>=21&&km<22) return `<span class="pill pill-21k">21.1km</span>`;
+    return `<span class="pill pill-other">${km}km</span>`;
+}
+const STRAVA_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="#FC4C02"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>`;
+
+// ── Weather cache (localStorage) ────────────────────────────────────────────
+const CACHE_KEY = 'meteo_cache_v1';
+function loadCache() {
+    try { return JSON.parse(localStorage.getItem(CACHE_KEY) || '{}'); }
+    catch(e) { return {}; }
+}
+function saveCache(cache) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch(e){}
+}
+
+// ── Fetch weather for one race ───────────────────────────────────────────────
+async function fetchWeather(race) {
+    const url = `https://archive-api.open-meteo.com/v1/archive`
+        + `?latitude=${race.lat}&longitude=${race.lng}`
+        + `&start_date=${race.date}&end_date=${race.date}`
+        + `&hourly=temperature_2m,apparent_temperature,precipitation,wind_speed_10m,wind_gusts_10m,weather_code,relative_humidity_2m`
+        + `&timezone=Europe%2FParis`;
+
+    const resp = await fetch(url);
+    if(!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    const h = race.hour;
+    const idx = Math.min(h, data.hourly.time.length-1);
+    return {
+        temp:        Math.round(data.hourly.temperature_2m[idx]*10)/10,
+        apparent:    Math.round(data.hourly.apparent_temperature[idx]*10)/10,
+        rain:        Math.round(data.hourly.precipitation[idx]*10)/10,
+        wind:        Math.round(data.hourly.wind_speed_10m[idx]*10)/10,
+        gusts:       Math.round(data.hourly.wind_gusts_10m[idx]*10)/10,
+        humidity:    data.hourly.relative_humidity_2m[idx],
+        weatherCode: data.hourly.weather_code[idx],
+    };
+}
+
+// ── Main load ────────────────────────────────────────────────────────────────
+const weatherData = {};
+
+async function loadAll() {
+    const cache = loadCache();
+    const bar = document.getElementById('load-bar');
+    const status = document.getElementById('load-status');
+    let done = 0;
+
+    // Deduplicate requests by date+coords
+    const tasks = RACES.map(r => ({ race: r, cacheKey: `${r.date}_${r.lat}_${r.lng}_${r.hour}` }));
+
+    for(const t of tasks) {
+        if(cache[t.cacheKey]) {
+            weatherData[t.race.date + '_' + t.race.ville] = cache[t.cacheKey];
+        } else {
+            try {
+                const w = await fetchWeather(t.race);
+                cache[t.cacheKey] = w;
+                weatherData[t.race.date + '_' + t.race.ville] = w;
+            } catch(e) {
+                weatherData[t.race.date + '_' + t.race.ville] = null;
+            }
+            // Small delay to avoid hammering the API
+            await new Promise(r => setTimeout(r, 120));
+        }
+        done++;
+        bar.style.width = (done/tasks.length*100)+'%';
+        status.textContent = `${done}/${tasks.length} courses — ${t.race.date} ${t.race.ville}`;
+    }
+
+    saveCache(cache);
+    status.textContent = `✓ Données météo chargées pour ${done} courses`;
+    setTimeout(() => {
+        document.getElementById('loading-bar-wrap').style.display='none';
+        buildUI();
+        document.getElementById('main-content').style.display='block';
+    }, 400);
+}
+
+// ── Build UI ─────────────────────────────────────────────────────────────────
+let activeFilter = 'all';
+let chartTemp, chartWind;
+
+function getW(race) { return weatherData[race.date + '_' + race.ville]; }
+
+function buildUI() {
+    const races = RACES.filter(r => getW(r));
+    buildInsights(races);
+    buildCharts(races);
+    buildConditions(races);
+    buildFilters();
+    buildTable('all');
+}
+
+function buildInsights(races) {
+    const withW = races;
+    // Best perf allure (lower = better)
+    const allures = withW.map(r => ({r, sec:allureToSec(r.allure), w:getW(r)}));
+    const best = allures.sort((a,b)=>a.sec-b.sec)[0];
+    const worst = [...allures].sort((a,b)=>b.sec-a.sec)[0];
+
+    // Temp at best allure
+    const tempAtBest = best.w ? best.w.apparent+'°C' : '—';
+
+    // Correlation: does temp affect perf?
+    const coolRaces = withW.filter(r=>{ const w=getW(r); return w && w.apparent<15; });
+    const warmRaces = withW.filter(r=>{ const w=getW(r); return w && w.apparent>=15; });
+    const avgCool = coolRaces.length ? coolRaces.reduce((s,r)=>s+allureToSec(r.allure),0)/coolRaces.length : 0;
+    const avgWarm = warmRaces.length ? warmRaces.reduce((s,r)=>s+allureToSec(r.allure),0)/warmRaces.length : 0;
+    const diff = Math.round(avgWarm - avgCool);
+
+    // Rainiest race
+    const rainy = [...withW].filter(r=>getW(r)?.rain>0).sort((a,b)=>(getW(b)?.rain||0)-(getW(a)?.rain||0))[0];
+
+    document.getElementById('insights').innerHTML = `
+        <div class="insight-card">
+            <div class="insight-val" style="color:#00ff88;">${tempAtBest}</div>
+            <div class="insight-label">Temp. ressentie à ta meilleure allure</div>
+            <div class="insight-sub">${best.r.course} · ${best.r.date.slice(0,4)}</div>
+        </div>
+        <div class="insight-card">
+            <div class="insight-val" style="color:${diff>0?'#ff006e':'#00fff9'};">${diff>0?'+':''}${diff}s/km</div>
+            <div class="insight-label">Allure par km : chaud vs frais</div>
+            <div class="insight-sub">≥15°C vs &lt;15°C (${warmRaces.length} vs ${coolRaces.length} courses)</div>
+        </div>
+        <div class="insight-card">
+            <div class="insight-val" style="color:#6af;">${rainy ? rainy.date.slice(0,4)+' '+rainy.ville : '—'}</div>
+            <div class="insight-label">Course la plus pluvieuse</div>
+            <div class="insight-sub">${rainy ? getW(rainy)?.rain+'mm · '+rainy.perf : ''}</div>
+        </div>
+        <div class="insight-card">
+            <div class="insight-val" style="color:#c8f;">${withW.filter(r=>getW(r)?.wind>=20).length}</div>
+            <div class="insight-label">Courses avec vent ≥ 20 km/h</div>
+            <div class="insight-sub">Sur ${withW.length} courses analysées</div>
+        </div>`;
+}
+
+function buildCharts(races) {
+    const withW = races.filter(r => getW(r));
+
+    // Color by distance
+    const pts = withW.map(r => {
+        const w = getW(r);
+        const km = r.km;
+        const col = km>=42?'rgba(188,19,254,.8)':km>=21?'rgba(0,255,249,.8)':km<=10?'rgba(0,255,136,.8)':'rgba(255,107,53,.8)';
+        return { x: w.apparent, y: allureToSec(r.allure), r: Math.max(4, w.rain*4+4), course:r.course, date:r.date, color:col, perf:r.perf };
+    });
+
+    const commonOpts = {
+        plugins: {
+            legend:{ display:false },
+            tooltip:{
+                backgroundColor:'rgba(7,7,14,.95)',
+                titleColor:'#00fff9', bodyColor:'#fff',
+                borderColor:'rgba(0,255,249,.25)', borderWidth:1, padding:10,
+                callbacks:{
+                    label: ctx => {
+                        const p = ctx.raw;
+                        return [` ${p.course}`, ` ${p.date}`, ` Allure : ${secToAllure(p.y)}/km`];
+                    }
+                }
+            }
+        },
+        scales:{
+            x:{ ticks:{color:'rgba(255,255,255,.4)',font:{size:9}}, grid:{color:'rgba(255,255,255,.04)'} },
+            y:{ ticks:{color:'rgba(255,255,255,.4)',font:{size:9},callback:v=>secToAllure(Math.round(v))}, grid:{color:'rgba(255,255,255,.04)'} }
+        }
+    };
+
+    // Chart temp
+    if(chartTemp) chartTemp.destroy();
+    chartTemp = new Chart(document.getElementById('chartTemp'), {
+        type:'bubble',
+        data:{ datasets:[{ data:pts.map(p=>({x:p.x,y:p.y,r:5,course:p.course,date:p.date,perf:p.perf})), backgroundColor:pts.map(p=>p.color), borderColor:'transparent' }] },
+        options:{ ...commonOpts, scales:{ ...commonOpts.scales, x:{ ...commonOpts.scales.x, title:{display:true,text:'Température ressentie (°C)',color:'rgba(255,255,255,.3)',font:{size:10}} } } }
+    });
+
+    // Chart wind
+    const ptsWind = withW.map(r => {
+        const w = getW(r);
+        const km = r.km;
+        const col = km>=42?'rgba(188,19,254,.8)':km>=21?'rgba(0,255,249,.8)':km<=10?'rgba(0,255,136,.8)':'rgba(255,107,53,.8)';
+        return { x:w.wind, y:allureToSec(r.allure), r:Math.max(4,w.rain*4+4), course:r.course, date:r.date, color:col, perf:r.perf };
+    });
+    if(chartWind) chartWind.destroy();
+    chartWind = new Chart(document.getElementById('chartWind'), {
+        type:'bubble',
+        data:{ datasets:[{ data:ptsWind.map(p=>({x:p.x,y:p.y,r:p.r,course:p.course,date:p.date,perf:p.perf})), backgroundColor:ptsWind.map(p=>p.color), borderColor:'transparent' }] },
+        options:{ ...commonOpts, scales:{ ...commonOpts.scales, x:{ ...commonOpts.scales.x, title:{display:true,text:'Vent (km/h) — taille bulle = pluie',color:'rgba(255,255,255,.3)',font:{size:10}} } } }
+    });
+}
+
+function buildConditions(races) {
+    const withW = races.filter(r=>getW(r));
+
+    // Temp ranges
+    const ranges = [
+        {label:'Froid < 5°C',   filter:r=>getW(r).apparent<5,   color:'#6af'},
+        {label:'Frais 5–14°C',  filter:r=>getW(r).apparent>=5&&getW(r).apparent<15, color:'#7cf'},
+        {label:'Doux 14–22°C',  filter:r=>getW(r).apparent>=15&&getW(r).apparent<22,color:'#fc8'},
+        {label:'Chaud > 22°C',  filter:r=>getW(r).apparent>=22, color:'#fa6'},
+    ];
+    const windRanges = [
+        {label:'Calme < 10 km/h',   filter:r=>getW(r).wind<10},
+        {label:'Brise 10–20 km/h',  filter:r=>getW(r).wind>=10&&getW(r).wind<20},
+        {label:'Vent fort > 20 km/h',filter:r=>getW(r).wind>=20},
+    ];
+    const rainGroups = [
+        {label:'Sec (0mm)',         filter:r=>getW(r).rain===0},
+        {label:'Légère pluie 0–2mm',filter:r=>getW(r).rain>0&&getW(r).rain<=2},
+        {label:'Pluie > 2mm',       filter:r=>getW(r).rain>2},
+    ];
+
+    function avgAllure(arr) {
+        if(!arr.length) return '—';
+        const avg = arr.reduce((s,r)=>s+allureToSec(r.allure),0)/arr.length;
+        return secToAllure(Math.round(avg))+'/km';
+    }
+    function rowsHTML(groups, all) {
+        return groups.map(g => {
+            const subset = all.filter(g.filter);
+            return `<div class="cond-row">
+                <span>${g.label} <span style="color:rgba(255,255,255,.25);font-size:.65rem;">(${subset.length})</span></span>
+                <span class="cond-val" style="color:var(--cyan);">${avgAllure(subset)}</span>
+            </div>`;
+        }).join('');
+    }
+
+    document.getElementById('conditions-grid').innerHTML = `
+        <div class="card cond-card">
+            <div class="cond-title" style="color:#fc8;">🌡️ Température ressentie → allure moy.</div>
+            ${rowsHTML(ranges, withW)}
+        </div>
+        <div class="card cond-card">
+            <div class="cond-title" style="color:#c8f;">💨 Vent → allure moyenne</div>
+            ${rowsHTML(windRanges, withW)}
+        </div>
+        <div class="card cond-card">
+            <div class="cond-title" style="color:#7af;">🌧️ Pluie → allure moyenne</div>
+            ${rowsHTML(rainGroups, withW)}
+        </div>`;
+}
+
+function buildFilters() {
+    const row = document.getElementById('filter-row');
+    const filters = [
+        {key:'all', label:'Toutes'},
+        {key:'10k', label:'10 km'},
+        {key:'21k', label:'Semi'},
+        {key:'42k', label:'Marathon'},
+        {key:'cold', label:'🥶 Froid < 5°C'},
+        {key:'cool', label:'😊 Frais 5–14°C'},
+        {key:'warm', label:'☀️ Doux/Chaud ≥15°C'},
+        {key:'rain', label:'🌧️ Avec pluie'},
+        {key:'wind', label:'💨 Vent fort ≥20'},
+    ];
+    row.innerHTML = filters.map(f =>
+        `<button class="fbtn${f.key==='all'?' active':''}" onclick="setFilter('${f.key}',this)">${f.label}</button>`
+    ).join('');
+}
+
+function setFilter(key, btn) {
+    activeFilter = key;
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    buildTable(key);
+}
+
+function filterRaces(key) {
+    return RACES.filter(r => {
+        const w = getW(r);
+        if(!w) return false;
+        if(key==='all') return true;
+        if(key==='10k') return r.km<=10;
+        if(key==='21k') return r.km>10&&r.km<30;
+        if(key==='42k') return r.km>=42;
+        if(key==='cold') return w.apparent<5;
+        if(key==='cool') return w.apparent>=5&&w.apparent<15;
+        if(key==='warm') return w.apparent>=15;
+        if(key==='rain') return w.rain>0;
+        if(key==='wind') return w.wind>=20;
+        return true;
+    });
+}
+
+function buildTable(key) {
+    const races = filterRaces(key);
+    const tbody = document.getElementById('table-body');
+
+    if(!races.length) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center;padding:2rem;color:rgba(255,255,255,.25);">Aucune course pour ce filtre</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = races.map(r => {
+        const w = getW(r);
+        const wmo = wmoIcon(w.weatherCode);
+        const tc = tempClass(w.apparent);
+        const windBadge = w.wind>=20 ? `<span class="w-tag w-wind">💨 ${w.wind}km/h</span>` : '';
+        const rainBadge = w.rain>0 ? `<span class="w-tag w-rain">🌧 ${w.rain}mm</span>` : '';
+
+        return `<tr${r.record?' class="best-perf"':''}>
+            <td style="color:rgba(255,255,255,.5);white-space:nowrap;font-size:.75rem;">${r.date}</td>
+            <td>
+                <span style="font-weight:600;font-size:.82rem;">${r.course}</span>
+                ${r.record?'<span class="record-star">★</span>':''}
+                <div style="font-size:.65rem;color:rgba(255,255,255,.3);margin-top:1px;">${r.ville}</div>
+            </td>
+            <td>${distPill(r.km)}</td>
+            <td>
+                <div class="perf-time">${r.perf}</div>
+                <div class="perf-allure">${r.allure}/km</div>
+                <div class="perf-pct">top ${pct(r.classement).toFixed(1)}%</div>
+            </td>
+            <td>
+                <span style="font-size:1.1rem;">${wmo.icon}</span>
+                <span style="font-size:.65rem;color:rgba(255,255,255,.3);margin-left:3px;">${wmo.label}</span>
+            </td>
+            <td>
+                <span class="w-tag ${tc}">${w.apparent > w.temp ? '🌡' : '🥶'} ${w.apparent}°C</span>
+                <div style="font-size:.58rem;color:rgba(255,255,255,.25);margin-top:2px;">réel ${w.temp}°C · hum. ${w.humidity}%</div>
+            </td>
+            <td>
+                <span class="w-tag ${w.wind>=20?'w-wind':''}" style="${w.wind<20?'color:rgba(255,255,255,.4);background:rgba(255,255,255,.04);':''}">
+                    💨 ${w.wind} km/h
+                </span>
+                ${w.gusts>w.wind+5?`<div style="font-size:.58rem;color:rgba(200,150,255,.5);margin-top:2px;">rafales ${w.gusts}km/h</div>`:''}
+            </td>
+            <td>
+                ${w.rain>0
+                    ? `<span class="w-tag w-rain">🌧 ${w.rain}mm</span>`
+                    : `<span style="color:rgba(255,255,255,.2);font-size:.7rem;">— sec</span>`}
+            </td>
+            <td>
+                ${r.strava?`<a href="${r.strava}" target="_blank" class="strava-ic">${STRAVA_SVG}</a>`:''}
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ── Start ────────────────────────────────────────────────────────────────────
+loadAll();
+</script>
+</body>
+</html>
