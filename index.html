@@ -4,9 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Running History</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+/* Tailwind utility stubs */
+.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.block{display:block}.hidden{display:none}
+.flex-wrap{flex-wrap:wrap}.flex-1{flex:1 1 0%}.flex-shrink-0{flex-shrink:0}
+.items-center{align-items:center}.items-start{align-items:flex-start}
+.justify-center{justify-content:center}.justify-between{justify-content:space-between}.justify-end{justify-content:flex-end}
+.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.overflow-x-auto{overflow-x:auto}.overflow-hidden{overflow:hidden}
+.w-full{width:100%}.h-full{height:100%}.min-w-0{min-width:0}
+.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}
+.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}
+.text-lg{font-size:1.125rem}.text-xl{font-size:1.25rem}.text-2xl{font-size:1.5rem}
+.text-white{color:#fff}.text-gray-300{color:#d1d5db}.text-gray-400{color:#9ca3af}
+.font-bold{font-weight:700}.font-semibold{font-weight:600}.font-medium{font-weight:500}
+.tracking-widest{letter-spacing:.1em}.uppercase{text-transform:uppercase}
+.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}
+.py-20{padding-top:5rem;padding-bottom:5rem}
+.p-4{padding:1rem}.p-6{padding:1.5rem}.p-8{padding:2rem}
+.mb-2{margin-bottom:.5rem}.mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}
+.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mb-10{margin-bottom:2.5rem}
+.mb-16{margin-bottom:4rem}.mb-20{margin-bottom:5rem}
+.mt-4{margin-top:1rem}.mt-6{margin-top:1.5rem}.mt-8{margin-top:2rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.relative{position:relative}.absolute{position:absolute}.fixed{position:fixed}.sticky{position:sticky}
+.top-0{top:0}.bottom-0{bottom:0}.left-0{left:0}.right-0{right:0}.inset-0{inset:0}
+.z-10{z-index:10}.z-50{z-index:50}
+.rounded{border-radius:.25rem}.rounded-lg{border-radius:.5rem}.rounded-full{border-radius:9999px}
+.border{border-width:1px}.border-0{border-width:0}
+.cursor-pointer{cursor:pointer}
+.space-y-4>*+*{margin-top:1rem}
+.leading-relaxed{line-height:1.625}
+.opacity-50{opacity:.5}.opacity-75{opacity:.75}
+.min-h-screen{min-height:100vh}
+.max-w-7xl{max-width:80rem}
+.col-span-1{grid-column:span 1}
+.pointer-events-none{pointer-events:none}
+.select-none{user-select:none}
+
+    /* ── Mobile responsiveness patch ─────────────────────────── */
+    @media (max-width: 768px) {
+        .container, [class*="container"] {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .site-nav { justify-content: flex-start !important; }
+    }
+    @media (max-width: 480px) {
+        h1, .main-title { font-size: clamp(1.4rem, 7vw, 2.5rem) !important; }
+        .subtitle { font-size: 0.7rem !important; }
+    }
+</style>
+    <script>function Chart(){return{destroy:()=>{},update:()=>{}}} Chart.register=()=>{};</script>
+    
     <style>
         * {
             margin: 0;
@@ -188,7 +241,7 @@
         /* Stat Numbers */
         .stat-number {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #00fff9, #bc13fe);
             -webkit-background-clip: text;
@@ -510,9 +563,11 @@
             box-shadow: 0 10px 30px rgba(0, 255, 136, 0.5);
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.3), rgba(0, 200, 100, 0.4));
         }
+    
+<style>
     </style>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
+</style>
+    
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -686,6 +741,26 @@
             return { totalRaces, avgPace, bestRank, vma, avgPercentage };
         }
 
+
+        const BIB_NUMS = {
+  "2019-01-05":213,"2019-01-06":5477,"2019-03-11":216,
+  "2019-03-17":441,"2019-04-28":282,"2019-06-30":363,
+  "2019-07-06":306,"2019-08-25":232,"2019-10-21":3098,
+  "2020-01-03":253,"2021-04-07":213,"2021-09-19":436,
+  "2021-10-17":4027,"2022-01-05":339,"2022-03-06":415,
+  "2022-03-20":37,"2022-03-27":199,"2022-05-15":921,
+  "2022-05-28":6011,"2022-06-26":91,"2022-09-18":14,
+  "2022-10-16":1020,"2023-01-10":209,"2023-02-06":638,
+  "2023-03-19":208,"2023-04-23":2463,"2023-05-20":2687,
+  "2023-06-25":192,"2023-09-07":306,"2023-09-24":833,
+  "2023-10-14":421,"2023-12-03":3481,"2024-01-05":448,
+  "2024-03-17":463,"2024-04-21":2968,"2024-06-10":1569,
+  "2024-07-04":3202,"2024-07-06":758,"2024-08-05":434,
+  "2024-08-25":371,"2024-09-29":536,"2024-10-03":1445,
+  "2024-11-05":4403,"2025-03-16":65,"2025-04-27":4013,
+  "2025-05-10":1154,"2025-05-31":547,"2025-09-28":1413,
+  "2026-03-01":457
+};
         function render() {
             const stats = calculateStats();
             const filtered = filterRaces();
@@ -700,64 +775,98 @@
                             <div class="pulse-indicator"></div>
                             <span class="text-xl font-bold tracking-wider" style="color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 255, 249, 0.8);">51 COURSES</span>
                         </div>
-                        <div class="flex flex-wrap justify-center gap-3">
-                            <a href="progression.html" class="progress-btn">
-                                📊 COURBES DE PROGRESSION
-                            </a>
-                            <a href="radar.html" class="progress-btn" style="background:linear-gradient(135deg,rgba(188,19,254,0.2),rgba(255,0,110,0.3));border-color:rgba(188,19,254,0.5);color:#bc13fe;box-shadow:0 0 20px rgba(188,19,254,0.3);">
-                                🕸️ RADAR DE PERFORMANCE
-                            </a>
-                            <a href="elite.html" class="progress-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,107,53,0.3));border-color:rgba(255,215,0,0.5);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.3);">
-                                🏅 TOI VS L'ÉLITE
-                            </a>
-                            <a href="carte.html" class="progress-btn" style="background:linear-gradient(135deg,rgba(0,255,136,0.2),rgba(0,200,100,0.3));border-color:rgba(0,255,136,0.5);color:#00ff88;box-shadow:0 0 20px rgba(0,255,136,0.3);">
-                                🗺️ CARTE DES COURSES
-                            </a>
-                            <a href="comparaison.html" class="progress-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,165,0,0.3));border-color:rgba(255,215,0,0.5);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.3);">
-                                ⚡ COMPARER
-                            </a>
-                            <a href="meteo.html" class="progress-btn" style="background:linear-gradient(135deg,rgba(100,170,255,0.2),rgba(50,120,255,0.3));border-color:rgba(100,170,255,0.5);color:#6af;box-shadow:0 0 20px rgba(100,170,255,0.3);">
-                                🌤️ MÉTÉO & PERFS
-                            </a>
-                        </div>
+                        <div style="margin-bottom:2rem;"><style>
+.site-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0.5rem;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.38rem 0.75rem;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.site-nav a:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+}
+.site-nav a.active {
+    border-color: var(--neon-cyan, #00fff9);
+    color: var(--neon-cyan, #00fff9);
+    background: rgba(0,255,249,0.1);
+    box-shadow: 0 0 12px rgba(0,255,249,0.25);
+}
+@media (max-width: 600px) {
+    .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
+}
+</style>
+<nav class="site-nav">
+    <a href="#" class="active">🏠 ACCUEIL</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+</nav></div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.1s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Total Courses</div>
-                            <div class="stat-number mb-2">${stats.totalRaces}</div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:3rem;">
+                        <div class="glass-card p-4 fade-in" style="animation-delay: 0.1s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">Total Courses</div>
+                            <div class="stat-number mb-1">${stats.totalRaces}</div>
                         </div>
                         
-                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.2s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Allure Moyenne</div>
-                            <div class="stat-number mb-2">${Math.floor(stats.avgPace)}:${String(Math.round((stats.avgPace % 1) * 60)).padStart(2, '0')}</div>
-                            <div class="text-xs text-gray-500 mt-1">min/km</div>
+                        <div class="glass-card p-4 fade-in" style="animation-delay: 0.2s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">Allure Moyenne</div>
+                            <div class="stat-number mb-1">${Math.floor(stats.avgPace)}:${String(Math.round((stats.avgPace % 1) * 60)).padStart(2, '0')}</div>
+                            <div class="text-xs text-gray-500">min/km</div>
                         </div>
 
-                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.25s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">VMA Moyenne</div>
-                            <div class="stat-number mb-2">${stats.vma.toFixed(2)}</div>
-                            <div class="text-xs text-gray-500 mt-1">km/h</div>
+                        <div class="glass-card p-4 fade-in" style="animation-delay: 0.25s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">VMA Moyenne</div>
+                            <div class="stat-number mb-1">${stats.vma.toFixed(2)}</div>
+                            <div class="text-xs text-gray-500">km/h</div>
                         </div>
                         
-                        <div class="glass-card clickable p-8 fade-in" onclick="toggleBestRankFilter()" style="animation-delay: 0.3s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Meilleur Classement</div>
-                            <div class="stat-number mb-2">${stats.bestRank}</div>
-                            <div class="text-xs text-gray-500 mt-1">position</div>
-                            ${bestRankFilter ? '<div class="filter-indicator mt-2">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-2">Cliquer pour filtrer</div>'}
+                        <div class="glass-card clickable p-4 fade-in" onclick="toggleBestRankFilter()" style="animation-delay: 0.3s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">Meilleur Classement</div>
+                            <div class="stat-number mb-1">${stats.bestRank}</div>
+                            <div class="text-xs text-gray-500">position</div>
+                            ${bestRankFilter ? '<div class="filter-indicator mt-1">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-1">Cliquer pour filtrer</div>'}
                         </div>
 
-                        <div class="glass-card p-8 fade-in" style="animation-delay: 0.35s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Moyenne %</div>
-                            <div class="stat-number mb-2">${stats.avgPercentage.toFixed(1)}%</div>
-                            <div class="text-xs text-gray-500 mt-1">classement moyen</div>
+                        <div class="glass-card p-4 fade-in" style="animation-delay: 0.35s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">Moyenne %</div>
+                            <div class="stat-number mb-1">${stats.avgPercentage.toFixed(1)}%</div>
+                            <div class="text-xs text-gray-500">classement moyen</div>
                         </div>
                         
-                        <div class="glass-card clickable p-8 fade-in" onclick="toggleRecordFilter()" style="animation-delay: 0.4s">
-                            <div class="text-gray-400 text-xs font-semibold mb-3 tracking-widest uppercase">Records Perso</div>
-                            <div class="stat-number mb-2">3</div>
-                            <div class="text-xs text-gray-500 mt-1">10K • 21K • 42K</div>
-                            ${recordFilter ? '<div class="filter-indicator mt-2">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-2">Cliquer pour filtrer</div>'}
+                        <div class="glass-card clickable p-4 fade-in" onclick="toggleRecordFilter()" style="animation-delay: 0.4s">
+                            <div class="text-gray-400 text-xs font-semibold mb-1 tracking-widest uppercase">Records Perso</div>
+                            <div class="stat-number mb-1">3</div>
+                            <div class="text-xs text-gray-500">10K • 21K • 42K</div>
+                            ${recordFilter ? '<div class="filter-indicator mt-1">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-1">Cliquer pour filtrer</div>'}
                         </div>
                     </div>
 
@@ -801,6 +910,7 @@
                                         <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">VMA</th>
                                         <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">FC moy.</th>
                                         <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Strava</th>
+                                        <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Dossard</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -835,6 +945,9 @@
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.15)" xmlns="http://www.w3.org/2000/svg"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
                                                 </span>`}
                                             </td>
+                                            <td class="px-4 py-4">
+                                                ${BIB_NUMS[race.date] ? `<button onclick="openBib(event,'${race.date}')" title="Voir le dossard" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:6px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;transition:all .2s;font-size:14px;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.borderColor='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)'">🎽</button>` : ''}
+                                            </td>
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -856,6 +969,7 @@
                                     </div>
                                     <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
                                         <span class="distance-badge ${getDistanceClass(race.km)}" style="font-size:0.65rem;">${race.km}km</span>
+                                        ${BIB_NUMS[race.date] ? `<button onclick="openBib(event,'${race.date}')" title="Dossard" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;font-size:13px;">🎽</button>` : ''}
                                         ${race.strava ? `<a href="${race.strava}" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(252,76,2,0.15);border:1.5px solid rgba(252,76,2,0.4);text-decoration:none;flex-shrink:0;"><svg width="13" height="13" viewBox="0 0 24 24" fill="#FC4C02"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg></a>` : ''}
                                     </div>
                                 </div>
@@ -886,8 +1000,7 @@
                                     </div>
                                 </div>
                             </div>
-                        `).join('')}
-                    </div>
+                        `).join('')}                </div>
                 </div>
             `;
         }
@@ -1195,8 +1308,414 @@
                 }
             });
         }
-
         render();
     </script>
+
+
+<!-- ── DOSSARD MODAL ─────────────────────────────────────────────────────── -->
+<div id="bib-overlay" onclick="closeBib()" style="
+    display:none; position:fixed; inset:0; z-index:9000;
+    background:rgba(0,0,0,0.75); backdrop-filter:blur(6px);
+"></div>
+
+<div id="bib-modal" style="
+    display:none; position:fixed; z-index:9001;
+    top:50%; left:50%; transform:translate(-50%,-50%);
+">
+    <!-- Close button -->
+    <button onclick="closeBib()" style="
+        position:absolute; top:-14px; right:-14px; z-index:10;
+        width:30px; height:30px; border-radius:50%;
+        background:#1a1a1a; border:1.5px solid rgba(255,255,255,0.2);
+        color:rgba(255,255,255,0.7); font-size:16px; cursor:pointer;
+        display:flex; align-items:center; justify-content:center;
+        box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    ">×</button>
+
+    <!-- Perspective wrapper — MUST be a separate element from the one that translates -->
+    <div id="bib-perspective" style="perspective:900px; perspective-origin:50% 50%;">
+        <!-- This is the element that receives rotateX/Y -->
+        <div id="bib-tilt" style="
+            width: clamp(260px, 38vw, 360px);
+            aspect-ratio: 3/4;
+            transform-style: preserve-3d;
+            transition: transform 0.12s ease-out;
+            border-radius: 12px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.4);
+            cursor: grab;
+            will-change: transform;
+        ">
+            <canvas id="bib-canvas" style="
+                width:100%; height:100%;
+                border-radius:12px; display:block;
+            "></canvas>
+        </div>
+    </div>
+    <p style="text-align:center;margin-top:10px;font-size:.65rem;
+        color:rgba(255,255,255,.25);letter-spacing:.1em;">
+        DÉPLACER LA SOURIS SUR LE DOSSARD
+    </p>
+</div>
+
+<style>
+#bib-overlay.visible { display:block !important; }
+#bib-modal.visible   { display:block !important; }
+#bib-modal.visible #bib-tilt {
+    animation: bibPop .4s cubic-bezier(.175,.885,.32,1.275) forwards;
+}
+@keyframes bibPop {
+    from { opacity:0; transform: perspective(900px) scale(0.7) rotateX(20deg); }
+    to   { opacity:1; transform: perspective(900px) scale(1)   rotateX(0deg); }
+}
+</style>
+
+<script>
+// ── Bib data ─────────────────────────────────────────────────────────────────
+
+// ── Draw bib on canvas (realistic paper) ─────────────────────────────────────
+function drawBib(race) {
+    const canvas = document.getElementById('bib-canvas');
+    const W = 360, H = 480;
+    canvas.width  = W * 2;  // retina
+    canvas.height = H * 2;
+    canvas.style.width  = W + 'px';
+    canvas.style.height = H + 'px';
+    const ctx = canvas.getContext('2d');
+    ctx.scale(2, 2);
+
+    const bibNum = BIB_NUMS[race.date];
+    const km = parseFloat(race.km);
+
+    // ── Color scheme by distance ──
+    let accentH, accentS, accentL;
+    if (km >= 42)       { accentH=270; accentS=60; accentL=45; }  // purple — marathon
+    else if (km >= 21)  { accentH=210; accentS=70; accentL=42; }  // blue   — semi
+    else if (km >= 14)  { accentH=22;  accentS=75; accentL=45; }  // orange — trail
+    else                { accentH=148; accentS=55; accentL=38; }  // green  — 10k
+
+    const accent    = `hsl(${accentH},${accentS}%,${accentL}%)`;
+    const accentMid = `hsl(${accentH},${accentS-10}%,${accentL+8}%)`;
+    const accentLt  = `hsl(${accentH},${accentS-20}%,${accentL+18}%)`;
+
+    // ── Paper background ──
+    // Base cream paper
+    const paperGrad = ctx.createLinearGradient(0,0,W,H);
+    paperGrad.addColorStop(0,   '#faf8f3');
+    paperGrad.addColorStop(0.4, '#f5f2ea');
+    paperGrad.addColorStop(1,   '#ede9df');
+    ctx.fillStyle = paperGrad;
+    ctx.beginPath();
+    ctx.roundRect(0, 0, W, H, 10);
+    ctx.fill();
+
+    // Paper grain texture (stippled)
+    ctx.save();
+    ctx.globalAlpha = 0.04;
+    for (let i = 0; i < 1800; i++) {
+        const x = Math.random() * W;
+        const y = Math.random() * H;
+        const r = Math.random() * 1.2;
+        ctx.fillStyle = Math.random() > 0.5 ? '#5a4a30' : '#fff';
+        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+    }
+    ctx.restore();
+
+    // Subtle vertical fiber lines
+    ctx.save();
+    ctx.globalAlpha = 0.025;
+    ctx.strokeStyle = '#8a7a60';
+    ctx.lineWidth = 0.5;
+    for (let x = 5; x < W; x += 3.5) {
+        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x+Math.random()*1.5, H); ctx.stroke();
+    }
+    ctx.restore();
+
+    // ── Top color band ──
+    const bandGrad = ctx.createLinearGradient(0,0,0,72);
+    bandGrad.addColorStop(0, accent);
+    bandGrad.addColorStop(1, accentMid);
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(0, 0, W, 72, [10,10,0,0]);
+    ctx.fillStyle = bandGrad;
+    ctx.fill();
+    // Subtle horizontal line texture on band
+    ctx.globalAlpha = 0.12;
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 0.7;
+    for (let y = 4; y < 72; y += 4) {
+        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+    }
+    ctx.restore();
+
+    // ── Race name in top band — word-wrap up to 2 lines ──
+    ctx.save();
+    ctx.fillStyle = 'rgba(255,255,255,0.95)';
+    ctx.textAlign = 'center';
+    const maxW = W - 80; // leave room for pin holes
+
+    // Try to fit on one line, shrinking font if needed
+    let fontSize = 13;
+    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+    const fullName = race.course.toUpperCase();
+    
+    // Word-wrap into lines
+    function wrapText(text, maxWidth, font) {
+        ctx.font = font;
+        const words = text.split(' ');
+        const lines = [];
+        let line = '';
+        for (const word of words) {
+            const test = line ? line + ' ' + word : word;
+            if (ctx.measureText(test).width > maxWidth && line) {
+                lines.push(line);
+                line = word;
+            } else {
+                line = test;
+            }
+        }
+        if (line) lines.push(line);
+        return lines;
+    }
+
+    // Start at 13px, shrink until fits in 2 lines or font hits 9px
+    let lines = [];
+    for (fontSize = 13; fontSize >= 9; fontSize--) {
+        const font = `bold ${fontSize}px Arial, sans-serif`;
+        lines = wrapText(fullName, maxW, font);
+        if (lines.length <= 2) break;
+    }
+
+    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
+    const lineH = fontSize + 3;
+    const totalH = lines.length * lineH;
+    const startY = 36 - totalH / 2 + lineH / 2;
+    lines.forEach((ln, i) => ctx.fillText(ln, W/2, startY + i * lineH));
+
+    // Location + date below
+    ctx.font = '10px Arial, sans-serif';
+    ctx.globalAlpha = 0.85;
+    const d = race.date.split('-');
+    ctx.fillText(race.ville.toUpperCase() + '  ·  ' + d[2]+'/'+d[1]+'/'+d[0], W/2, 60);
+    ctx.restore();
+
+    // ── Pin holes ──
+    function drawPin(x, y) {
+        // Shadow
+        ctx.save();
+        ctx.globalAlpha = 0.3;
+        ctx.fillStyle = '#2a1a00';
+        ctx.beginPath(); ctx.arc(x+1, y+1, 7, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+        // Hole
+        ctx.save();
+        ctx.fillStyle = '#1a0f00';
+        ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI*2); ctx.fill();
+        // Metal rim
+        const rimGrad = ctx.createRadialGradient(x-2, y-2, 1, x, y, 7);
+        rimGrad.addColorStop(0, 'rgba(255,255,255,0.5)');
+        rimGrad.addColorStop(1, 'rgba(80,60,20,0.6)');
+        ctx.strokeStyle = rimGrad;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        // Inner shine
+        ctx.fillStyle = 'rgba(255,255,255,0.08)';
+        ctx.beginPath(); ctx.arc(x-2, y-2, 3, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+    }
+    drawPin(28, 36);
+    drawPin(W-28, 36);
+
+    // ── Distance badge — sized to content ──
+    const distLabel = km >= 42 ? 'MARATHON' : km >= 21 ? 'SEMI-MARATHON' : km >= 14 ? 'TRAIL' : '10 KM';
+    const badgeText = distLabel + '  ' + km + ' KM';
+    const badgeY = 90;
+    ctx.save();
+    ctx.font = 'bold 10px Arial, sans-serif';
+    ctx.textAlign = 'center';
+    const badgeTW = ctx.measureText(badgeText).width;
+    const badgePad = 14;
+    const badgeW = badgeTW + badgePad * 2;
+    const badgeX = W/2 - badgeW/2;
+    // Fill
+    ctx.fillStyle = accentLt;
+    ctx.globalAlpha = 0.22;
+    ctx.beginPath(); ctx.roundRect(badgeX, badgeY-13, badgeW, 22, 4); ctx.fill();
+    // Border
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = accentMid;
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.roundRect(badgeX, badgeY-13, badgeW, 22, 4); ctx.stroke();
+    // Text
+    ctx.fillStyle = accent;
+    ctx.fillText(badgeText, W/2, badgeY + 1);
+    ctx.restore();
+
+    // ── BIG BIB NUMBER ──
+    const numStr = String(bibNum);
+    const numLen = numStr.length;
+    const numSize = numLen <= 2 ? 148 : numLen <= 3 ? 118 : numLen <= 4 ? 90 : 70;
+
+    // Number shadow (slight depth)
+    ctx.save();
+    ctx.globalAlpha = 0.12;
+    ctx.fillStyle = '#3a2800';
+    ctx.font = `900 ${numSize}px "Arial Black", Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(numStr, W/2 + 3, H/2 + 10 + 3);
+    ctx.restore();
+
+    // Number itself
+    ctx.save();
+    ctx.font = `900 ${numSize}px "Arial Black", Arial, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    // Slightly desaturated dark color for the number — realistic ink
+    ctx.fillStyle = `hsl(${accentH},${accentS+5}%,${accentL-12}%)`;
+    ctx.fillText(numStr, W/2, H/2 + 10);
+    ctx.restore();
+
+    // ── Performance info ──
+    const infoY = H - 88;
+
+    // Separator line
+    ctx.save();
+    ctx.strokeStyle = accentMid;
+    ctx.globalAlpha = 0.3;
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(24, infoY - 14); ctx.lineTo(W-24, infoY - 14); ctx.stroke();
+    ctx.restore();
+
+    // Perf + allure
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = `hsl(${accentH},${accentS}%,${accentL-8}%)`;
+    ctx.font = `bold 28px "Arial Black", Arial, sans-serif`;
+    ctx.fillText(race.perf, W/2, infoY + 14);
+
+    ctx.globalAlpha = 0.55;
+    ctx.fillStyle = '#4a3a20';
+    ctx.font = '11px Arial, sans-serif';
+    ctx.fillText(race.tempsMoyenKm + '/km  ·  ' + race.classement, W/2, infoY + 34);
+    ctx.restore();
+
+    // ── Bottom color stripe ──
+    const stripeGrad = ctx.createLinearGradient(0,0,W,0);
+    stripeGrad.addColorStop(0, 'transparent');
+    stripeGrad.addColorStop(0.15, accent);
+    stripeGrad.addColorStop(0.5, accentMid);
+    stripeGrad.addColorStop(0.85, accent);
+    stripeGrad.addColorStop(1, 'transparent');
+    ctx.save();
+    ctx.fillStyle = stripeGrad;
+    ctx.globalAlpha = 0.7;
+    ctx.beginPath();
+    ctx.roundRect(0, H-18, W, 18, [0,0,10,10]);
+    ctx.fill();
+    ctx.restore();
+
+    // ── Subtle corner fold effect ──
+    ctx.save();
+    ctx.globalAlpha = 0.06;
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.moveTo(W-28, H); ctx.lineTo(W, H-28); ctx.lineTo(W, H); ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 0.5;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.moveTo(W-26, H-2); ctx.lineTo(W-2, H-26); ctx.lineTo(W-28, H-28); ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+
+    // ── Paper edge shadow (right + bottom) ──
+    ctx.save();
+    const edgeR = ctx.createLinearGradient(W-12,0,W,0);
+    edgeR.addColorStop(0,'transparent'); edgeR.addColorStop(1,'rgba(0,0,0,0.06)');
+    ctx.fillStyle = edgeR; ctx.fillRect(W-12,0,12,H);
+    const edgeB = ctx.createLinearGradient(0,H-12,0,H);
+    edgeB.addColorStop(0,'transparent'); edgeB.addColorStop(1,'rgba(0,0,0,0.06)');
+    ctx.fillStyle = edgeB; ctx.fillRect(0,H-12,W,12);
+    ctx.restore();
+}
+
+// ── Open / close modal ────────────────────────────────────────────────────────
+function openBib(e, date) {
+    e.stopPropagation();
+    // Find race data from racesData
+    const race = racesData.find(r => r.date === date);
+    if (!race) return;
+
+    drawBib(race);
+
+    document.getElementById('bib-overlay').classList.add('visible');
+    document.getElementById('bib-modal').classList.add('visible');
+
+    // Reset tilt
+    document.getElementById('bib-tilt').style.transform = '';
+    attachBibTilt();
+}
+
+function closeBib() {
+    document.getElementById('bib-overlay').classList.remove('visible');
+    document.getElementById('bib-modal').classList.remove('visible');
+    removeBibTilt();
+}
+
+// ── 3D tilt (mouse + touch) ───────────────────────────────────────────────────
+function attachBibTilt() {
+    const tilt = document.getElementById('bib-tilt');
+    const persp = document.getElementById('bib-perspective');
+    const MAX = 20;
+
+    function applyTilt(cx, cy) {
+        const rect = persp.getBoundingClientRect();
+        const dx = (cx - (rect.left + rect.width  / 2)) / (rect.width  / 2);
+        const dy = (cy - (rect.top  + rect.height / 2)) / (rect.height / 2);
+        // clamp to ±1
+        const rx = Math.max(-1, Math.min(1, -dy)) * MAX;
+        const ry = Math.max(-1, Math.min(1,  dx)) * MAX;
+        tilt.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
+    }
+
+    function resetTilt() {
+        tilt.style.transition = 'transform .7s cubic-bezier(.25,.46,.45,.94)';
+        tilt.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+        setTimeout(() => { tilt.style.transition = 'transform 0.12s ease-out'; }, 720);
+    }
+
+    tilt._mm = e => {
+        tilt.style.transition = 'transform 0.12s ease-out';
+        applyTilt(e.clientX, e.clientY);
+    };
+    tilt._ml = resetTilt;
+    tilt._tm = e => { e.preventDefault(); const t = e.touches[0]; applyTilt(t.clientX, t.clientY); };
+    tilt._te = resetTilt;
+
+    // Listen on the perspective container so tilt starts before cursor enters card
+    persp.addEventListener('mousemove', tilt._mm);
+    persp.addEventListener('mouseleave', tilt._ml);
+    persp.addEventListener('touchmove', tilt._tm, {passive:false});
+    persp.addEventListener('touchend', tilt._te, {passive:true});
+}
+
+function removeBibTilt() {
+    const tilt = document.getElementById('bib-tilt');
+    const persp = document.getElementById('bib-perspective');
+    if (tilt._mm) {
+        persp.removeEventListener('mousemove', tilt._mm);
+        persp.removeEventListener('mouseleave', tilt._ml);
+        persp.removeEventListener('touchmove', tilt._tm);
+        persp.removeEventListener('touchend', tilt._te);
+        tilt.style.transform = '';
+    }
+}
+
+// Close on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBib(); });
+</script>
+
 </body>
 </html>

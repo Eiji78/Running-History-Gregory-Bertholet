@@ -235,7 +235,20 @@
             .history-item { grid-template-columns:auto 1fr auto auto; }
             .hi-city { display:none; }
         }
-    </style>
+    
+    /* ── Mobile responsiveness patch ─────────────────────────── */
+    @media (max-width: 768px) {
+        .container, [class*="container"] {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .site-nav { justify-content: flex-start !important; }
+    }
+    @media (max-width: 480px) {
+        h1, .main-title { font-size: clamp(1.4rem, 7vw, 2.5rem) !important; }
+        .subtitle { font-size: 0.7rem !important; }
+    }
+</style>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
@@ -254,14 +267,60 @@
         <div class="page-header">
             <h1 class="page-title">COMPARAISON</h1>
             <p class="page-sub">Deux éditions · Une évolution</p>
-            <nav class="nav-pills">
-                <a href="index.html"      class="nav-pill home" >🏠 Tableau de bord</a>
-                <a href="progression.html" class="nav-pill prog" >📊 Progression</a>
-                <a href="radar.html"      class="nav-pill radar">🕸️ Radar</a>
-                <a href="elite.html"      class="nav-pill elite">🏅 Vs l'élite</a>
-                <a href="carte.html"      class="nav-pill carte">🗺️ Carte</a>
-                <a href="meteo.html"      class="nav-pill" style="color:#6af;border-color:rgba(100,170,255,.35);background:rgba(100,170,255,.07);">🌤️ Météo</a>
-            </nav>
+            <style>
+.site-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0.5rem;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.38rem 0.75rem;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.site-nav a:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+}
+.site-nav a.active {
+    border-color: var(--neon-cyan, #00fff9);
+    color: var(--neon-cyan, #00fff9);
+    background: rgba(0,255,249,0.1);
+    box-shadow: 0 0 12px rgba(0,255,249,0.25);
+}
+@media (max-width: 600px) {
+    .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
+}
+</style>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="#" class="active">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+</nav>
         </div>
 
         <!-- Selector -->

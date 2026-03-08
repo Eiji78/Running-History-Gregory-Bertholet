@@ -136,7 +136,20 @@
         .leaflet-control-attribution a { color: rgba(255,255,255,0.4) !important; }
         .leaflet-control-zoom a { background: rgba(10,10,25,0.9) !important; color: rgba(0,255,249,0.8) !important; border-color: rgba(0,255,249,0.2) !important; }
         .leaflet-control-zoom a:hover { background: rgba(0,255,249,0.1) !important; color: #00fff9 !important; }
-    </style>
+    
+    /* ── Mobile responsiveness patch ─────────────────────────── */
+    @media (max-width: 768px) {
+        .container, [class*="container"] {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .site-nav { justify-content: flex-start !important; }
+    }
+    @media (max-width: 480px) {
+        h1, .main-title { font-size: clamp(1.4rem, 7vw, 2.5rem) !important; }
+        .subtitle { font-size: 0.7rem !important; }
+    }
+</style>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
@@ -165,12 +178,60 @@
         <div class="text-center mb-10 fade-in">
             <h1 class="main-title mb-3">CARTE DES COURSES</h1>
             <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">51 COURSES · 18 VILLES · 5 PAYS</p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <a href="index.html" class="back-btn">🏠 TABLEAU DE BORD</a>
-                <a href="progression.html" class="back-btn" style="background:linear-gradient(135deg,rgba(0,200,255,0.15),rgba(0,150,255,0.2));border-color:rgba(0,200,255,0.4);color:#00c8ff;box-shadow:0 0 20px rgba(0,200,255,0.25);">📊 PROGRESSION</a>
-                <a href="radar.html" class="back-btn" style="background:linear-gradient(135deg,rgba(188,19,254,0.15),rgba(255,0,110,0.2));border-color:rgba(188,19,254,0.4);color:#bc13fe;box-shadow:0 0 20px rgba(188,19,254,0.25);">🕸️ RADAR</a>
-                <a href="elite.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,107,53,0.2));border-color:rgba(255,215,0,0.4);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.25);">🏅 VS L'ÉLITE</a>
-            </div>
+            <style>
+.site-nav {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.45rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.25rem 0.5rem;
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.38rem 0.75rem;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.site-nav a:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+}
+.site-nav a.active {
+    border-color: var(--neon-cyan, #00fff9);
+    color: var(--neon-cyan, #00fff9);
+    background: rgba(0,255,249,0.1);
+    box-shadow: 0 0 12px rgba(0,255,249,0.25);
+}
+@media (max-width: 600px) {
+    .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
+}
+</style>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="#" class="active">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+</nav>
         </div>
 
         <!-- Stats pills -->
