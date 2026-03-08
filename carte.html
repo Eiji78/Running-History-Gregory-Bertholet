@@ -358,12 +358,13 @@
             <div class="popup-race">
                 <div class="popup-race-name">${r.course}${r.record ? ' <span style="color:#ffd700;font-size:0.7rem;">★ RP</span>': ''}${r.virtual ? ' <span style="color:rgba(255,255,255,0.35);font-size:0.65rem;">(virtuel)</span>': ''}</div>
                 <div class="popup-race-meta">
-                    <span class="popup-tag tag-date">${r.date}</span>
+                    <span class="popup-tag tag-date">${fmtDate(r.date)}</span>
                     <span class="popup-tag ${dc.cls}">${dc.label}</span>
                     <span class="popup-tag tag-time">${r.perf}</span>
                     <span class="popup-tag tag-class">top ${pct}</span>
                     ${r.strava ? `<a href="${r.strava}" target="_blank" class="strava-link">${STRAVA_SVG} Strava</a>
-                <a href="comparaison.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.2));border-color:rgba(255,215,0,0.4);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.25);">⚡ COMPARER</a>` : ''}
+                <a href="comparaison.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.2));border-color:rgba(255,215,0,0.4);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.25);">⚡ COMPARER</a>
+                <a href="meteo.html" class="back-btn" style="background:linear-gradient(135deg,rgba(100,170,255,0.15),rgba(50,120,255,0.2));border-color:rgba(100,170,255,0.4);color:#6af;box-shadow:0 0 20px rgba(100,170,255,0.25);">🌤️ MÉTÉO</a>` : ''}
                 </div>
             </div>`;
         }).join('');
@@ -460,6 +461,8 @@
     }
 
     renderMarkers();
+
+    function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
     // ── CITY LIST ─────────────────────────────────────────────────────────────
     const cityList = document.getElementById('city-list');

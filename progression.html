@@ -259,6 +259,7 @@
                 <a href="elite.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.2),rgba(255,107,53,0.3));border-color:rgba(255,215,0,0.5);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.3);">🏅 TOI VS L'ÉLITE</a>
                 <a href="carte.html" class="back-btn" style="background:linear-gradient(135deg,rgba(0,255,136,0.15),rgba(0,200,100,0.2));border-color:rgba(0,255,136,0.4);color:#00ff88;box-shadow:0 0 20px rgba(0,255,136,0.25);">🗺️ CARTE</a>
                 <a href="comparaison.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.2));border-color:rgba(255,215,0,0.4);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.25);">⚡ COMPARER</a>
+                <a href="meteo.html" class="back-btn" style="background:linear-gradient(135deg,rgba(100,170,255,0.15),rgba(50,120,255,0.2));border-color:rgba(100,170,255,0.4);color:#6af;box-shadow:0 0 20px rgba(100,170,255,0.25);">🌤️ MÉTÉO</a>
             </div>
         </div>
 
@@ -286,6 +287,8 @@
     </div>
 
     <script>
+        function fmtDate(d){const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+
         const racesData = [
             {date: "2026-03-01", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "48/673", indice: "7.13", perf: "01:25:52", tempsMoyenKm: "4:04"},
             {date: "2025-05-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
