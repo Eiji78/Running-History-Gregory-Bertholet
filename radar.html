@@ -17,8 +17,28 @@
             --neon-green: #00ff88;
         }
         body { font-family: 'Space Grotesk', sans-serif; background: #0a0a0f; color: white; overflow-x: hidden; }
-        .animated-bg { position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0; background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%); }
-        .animated-bg::before { content: ''; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%; background: radial-gradient(circle at 20% 50%, rgba(188,19,254,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(0,255,249,0.12) 0%, transparent 50%), radial-gradient(circle at 60% 10%, rgba(255,107,53,0.08) 0%, transparent 50%); animation: rotate 20s linear infinite; }
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+                        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 249, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
         @keyframes rotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
         .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.03; z-index: 1; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
         .neon-border { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-purple) 25%, var(--neon-pink) 50%, var(--neon-orange) 75%, var(--neon-cyan) 100%); background-size: 200% 100%; animation: gradientSlide 4s linear infinite; z-index: 1000; box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-purple); }
@@ -35,7 +55,8 @@
         .year-btn.active { transform: translateY(-2px); }
         .year-btn:hover:not(.active) { transform: translateY(-1px); opacity: 0.9; }
         .partial-tag { font-size: 0.48rem; padding: 1px 5px; border-radius: 5px; background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.5); letter-spacing: 0.05em; font-family: 'Space Grotesk', sans-serif; }
-        .radar-container { position: relative; max-width: 850px; margin: 0 auto; }
+        .radar-container { position: relative; max-width: 850px; margin: 0 auto; width: 100%; }
+        #radarChart { display: block; width: 100% !important; }
         .stat-mini { border-radius: 14px; padding: 0.9rem 1rem; border: 1px solid; transition: all 0.4s; }
         .fade-in { animation: fadeIn 0.9s ease-out forwards; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
@@ -58,7 +79,7 @@
             .p-8 { padding: 1.2rem !important; }
             .p-7 { padding: 1rem !important; }
             .radar-container { max-width: 100% !important; padding: 0 !important; }
-            #radarChart { width: 100% !important; height: auto !important; min-height: 340px; max-height: 420px; }
+            #radarChart { width: 100% !important; height: auto !important; min-height: 280px; }
             .grid.grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
             /* Radar point labels smaller */
             .grid.md\:grid-cols-4 { grid-template-columns: 1fr 1fr !important; }
@@ -188,7 +209,7 @@
             <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:var(--neon-cyan);">GRAPHIQUE ARAIGNÉE — PERFORMANCES PAR AXE</h3>
             <p class="text-center text-xs mb-8" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Plus la surface couverte est grande, meilleure est la performance globale</p>
             <div class="radar-container">
-                <canvas id="radarChart" width="850" height="850"></canvas>
+                <canvas id="radarChart" style="width:100%;max-width:100%;display:block;"></canvas>
             </div>
         </div>
 
@@ -265,13 +286,16 @@
 
     // ── CHART ──────────────────────────────────────────────────────────────────
     const ctx = document.getElementById('radarChart').getContext('2d');
+    const isMobile = window.innerWidth <= 600;
     const radarChart = new Chart(ctx, {
         type: 'radar',
         data: { labels: [], datasets: [] },
         options: {
             responsive: true,
             maintainAspectRatio: true,
+            aspectRatio: isMobile ? 1 : 1,
             animation: { duration: 500, easing: 'easeInOutQuart' },
+            layout: { padding: isMobile ? 10 : 20 },
             scales: {
                 r: {
                     min: 0, max: 100,
@@ -279,14 +303,14 @@
                         stepSize: 20,
                         color: 'rgba(255,255,255,0.22)',
                         backdropColor: 'transparent',
-                        font: { size: 10, family: 'Space Grotesk' },
+                        font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' },
                     },
                     grid: { color: 'rgba(255,255,255,0.07)', lineWidth: 1 },
                     angleLines: { color: 'rgba(255,255,255,0.1)', lineWidth: 1 },
                     pointLabels: {
                         color: 'rgba(255,255,255,0.75)',
-                        font: { size: window.innerWidth <= 768 ? 9 : 13, family: 'Space Grotesk', weight: '600' },
-                        padding: window.innerWidth <= 768 ? 6 : 16,
+                        font: { size: isMobile ? 9 : 13, family: 'Space Grotesk', weight: '600' },
+                        padding: isMobile ? 4 : 16,
                     },
                 },
             },

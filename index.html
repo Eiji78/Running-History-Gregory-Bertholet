@@ -95,7 +95,7 @@
             background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
         }
 
-        .animated-bg::before {
+                        .animated-bg::before {
             content: '';
             position: absolute;
             width: 200%;
@@ -306,6 +306,23 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             overflow: hidden;
+        }
+
+        .data-table .overflow-x-auto {
+            max-height: 70vh;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+
+
+        .table-header th {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-align: center !important;
+            background: linear-gradient(135deg, rgba(5,5,18,0.98), rgba(12,8,22,0.98));
+            backdrop-filter: blur(20px);
+            box-shadow: 0 2px 0 rgba(0,255,249,0.3);
         }
 
         .table-header {
@@ -899,18 +916,18 @@
                             <table class="w-full">
                                 <thead>
                                     <tr class="table-header">
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Date</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Course</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Ville</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Distance</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Classement</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">%</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Temps</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Allure</th>
-                                        <th class="px-6 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">VMA</th>
-                                        <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">FC moy.</th>
-                                        <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Strava</th>
-                                        <th class="px-4 py-5 text-left font-bold text-xs tracking-widest uppercase" style="color: var(--neon-cyan);">Dossard</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Date</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Course</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Ville</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Distance</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Classement</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">%</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Temps</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Allure</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">VMA</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">FC moy.</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan);">Strava</th>
+                                        <th class="px-3 py-4 text-center font-bold text-xs tracking-wider uppercase" style="color: var(--neon-cyan); min-width: 72px;">Dossard</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -934,10 +951,10 @@
                                             <td class="px-6 py-4 font-bold text-sm" style="color: var(--neon-orange);">${race.perf}</td>
                                             <td class="px-6 py-4 text-sm" style="color: rgba(255, 215, 0, 0.8);">${race.tempsMoyenKm}/km</td>
                                             <td class="px-6 py-4 font-bold text-sm" style="color: var(--neon-pink);">${calculateRaceVMA(race.tempsMoyenKm)} km/h</td>
-                                            <td class="px-4 py-4">
+                                            <td class="px-6 py-4">
                                                 ${race.fc ? `<span style="display:inline-block;font-family:'Orbitron',sans-serif;font-size:0.72rem;font-weight:800;padding:2px 8px;border-radius:7px;background:${race.fc>=185?'rgba(255,0,110,.18)':race.fc>=175?'rgba(255,107,53,.18)':'rgba(0,255,136,.15)'};color:${race.fc>=185?'#ff6e9c':race.fc>=175?'#ffa07a':'#00ff88'};">❤️ ${race.fc}</span>` : '<span style="color:rgba(255,255,255,.18);font-size:.65rem;">—</span>'}
                                             </td>
-                                            <td class="px-4 py-4">
+                                            <td class="px-6 py-4">
                                                 ${race.strava ? `
                                                 <a href="${race.strava}" target="_blank" title="Voir sur Strava" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;background:rgba(252,76,2,0.15);border:1.5px solid rgba(252,76,2,0.4);transition:all 0.3s;text-decoration:none;" onmouseover="this.style.background='rgba(252,76,2,0.35)';this.style.boxShadow='0 0 12px rgba(252,76,2,0.6)';this.style.borderColor='rgba(252,76,2,0.9)'" onmouseout="this.style.background='rgba(252,76,2,0.15)';this.style.boxShadow='none';this.style.borderColor='rgba(252,76,2,0.4)'">
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="#FC4C02" xmlns="http://www.w3.org/2000/svg"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
@@ -945,7 +962,7 @@
                                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="rgba(255,255,255,0.15)" xmlns="http://www.w3.org/2000/svg"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>
                                                 </span>`}
                                             </td>
-                                            <td class="px-4 py-4">
+                                            <td class="px-6 py-4">
                                                 ${BIB_NUMS[race.date] ? `<button onclick="openBib(event,'${race.date}')" title="Voir le dossard" style="display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:6px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.15);cursor:pointer;transition:all .2s;font-size:14px;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.borderColor='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.06)';this.style.borderColor='rgba(255,255,255,0.15)'">🎽</button>` : ''}
                                             </td>
                                         </tr>
@@ -1320,46 +1337,51 @@
 
 <div id="bib-modal" style="
     display:none; position:fixed; z-index:9001;
-    top:50%; left:50%; transform:translate(-50%,-50%);
+    inset:0;
+    align-items:center; justify-content:center;
+    padding: 16px;
+    box-sizing:border-box;
+    pointer-events:none;
 ">
-    <!-- Close button -->
-    <button onclick="closeBib()" style="
-        position:absolute; top:-14px; right:-14px; z-index:10;
-        width:30px; height:30px; border-radius:50%;
-        background:#1a1a1a; border:1.5px solid rgba(255,255,255,0.2);
-        color:rgba(255,255,255,0.7); font-size:16px; cursor:pointer;
-        display:flex; align-items:center; justify-content:center;
-        box-shadow:0 4px 12px rgba(0,0,0,0.5);
-    ">×</button>
+    <div style="position:relative; pointer-events:auto; width:100%; max-width:340px; margin:0 auto;">
+        <!-- Close button -->
+        <button onclick="closeBib()" style="
+            position:absolute; top:-14px; right:-14px; z-index:10;
+            width:30px; height:30px; border-radius:50%;
+            background:#1a1a1a; border:1.5px solid rgba(255,255,255,0.2);
+            color:rgba(255,255,255,0.7); font-size:16px; cursor:pointer;
+            display:flex; align-items:center; justify-content:center;
+            box-shadow:0 4px 12px rgba(0,0,0,0.5);
+        ">×</button>
 
-    <!-- Perspective wrapper — MUST be a separate element from the one that translates -->
-    <div id="bib-perspective" style="perspective:900px; perspective-origin:50% 50%;">
-        <!-- This is the element that receives rotateX/Y -->
-        <div id="bib-tilt" style="
-            width: clamp(260px, 38vw, 360px);
-            aspect-ratio: 3/4;
-            transform-style: preserve-3d;
-            transition: transform 0.12s ease-out;
-            border-radius: 12px;
-            box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.4);
-            cursor: grab;
-            will-change: transform;
-        ">
-            <canvas id="bib-canvas" style="
-                width:100%; height:100%;
-                border-radius:12px; display:block;
-            "></canvas>
+        <!-- Perspective wrapper -->
+        <div id="bib-perspective" style="perspective:900px; perspective-origin:50% 50%; width:100%;">
+            <div id="bib-tilt" style="
+                width:100%;
+                aspect-ratio:3/4;
+                transform-style:preserve-3d;
+                transition:transform 0.12s ease-out;
+                border-radius:12px;
+                box-shadow:0 24px 60px rgba(0,0,0,0.7), 0 8px 24px rgba(0,0,0,0.4);
+                cursor:grab;
+                will-change:transform;
+            ">
+                <canvas id="bib-canvas" style="
+                    width:100%; height:100%;
+                    border-radius:12px; display:block;
+                "></canvas>
+            </div>
         </div>
+        <p style="text-align:center;margin-top:10px;font-size:.65rem;
+            color:rgba(255,255,255,.25);letter-spacing:.1em;">
+            DÉPLACER LA SOURIS SUR LE DOSSARD
+        </p>
     </div>
-    <p style="text-align:center;margin-top:10px;font-size:.65rem;
-        color:rgba(255,255,255,.25);letter-spacing:.1em;">
-        DÉPLACER LA SOURIS SUR LE DOSSARD
-    </p>
 </div>
 
 <style>
 #bib-overlay.visible { display:block !important; }
-#bib-modal.visible   { display:block !important; }
+#bib-modal.visible   { display:flex !important; pointer-events:auto !important; }
 #bib-modal.visible #bib-tilt {
     animation: bibPop .4s cubic-bezier(.175,.885,.32,1.275) forwards;
 }
@@ -1372,272 +1394,217 @@
 <script>
 // ── Bib data ─────────────────────────────────────────────────────────────────
 
-// ── Draw bib on canvas (realistic paper) ─────────────────────────────────────
+// ── Draw bib on canvas (crumpled paper effect) ───────────────────────────────
 function drawBib(race) {
     const canvas = document.getElementById('bib-canvas');
-    const W = 360, H = 480;
-    canvas.width  = W * 2;  // retina
-    canvas.height = H * 2;
+    const displayW = canvas.parentElement.offsetWidth || Math.min(340, window.innerWidth - 48);
+    const displayH = displayW * 4 / 3;
+    const DPR = window.devicePixelRatio || 1;
+    const W = displayW, H = displayH;
+    canvas.width  = W * DPR;
+    canvas.height = H * DPR;
     canvas.style.width  = W + 'px';
     canvas.style.height = H + 'px';
     const ctx = canvas.getContext('2d');
-    ctx.scale(2, 2);
+    ctx.scale(DPR, DPR);
+
+    // ── RNG déterministe par course ──
+    let _s = (race.date.replace(/-/g,'') | 0) || 20190106;
+    function rnd() { _s ^= _s<<13; _s ^= _s>>17; _s ^= _s<<5; return (_s>>>0)/4294967296; }
 
     const bibNum = BIB_NUMS[race.date];
     const km = parseFloat(race.km);
 
-    // ── Color scheme by distance ──
+    // Couleurs par distance
     let accentH, accentS, accentL;
-    if (km >= 42)       { accentH=270; accentS=60; accentL=45; }  // purple — marathon
-    else if (km >= 21)  { accentH=210; accentS=70; accentL=42; }  // blue   — semi
-    else if (km >= 14)  { accentH=22;  accentS=75; accentL=45; }  // orange — trail
-    else                { accentH=148; accentS=55; accentL=38; }  // green  — 10k
-
+    if (km >= 42)      { accentH=270; accentS=60; accentL=45; }
+    else if (km >= 21) { accentH=210; accentS=70; accentL=42; }
+    else if (km >= 14) { accentH=22;  accentS=75; accentL=45; }
+    else               { accentH=148; accentS=55; accentL=38; }
     const accent    = `hsl(${accentH},${accentS}%,${accentL}%)`;
     const accentMid = `hsl(${accentH},${accentS-10}%,${accentL+8}%)`;
     const accentLt  = `hsl(${accentH},${accentS-20}%,${accentL+18}%)`;
 
-    // ── Paper background ──
-    // Base cream paper
-    const paperGrad = ctx.createLinearGradient(0,0,W,H);
-    paperGrad.addColorStop(0,   '#faf8f3');
-    paperGrad.addColorStop(0.4, '#f5f2ea');
-    paperGrad.addColorStop(1,   '#ede9df');
-    ctx.fillStyle = paperGrad;
-    ctx.beginPath();
-    ctx.roundRect(0, 0, W, H, 10);
-    ctx.fill();
-
-    // Paper grain texture (stippled)
-    ctx.save();
-    ctx.globalAlpha = 0.04;
-    for (let i = 0; i < 1800; i++) {
-        const x = Math.random() * W;
-        const y = Math.random() * H;
-        const r = Math.random() * 1.2;
-        ctx.fillStyle = Math.random() > 0.5 ? '#5a4a30' : '#fff';
-        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-    }
-    ctx.restore();
-
-    // Subtle vertical fiber lines
-    ctx.save();
-    ctx.globalAlpha = 0.025;
-    ctx.strokeStyle = '#8a7a60';
-    ctx.lineWidth = 0.5;
-    for (let x = 5; x < W; x += 3.5) {
-        ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x+Math.random()*1.5, H); ctx.stroke();
-    }
-    ctx.restore();
-
-    // ── Top color band ──
-    const bandGrad = ctx.createLinearGradient(0,0,0,72);
-    bandGrad.addColorStop(0, accent);
-    bandGrad.addColorStop(1, accentMid);
-    ctx.save();
-    ctx.beginPath();
-    ctx.roundRect(0, 0, W, 72, [10,10,0,0]);
-    ctx.fillStyle = bandGrad;
-    ctx.fill();
-    // Subtle horizontal line texture on band
-    ctx.globalAlpha = 0.12;
-    ctx.strokeStyle = '#fff';
-    ctx.lineWidth = 0.7;
-    for (let y = 4; y < 72; y += 4) {
-        ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-    }
-    ctx.restore();
-
-    // ── Race name in top band — word-wrap up to 2 lines ──
-    ctx.save();
-    ctx.fillStyle = 'rgba(255,255,255,0.95)';
-    ctx.textAlign = 'center';
-    const maxW = W - 80; // leave room for pin holes
-
-    // Try to fit on one line, shrinking font if needed
-    let fontSize = 13;
-    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
-    const fullName = race.course.toUpperCase();
-    
-    // Word-wrap into lines
-    function wrapText(text, maxWidth, font) {
-        ctx.font = font;
-        const words = text.split(' ');
-        const lines = [];
-        let line = '';
-        for (const word of words) {
-            const test = line ? line + ' ' + word : word;
-            if (ctx.measureText(test).width > maxWidth && line) {
-                lines.push(line);
-                line = word;
-            } else {
-                line = test;
+    // ── 1. HEIGHTMAP FROISSÉE ─────────────────────────────────────────────────
+    // Grille de hauteurs pseudo-aléatoires, lissée, pour simuler les bosses du papier
+    const GX=9, GY=12;
+    const raw=[], sm=[];
+    for (let r=0;r<=GY;r++) { raw[r]=[]; for (let c=0;c<=GX;c++) raw[r][c]=rnd(); }
+    // 2 passes de lissage
+    for (let pass=0;pass<2;pass++) {
+        for (let r=0;r<=GY;r++) { sm[r]=[]; for (let c=0;c<=GX;c++) {
+            let s=0,n=0;
+            for (let dr=-1;dr<=1;dr++) for (let dc=-1;dc<=1;dc++) {
+                const nr=r+dr,nc=c+dc;
+                if (nr>=0&&nr<=GY&&nc>=0&&nc<=GX){s+=raw[nr][nc];n++;}
             }
+            sm[r][c]=s/n;
+        }}
+        for (let r=0;r<=GY;r++) for (let c=0;c<=GX;c++) raw[r][c]=sm[r][c];
+    }
+
+    // ── 2. FOND PAPIER : rendu des facettes avec shading ────────────────────
+    // Direction lumière (haut-gauche)
+    const LX=-0.7, LY=-0.5;
+    for (let r=0;r<GY;r++) {
+        for (let c=0;c<GX;c++) {
+            const x0=(c/GX)*W, y0=(r/GY)*H, x1=((c+1)/GX)*W, y1=((r+1)/GY)*H;
+            const h00=sm[r][c],h10=sm[r][c+1],h01=sm[r+1][c],h11=sm[r+1][c+1];
+            const dhdx=(h10+h11-h00-h01)*0.5, dhdy=(h01+h11-h00-h10)*0.5;
+            const dot=dhdx*LX+dhdy*LY;
+            // luminosité [0.78 .. 1.18]
+            const bright=0.98+dot*0.32;
+            const base=242;
+            const bv=Math.round(Math.max(140,Math.min(255,base*bright)));
+            const rv=Math.min(255,bv+9),gv=Math.min(255,bv+4),bvv=Math.max(0,bv-22);
+            ctx.fillStyle=`rgb(${rv},${gv},${bvv})`;
+            ctx.fillRect(x0,y0,x1-x0+0.5,y1-y0+0.5);
         }
-        if (line) lines.push(line);
-        return lines;
     }
-
-    // Start at 13px, shrink until fits in 2 lines or font hits 9px
-    let lines = [];
-    for (fontSize = 13; fontSize >= 9; fontSize--) {
-        const font = `bold ${fontSize}px Arial, sans-serif`;
-        lines = wrapText(fullName, maxW, font);
-        if (lines.length <= 2) break;
-    }
-
-    ctx.font = `bold ${fontSize}px Arial, sans-serif`;
-    const lineH = fontSize + 3;
-    const totalH = lines.length * lineH;
-    const startY = 36 - totalH / 2 + lineH / 2;
-    lines.forEach((ln, i) => ctx.fillText(ln, W/2, startY + i * lineH));
-
-    // Location + date below
-    ctx.font = '10px Arial, sans-serif';
-    ctx.globalAlpha = 0.85;
-    const d = race.date.split('-');
-    ctx.fillText(race.ville.toUpperCase() + '  ·  ' + d[2]+'/'+d[1]+'/'+d[0], W/2, 60);
+    // Arrondir les coins du papier
+    ctx.save();
+    ctx.globalCompositeOperation='destination-in';
+    ctx.beginPath(); ctx.roundRect(0,0,W,H,10); ctx.fill();
+    ctx.globalCompositeOperation='source-over';
     ctx.restore();
 
-    // ── Pin holes ──
-    function drawPin(x, y) {
-        // Shadow
+    // ── 3. BRUIT FIN (grain de papier) ───────────────────────────────────────
+    const ns=64;
+    const ofc=document.createElement('canvas'); ofc.width=ofc.height=ns;
+    const nctx=ofc.getContext('2d');
+    const imd=nctx.createImageData(ns,ns);
+    for (let i=0;i<imd.data.length;i+=4) {
+        const v=Math.floor(rnd()*255);
+        imd.data[i]=v; imd.data[i+1]=v; imd.data[i+2]=Math.max(0,v-15); imd.data[i+3]=22;
+    }
+    nctx.putImageData(imd,0,0);
+    const pat=ctx.createPattern(ofc,'repeat');
+    if (pat) { ctx.save(); ctx.fillStyle=pat; ctx.fillRect(0,0,W,H); ctx.restore(); }
+
+    // ── 4. BANDE COULEUR EN HAUT ─────────────────────────────────────────────
+    const bandH=H*0.155;
+    const bg=ctx.createLinearGradient(0,0,0,bandH);
+    bg.addColorStop(0,accent); bg.addColorStop(1,accentMid);
+    ctx.save();
+    ctx.beginPath(); ctx.roundRect(0,0,W,bandH,[10,10,0,0]);
+    ctx.fillStyle=bg; ctx.fill();
+    // Variation de luminosité froissée sur la bande
+    for (let c=0;c<GX;c++) {
+        const x0=(c/GX)*W,x1=((c+1)/GX)*W;
+        const dh=(sm[0][c+1]-sm[0][c])*LX*1.2;
+        const br=1.0+dh*0.25;
+        ctx.globalAlpha=Math.abs(br-1)*0.45;
+        ctx.fillStyle=br>1?'rgba(255,255,255,1)':'rgba(0,0,0,1)';
+        ctx.fillRect(x0,0,x1-x0,bandH);
+    }
+    ctx.globalAlpha=1;
+    // Trame horizontale discrète
+    ctx.globalAlpha=0.08; ctx.strokeStyle='#fff'; ctx.lineWidth=0.6;
+    for (let y=3;y<bandH;y+=4){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    ctx.restore();
+
+    // ── 5. TITRE ─────────────────────────────────────────────────────────────
+    ctx.save();
+    ctx.fillStyle='rgba(255,255,255,0.96)'; ctx.textAlign='center';
+    function wrapText(text,maxWidth,font){
+        ctx.font=font; const words=text.split(' '),ls=[];let line='';
+        for(const w of words){const t=line?line+' '+w:w;
+            if(ctx.measureText(t).width>maxWidth&&line){ls.push(line);line=w;}else line=t;}
+        if(line)ls.push(line);return ls;
+    }
+    let fs=13,titleLines=[];
+    for(fs=13;fs>=9;fs--){
+        titleLines=wrapText(race.course.toUpperCase(),W-80,`bold ${fs}px Arial,sans-serif`);
+        if(titleLines.length<=2)break;
+    }
+    ctx.font=`bold ${fs}px Arial,sans-serif`;
+    const lhh=fs+3,ty0=bandH*0.38-(titleLines.length*lhh)/2+lhh/2;
+    titleLines.forEach((ln,i)=>ctx.fillText(ln,W/2,ty0+i*lhh));
+    ctx.font='10px Arial,sans-serif'; ctx.globalAlpha=0.85;
+    const d=race.date.split('-');
+    ctx.fillText(race.ville.toUpperCase()+'  ·  '+d[2]+'/'+d[1]+'/'+d[0],W/2,bandH*0.82);
+    ctx.restore();
+
+    // ── 6. TROUS DE PIN ──────────────────────────────────────────────────────
+    function drawPin(px,py){
         ctx.save();
-        ctx.globalAlpha = 0.3;
-        ctx.fillStyle = '#2a1a00';
-        ctx.beginPath(); ctx.arc(x+1, y+1, 7, 0, Math.PI*2); ctx.fill();
-        ctx.restore();
-        // Hole
-        ctx.save();
-        ctx.fillStyle = '#1a0f00';
-        ctx.beginPath(); ctx.arc(x, y, 7, 0, Math.PI*2); ctx.fill();
-        // Metal rim
-        const rimGrad = ctx.createRadialGradient(x-2, y-2, 1, x, y, 7);
-        rimGrad.addColorStop(0, 'rgba(255,255,255,0.5)');
-        rimGrad.addColorStop(1, 'rgba(80,60,20,0.6)');
-        ctx.strokeStyle = rimGrad;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        // Inner shine
-        ctx.fillStyle = 'rgba(255,255,255,0.08)';
-        ctx.beginPath(); ctx.arc(x-2, y-2, 3, 0, Math.PI*2); ctx.fill();
-        ctx.restore();
+        ctx.globalAlpha=0.28;ctx.fillStyle='#2a1a00';
+        ctx.beginPath();ctx.arc(px+1,py+1,6,0,Math.PI*2);ctx.fill();
+        ctx.globalAlpha=1;ctx.fillStyle='#1a0f00';
+        ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fill();
+        const rim=ctx.createRadialGradient(px-2,py-2,1,px,py,6);
+        rim.addColorStop(0,'rgba(255,255,255,0.5)');rim.addColorStop(1,'rgba(80,60,20,0.5)');
+        ctx.strokeStyle=rim;ctx.lineWidth=1.5;ctx.stroke();ctx.restore();
     }
-    drawPin(28, 36);
-    drawPin(W-28, 36);
+    drawPin(W*0.082,bandH*0.5); drawPin(W*0.918,bandH*0.5);
 
-    // ── Distance badge — sized to content ──
-    const distLabel = km >= 42 ? 'MARATHON' : km >= 21 ? 'SEMI-MARATHON' : km >= 14 ? 'TRAIL' : '10 KM';
-    const badgeText = distLabel + '  ' + km + ' KM';
-    const badgeY = 90;
+    // ── 7. BADGE DISTANCE ────────────────────────────────────────────────────
+    const distLabel=km>=42?'MARATHON':km>=21?'SEMI-MARATHON':km>=14?'TRAIL':'10 KM';
+    const badgeText=distLabel+'  '+km+' KM', badgeY=bandH+H*0.075;
     ctx.save();
-    ctx.font = 'bold 10px Arial, sans-serif';
-    ctx.textAlign = 'center';
-    const badgeTW = ctx.measureText(badgeText).width;
-    const badgePad = 14;
-    const badgeW = badgeTW + badgePad * 2;
-    const badgeX = W/2 - badgeW/2;
-    // Fill
-    ctx.fillStyle = accentLt;
-    ctx.globalAlpha = 0.22;
-    ctx.beginPath(); ctx.roundRect(badgeX, badgeY-13, badgeW, 22, 4); ctx.fill();
-    // Border
-    ctx.globalAlpha = 1;
-    ctx.strokeStyle = accentMid;
-    ctx.lineWidth = 1.2;
-    ctx.beginPath(); ctx.roundRect(badgeX, badgeY-13, badgeW, 22, 4); ctx.stroke();
-    // Text
-    ctx.fillStyle = accent;
-    ctx.fillText(badgeText, W/2, badgeY + 1);
+    ctx.font='bold 10px Arial,sans-serif';ctx.textAlign='center';
+    const btw=ctx.measureText(badgeText).width,bp=14,bW=btw+bp*2,bX=W/2-bW/2;
+    ctx.fillStyle=accentLt;ctx.globalAlpha=0.22;
+    ctx.beginPath();ctx.roundRect(bX,badgeY-13,bW,22,4);ctx.fill();
+    ctx.globalAlpha=1;ctx.strokeStyle=accentMid;ctx.lineWidth=1.2;
+    ctx.beginPath();ctx.roundRect(bX,badgeY-13,bW,22,4);ctx.stroke();
+    ctx.fillStyle=accent;ctx.fillText(badgeText,W/2,badgeY+1);
     ctx.restore();
 
-    // ── BIG BIB NUMBER ──
-    const numStr = String(bibNum);
-    const numLen = numStr.length;
-    const numSize = numLen <= 2 ? 148 : numLen <= 3 ? 118 : numLen <= 4 ? 90 : 70;
-
-    // Number shadow (slight depth)
+    // ── 8. GRAND NUMÉRO ──────────────────────────────────────────────────────
+    const numStr=String(bibNum);
+    const numSize=Math.floor(W*(numStr.length<=2?0.41:numStr.length<=3?0.33:numStr.length<=4?0.25:0.19));
+    const numCY=H*0.525;
     ctx.save();
-    ctx.globalAlpha = 0.12;
-    ctx.fillStyle = '#3a2800';
-    ctx.font = `900 ${numSize}px "Arial Black", Arial, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(numStr, W/2 + 3, H/2 + 10 + 3);
+    ctx.globalAlpha=0.10;ctx.fillStyle='#3a2800';
+    ctx.font=`900 ${numSize}px "Arial Black",Arial,sans-serif`;
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(numStr,W/2+2,numCY+3);
+    ctx.globalAlpha=1;
+    ctx.fillStyle=`hsl(${accentH},${accentS+5}%,${accentL-12}%)`;
+    ctx.fillText(numStr,W/2,numCY);
     ctx.restore();
 
-    // Number itself
+    // ── 9. INFOS PERF ────────────────────────────────────────────────────────
+    const infoY=H*0.80;
     ctx.save();
-    ctx.font = `900 ${numSize}px "Arial Black", Arial, sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    // Slightly desaturated dark color for the number — realistic ink
-    ctx.fillStyle = `hsl(${accentH},${accentS+5}%,${accentL-12}%)`;
-    ctx.fillText(numStr, W/2, H/2 + 10);
+    ctx.strokeStyle=accentMid;ctx.globalAlpha=0.28;ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(W*0.08,infoY-H*0.04);ctx.lineTo(W*0.92,infoY-H*0.038);ctx.stroke();
+    ctx.restore();
+    ctx.save();ctx.textAlign='center';
+    ctx.fillStyle=`hsl(${accentH},${accentS}%,${accentL-8}%)`;
+    ctx.font=`bold ${Math.max(16,Math.floor(W*0.078))}px "Arial Black",Arial,sans-serif`;
+    ctx.fillText(race.perf,W/2,infoY+H*0.03);
+    ctx.globalAlpha=0.5;ctx.fillStyle='#4a3a20';
+    ctx.font=`${Math.max(9,Math.floor(W*0.032))}px Arial,sans-serif`;
+    ctx.fillText(race.tempsMoyenKm+'/km  ·  '+race.classement,W/2,infoY+H*0.075);
     ctx.restore();
 
-    // ── Performance info ──
-    const infoY = H - 88;
-
-    // Separator line
-    ctx.save();
-    ctx.strokeStyle = accentMid;
-    ctx.globalAlpha = 0.3;
-    ctx.lineWidth = 1;
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath(); ctx.moveTo(24, infoY - 14); ctx.lineTo(W-24, infoY - 14); ctx.stroke();
+    // ── 10. BANDE BASSE ──────────────────────────────────────────────────────
+    const sg=ctx.createLinearGradient(0,0,W,0);
+    sg.addColorStop(0,'transparent');sg.addColorStop(0.15,accent);
+    sg.addColorStop(0.5,accentMid);sg.addColorStop(0.85,accent);sg.addColorStop(1,'transparent');
+    ctx.save();ctx.globalAlpha=0.65;ctx.fillStyle=sg;
+    ctx.beginPath();ctx.roundRect(0,H-H*0.04,W,H*0.04,[0,0,10,10]);ctx.fill();
     ctx.restore();
 
-    // Perf + allure
+    // ── 11. COIN CORNÉ ───────────────────────────────────────────────────────
+    const fc=W*0.085;
     ctx.save();
-    ctx.textAlign = 'center';
-    ctx.fillStyle = `hsl(${accentH},${accentS}%,${accentL-8}%)`;
-    ctx.font = `bold 28px "Arial Black", Arial, sans-serif`;
-    ctx.fillText(race.perf, W/2, infoY + 14);
-
-    ctx.globalAlpha = 0.55;
-    ctx.fillStyle = '#4a3a20';
-    ctx.font = '11px Arial, sans-serif';
-    ctx.fillText(race.tempsMoyenKm + '/km  ·  ' + race.classement, W/2, infoY + 34);
+    ctx.globalAlpha=0.08;ctx.fillStyle='#000';
+    ctx.beginPath();ctx.moveTo(W-fc,H);ctx.lineTo(W,H-fc);ctx.lineTo(W,H);ctx.closePath();ctx.fill();
+    ctx.globalAlpha=0.45;ctx.fillStyle='#fff';
+    ctx.beginPath();ctx.moveTo(W-fc+2,H-2);ctx.lineTo(W-2,H-fc+2);ctx.lineTo(W-fc-2,H-fc-2);ctx.closePath();ctx.fill();
     ctx.restore();
 
-    // ── Bottom color stripe ──
-    const stripeGrad = ctx.createLinearGradient(0,0,W,0);
-    stripeGrad.addColorStop(0, 'transparent');
-    stripeGrad.addColorStop(0.15, accent);
-    stripeGrad.addColorStop(0.5, accentMid);
-    stripeGrad.addColorStop(0.85, accent);
-    stripeGrad.addColorStop(1, 'transparent');
+    // ── 12. OMBRES DE BORD ───────────────────────────────────────────────────
     ctx.save();
-    ctx.fillStyle = stripeGrad;
-    ctx.globalAlpha = 0.7;
-    ctx.beginPath();
-    ctx.roundRect(0, H-18, W, 18, [0,0,10,10]);
-    ctx.fill();
-    ctx.restore();
-
-    // ── Subtle corner fold effect ──
-    ctx.save();
-    ctx.globalAlpha = 0.06;
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.moveTo(W-28, H); ctx.lineTo(W, H-28); ctx.lineTo(W, H); ctx.closePath();
-    ctx.fill();
-    ctx.globalAlpha = 0.5;
-    ctx.fillStyle = '#fff';
-    ctx.beginPath();
-    ctx.moveTo(W-26, H-2); ctx.lineTo(W-2, H-26); ctx.lineTo(W-28, H-28); ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-
-    // ── Paper edge shadow (right + bottom) ──
-    ctx.save();
-    const edgeR = ctx.createLinearGradient(W-12,0,W,0);
-    edgeR.addColorStop(0,'transparent'); edgeR.addColorStop(1,'rgba(0,0,0,0.06)');
-    ctx.fillStyle = edgeR; ctx.fillRect(W-12,0,12,H);
-    const edgeB = ctx.createLinearGradient(0,H-12,0,H);
-    edgeB.addColorStop(0,'transparent'); edgeB.addColorStop(1,'rgba(0,0,0,0.06)');
-    ctx.fillStyle = edgeB; ctx.fillRect(0,H-12,W,12);
+    const er=ctx.createLinearGradient(W-12,0,W,0);
+    er.addColorStop(0,'transparent');er.addColorStop(1,'rgba(0,0,0,0.07)');
+    ctx.fillStyle=er;ctx.fillRect(W-12,0,12,H);
+    const eb=ctx.createLinearGradient(0,H-12,0,H);
+    eb.addColorStop(0,'transparent');eb.addColorStop(1,'rgba(0,0,0,0.07)');
+    ctx.fillStyle=eb;ctx.fillRect(0,H-12,W,12);
     ctx.restore();
 }
 
