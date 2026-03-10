@@ -30,7 +30,7 @@
 
         /* Header */
         .header { padding:4.5rem 0 2rem; text-align:center; }
-        .title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:clamp(1.8rem,4.5vw,3rem);
+        .title { font-family:'Orbitron',sans-serif; font-weight:900; font-size:clamp(1.6rem, 4vw, 3.2rem);
             letter-spacing:.04em; background:linear-gradient(120deg,var(--cyan),var(--purple) 60%,var(--pink));
             -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
             filter:drop-shadow(0 0 24px rgba(0,255,249,.4)); margin-bottom:.4rem; }
@@ -188,14 +188,43 @@
         .site-nav { justify-content: flex-start !important; }
     }
     @media (max-width: 480px) {
-        h1, .main-title { font-size: clamp(1.4rem, 7vw, 2.5rem) !important; }
+        h1, .main-title { font-size: 1.1rem !important; }
         .subtitle { font-size: 0.7rem !important; }
     }
+
+        .animated-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+                        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 249, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F7JZPPYNEK');</script>
 </head>
 <body>
+<div class="animated-bg"></div>
+
     <div class="bg"></div>
     <div class="grain"></div>
     <div class="neon-line"></div>
