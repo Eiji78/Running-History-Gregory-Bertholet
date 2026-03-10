@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://eiji78.github.io/Running-History-Gregory-Bertholet/sitemap.xml
