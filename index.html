@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Running History</title>
+    <meta name="google-site-verification" content="koaGlvdod_uS1QfhPz4ZcacS2D1I_aGeGQawfZIYl1g" />
+    <title>Running History — Gregory Bertholet</title>
+    <meta name="description" content="Historique complet des courses de Gregory Bertholet : 51 courses, marathons, semi-marathons, progressions et comparaisons élite." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/" />
+    <meta property="og:title" content="Running History — Gregory Bertholet" />
+    <meta property="og:description" content="51 courses, marathons, semi-marathons, progressions et comparaisons élite." />
+    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Running History — Gregory Bertholet" />
+    <meta name="twitter:description" content="51 courses, marathons, semi-marathons, progressions et comparaisons élite." />
     <style>
 /* Tailwind utility stubs */
 .flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.block{display:block}.hidden{display:none}
@@ -460,6 +470,56 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, rgba(0, 255, 249, 0.8), rgba(188, 19, 254, 0.8));
         }
+        /* ── HEATMAP ────────────────────────────────────────── */
+        .heatmap-wrap {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.5rem 1.5rem 1.2rem;
+            margin-bottom: 2.5rem;
+            overflow-x: auto;
+        }
+        .heatmap-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: rgba(0,255,249,0.7);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        .heatmap-grid { display:flex; gap:3px; align-items:flex-start; }
+        .heatmap-month-col { display:flex; flex-direction:column; gap:3px; }
+        .heatmap-month-label {
+            font-size:0.58rem; color:rgba(255,255,255,0.28); text-align:center;
+            margin-bottom:2px; height:10px;
+        }
+        .heatmap-year-label {
+            font-size:0.68rem; font-weight:800; text-align:center;
+            margin-bottom:2px; height:10px; letter-spacing:0.05em;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0,255,249,0.7);
+        }
+        .heatmap-cell {
+            width:13px; height:13px; border-radius:3px;
+            background:rgba(255,255,255,0.05);
+            transition:transform 0.15s; position:relative; cursor:default;
+        }
+        .heatmap-cell:hover { transform:scale(1.6); z-index:10; }
+        .heatmap-cell.has-race-10k      { background:rgba(0,210,120,0.80); box-shadow:0 0 5px rgba(0,210,120,0.5); }
+        .heatmap-cell.has-race-trail    { background:rgba(255,140,50,0.80); box-shadow:0 0 5px rgba(255,140,50,0.5); }
+        .heatmap-cell.has-race-semi     { background:rgba(0,180,255,0.85); box-shadow:0 0 5px rgba(0,180,255,0.5); }
+        .heatmap-cell.has-race-marathon { background:rgba(200,80,255,0.85); box-shadow:0 0 5px rgba(200,80,255,0.5); }
+        .heatmap-cell.is-record { outline:2px solid rgba(255,215,0,0.9); }
+        .heatmap-legend { display:flex; gap:1.2rem; margin-top:0.9rem; flex-wrap:wrap; }
+        .heatmap-legend-item { display:flex; align-items:center; gap:5px; font-size:0.62rem; color:rgba(255,255,255,0.45); }
+        .heatmap-legend-dot { width:10px; height:10px; border-radius:2px; }
+        .heatmap-tooltip {
+            position:fixed; background:rgba(10,10,20,0.96);
+            border:1px solid rgba(0,255,249,0.3); border-radius:8px;
+            padding:7px 11px; font-size:0.7rem; color:#fff;
+            pointer-events:none; z-index:9999; display:none;
+            max-width:230px; line-height:1.7; backdrop-filter:blur(10px);
+        }
+
 
         /* Fade In Animation */
         .fade-in {
@@ -604,54 +664,54 @@
 
         const racesData = [
             {date: "2026-03-01", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "48/673", indice: "7.13", perf: "01:25:52", tempsMoyenKm: "4:04", strava: "https://www.strava.com/activities/17561583056", fc: 162},
-            {date: "2025-05-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11", strava: "https://www.strava.com/activities/16041281275", fc: 171},
+            {date: "2025-10-05", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11", strava: "https://www.strava.com/activities/16041281275", fc: 171},
             {date: "2025-09-28", course: "Semi-Marathon - Route Du Vin", ville: "Luxembourg", dept: "0", km: "21.1", classement: "145/2499", indice: "5.8", perf: "01:23:48", tempsMoyenKm: "3:58", record: true, strava: "https://www.strava.com/activities/15961102163", fc: 172},
             {date: "2025-05-31", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "181/8646", indice: "2.09", perf: "01:29:51", tempsMoyenKm: "4:14", strava: "https://www.strava.com/activities/14654980086", fc: 174},
             {date: "2025-04-27", course: "Marathon du lac d'Annecy", ville: "Annecy", dept: "74", km: "42.195", classement: "583/3845", indice: "15.16", perf: "03:26:08", tempsMoyenKm: "4:53", strava: "https://www.strava.com/activities/14299457228", fc: 167},
             {date: "2025-03-16", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Rosselange", dept: "57", km: "21.1", classement: "35/538", indice: "6.51", perf: "01:25:34", tempsMoyenKm: "4:03", strava: "https://www.strava.com/activities/13895827191", fc: 168},
-            {date: "2024-06-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "217/2734", indice: "7.94", perf: "01:40:51", tempsMoyenKm: "4:16", strava: "https://www.strava.com/activities/12589698929", fc: 170},
+            {date: "2024-10-06", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "217/2734", indice: "7.94", perf: "01:40:51", tempsMoyenKm: "4:16", strava: "https://www.strava.com/activities/12589698929", fc: 170},
             {date: "2024-09-29", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "178/1895", indice: "9.39", perf: "01:26:33", tempsMoyenKm: "4:06", strava: "https://www.strava.com/activities/12530152817", fc: 174},
             {date: "2024-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "11.8", classement: "59/433", indice: "13.63", perf: "01:00:59", tempsMoyenKm: "5:10", strava: "https://www.strava.com/activities/12235936176", fc: 168},
-            {date: "2024-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "20/161", indice: "12.42", perf: "00:38:18", tempsMoyenKm: "3:50", strava: "https://www.strava.com/activities/11597795067", fc: 179},
-            {date: "2024-11-05", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "176/6909", indice: "2.55", perf: "01:31:20", tempsMoyenKm: "4:19", strava: "https://www.strava.com/activities/11387709862", fc: 178},
-            {date: "2024-08-05", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true, strava: "https://www.strava.com/activities/11359052509", fc: 181},
-            {date: "2024-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56", strava: "https://www.strava.com/activities/11304839621", fc: 183},
+            {date: "2024-06-07", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "20/161", indice: "12.42", perf: "00:38:18", tempsMoyenKm: "3:50", strava: "https://www.strava.com/activities/11597795067", fc: 179},
+            {date: "2024-05-11", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "176/6909", indice: "2.55", perf: "01:31:20", tempsMoyenKm: "4:19", strava: "https://www.strava.com/activities/11387709862", fc: 178},
+            {date: "2024-05-08", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true, strava: "https://www.strava.com/activities/11359052509", fc: 181},
+            {date: "2024-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56", strava: "https://www.strava.com/activities/11304839621", fc: 183},
             {date: "2024-04-21", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "80/1089", indice: "7.35", perf: "01:25:30", tempsMoyenKm: "4:03", strava: "https://www.strava.com/activities/11229080745", fc: 171},
-            {date: "2024-07-04", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true, strava: "https://www.strava.com/activities/11124704539", fc: 174},
+            {date: "2024-04-07", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true, strava: "https://www.strava.com/activities/11124704539", fc: 174},
             {date: "2024-03-17", course: "Semi-Marathon Intercommunal de la Vallée de l'Orne", ville: "Moyeuvre-Grande", dept: "57", km: "21.1", classement: "34/416", indice: "8.17", perf: "01:30:06", tempsMoyenKm: "4:16", strava: "https://www.strava.com/activities/10977086066", fc: 166},
-            {date: "2024-10-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02", strava: "https://www.strava.com/activities/10928040300", fc: 176},
+            {date: "2024-03-10", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02", strava: "https://www.strava.com/activities/10928040300", fc: 176},
             {date: "2023-10-14", course: "Haard Trail Dudelange", ville: "Dudelange", dept: "0", km: "15", classement: "27/94", indice: "28.72", perf: "01:11:15", tempsMoyenKm: "4:45", strava: "https://www.strava.com/activities/10037221696", fc: 178},
-            {date: "2023-01-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "259/2171", indice: "11.93", perf: "01:48:54", tempsMoyenKm: "4:36", strava: "https://www.strava.com/activities/9955737974", fc: 182},
+            {date: "2023-10-01", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "259/2171", indice: "11.93", perf: "01:48:54", tempsMoyenKm: "4:36", strava: "https://www.strava.com/activities/9955737974", fc: 182},
             {date: "2023-09-24", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "179/1370", indice: "13.07", perf: "01:30:39", tempsMoyenKm: "4:17", strava: "https://www.strava.com/activities/9909962182", fc: 174},
-            {date: "2023-09-07", course: "La Forestière", ville: "Moyeuvre-Grande", dept: "57", km: "10", classement: "39/164", indice: "23.78", perf: "00:50:30", tempsMoyenKm: "5:03", strava: "https://www.strava.com/activities/9416504602", fc: 181},
+            {date: "2023-07-09", course: "La Forestière", ville: "Moyeuvre-Grande", dept: "57", km: "10", classement: "39/164", indice: "23.78", perf: "00:50:30", tempsMoyenKm: "5:03", strava: "https://www.strava.com/activities/9416504602", fc: 181},
             {date: "2023-06-25", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "24/169", indice: "14.2", perf: "00:41:37", tempsMoyenKm: "4:10", strava: "https://www.strava.com/activities/9330053741", fc: 183},
-            {date: "2023-02-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "18/119", indice: "15.13", perf: "00:40:17", tempsMoyenKm: "4:02", strava: "https://www.strava.com/activities/9189866875", fc: 184},
+            {date: "2023-06-02", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "18/119", indice: "15.13", perf: "00:40:17", tempsMoyenKm: "4:02", strava: "https://www.strava.com/activities/9189866875", fc: 184},
             {date: "2023-05-20", course: "Ing Night Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "42.195", classement: "222/1046", indice: "21.22", perf: "03:47:13", tempsMoyenKm: "5:23", strava: "https://www.strava.com/activities/9108818382", fc: 175},
             {date: "2023-04-23", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "82/690", indice: "11.88", perf: "01:27:20", tempsMoyenKm: "4:08", strava: "https://www.strava.com/activities/8940931342", fc: 178},
             {date: "2023-03-19", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Rombas", dept: "57", km: "21.1", classement: "33/395", indice: "8.35", perf: "01:28:36", tempsMoyenKm: "4:12", strava: "https://www.strava.com/activities/8739505302", fc: 179},
-            {date: "2023-12-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "142/2067", indice: "6.87", perf: "00:42:44", tempsMoyenKm: "4:16", strava: "https://www.strava.com/activities/8700435543", fc: 178},
+            {date: "2023-03-12", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "142/2067", indice: "6.87", perf: "00:42:44", tempsMoyenKm: "4:16", strava: "https://www.strava.com/activities/8700435543", fc: 178},
             {date: "2022-10-16", course: "Tcs Amsterdam Marathon", ville: "Amsterdam", dept: "0", km: "42.195", classement: "1630/12658", indice: "12.88", perf: "03:13:45", tempsMoyenKm: "4:35", strava: "https://www.strava.com/activities/7970754505", fc: 173},
             {date: "2022-09-18", course: "Semi-Marathon Fensch et Moselle", ville: "Uckange", dept: "57", km: "21.1", classement: "30/124", indice: "24.19", perf: "01:32:20", tempsMoyenKm: "4:23", strava: "https://www.strava.com/activities/7826241352", fc: 178},
             {date: "2022-06-26", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "21/147", indice: "14.29", perf: "00:41:27", tempsMoyenKm: "4:09", strava: "https://www.strava.com/activities/7369943097", fc: 177},
-            {date: "2022-03-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "28/100", indice: "28", perf: "00:40:05", tempsMoyenKm: "4:01", strava: "https://www.strava.com/activities/7249627360", fc: 182},
+            {date: "2022-06-03", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "28/100", indice: "28", perf: "00:40:05", tempsMoyenKm: "4:01", strava: "https://www.strava.com/activities/7249627360", fc: 182},
             {date: "2022-05-28", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "456/4498", indice: "10.14", perf: "01:37:46", tempsMoyenKm: "4:38", strava: "https://www.strava.com/activities/7217953463", fc: 174},
             {date: "2022-05-15", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "289/798", indice: "36.22", perf: "01:51:28", tempsMoyenKm: "5:17", strava: "https://www.strava.com/activities/7145622553", fc: 177},
-            {date: "2022-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "21/136", indice: "15.44", perf: "00:40:34", tempsMoyenKm: "4:03", strava: "https://www.strava.com/activities/7068557851", fc: 176},
+            {date: "2022-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "21/136", indice: "15.44", perf: "00:40:34", tempsMoyenKm: "4:03", strava: "https://www.strava.com/activities/7068557851", fc: 176},
             {date: "2022-03-27", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "77/325", indice: "23.69", perf: "00:40:16", tempsMoyenKm: "4:02", strava: "https://www.strava.com/activities/6889279481", fc: 186},
             {date: "2022-03-20", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Gandrange", dept: "57", km: "21.1", classement: "82/309", indice: "26.54", perf: "01:33:58", tempsMoyenKm: "4:27", strava: "https://www.strava.com/activities/6852262326", fc: 179},
             {date: "2021-10-17", course: "Schneider Electric Marathon de Paris", ville: "Paris", dept: "75", km: "42.195", classement: "4587/27071", indice: "16.94", perf: "03:29:02", tempsMoyenKm: "4:57", strava: "https://www.strava.com/activities/6125599297", fc: 172},
             {date: "2021-09-19", course: "Semi-Marathon du Val de Fensch", ville: "Uckange", dept: "57", km: "21.1", classement: "60/188", indice: "31.91", perf: "01:33:14", tempsMoyenKm: "4:25", strava: "https://www.strava.com/activities/5983824622", fc: 178},
-            {date: "2021-04-07", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "78/250", indice: "31.2", perf: "00:40:49", tempsMoyenKm: "4:05", strava: "https://www.strava.com/activities/5572013481", fc: 186},
+            {date: "2021-07-04", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "78/250", indice: "31.2", perf: "00:40:49", tempsMoyenKm: "4:05", strava: "https://www.strava.com/activities/5572013481", fc: 186},
             {date: "2020-12-24", course: "5Km Athlé - Open de France virtuel", ville: "Partout", dept: "75", km: "5", classement: "1666/11608", indice: "14.35", perf: "00:20:25", tempsMoyenKm: "4:05", strava: "https://www.strava.com/activities/4494773509", fc: 189},
             {date: "2020-07-14", course: "5km Athlé - Open de France Virtuel", ville: "Partout", dept: "56", km: "5", classement: "1413/7990", indice: "17.68", perf: "00:21:15", tempsMoyenKm: "4:15", strava: "https://www.strava.com/activities/3756329596", fc: 180},
-            {date: "2020-01-03", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Vitry-Sur-Orne", dept: "57", km: "21.1", classement: "247/582", indice: "42.44", perf: "01:42:59", tempsMoyenKm: "4:53", strava: "https://www.strava.com/activities/3144210898", fc: 178},
-            {date: "2019-03-11", course: "Course Marcel Kiefer", ville: "Hussigny-Godbrange", dept: "54", km: "21", classement: "41/102", indice: "40.2", perf: "01:52:47", tempsMoyenKm: "5:22", strava: "https://www.strava.com/activities/2838102426", fc: 184},
+            {date: "2020-03-01", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Vitry-Sur-Orne", dept: "57", km: "21.1", classement: "247/582", indice: "42.44", perf: "01:42:59", tempsMoyenKm: "4:53", strava: "https://www.strava.com/activities/3144210898", fc: 178},
+            {date: "2019-11-03", course: "Course Marcel Kiefer", ville: "Hussigny-Godbrange", dept: "54", km: "21", classement: "41/102", indice: "40.2", perf: "01:52:47", tempsMoyenKm: "5:22", strava: "https://www.strava.com/activities/2838102426", fc: 184},
             {date: "2019-10-21", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "2083/7623", indice: "27.33", perf: "01:59:38", tempsMoyenKm: "5:04", strava: "https://www.strava.com/activities/2767774831", fc: 182},
             {date: "2019-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "15", classement: "96/289", indice: "33.22", perf: "01:15:11", tempsMoyenKm: "5:01", strava: "https://www.strava.com/activities/2649386092", fc: 185},
             {date: "2019-06-30", course: "Les Foulées de Saint Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "73/234", indice: "31.2", perf: "00:46:42", tempsMoyenKm: "4:40", strava: "https://www.strava.com/activities/2491818770", fc: 185},
-            {date: "2019-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "58/131", indice: "44.27", perf: "00:45:11", tempsMoyenKm: "4:31", strava: "https://www.strava.com/activities/2431537538", fc: 181},
-            {date: "2019-01-06", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "1564/6470", indice: "24.17", perf: "01:55:51", tempsMoyenKm: "5:29", strava: "https://www.strava.com/activities/2415438474", fc: 185},
-            {date: "2019-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "121/248", indice: "48.79", perf: "00:49:03", tempsMoyenKm: "4:54", strava: "https://www.strava.com/activities/2332583576", fc: 185},
+            {date: "2019-06-07", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "58/131", indice: "44.27", perf: "00:45:11", tempsMoyenKm: "4:31", strava: "https://www.strava.com/activities/2431537538", fc: 181},
+            {date: "2019-06-01", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "1564/6470", indice: "24.17", perf: "01:55:51", tempsMoyenKm: "5:29", strava: "https://www.strava.com/activities/2415438474", fc: 185},
+            {date: "2019-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "121/248", indice: "48.79", perf: "00:49:03", tempsMoyenKm: "4:54", strava: "https://www.strava.com/activities/2332583576", fc: 185},
             {date: "2019-04-28", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "521/987", indice: "52.79", perf: "01:49:48", tempsMoyenKm: "5:12", strava: "https://www.strava.com/activities/2325102723", fc: 186},
             {date: "2019-03-17", course: "Semi-Marathon de La Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "314/456", indice: "68.86", perf: "01:53:04", tempsMoyenKm: "5:22", strava: "https://www.strava.com/activities/2220974946"}
         ];
@@ -760,22 +820,22 @@
 
 
         const BIB_NUMS = {
-  "2019-01-05":213,"2019-01-06":5477,"2019-03-11":216,
+  "2019-05-01":213,"2019-06-01":5477,"2019-11-03":216,
   "2019-03-17":441,"2019-04-28":282,"2019-06-30":363,
-  "2019-07-06":306,"2019-08-25":232,"2019-10-21":3098,
-  "2020-01-03":253,"2021-04-07":213,"2021-09-19":436,
-  "2021-10-17":4027,"2022-01-05":339,"2022-03-06":415,
+  "2019-06-07":306,"2019-08-25":232,"2019-10-21":3098,
+  "2020-03-01":253,"2021-07-04":213,"2021-09-19":436,
+  "2021-10-17":4027,"2022-05-01":339,"2022-06-03":415,
   "2022-03-20":37,"2022-03-27":199,"2022-05-15":921,
   "2022-05-28":6011,"2022-06-26":91,"2022-09-18":14,
-  "2022-10-16":1020,"2023-01-10":209,"2023-02-06":638,
+  "2022-10-16":1020,"2023-10-01":209,"2023-06-02":638,
   "2023-03-19":208,"2023-04-23":2463,"2023-05-20":2687,
-  "2023-06-25":192,"2023-09-07":306,"2023-09-24":833,
-  "2023-10-14":421,"2023-12-03":3481,"2024-01-05":448,
-  "2024-03-17":463,"2024-04-21":2968,"2024-06-10":1569,
-  "2024-07-04":3202,"2024-07-06":758,"2024-08-05":434,
+  "2023-06-25":192,"2023-07-09":306,"2023-09-24":833,
+  "2023-10-14":421,"2023-03-12":3481,"2024-05-01":448,
+  "2024-03-17":463,"2024-04-21":2968,"2024-03-10":1569,
+  "2024-04-07":3202,"2024-06-07":758,"2024-05-08":434,
   "2024-08-25":371,"2024-09-29":536,"2024-10-03":1445,
-  "2024-11-05":4403,"2025-03-16":65,"2025-04-27":4013,
-  "2025-05-10":1154,"2025-05-31":547,"2025-09-28":1413,
+  "2024-05-11":4403,"2025-03-16":65,"2025-04-27":4013,
+  "2025-10-05":1154,"2025-05-31":547,"2025-09-28":1413,
   "2026-03-01":457
 };
         function render() {
@@ -886,6 +946,22 @@
                             ${recordFilter ? '<div class="filter-indicator mt-1">✓ FILTRÉ</div>' : '<div class="text-xs text-gray-600 mt-1">Cliquer pour filtrer</div>'}
                         </div>
                     </div>
+
+
+                    <!-- HEATMAP CALENDRIER -->
+                    <div class="heatmap-wrap fade-in" style="animation-delay:0.4s">
+                        <div class="heatmap-title">📅 Calendrier des courses — 2019 → 2026</div>
+                        <div id="heatmap-container"></div>
+                        <div class="heatmap-legend">
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(0,210,120,0.8)"></div>10 km</div>
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(255,140,50,0.8)"></div>Trail</div>
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(0,180,255,0.85)"></div>Semi</div>
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(200,80,255,0.85)"></div>Marathon</div>
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(255,255,255,0.05);outline:1.5px solid rgba(255,255,255,0.15);outline-offset:0px;border-radius:2px;"></div>Vide</div>
+                            <div class="heatmap-legend-item"><div class="heatmap-legend-dot" style="background:rgba(0,180,255,0.85);outline:2px solid rgba(255,215,0,0.9);border-radius:2px;"></div>Record perso</div>
+                        </div>
+                    </div>
+                    <div class="heatmap-tooltip" id="heatmap-tooltip"></div>
 
                     <div class="mb-10 flex flex-wrap gap-3">
                         <button onclick="setDistanceFilter('all')" class="filter-btn ${distanceFilter === 'all' ? 'active' : ''}">
@@ -1680,6 +1756,100 @@ function removeBibTilt() {
     }
 }
 
+
+// ── HEATMAP CALENDRIER ────────────────────────────────────────────────────────
+function buildHeatmap() {
+    const container = document.getElementById('heatmap-container');
+    if (!container) return;
+    const tooltip = document.getElementById('heatmap-tooltip');
+
+    // Indexer les courses par date ISO
+    const raceByDate = {};
+    racesData.forEach(r => { raceByDate[r.date] = r; });
+
+    const MONTHS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
+    const startYear = 2019, endYear = 2026;
+
+    const grid = document.createElement('div');
+    grid.className = 'heatmap-grid';
+
+    for (let y = startYear; y <= endYear; y++) {
+        // Vérifier si l'année a au moins une course
+        const yearHasRaces = racesData.some(r => r.date.startsWith(String(y)));
+
+        // Toujours afficher le marqueur d'année (colonne label seule si janvier vide)
+        let yearLabelAdded = false;
+
+        for (let m = 0; m < 12; m++) {
+            // Nombre de jours dans ce mois
+            const daysInMonth = new Date(y, m + 1, 0).getDate();
+
+            // Chercher les courses de ce mois
+            const monthRaces = [];
+            for (let d = 1; d <= daysInMonth; d++) {
+                const iso = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                if (raceByDate[iso]) monthRaces.push(raceByDate[iso]);
+            }
+
+            // Si pas de course ET pas encore affiché le label année → colonne label seule
+            if (monthRaces.length === 0 && m !== 0) continue;
+
+            const col = document.createElement('div');
+            col.className = 'heatmap-month-col';
+
+            // Label
+            const label = document.createElement('div');
+            if (!yearLabelAdded) {
+                label.className = 'heatmap-year-label';
+                label.textContent = String(y);
+                yearLabelAdded = true;
+            } else {
+                label.className = 'heatmap-month-label';
+                label.textContent = MONTHS[m];
+            }
+            col.appendChild(label);
+
+            if (monthRaces.length === 0) {
+                // Colonne vide juste pour afficher l'année
+                grid.appendChild(col);
+                continue;
+            }
+
+            // Ignorer les mois sans course
+            if (monthRaces.length === 0) continue;
+
+            monthRaces.forEach(race => {
+                    const cell = document.createElement('div');
+                    const km = parseFloat(race.km);
+                    let cls = km >= 42 ? 'has-race-marathon' : km >= 21 ? 'has-race-semi' : km >= 14 ? 'has-race-trail' : 'has-race-10k';
+                    cell.className = 'heatmap-cell ' + cls + (race.record ? ' is-record' : '');
+
+                    // Tooltip
+                    cell.addEventListener('mouseenter', e => {
+                        const d = race.date.split('-');
+                        tooltip.innerHTML =
+                            `<strong style="color:var(--neon-cyan)">${race.course}</strong><br>` +
+                            `📅 ${d[2]}/${d[1]}/${d[0]}<br>` +
+                            `📏 ${race.km} km &nbsp;·&nbsp; ⏱ ${race.perf}<br>` +
+                            `🏁 ${race.classement} &nbsp;·&nbsp; 👟 ${race.tempsMoyenKm}/km` +
+                            (race.record ? `<br><span style="color:rgba(255,215,0,0.9)">⭐ Record Personnel</span>` : '');
+                        tooltip.style.display = 'block';
+                    });
+                    cell.addEventListener('mousemove', e => {
+                        tooltip.style.left = (e.clientX + 14) + 'px';
+                        tooltip.style.top  = (e.clientY - 10) + 'px';
+                    });
+                    cell.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+
+                    col.appendChild(cell);
+                });
+            grid.appendChild(col);
+        }
+    }
+    container.appendChild(grid);
+}
+
+buildHeatmap();
 // Close on Escape
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBib(); });
 </script>
