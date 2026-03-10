@@ -1101,16 +1101,19 @@
         window.setDistanceFilter = function(filter) {
             distanceFilter = filter;
             render();
+            buildHeatmap(filterRaces());
         };
 
         window.setYearFilter = function(year) {
             yearFilter = yearFilter === year ? 'all' : year;
             render();
+            buildHeatmap(filterRaces());
         };
 
         window.toggleRecordFilter = function() {
             recordFilter = !recordFilter;
             render();
+            buildHeatmap(filterRaces());
         };
 
         window.toggleBestRankFilter = function() {
@@ -1758,17 +1761,23 @@ function removeBibTilt() {
 
 
 // ── HEATMAP CALENDRIER ────────────────────────────────────────────────────────
-function buildHeatmap() {
+function buildHeatmap(races) {
+    races = races || racesData;
     const container = document.getElementById('heatmap-container');
     if (!container) return;
     const tooltip = document.getElementById('heatmap-tooltip');
 
+    // Vider le conteneur avant de reconstruire
+    container.innerHTML = '';
+
     // Indexer les courses par date ISO
     const raceByDate = {};
-    racesData.forEach(r => { raceByDate[r.date] = r; });
+    races.forEach(r => { raceByDate[r.date] = r; });
 
     const MONTHS = ['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Août','Sep','Oct','Nov','Déc'];
-    const startYear = 2019, endYear = 2026;
+    const raceYears = races.map(r => parseInt(r.date.split('-')[0]));
+    if (raceYears.length === 0) { container.innerHTML = '<div style="color:rgba(255,255,255,0.3);font-size:0.75rem;padding:0.5rem">Aucune course pour cette sélection</div>'; return; }
+    const startYear = Math.min(...raceYears), endYear = Math.max(...raceYears);
 
     const grid = document.createElement('div');
     grid.className = 'heatmap-grid';
