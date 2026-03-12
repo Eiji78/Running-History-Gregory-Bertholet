@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courbes de Progression - Running History</title>
+    <title>Progression - Running History</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -101,15 +101,14 @@
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(1.6rem, 4vw, 3.2rem);
             font-weight: 900;
-            background: linear-gradient(135deg, #00fff9 0%, #bc13fe 50%, #ff006e 100%);
+            background: linear-gradient(135deg, var(--neon-cyan) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 80px rgba(0, 255, 249, 0.5);
-            letter-spacing: 0.1em;
-            position: relative;
-            animation: titleGlow 3s ease-in-out infinite;
-            white-space: nowrap;
+            letter-spacing: 0.06em;
+            filter: drop-shadow(0 0 20px rgba(0,255,249,0.7)) drop-shadow(0 0 40px rgba(188,19,254,0.5));
+            display: block;
+            text-align: center;
         }
 
         @keyframes titleGlow {
@@ -129,7 +128,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
@@ -201,6 +200,14 @@
             .back-btn { font-size: 0.7rem; padding: 0.45rem 0.9rem; letter-spacing: 0.04em; }
             .py-20 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
             .mb-14, .mb-12, .mb-10 { margin-bottom: 1.5rem !important; }
+            .text-center { text-align: center !important; }
+            .font-bold { font-weight: 700 !important; }
+            .tracking-wider { letter-spacing: 0.05em !important; }
+            .mb-3 { margin-bottom: 0.75rem !important; }
+            .mb-6 { margin-bottom: 1.5rem !important; }
+            .mb-8 { margin-bottom: 2rem !important; }
+            .gap-8 { gap: 2rem !important; }
+            .grid-cols-1 { grid-template-columns: repeat(1,minmax(0,1fr)) !important; }
             .p-8 { padding: 1.2rem !important; }
             .p-7 { padding: 1rem !important; }
             /* Graphiques : 1 colonne, hauteur généreuse */
@@ -240,7 +247,111 @@
         h1, .main-title { font-size: 1.1rem !important; white-space: normal !important; word-break: break-word !important; text-align: center !important; }
         .subtitle { font-size: 0.7rem !important; }
     }
-</style>
+/* ── PROGRESSION RECORDS ─────────────────────────────── */
+        .prog-records-wrap {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .prog-records-title {
+            font-size: 0.7rem;
+            letter-spacing: 0.15em;
+            color: rgba(0,255,249,0.7);
+            text-transform: uppercase;
+            margin-bottom: 1.2rem;
+        }
+        .prog-distance-block {
+            margin-bottom: 1.4rem;
+        }
+        .prog-distance-block:last-child { margin-bottom: 0; }
+        .prog-dist-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .prog-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+        }
+        .prog-step {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .prog-bubble {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            padding: 0.35rem 0.7rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: default;
+            position: relative;
+        }
+        .prog-bubble:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        .prog-bubble.is-record {
+            border-color: rgba(255,215,0,0.5);
+            background: rgba(255,215,0,0.07);
+        }
+        .prog-bubble .pb-time {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .prog-bubble .pb-date {
+            font-size: 0.55rem;
+            color: rgba(255,255,255,0.3);
+            margin-top: 1px;
+        }
+        .prog-bubble .pb-gain {
+            font-size: 0.55rem;
+            font-weight: 600;
+            margin-top: 1px;
+        }
+        .prog-step {
+            opacity: 0;
+            transform: translateX(-18px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .prog-step.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .prog-arrow {
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .prog-arrow.visible {
+            opacity: 1;
+            color: rgba(255,255,255,0.2);
+        }
+        .prog-total {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 0.5rem;
+            font-style: italic;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .prog-total.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
     <script>
@@ -264,8 +375,9 @@
     </a>
 
     <div class="container py-20">
-        <div class="text-center mb-16 fade-in">
-            <h1 class="main-title mb-8">COURBES DE PROGRESSION</h1>
+        <div class="text-center mb-12 fade-in">
+            <h1 class="main-title mb-3">PROGRESSION</h1>
+            <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">ÉVOLUTION · 2019 → 2026</p>
             <style>
 .site-nav {
     display: flex;
@@ -322,26 +434,31 @@
 </nav>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <!-- Graphique VMA au fil du temps -->
-            <div class="glass-card p-8 fade-in" style="animation-delay: 0.1s">
-                <h3 class="text-xl font-bold mb-6 tracking-wider" style="color: var(--neon-cyan);">ÉVOLUTION VMA</h3>
-                <canvas id="vmaChart" width="400" height="250"></canvas>
-            </div>
-
-            <!-- Graphique Pourcentage de classement -->
-            <div class="glass-card p-8 fade-in" style="animation-delay: 0.2s">
-                <h3 class="text-xl font-bold mb-6 tracking-wider" style="color: var(--neon-purple);">ÉVOLUTION CLASSEMENT (%)</h3>
-                <canvas id="percentChart" width="400" height="250"></canvas>
-            </div>
+        <!-- RECORD DE PROGRESSION -->
+        <div class="prog-records-wrap fade-in" id="prog-records-content-wrap" style="animation-delay:0.05s; margin-bottom:2.5rem;">
+            <div class="prog-records-title">🏆 Record de progression par distance</div>
+            <div id="prog-records-content"></div>
         </div>
 
-        <div class="grid grid-cols-1 gap-8">
-            <!-- Graphique Allure moyenne -->
-            <div class="glass-card p-8 fade-in" style="animation-delay: 0.3s">
-                <h3 class="text-xl font-bold mb-6 tracking-wider" style="color: var(--neon-orange);">ÉVOLUTION ALLURE (min/km)</h3>
-                <canvas id="paceChart" width="400" height="200"></canvas>
-            </div>
+        <!-- Évolution classement % -->
+        <div class="glass-card p-8 fade-in" style="animation-delay:0.08s; overflow:visible; margin-bottom:2rem;">
+            <h3 class="text-xl font-bold mb-2 tracking-wider" style="color:var(--neon-green); padding-top:0.25rem; padding-left:0.75rem;">ÉVOLUTION DU CLASSEMENT %</h3>
+            <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:0.08em;margin-bottom:1.5rem;padding-left:0.75rem;">Progression réelle indépendamment de la distance — plus c'est bas, mieux c'est</p>
+            <canvas id="rankPctChart" width="800" height="220"></canvas>
+        </div>
+
+        <!-- Évolution VMA -->
+        <div class="glass-card p-8 fade-in" style="animation-delay:0.1s; overflow:visible; margin-bottom:2rem;">
+            <h3 class="text-xl font-bold mb-2 tracking-wider" style="color:var(--neon-cyan); padding-top:0.25rem; padding-left:0.75rem;">ÉVOLUTION VMA</h3>
+            <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:0.08em;margin-bottom:1.5rem;padding-left:0.75rem;">Vitesse maximale aérobie estimée — plus c'est haut, mieux c'est</p>
+            <canvas id="vmaChart" width="800" height="220"></canvas>
+        </div>
+
+        <!-- Évolution Allure -->
+        <div class="glass-card p-8 fade-in" style="animation-delay:0.15s; overflow:visible; margin-bottom:2rem;">
+            <h3 class="text-xl font-bold mb-2 tracking-wider" style="color:var(--neon-orange); padding-top:0.25rem; padding-left:0.75rem;">ÉVOLUTION ALLURE (min/km)</h3>
+            <p style="font-size:0.72rem;color:rgba(255,255,255,0.3);letter-spacing:0.08em;margin-bottom:1.5rem;padding-left:0.75rem;">Allure moyenne par course — plus c'est bas, mieux c'est</p>
+            <canvas id="paceChart" width="800" height="220"></canvas>
         </div>
     </div>
 
@@ -350,54 +467,54 @@
 
         const racesData = [
             {date: "2026-03-01", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "48/673", indice: "7.13", perf: "01:25:52", tempsMoyenKm: "4:04"},
-            {date: "2025-05-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
+            {date: "2025-10-05", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
             {date: "2025-09-28", course: "Semi-Marathon - Route Du Vin", ville: "Luxembourg", dept: "0", km: "21.1", classement: "145/2499", indice: "5.8", perf: "01:23:48", tempsMoyenKm: "3:58", record: true},
             {date: "2025-05-31", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "181/8646", indice: "2.09", perf: "01:29:51", tempsMoyenKm: "4:14"},
             {date: "2025-04-27", course: "Marathon du lac d'Annecy", ville: "Annecy", dept: "74", km: "42.195", classement: "583/3845", indice: "15.16", perf: "03:26:08", tempsMoyenKm: "4:53"},
             {date: "2025-03-16", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Rosselange", dept: "57", km: "21.1", classement: "35/538", indice: "6.51", perf: "01:25:34", tempsMoyenKm: "4:03"},
-            {date: "2024-06-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "217/2734", indice: "7.94", perf: "01:40:51", tempsMoyenKm: "4:16"},
+            {date: "2024-10-06", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "217/2734", indice: "7.94", perf: "01:40:51", tempsMoyenKm: "4:16"},
             {date: "2024-09-29", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "178/1895", indice: "9.39", perf: "01:26:33", tempsMoyenKm: "4:06"},
             {date: "2024-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "11.8", classement: "59/433", indice: "13.63", perf: "01:00:59", tempsMoyenKm: "5:10"},
-            {date: "2024-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "20/161", indice: "12.42", perf: "00:38:18", tempsMoyenKm: "3:50"},
-            {date: "2024-11-05", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "176/6909", indice: "2.55", perf: "01:31:20", tempsMoyenKm: "4:19"},
-            {date: "2024-08-05", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true},
-            {date: "2024-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56"},
+            {date: "2024-06-07", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "20/161", indice: "12.42", perf: "00:38:18", tempsMoyenKm: "3:50"},
+            {date: "2024-05-11", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "176/6909", indice: "2.55", perf: "01:31:20", tempsMoyenKm: "4:19"},
+            {date: "2024-05-08", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true},
+            {date: "2024-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56"},
             {date: "2024-04-21", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "80/1089", indice: "7.35", perf: "01:25:30", tempsMoyenKm: "4:03"},
-            {date: "2024-07-04", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true},
+            {date: "2024-04-07", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true},
             {date: "2024-03-17", course: "Semi-Marathon Intercommunal de la Vallée de l'Orne", ville: "Moyeuvre-Grande", dept: "57", km: "21.1", classement: "34/416", indice: "8.17", perf: "01:30:06", tempsMoyenKm: "4:16"},
-            {date: "2024-10-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02"},
+            {date: "2024-03-10", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02"},
             {date: "2023-10-14", course: "Haard Trail Dudelange", ville: "Dudelange", dept: "0", km: "15", classement: "27/94", indice: "28.72", perf: "01:11:15", tempsMoyenKm: "4:45"},
-            {date: "2023-01-10", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "259/2171", indice: "11.93", perf: "01:48:54", tempsMoyenKm: "4:36"},
+            {date: "2023-10-01", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "259/2171", indice: "11.93", perf: "01:48:54", tempsMoyenKm: "4:36"},
             {date: "2023-09-24", course: "Ing Semi Marathon - Route Du Vin", ville: "Remich", dept: "0", km: "21.1", classement: "179/1370", indice: "13.07", perf: "01:30:39", tempsMoyenKm: "4:17"},
-            {date: "2023-09-07", course: "La Forestière", ville: "Moyeuvre-Grande", dept: "57", km: "10", classement: "39/164", indice: "23.78", perf: "00:50:30", tempsMoyenKm: "5:03"},
+            {date: "2023-07-09", course: "La Forestière", ville: "Moyeuvre-Grande", dept: "57", km: "10", classement: "39/164", indice: "23.78", perf: "00:50:30", tempsMoyenKm: "5:03"},
             {date: "2023-06-25", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "24/169", indice: "14.2", perf: "00:41:37", tempsMoyenKm: "4:10"},
-            {date: "2023-02-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "18/119", indice: "15.13", perf: "00:40:17", tempsMoyenKm: "4:02"},
+            {date: "2023-06-02", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "18/119", indice: "15.13", perf: "00:40:17", tempsMoyenKm: "4:02"},
             {date: "2023-05-20", course: "Ing Night Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "42.195", classement: "222/1046", indice: "21.22", perf: "03:47:13", tempsMoyenKm: "5:23"},
             {date: "2023-04-23", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "82/690", indice: "11.88", perf: "01:27:20", tempsMoyenKm: "4:08"},
             {date: "2023-03-19", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Rombas", dept: "57", km: "21.1", classement: "33/395", indice: "8.35", perf: "01:28:36", tempsMoyenKm: "4:12"},
-            {date: "2023-12-03", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "142/2067", indice: "6.87", perf: "00:42:44", tempsMoyenKm: "4:16"},
+            {date: "2023-03-12", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "142/2067", indice: "6.87", perf: "00:42:44", tempsMoyenKm: "4:16"},
             {date: "2022-10-16", course: "Tcs Amsterdam Marathon", ville: "Amsterdam", dept: "0", km: "42.195", classement: "1630/12658", indice: "12.88", perf: "03:13:45", tempsMoyenKm: "4:35"},
             {date: "2022-09-18", course: "Semi-Marathon Fensch et Moselle", ville: "Uckange", dept: "57", km: "21.1", classement: "30/124", indice: "24.19", perf: "01:32:20", tempsMoyenKm: "4:23"},
             {date: "2022-06-26", course: "Foulées de Saint-Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "21/147", indice: "14.29", perf: "00:41:27", tempsMoyenKm: "4:09"},
-            {date: "2022-03-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "28/100", indice: "28", perf: "00:40:05", tempsMoyenKm: "4:01"},
+            {date: "2022-06-03", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "28/100", indice: "28", perf: "00:40:05", tempsMoyenKm: "4:01"},
             {date: "2022-05-28", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "456/4498", indice: "10.14", perf: "01:37:46", tempsMoyenKm: "4:38"},
             {date: "2022-05-15", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "289/798", indice: "36.22", perf: "01:51:28", tempsMoyenKm: "5:17"},
-            {date: "2022-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "21/136", indice: "15.44", perf: "00:40:34", tempsMoyenKm: "4:03"},
+            {date: "2022-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "21/136", indice: "15.44", perf: "00:40:34", tempsMoyenKm: "4:03"},
             {date: "2022-03-27", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "77/325", indice: "23.69", perf: "00:40:16", tempsMoyenKm: "4:02"},
             {date: "2022-03-20", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Gandrange", dept: "57", km: "21.1", classement: "82/309", indice: "26.54", perf: "01:33:58", tempsMoyenKm: "4:27"},
             {date: "2021-10-17", course: "Schneider Electric Marathon de Paris", ville: "Paris", dept: "75", km: "42.195", classement: "4587/27071", indice: "16.94", perf: "03:29:02", tempsMoyenKm: "4:57"},
             {date: "2021-09-19", course: "Semi-Marathon du Val de Fensch", ville: "Uckange", dept: "57", km: "21.1", classement: "60/188", indice: "31.91", perf: "01:33:14", tempsMoyenKm: "4:25"},
-            {date: "2021-04-07", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "78/250", indice: "31.2", perf: "00:40:49", tempsMoyenKm: "4:05"},
+            {date: "2021-07-04", course: "Boucles de l'Acier", ville: "Florange", dept: "57", km: "10", classement: "78/250", indice: "31.2", perf: "00:40:49", tempsMoyenKm: "4:05"},
             {date: "2020-12-24", course: "5Km Athlé - Open de France virtuel", ville: "Partout", dept: "75", km: "5", classement: "1666/11608", indice: "14.35", perf: "00:20:25", tempsMoyenKm: "4:05"},
             {date: "2020-07-14", course: "5km Athlé - Open de France Virtuel", ville: "Partout", dept: "56", km: "5", classement: "1413/7990", indice: "17.68", perf: "00:21:15", tempsMoyenKm: "4:15"},
-            {date: "2020-01-03", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Vitry-Sur-Orne", dept: "57", km: "21.1", classement: "247/582", indice: "42.44", perf: "01:42:59", tempsMoyenKm: "4:53"},
-            {date: "2019-03-11", course: "Course Marcel Kiefer", ville: "Hussigny-Godbrange", dept: "54", km: "21", classement: "41/102", indice: "40.2", perf: "01:52:47", tempsMoyenKm: "5:22"},
+            {date: "2020-03-01", course: "Semi Marathon Intercommunal de La Vallée de l'Orne", ville: "Vitry-Sur-Orne", dept: "57", km: "21.1", classement: "247/582", indice: "42.44", perf: "01:42:59", tempsMoyenKm: "4:53"},
+            {date: "2019-11-03", course: "Course Marcel Kiefer", ville: "Hussigny-Godbrange", dept: "54", km: "21", classement: "41/102", indice: "40.2", perf: "01:52:47", tempsMoyenKm: "5:22"},
             {date: "2019-10-21", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "2083/7623", indice: "27.33", perf: "01:59:38", tempsMoyenKm: "5:04"},
             {date: "2019-08-25", course: "La Boussoise", ville: "Bousse", dept: "57", km: "15", classement: "96/289", indice: "33.22", perf: "01:15:11", tempsMoyenKm: "5:01"},
             {date: "2019-06-30", course: "Les Foulées de Saint Hubert", ville: "Gandrange", dept: "57", km: "10", classement: "73/234", indice: "31.2", perf: "00:46:42", tempsMoyenKm: "4:40"},
-            {date: "2019-07-06", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "58/131", indice: "44.27", perf: "00:45:11", tempsMoyenKm: "4:31"},
-            {date: "2019-01-06", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "1564/6470", indice: "24.17", perf: "01:55:51", tempsMoyenKm: "5:29"},
-            {date: "2019-01-05", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "121/248", indice: "48.79", perf: "00:49:03", tempsMoyenKm: "4:54"},
+            {date: "2019-06-07", course: "Ronde Nocturne", ville: "Clouange", dept: "57", km: "10", classement: "58/131", indice: "44.27", perf: "00:45:11", tempsMoyenKm: "4:31"},
+            {date: "2019-06-01", course: "Ing Night Semi Marathon Luxembourg", ville: "Luxembourg", dept: "0", km: "21.1", classement: "1564/6470", indice: "24.17", perf: "01:55:51", tempsMoyenKm: "5:29"},
+            {date: "2019-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "121/248", indice: "48.79", perf: "00:49:03", tempsMoyenKm: "4:54"},
             {date: "2019-04-28", course: "Semi Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "521/987", indice: "52.79", perf: "01:49:48", tempsMoyenKm: "5:12"},
             {date: "2019-03-17", course: "Semi-Marathon de La Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "314/456", indice: "68.86", perf: "01:53:04", tempsMoyenKm: "5:22"}
         ];
@@ -427,45 +544,26 @@
             
             const labels = sortedRaces.map(r => r.date);
             const vmaData = sortedRaces.map(r => parseFloat(calculateRaceVMA(r.tempsMoyenKm)));
-            const percentData = sortedRaces.map(r => {
-                const perc = calculatePercentage(r.classement);
-                return perc === 'N/A' ? null : parseFloat(perc);
-            });
             const paceData = sortedRaces.map(r => {
                 const [min, sec] = r.tempsMoyenKm.split(':');
                 return parseInt(min) + (parseInt(sec) / 60);
             });
 
-            const avgVMA = vmaData.reduce((a, b) => a + b, 0) / vmaData.length;
-            const avgPercent = percentData.filter(p => p !== null).reduce((a, b) => a + b, 0) / percentData.filter(p => p !== null).length;
-            const avgPace = paceData.reduce((a, b) => a + b, 0) / paceData.length;
+            // Group data by distance category for coloring
+            const DIST_COLORS = {
+                '10K':  { border: 'rgba(0,210,120,1)',  bg: 'rgba(0,210,120,0.15)' },
+                'Semi': { border: 'rgba(0,180,255,1)',  bg: 'rgba(0,180,255,0.15)' },
+                'Trail':{ border: 'rgba(255,165,0,1)',  bg: 'rgba(255,165,0,0.15)'  },
+                'Mar':  { border: 'rgba(200,80,255,1)', bg: 'rgba(200,80,255,0.15)' },
+            };
 
-            function calculateTrendLine(data) {
-                const n = data.length;
-                let sumX = 0, sumY = 0, sumXY = 0, sumX2 = 0;
-                
-                data.forEach((y, x) => {
-                    if (y !== null) {
-                        sumX += x;
-                        sumY += y;
-                        sumXY += x * y;
-                        sumX2 += x * x;
-                    }
-                });
-                
-                const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
-                const intercept = (sumY - slope * sumX) / n;
-                
-                return data.map((_, i) => slope * i + intercept);
+            function distCat(km) {
+                const k = parseFloat(km);
+                if (k >= 40) return 'Mar';
+                if (k >= 18) return 'Semi';
+                if (k >= 9 && k <= 13) return '10K';
+                return 'Trail';
             }
-
-            const vmaTrend = calculateTrendLine(vmaData);
-            const percentTrend = calculateTrendLine(percentData.map(p => p === null ? 0 : p));
-            const paceTrend = calculateTrendLine(paceData);
-
-            const vmaAvgLine = new Array(labels.length).fill(avgVMA);
-            const percentAvgLine = new Array(labels.length).fill(avgPercent);
-            const paceAvgLine = new Array(labels.length).fill(avgPace);
 
             const isMobile = window.innerWidth <= 768;
             const commonOptions = {
@@ -524,90 +622,62 @@
                 }
             };
 
+            // ── ÉVOLUTION VMA ──────────────────────────────────────────
             const vmaCtx = document.getElementById('vmaChart').getContext('2d');
+            const vmaPointColors = sortedRaces.map(r => DIST_COLORS[distCat(r.km)].border);
+            const avgVMA = vmaData.reduce((a,b)=>a+b,0)/vmaData.length;
+            function vmaTrendLine(vals) {
+                const n=vals.length; let sx=0,sy=0,sxy=0,sx2=0;
+                vals.forEach((y,x)=>{sx+=x;sy+=y;sxy+=x*y;sx2+=x*x;});
+                const slope=(n*sxy-sx*sy)/(n*sx2-sx*sx);
+                const intercept=(sy-slope*sx)/n;
+                return vals.map((_,x)=>parseFloat((slope*x+intercept).toFixed(3)));
+            }
+            const vmaTrend = vmaTrendLine(vmaData);
+
             new Chart(vmaCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'VMA (km/h)',
-                        data: vmaData,
-                        borderColor: '#00fff9',
-                        backgroundColor: 'rgba(0, 255, 249, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#00fff9',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 6,
-                        order: 1
-                    }, {
-                        label: 'Moyenne (' + avgVMA.toFixed(2) + ' km/h)',
-                        data: vmaAvgLine,
-                        borderColor: 'rgba(255, 215, 0, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [10, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 2
-                    }, {
-                        label: 'Tendance',
-                        data: vmaTrend,
-                        borderColor: 'rgba(0, 255, 136, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 3
-                    }]
-                },
-                options: commonOptions
-            });
-
-            const percentCtx = document.getElementById('percentChart').getContext('2d');
-            new Chart(percentCtx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Classement (%)',
-                        data: percentData,
-                        borderColor: '#bc13fe',
-                        backgroundColor: 'rgba(188, 19, 254, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#bc13fe',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 6,
-                        order: 1
-                    }, {
-                        label: 'Moyenne (' + avgPercent.toFixed(1) + '%)',
-                        data: percentAvgLine,
-                        borderColor: 'rgba(255, 215, 0, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [10, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 2
-                    }, {
-                        label: 'Tendance',
-                        data: percentTrend,
-                        borderColor: 'rgba(0, 255, 136, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 3
-                    }]
+                    datasets: [
+                        {
+                            label: 'VMA (km/h)',
+                            data: vmaData,
+                            borderColor: 'rgba(255,255,255,0.25)',
+                            borderWidth: 1.5,
+                            borderDash: [3,3],
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: vmaPointColors,
+                            pointBorderColor: vmaPointColors,
+                            pointBorderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            order: 1
+                        },
+                        {
+                            label: 'Tendance',
+                            data: vmaTrend,
+                            borderColor: 'rgba(0,255,136,0.9)',
+                            borderWidth: 2.5,
+                            borderDash: [6,4],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 2
+                        },
+                        {
+                            label: 'Moyenne (' + avgVMA.toFixed(2) + ' km/h)',
+                            data: Array(labels.length).fill(parseFloat(avgVMA.toFixed(3))),
+                            borderColor: 'rgba(255,215,0,0.6)',
+                            borderWidth: 1.5,
+                            borderDash: [10,5],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 3
+                        }
+                    ]
                 },
                 options: {
                     ...commonOptions,
@@ -615,54 +685,95 @@
                         ...commonOptions.scales,
                         y: {
                             ...commonOptions.scales.y,
-                            reverse: true
+                            ticks: {
+                                color: 'rgba(255,255,255,0.5)',
+                                callback: v => v.toFixed(1) + ' km/h'
+                            },
+                            title: { display: true, text: 'VMA (km/h)', color: 'rgba(255,255,255,0.3)', font: { size: 10 } }
                         }
+                    },
+                    plugins: {
+                        ...commonOptions.plugins,
+                        legend: { ...commonOptions.plugins.legend, labels: { ...commonOptions.plugins.legend.labels,
+                            generateLabels: function() {
+                                return [
+                                    { text: 'Tendance', strokeStyle: 'rgba(0,255,136,0.9)', fillStyle:'transparent', lineWidth:2, pointStyle:'line' },
+                                    { text: 'Moyenne',  strokeStyle: 'rgba(255,215,0,0.6)',  fillStyle:'transparent', lineWidth:2, pointStyle:'line' },
+                                    { text: '10K',      strokeStyle: 'rgba(0,210,120,1)',    fillStyle:'rgba(0,210,120,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Semi',     strokeStyle: 'rgba(0,180,255,1)',    fillStyle:'rgba(0,180,255,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Trail',    strokeStyle: 'rgba(255,165,0,1)',    fillStyle:'rgba(255,165,0,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Marathon', strokeStyle: 'rgba(200,80,255,1)',   fillStyle:'rgba(200,80,255,0.5)', lineWidth:2, pointStyle:'circle' },
+                                ];
+                            }
+                        }},
+                        tooltip: { ...commonOptions.plugins.tooltip, callbacks: {
+                            title: ctx => sortedRaces[ctx[0].dataIndex]?.course || '',
+                            label: ctx => {
+                                if (ctx.datasetIndex !== 0) return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(2) + ' km/h';
+                                const r = sortedRaces[ctx.dataIndex];
+                                return [ ctx.parsed.y.toFixed(2) + ' km/h', distCat(r.km) + ' · ' + r.perf ];
+                            }
+                        }}
                     }
                 }
             });
 
+            // ── ÉVOLUTION ALLURE ───────────────────────────────────────────
             const paceCtx = document.getElementById('paceChart').getContext('2d');
-            const avgPaceMin = Math.floor(avgPace);
-            const avgPaceSec = Math.round((avgPace - avgPaceMin) * 60);
+            const pacePointColors = sortedRaces.map(r => DIST_COLORS[distCat(r.km)].border);
+            const avgPaceVal = paceData.reduce((a,b)=>a+b,0)/paceData.length;
+            function paceTrendLine(vals) {
+                const n=vals.length; let sx=0,sy=0,sxy=0,sx2=0;
+                vals.forEach((y,x)=>{sx+=x;sy+=y;sxy+=x*y;sx2+=x*x;});
+                const slope=(n*sxy-sx*sy)/(n*sx2-sx*sx);
+                const intercept=(sy-slope*sx)/n;
+                return vals.map((_,x)=>parseFloat((slope*x+intercept).toFixed(3)));
+            }
+            const paceTrendData = paceTrendLine(paceData);
+
             new Chart(paceCtx, {
                 type: 'line',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        label: 'Allure (min/km)',
-                        data: paceData,
-                        borderColor: '#ff6b35',
-                        backgroundColor: 'rgba(255, 107, 53, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#ff6b35',
-                        pointBorderColor: '#ffffff',
-                        pointBorderWidth: 2,
-                        pointHoverRadius: 6,
-                        order: 1
-                    }, {
-                        label: 'Moyenne (' + avgPaceMin + ':' + String(avgPaceSec).padStart(2, '0') + ' /km)',
-                        data: paceAvgLine,
-                        borderColor: 'rgba(255, 215, 0, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [10, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 2
-                    }, {
-                        label: 'Tendance',
-                        data: paceTrend,
-                        borderColor: 'rgba(0, 255, 136, 0.8)',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        pointRadius: 0,
-                        fill: false,
-                        tension: 0,
-                        order: 3
-                    }]
+                    datasets: [
+                        {
+                            label: 'Allure (min/km)',
+                            data: paceData,
+                            borderColor: 'rgba(255,255,255,0.25)',
+                            borderWidth: 1.5,
+                            borderDash: [3,3],
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: pacePointColors,
+                            pointBorderColor: pacePointColors,
+                            pointBorderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            order: 1
+                        },
+                        {
+                            label: 'Tendance',
+                            data: paceTrendData,
+                            borderColor: 'rgba(0,255,136,0.9)',
+                            borderWidth: 2.5,
+                            borderDash: [6,4],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 2
+                        },
+                        {
+                            label: 'Moyenne (' + Math.floor(avgPaceVal) + ':' + String(Math.round((avgPaceVal%1)*60)).padStart(2,'0') + ' /km)',
+                            data: Array(labels.length).fill(parseFloat(avgPaceVal.toFixed(3))),
+                            borderColor: 'rgba(255,215,0,0.6)',
+                            borderWidth: 1.5,
+                            borderDash: [10,5],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 3
+                        }
+                    ]
                 },
                 options: {
                     ...commonOptions,
@@ -672,35 +783,348 @@
                             ...commonOptions.scales.y,
                             reverse: true,
                             ticks: {
-                                ...commonOptions.scales.y.ticks,
-                                callback: function(value) {
-                                    const min = Math.floor(value);
-                                    const sec = Math.round((value - min) * 60);
-                                    return min + ':' + String(sec).padStart(2, '0');
+                                color: 'rgba(255,255,255,0.5)',
+                                callback: v => { const m=Math.floor(v); return m+':'+String(Math.round((v-m)*60)).padStart(2,'0'); }
+                            },
+                            title: { display: true, text: 'Allure (min/km)', color: 'rgba(255,255,255,0.3)', font: { size: 10 } }
+                        }
+                    },
+                    plugins: {
+                        ...commonOptions.plugins,
+                        legend: { ...commonOptions.plugins.legend, labels: { ...commonOptions.plugins.legend.labels,
+                            generateLabels: function() {
+                                return [
+                                    { text: 'Tendance', strokeStyle: 'rgba(0,255,136,0.9)', fillStyle:'transparent', lineWidth:2, pointStyle:'line' },
+                                    { text: 'Moyenne',  strokeStyle: 'rgba(255,215,0,0.6)',  fillStyle:'transparent', lineWidth:2, pointStyle:'line' },
+                                    { text: '10K',      strokeStyle: 'rgba(0,210,120,1)',    fillStyle:'rgba(0,210,120,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Semi',     strokeStyle: 'rgba(0,180,255,1)',    fillStyle:'rgba(0,180,255,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Trail',    strokeStyle: 'rgba(255,165,0,1)',    fillStyle:'rgba(255,165,0,0.5)',  lineWidth:2, pointStyle:'circle' },
+                                    { text: 'Marathon', strokeStyle: 'rgba(200,80,255,1)',   fillStyle:'rgba(200,80,255,0.5)', lineWidth:2, pointStyle:'circle' },
+                                ];
+                            }
+                        }},
+                        tooltip: { ...commonOptions.plugins.tooltip, callbacks: {
+                            title: ctx => sortedRaces[ctx[0].dataIndex]?.course || '',
+                            label: ctx => {
+                                if (ctx.datasetIndex !== 0) {
+                                    const v=ctx.parsed.y; return ctx.dataset.label.split('(')[0] + Math.floor(v)+':'+String(Math.round((v%1)*60)).padStart(2,'0')+' /km';
                                 }
+                                const r = sortedRaces[ctx.dataIndex];
+                                const v = ctx.parsed.y;
+                                return [ Math.floor(v)+':'+String(Math.round((v%1)*60)).padStart(2,'0')+' /km', distCat(r.km) + ' · ' + r.perf ];
+                            }
+                        }}
+                    }
+                }
+            });
+
+            // ── ÉVOLUTION CLASSEMENT % ───────────────────────────────────────
+            const rankPctCtx = document.getElementById('rankPctChart').getContext('2d');
+
+
+            // Sorted all races with valid percentage
+            const pctRaces = sortedRaces.filter(r => {
+                const p = r.classement.split('/');
+                return p.length === 2 && !isNaN(parseInt(p[0])) && !isNaN(parseInt(p[1]));
+            });
+
+            const pctLabels = pctRaces.map(r => {
+                const d = r.date.split('-');
+                return d[2] + '/' + d[1] + '/' + d[0].slice(2);
+            });
+
+            const pctValues = pctRaces.map(r => {
+                const p = r.classement.split('/');
+                return parseFloat(((parseInt(p[0]) / parseInt(p[1])) * 100).toFixed(2));
+            });
+
+            // Trend line across all distances
+            function trendLine(vals) {
+                const n = vals.length;
+                let sx=0,sy=0,sxy=0,sx2=0;
+                vals.forEach((y,x)=>{sx+=x;sy+=y;sxy+=x*y;sx2+=x*x;});
+                const slope=(n*sxy-sx*sy)/(n*sx2-sx*sx);
+                const intercept=(sy-slope*sx)/n;
+                return vals.map((_,x)=>parseFloat((slope*x+intercept).toFixed(2)));
+            }
+            const pctTrend = trendLine(pctValues);
+            const avgPct = pctValues.reduce((a,b)=>a+b,0)/pctValues.length;
+
+            // Per-point color based on distance
+            const pointColors = pctRaces.map(r => DIST_COLORS[distCat(r.km)].border);
+            const pointBg     = pctRaces.map(r => DIST_COLORS[distCat(r.km)].bg);
+
+            new Chart(rankPctCtx, {
+                type: 'line',
+                data: {
+                    labels: pctLabels,
+                    datasets: [
+                        {
+                            label: 'Classement %',
+                            data: pctValues,
+                            borderColor: 'rgba(255,255,255,0.25)',
+                            borderWidth: 1.5,
+                            borderDash: [3,3],
+                            pointRadius: 6,
+                            pointHoverRadius: 8,
+                            pointBackgroundColor: pointColors,
+                            pointBorderColor: pointColors,
+                            pointBorderWidth: 2,
+                            fill: false,
+                            tension: 0.3,
+                            order: 1
+                        },
+                        {
+                            label: 'Tendance',
+                            data: pctTrend,
+                            borderColor: 'rgba(0,255,136,0.9)',
+                            borderWidth: 2.5,
+                            borderDash: [6,4],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 2
+                        },
+                        {
+                            label: 'Moyenne (' + avgPct.toFixed(1) + '%)',
+                            data: Array(pctLabels.length).fill(parseFloat(avgPct.toFixed(2))),
+                            borderColor: 'rgba(255,215,0,0.6)',
+                            borderWidth: 1.5,
+                            borderDash: [10,5],
+                            pointRadius: 0,
+                            fill: false,
+                            tension: 0,
+                            order: 3
+                        }
+                    ]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: {
+                        ...commonOptions.scales,
+                        y: {
+                            ...commonOptions.scales.y,
+                            reverse: true,
+                            min: 0,
+                            ticks: {
+                                color: 'rgba(255,255,255,0.5)',
+                                callback: v => v.toFixed(0) + '%'
+                            },
+                            title: {
+                                display: true,
+                                text: '% dans le classement',
+                                color: 'rgba(255,255,255,0.3)',
+                                font: { size: 10 }
                             }
                         }
                     },
                     plugins: {
                         ...commonOptions.plugins,
+                        legend: {
+                            ...commonOptions.plugins.legend,
+                            labels: {
+                                ...commonOptions.plugins.legend.labels,
+                                generateLabels: function(chart) {
+                                    // Custom legend: show distance colors
+                                    const defaults = [
+                                        { text: 'Tendance', strokeStyle: 'rgba(0,255,136,0.9)', fillStyle: 'transparent', lineWidth: 2 },
+                                        { text: 'Moyenne', strokeStyle: 'rgba(255,215,0,0.6)', fillStyle: 'transparent', lineWidth: 1 },
+                                        { text: '10K', strokeStyle: 'rgba(0,210,120,1)', fillStyle: 'rgba(0,210,120,0.5)', lineWidth: 2 },
+                                        { text: 'Semi', strokeStyle: 'rgba(0,180,255,1)', fillStyle: 'rgba(0,180,255,0.5)', lineWidth: 2 },
+                                        { text: 'Trail', strokeStyle: 'rgba(255,165,0,1)', fillStyle: 'rgba(255,165,0,0.5)', lineWidth: 2 },
+                                        { text: 'Marathon', strokeStyle: 'rgba(200,80,255,1)', fillStyle: 'rgba(200,80,255,0.5)', lineWidth: 2 },
+                                    ];
+                                    return defaults.map((d,i) => ({
+                                        text: d.text, strokeStyle: d.strokeStyle, fillStyle: d.fillStyle,
+                                        lineWidth: d.lineWidth, hidden: false, index: i,
+                                        pointStyle: ['line','line','circle','circle','circle','circle'][i]
+                                    }));
+                                }
+                            }
+                        },
                         tooltip: {
                             ...commonOptions.plugins.tooltip,
                             callbacks: {
-                                ...commonOptions.plugins.tooltip.callbacks,
-                                label: function(context) {
-                                    const value = context.parsed.y;
-                                    const min = Math.floor(value);
-                                    const sec = Math.round((value - min) * 60);
-                                    return 'Allure: ' + min + ':' + String(sec).padStart(2, '0') + ' /km';
+                                title: ctx => pctRaces[ctx[0].dataIndex]?.course || '',
+                                label: ctx => {
+                                    if (ctx.datasetIndex !== 0) return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + '%';
+                                    const r = pctRaces[ctx.dataIndex];
+                                    return [
+                                        ctx.parsed.y.toFixed(1) + '% · ' + r.classement,
+                                        distCat(r.km) + ' · ' + r.perf
+                                    ];
                                 }
                             }
                         }
                     }
                 }
             });
+
         }
 
-        createCharts();
+
+// ── RECORD DE PROGRESSION ─────────────────────────────────────────────────────
+function buildProgressionRecords() {
+    const container = document.getElementById('prog-records-content');
+    if (!container) return;
+    container.innerHTML = '';
+
+    // Convertit "HH:MM:SS" en secondes
+    function toSec(t) {
+        const p = t.split(':').map(Number);
+        return p.length === 3 ? p[0]*3600 + p[1]*60 + p[2] : p[0]*60 + p[1];
+    }
+    // Formatte secondes en "H:MM:SS" ou "MM:SS"
+    function fmtTime(s) {
+        const h = Math.floor(s/3600);
+        const m = Math.floor((s%3600)/60);
+        const sec = s%60;
+        if (h > 0) return h + ':' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+        return m + ':' + String(sec).padStart(2,'0');
+    }
+    // Formatte un gain en "−Xm YYs"
+    function fmtGain(sec) {
+        const m = Math.floor(sec/60), s = sec%60;
+        return m > 0 ? `−${m}m${s > 0 ? String(s).padStart(2,'0')+'s' : ''}` : `−${s}s`;
+    }
+
+    const DISTANCES = [
+        { key:'10K',  label:'10 KM',      color:'rgba(0,210,120,1)',   bg:'rgba(0,210,120,0.15)', km_min:9,  km_max:11  },
+        { key:'21K',  label:'SEMI',        color:'rgba(0,180,255,1)',   bg:'rgba(0,180,255,0.15)', km_min:18, km_max:22.5 },
+        { key:'42K',  label:'MARATHON',    color:'rgba(200,80,255,1)',  bg:'rgba(200,80,255,0.15)',km_min:40, km_max:45  },
+    ];
+
+    DISTANCES.forEach(dist => {
+        // Filtrer les courses de cette distance, triées chronologiquement
+        const races = racesData
+            .filter(r => parseFloat(r.km) >= dist.km_min && parseFloat(r.km) <= dist.km_max)
+            .sort((a,b) => a.date.localeCompare(b.date));
+
+        if (races.length === 0) return;
+
+        // Calcule les records successifs (seulement quand on bat le précédent)
+        let currentRecord = Infinity;
+        const milestones = [];
+        races.forEach(r => {
+            const sec = toSec(r.perf);
+            if (sec < currentRecord) {
+                milestones.push({ race: r, sec, prev: currentRecord === Infinity ? null : currentRecord });
+                currentRecord = sec;
+            }
+        });
+
+        if (milestones.length === 0) return;
+
+        // Calcul total gagné depuis le 1er record
+        const totalGain = milestones[0].sec - milestones[milestones.length-1].sec;
+        const firstYear = milestones[0].race.date.split('-')[0];
+        const lastYear  = milestones[milestones.length-1].race.date.split('-')[0];
+        const years = parseInt(lastYear) - parseInt(firstYear);
+
+        const block = document.createElement('div');
+        block.className = 'prog-distance-block';
+
+        // Label distance
+        const label = document.createElement('div');
+        label.className = 'prog-dist-label';
+        label.innerHTML = `<span style="color:${dist.color}">${dist.label}</span>
+            <span style="color:rgba(255,255,255,0.2);font-size:0.6rem;font-weight:400;">
+                ${milestones.length} record${milestones.length > 1 ? 's' : ''} battu${milestones.length > 1 ? 's' : ''}
+            </span>`;
+        block.appendChild(label);
+
+        // Timeline
+        const timeline = document.createElement('div');
+        timeline.className = 'prog-timeline';
+
+        milestones.forEach((m, i) => {
+            const isLast = i === milestones.length - 1;
+            const d = m.race.date.split('-');
+            const gain = m.prev !== null ? m.prev - m.sec : null;
+
+            const step = document.createElement('div');
+            step.className = 'prog-step';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'prog-bubble' + (isLast ? ' is-record' : '');
+            bubble.title = m.race.course + ' — ' + d[2]+'/'+d[1]+'/'+d[0];
+
+            bubble.innerHTML = `
+                <div class="pb-time" style="color:${isLast ? '#ffd700' : dist.color}">${fmtTime(m.sec)}</div>
+                <div class="pb-date">${d[2]}/${d[1]}/${d[0].slice(2)}</div>
+                ${gain !== null ? `<div class="pb-gain" style="color:rgba(0,255,136,0.8)">${fmtGain(gain)}</div>` : '<div class="pb-gain" style="color:rgba(255,255,255,0.2)">départ</div>'}
+            `;
+            step.appendChild(bubble);
+
+            if (!isLast) {
+                const arrow = document.createElement('span');
+                arrow.className = 'prog-arrow';
+                arrow.textContent = '→';
+                step.appendChild(arrow);
+            }
+            timeline.appendChild(step);
+        });
+        block.appendChild(timeline);
+
+        // Total gagné
+        if (totalGain > 0) {
+            const total = document.createElement('div');
+            total.className = 'prog-total';
+            total.innerHTML = `
+                <span style="color:rgba(0,255,136,0.6);font-style:normal;font-weight:600;">${fmtGain(totalGain)}</span>
+                gagnées en ${years > 0 ? years + ' an' + (years > 1 ? 's' : '') : 'moins d\'un an'}
+                &nbsp;·&nbsp; ${firstYear} → ${lastYear}
+            `;
+            block.appendChild(total);
+        }
+
+        container.appendChild(block);
+    });
+}
+
+        buildProgressionRecords();
+
+        // ── ANIMATION RECORDS ─────────────────────────────────────────────
+        (function animateProgressionRecords() {
+            const wrap = document.getElementById('prog-records-content-wrap');
+            if (!wrap) return;
+
+            // Global step counter across all distance blocks
+            let globalIndex = 0;
+
+            wrap.querySelectorAll('.prog-distance-block').forEach((block, blockIdx) => {
+                const steps  = block.querySelectorAll('.prog-step');
+                const arrows = block.querySelectorAll('.prog-arrow');
+                const total  = block.querySelector('.prog-total');
+
+                // Base delay: each block starts after previous block's last step + gap
+                const BLOCK_GAP   = 300;   // ms between distance blocks
+                const STEP_DELAY  = 180;   // ms between each record within a block
+
+                steps.forEach((step, stepIdx) => {
+                    const delay = globalIndex * STEP_DELAY + blockIdx * BLOCK_GAP;
+                    setTimeout(() => {
+                        step.classList.add('visible');
+                        // Show arrow after bubble appears
+                        const arrow = arrows[stepIdx];
+                        if (arrow) {
+                            setTimeout(() => arrow.classList.add('visible'), 80);
+                        }
+                    }, delay);
+                    globalIndex++;
+                });
+
+                // Total line appears after last step of this block
+                if (total) {
+                    const totalDelay = globalIndex * STEP_DELAY + blockIdx * BLOCK_GAP + 100;
+                    setTimeout(() => total.classList.add('visible'), totalDelay);
+                }
+            });
+        })();
+        window.addEventListener('load', function() {
+            createCharts();
+        });
     </script>
+
 </body>
 </html>
