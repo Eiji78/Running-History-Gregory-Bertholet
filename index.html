@@ -832,22 +832,24 @@
 
 
         const BIB_NUMS = {
-  "2019-05-01":213,"2019-06-01":5477,"2019-11-03":216,
-  "2019-03-17":441,"2019-04-28":282,"2019-06-30":363,
-  "2019-06-07":306,"2019-08-25":232,"2019-10-21":3098,
-  "2020-03-01":253,"2021-07-04":213,"2021-09-19":436,
-  "2021-10-17":4027,"2022-05-01":339,"2022-06-03":415,
-  "2022-03-20":37,"2022-03-27":199,"2022-05-15":921,
-  "2022-05-28":6011,"2022-06-26":91,"2022-09-18":14,
-  "2022-10-16":1020,"2023-10-01":209,"2023-06-02":638,
-  "2023-03-19":208,"2023-04-23":2463,"2023-05-20":2687,
-  "2023-06-25":192,"2023-07-09":306,"2023-09-24":833,
-  "2023-10-14":421,"2023-03-12":3481,"2024-05-01":448,
-  "2024-03-17":463,"2024-04-21":2968,"2024-03-10":1569,
-  "2024-04-07":3202,"2024-06-07":758,"2024-05-08":434,
-  "2024-08-25":371,"2024-09-29":536,"2024-10-03":1445,
-  "2024-05-11":4403,"2025-03-16":65,"2025-04-27":4013,
-  "2025-10-05":1154,"2025-05-31":547,"2025-09-28":1413,
+  "2019-03-17":441,"2019-04-28":282,"2019-05-01":213,
+  "2019-06-01":5477,"2019-06-07":306,"2019-06-30":363,
+  "2019-08-25":232,"2019-10-21":3098,"2019-11-03":216,
+  "2020-03-01":253,
+  "2021-07-04":213,"2021-09-19":436,"2021-10-17":4027,
+  "2022-03-20":37,"2022-03-27":199,"2022-05-01":339,
+  "2022-05-15":921,"2022-05-28":6011,"2022-06-03":415,
+  "2022-06-26":91,"2022-09-18":14,"2022-10-16":1020,
+  "2023-03-12":3481,"2023-03-19":208,"2023-04-23":2463,
+  "2023-05-20":2687,"2023-06-02":638,"2023-06-25":192,
+  "2023-07-09":306,"2023-09-24":833,"2023-10-01":209,
+  "2023-10-14":421,
+  "2024-03-10":1445,"2024-03-17":463,"2024-04-07":3202,
+  "2024-04-21":2968,"2024-05-01":448,"2024-05-08":434,
+  "2024-05-11":4403,"2024-06-07":758,"2024-08-25":371,
+  "2024-09-29":536,"2024-10-06":1569,
+  "2025-03-16":65,"2025-04-27":4013,"2025-05-31":547,
+  "2025-09-28":1413,"2025-10-05":1154,
   "2026-03-01":457
 };
         function render() {
@@ -861,6 +863,19 @@
                         <h1 class="main-title mb-6">RUNNING HISTORY</h1>
                         <p class="subtitle mb-4">Courses Officielles de Greg</p>
                         <p class="seo-intro mb-8"><em>Historique complet des courses à pied de Gregory Bertholet depuis 2019 — marathons, semi-marathons et 10km dans le Grand Est, en Moselle, dans les Ardennes, Luxembourg&nbsp;…</em></p>
+                        <a href="historique_courses.pdf" download="Historique_Courses_Gregory_Bertholet.pdf" style="
+                            display:inline-flex; align-items:center; gap:0.3rem;
+                            padding:0.22rem 0.6rem; border-radius:6px;
+                            font-family:'Barlow Condensed',sans-serif;
+                            font-size:0.6rem; font-weight:700; letter-spacing:0.07em;
+                            text-decoration:none;
+                            border:1px solid rgba(255,107,53,0.4);
+                            background:rgba(255,107,53,0.07); color:#ff6b35;
+                            transition:all 0.2s; margin-bottom:1.2rem; opacity:0.7;
+                        " onmouseover="this.style.opacity='1';this.style.background='rgba(255,107,53,0.15)'"
+                           onmouseout="this.style.opacity='0.7';this.style.background='rgba(255,107,53,0.07)'">
+                            ⬇ PDF
+                        </a>
                         <div class="flex items-center justify-center gap-4 mb-6">
                             <div class="pulse-indicator"></div>
                             <span class="text-xl font-bold tracking-wider" style="color: var(--neon-cyan); text-shadow: 0 0 20px rgba(0, 255, 249, 0.8);">51 COURSES</span>
@@ -918,6 +933,7 @@
     <a href="carte.html">🗺️ CARTE</a>
     <a href="comparaison.html">⚡ COMPARER</a>
     <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="timeline.html">📅 TIMELINE</a>
 </nav></div>
                     </div>
 
@@ -1601,7 +1617,6 @@ buildHeatmap();
             display:flex; align-items:center; justify-content:center;
             box-shadow:0 4px 12px rgba(0,0,0,0.5);
         ">×</button>
-
         <!-- Perspective wrapper -->
         <div id="bib-perspective" style="perspective:900px; perspective-origin:50% 50%; width:100%;">
             <div id="bib-tilt" style="
@@ -1927,6 +1942,7 @@ function removeBibTilt() {
         tilt.style.transform = '';
     }
 }
+
 
 
 

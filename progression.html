@@ -351,6 +351,124 @@
             opacity: 1;
             transform: translateY(0);
         }
+        
+        /* ── MEILLEURE SAISON ─────────────────────────────────────────────── */
+        .season-section { margin-bottom: 2.5rem; }
+        .season-section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.18em;
+            color: rgba(255,255,255,0.35); text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        /* Podium */
+        .podium-wrap {
+            display: flex; align-items: flex-end; justify-content: center;
+            gap: 1rem; margin-bottom: 2.5rem;
+        }
+        .podium-col {
+            display: flex; flex-direction: column; align-items: center;
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .podium-col.revealed { opacity: 1; transform: translateY(0); }
+
+        .podium-year-badge {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+            padding: 0.2rem 0.6rem; border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .podium-medal {
+            font-size: 1.6rem; margin-bottom: 0.4rem; line-height: 1;
+        }
+        .podium-score {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem; font-weight: 700;
+            margin-bottom: 0.6rem;
+        }
+        .podium-block {
+            width: 90px; border-radius: 10px 10px 0 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem; font-weight: 900;
+            /* height set inline per rank */
+            transition: height 0.7s cubic-bezier(0.22,0.61,0.36,1);
+        }
+        .podium-col:nth-child(1) .podium-block {  /* 2nd */
+            background: linear-gradient(180deg, rgba(192,192,192,0.25), rgba(192,192,192,0.08));
+            border: 1px solid rgba(192,192,192,0.3);
+            color: rgba(192,192,192,0.8);
+        }
+        .podium-col:nth-child(2) .podium-block {  /* 1st */
+            background: linear-gradient(180deg, rgba(255,215,0,0.28), rgba(255,215,0,0.08));
+            border: 1px solid rgba(255,215,0,0.45);
+            color: rgba(255,215,0,0.9);
+        }
+        .podium-col:nth-child(3) .podium-block {  /* 3rd */
+            background: linear-gradient(180deg, rgba(205,127,50,0.22), rgba(205,127,50,0.07));
+            border: 1px solid rgba(205,127,50,0.3);
+            color: rgba(205,127,50,0.8);
+        }
+        .podium-stats {
+            margin-top: 0.5rem; text-align: center;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.58rem; color: rgba(255,255,255,0.3);
+            line-height: 1.7;
+        }
+        .podium-stats strong { color: rgba(255,255,255,0.7); }
+
+        /* Year bars chart */
+        .season-bars { display: flex; flex-direction: column; gap: 0.55rem; }
+        .season-bar-row {
+            display: flex; align-items: center; gap: 0.75rem;
+            opacity: 0; transform: translateX(-12px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .season-bar-row.revealed { opacity: 1; transform: translateX(0); }
+        .season-bar-year {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.6rem; font-weight: 700; letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.4); width: 32px; flex-shrink: 0; text-align: right;
+        }
+        .season-bar-track {
+            flex: 1; height: 22px; background: rgba(255,255,255,0.04);
+            border-radius: 4px; overflow: hidden; position: relative;
+        }
+        .season-bar-fill {
+            height: 100%; border-radius: 4px;
+            width: 0; transition: width 0.8s cubic-bezier(0.22,0.61,0.36,1);
+            position: relative;
+        }
+        .season-bar-label {
+            position: absolute; right: 6px; top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em;
+            color: rgba(255,255,255,0.7); white-space: nowrap;
+        }
+        .season-bar-meta {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.62rem; color: rgba(255,255,255,0.25);
+            width: 70px; flex-shrink: 0;
+        }
+
+        .season-tab {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+            padding: 0.28rem 0.8rem; border-radius: 8px; cursor: pointer;
+            border: 1.5px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.45);
+            transition: all 0.2s;
+        }
+        .season-tab:hover { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8); }
+        .season-tab.active { border-color: var(--neon-gold); color: var(--neon-gold); background: rgba(255,215,0,0.1); }
+
+        @media (max-width: 600px) {
+            .podium-block { width: 68px; }
+            .podium-score { font-size: 0.62rem; }
+        }
+
         </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
@@ -431,6 +549,7 @@
     <a href="carte.html">🗺️ CARTE</a>
     <a href="comparaison.html">⚡ COMPARER</a>
     <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="timeline.html">📅 TIMELINE</a>
 </nav>
         </div>
 
@@ -438,6 +557,28 @@
         <div class="prog-records-wrap fade-in" id="prog-records-content-wrap" style="animation-delay:0.05s; margin-bottom:2.5rem;">
             <div class="prog-records-title">🏆 Record de progression par distance</div>
             <div id="prog-records-content"></div>
+        </div>
+
+
+        <!-- ── MEILLEURE SAISON ─────────────────────────────────────────── -->
+        <div class="glass-card p-8 fade-in season-section" style="animation-delay:0.05s; margin-bottom:2rem;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:0.75rem; margin-bottom:1.5rem; padding-left:0.75rem; padding-top:0.25rem;">
+                <div>
+                    <h3 class="text-xl font-bold tracking-wider" style="color:var(--neon-gold);">🏆 MEILLEURE SAISON</h3>
+                    <p id="season-subtitle" style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.05em;margin-top:0.3rem;line-height:1.5;">Classement des années par % moyen dans les classements</p>
+                </div>
+                <!-- Selector -->
+                <div style="display:flex; gap:0.4rem; flex-shrink:0;">
+                    <button class="season-tab active" data-metric="pct" onclick="switchSeasonMetric('pct',this)">% Classement</button>
+                    <button class="season-tab" data-metric="pace" onclick="switchSeasonMetric('pace',this)">Allure</button>
+                </div>
+            </div>
+
+            <!-- Podium top 3 -->
+            <div class="podium-wrap" id="podium-wrap"></div>
+
+            <!-- All years bar chart -->
+            <div class="season-bars" id="season-bars"></div>
         </div>
 
         <!-- Évolution classement % -->
@@ -937,7 +1078,9 @@
                                     return defaults.map((d,i) => ({
                                         text: d.text, strokeStyle: d.strokeStyle, fillStyle: d.fillStyle,
                                         lineWidth: d.lineWidth, hidden: false, index: i,
-                                        pointStyle: ['line','line','circle','circle','circle','circle'][i]
+                                        pointStyle: ['line','line','circle','circle','circle','circle'][i],
+                                        fontColor: 'rgba(255,255,255,0.8)',
+                                        color: 'rgba(255,255,255,0.8)'
                                     }));
                                 }
                             }
@@ -1082,7 +1225,189 @@ function buildProgressionRecords() {
     });
 }
 
+
+        // ── MEILLEURE SAISON ──────────────────────────────────────────────────
+        let _seasonData = null;   // cached stats
+        let _seasonMetric = 'pct';
+        let _seasonObserved = false;
+
+        function computeSeasonData() {
+            if (_seasonData) return _seasonData;
+            const valid = racesData.filter(r => parseFloat(r.km) >= 9);
+            const byYear = {};
+            valid.forEach(r => {
+                const y = r.date.slice(0,4);
+                if (!byYear[y]) byYear[y] = [];
+                byYear[y].push(r);
+            });
+
+            _seasonData = Object.entries(byYear).map(([year, races]) => {
+                // % classement
+                const pcts = races.map(r => {
+                    const p = r.classement.split('/');
+                    return p.length === 2 ? parseInt(p[0])/parseInt(p[1])*100 : null;
+                }).filter(p => p !== null);
+                const avgPct  = pcts.reduce((a,b)=>a+b,0)/pcts.length;
+                const bestPct = Math.min(...pcts);
+
+                // Allure (min/km → decimal minutes)
+                const paces = races.map(r => {
+                    const [m,s] = r.tempsMoyenKm.split(':');
+                    return parseInt(m) + parseInt(s)/60;
+                });
+                const avgPace  = paces.reduce((a,b)=>a+b,0)/paces.length;
+                const bestPace = Math.min(...paces);
+
+                const km  = races.reduce((a,r)=>a+parseFloat(r.km),0);
+                const prs = races.filter(r=>r.record).length;
+                return { year, avgPct, bestPct, avgPace, bestPace,
+                         count: races.length, km: Math.round(km), prs };
+            }).filter(y => y.count >= 2);
+
+            return _seasonData;
+        }
+
+        function fmtPace(dec) {
+            const m = Math.floor(dec);
+            const s = Math.round((dec-m)*60);
+            return `${m}'${String(s).padStart(2,'0')}"`;
+        }
+
+        function renderSeason(metric) {
+            const stats = computeSeasonData();
+            const isPct = metric === 'pct';
+
+            // Sort: lower is better for both metrics
+            const sorted = [...stats].sort((a,b) =>
+                isPct ? a.avgPct-b.avgPct : a.avgPace-b.avgPace
+            );
+
+            const medals = ['🥇','🥈','🥉'];
+            const podiumColors = ['rgba(255,215,0,0.8)','rgba(192,192,192,0.7)','rgba(205,127,50,0.7)'];
+            const podiumHeights = [140,100,75];
+
+            // ── Subtitle ──
+            const sub = document.getElementById('season-subtitle');
+            if (sub) sub.textContent = isPct
+                ? 'Classement des années par % moyen dans les classements'
+                : 'Classement des années par allure moyenne (plus bas = mieux)';
+
+            // ── Podium ──
+            const podiumWrap = document.getElementById('podium-wrap');
+            podiumWrap.innerHTML = '';
+            const podiumOrder = [1,0,2];
+            podiumOrder.forEach((rankIdx, colIdx) => {
+                if (rankIdx >= sorted.length) return;
+                const s = sorted[rankIdx];
+                const scoreLabel = isPct
+                    ? `${s.avgPct.toFixed(1)}% moy.`
+                    : `${fmtPace(s.avgPace)}/km`;
+                const bestLabel = isPct
+                    ? `top ${s.bestPct.toFixed(1)}%`
+                    : `meilleure ${fmtPace(s.bestPace)}/km`;
+
+                const col = document.createElement('div');
+                col.className = 'podium-col';
+                col.innerHTML = `
+                    <div class="podium-year-badge" style="border:1px solid ${podiumColors[rankIdx]};color:${podiumColors[rankIdx]};background:${podiumColors[rankIdx].replace('0.8','0.08').replace('0.7','0.07')};">${s.year}</div>
+                    <div class="podium-medal">${medals[rankIdx]}</div>
+                    <div class="podium-score" style="color:${podiumColors[rankIdx]};">${scoreLabel}</div>
+                    <div class="podium-block" style="height:${podiumHeights[colIdx]}px;">${rankIdx+1}</div>
+                    <div class="podium-stats">
+                        <div><strong>${s.count}</strong> courses</div>
+                        <div><strong>${s.km}</strong> km</div>
+                        ${s.prs > 0 ? `<div><strong>${s.prs}</strong> PR${s.prs>1?'s':''} ⭐</div>` : ''}
+                        <div>${bestLabel}</div>
+                    </div>`;
+                podiumWrap.appendChild(col);
+            });
+
+            // ── Bars ──
+            const barsWrap = document.getElementById('season-bars');
+            barsWrap.innerHTML = '';
+            const vals = sorted.map(s => isPct ? s.avgPct : s.avgPace);
+            const best  = Math.min(...vals);
+            const worst = Math.max(...vals);
+
+            sorted.forEach((s, i) => {
+                const val   = isPct ? s.avgPct : s.avgPace;
+                const label = isPct ? `${s.avgPct.toFixed(1)}% moy.` : `${fmtPace(s.avgPace)}/km`;
+                const ratio = 1 - ((val - best) / (worst - best + 0.001));
+                const barPct = 20 + ratio * 80;
+                const h = Math.round(50 - ratio*50 + 280);
+                const barColor = `hsl(${h},80%,55%)`;
+                const medal = i < 3 ? medals[i] + ' ' : '';
+
+                const row = document.createElement('div');
+                row.className = 'season-bar-row';
+                row.innerHTML = `
+                    <div class="season-bar-year">${s.year}</div>
+                    <div class="season-bar-track">
+                        <div class="season-bar-fill" data-width="${barPct}" style="background:linear-gradient(90deg,${barColor},${barColor}88);width:0%;">
+                            <span class="season-bar-label">${medal}${label}</span>
+                        </div>
+                    </div>
+                    <div class="season-bar-meta">${s.count} courses · ${s.km}km</div>`;
+                barsWrap.appendChild(row);
+            });
+
+            // ── Animate (always re-trigger on switch) ──
+            setTimeout(() => {
+                podiumWrap.querySelectorAll('.podium-col').forEach((col, i) => {
+                    setTimeout(() => col.classList.add('revealed'), i * 150);
+                });
+                barsWrap.querySelectorAll('.season-bar-row').forEach((row, i) => {
+                    setTimeout(() => {
+                        row.classList.add('revealed');
+                        const fill = row.querySelector('.season-bar-fill');
+                        if (fill) fill.style.width = fill.dataset.width + '%';
+                    }, 100 + i * 70);
+                });
+            }, 20);
+        }
+
+        function buildBestSeason() {
+            computeSeasonData();
+            renderSeason('pct');
+
+            // IntersectionObserver for first reveal
+            const obs = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting || _seasonObserved) return;
+                    _seasonObserved = true;
+                    obs.unobserve(entry.target);
+                    // Re-trigger animation
+                    document.querySelectorAll('.podium-col').forEach(c => c.classList.remove('revealed'));
+                    document.querySelectorAll('.season-bar-row').forEach(r => {
+                        r.classList.remove('revealed');
+                        const f = r.querySelector('.season-bar-fill');
+                        if (f) f.style.width = '0%';
+                    });
+                    setTimeout(() => renderSeason(_seasonMetric), 50);
+                });
+            }, { threshold: 0.2 });
+            const section = document.getElementById('podium-wrap')?.closest('.glass-card');
+            if (section) obs.observe(section);
+        }
+
+        function switchSeasonMetric(metric, btn) {
+            if (metric === _seasonMetric) return;
+            _seasonMetric = metric;
+            document.querySelectorAll('.season-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Fade out → re-render → fade in
+            const podiumWrap = document.getElementById('podium-wrap');
+            const barsWrap   = document.getElementById('season-bars');
+            [podiumWrap, barsWrap].forEach(el => { el.style.transition='opacity 0.18s'; el.style.opacity='0'; });
+            setTimeout(() => {
+                renderSeason(metric);
+                [podiumWrap, barsWrap].forEach(el => { el.style.opacity='1'; });
+            }, 180);
+        }
+
         buildProgressionRecords();
+        buildBestSeason();
 
         // ── ANIMATION RECORDS ─────────────────────────────────────────────
         (function animateProgressionRecords() {

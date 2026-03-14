@@ -358,7 +358,42 @@
         h1, .main-title { font-size: 1.1rem !important; }
         .subtitle { font-size: 0.7rem !important; }
     }
-</style>
+
+        /* ── STAMP EFFECT ─────────────────────────────────────────────── */
+        .stamp-card {
+            opacity: 0;
+            transform: scale(1.35) rotate(var(--stamp-rot, -3deg));
+            filter: blur(2px) brightness(1.8);
+            transition: none;
+        }
+        .stamp-card.stamped {
+            animation: stamp-in 0.65s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+        }
+        @keyframes stamp-in {
+            0%   { opacity: 0;   transform: scale(1.45) rotate(var(--stamp-rot, -3deg)); filter: blur(3px) brightness(2.2); }
+            55%  { opacity: 1;   transform: scale(0.93) rotate(calc(var(--stamp-rot, -3deg) * 0.3)); filter: blur(0px) brightness(1.3); }
+            72%  { transform: scale(1.04) rotate(calc(var(--stamp-rot, -3deg) * 0.1)); filter: brightness(1.1); }
+            85%  { transform: scale(0.98) rotate(0deg); filter: brightness(1); }
+            100% { opacity: 1;   transform: scale(1) rotate(0deg); filter: none; }
+        }
+        /* Ink splat pseudo-element on stamp impact */
+        .stamp-card.stamped::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            background: radial-gradient(circle at 50% 50%, rgba(0,255,249,0.18) 0%, transparent 65%);
+            animation: ink-splat 0.4s ease-out 0.22s both;
+            pointer-events: none;
+            z-index: 0;
+        }
+        @keyframes ink-splat {
+            0%   { opacity: 0.9; transform: scale(0.5); }
+            60%  { opacity: 0.6; transform: scale(1.15); }
+            100% { opacity: 0;   transform: scale(1.4); }
+        }
+
+        </style>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
     <script>
@@ -392,7 +427,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 0.45rem;
+    gap: 0.3rem;
     margin-bottom: 2rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -405,9 +440,9 @@
     display: inline-flex;
     align-items: center;
     gap: 0.3rem;
-    padding: 0.38rem 0.75rem;
+    padding: 0.32rem 0.55rem;
     border-radius: 10px;
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-decoration: none;
@@ -440,6 +475,7 @@
     <a href="carte.html">🗺️ CARTE</a>
     <a href="comparaison.html">⚡ COMPARER</a>
     <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="timeline.html">📅 TIMELINE</a>
 </nav>
         </div>
 
@@ -454,25 +490,25 @@
         <div id="panel-10k" class="fade-in" style="animation-delay:0.15s;">
             <!-- Top stats row -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
-                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(255,215,0,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'38"</div>
                     <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">J. Cheptegei 🇺🇬</div>
                     <div class="info-pill">Valence · 2019</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,200,255,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'43"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">Y. Schrub 🇫🇷</div>
                     <div class="info-pill">Castellon · fév. 2026</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,255,136,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">26'43"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">Y. Schrub 🇫🇷</div>
                     <div class="info-pill">Castellon · fév. 2026</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.8rem;">37'41"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
@@ -614,25 +650,25 @@
         <!-- === 21 KM PANEL === -->
         <div id="panel-21k" class="fade-in" style="display:none;animation-delay:0.15s;">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
-                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(255,215,0,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">57'20"</div>
                     <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">J. Kiplimo 🇺🇬</div>
                     <div class="info-pill">Lisbonne · 08/03/2026 🆕</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,200,255,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">58'41"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">A. Almgren 🇸🇪</div>
                     <div class="info-pill">Ras el-Khaïmah · 2019</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,255,136,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">59'13"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">J. Wanders 🇨🇭🇫🇷</div>
                     <div class="info-pill">Ras el-Khaïmah · 2019</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
                     <div class="text-xs font-bold tracking-widets mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.6rem;">1h23'48"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
@@ -749,25 +785,25 @@
         <!-- === 42 KM PANEL === -->
         <div id="panel-42k" class="fade-in" style="display:none;animation-delay:0.15s;">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
-                <div class="glass-card p-5 text-center" style="border-color:rgba(255,215,0,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(255,215,0,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h00'35"</div>
                     <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">K. Kiptum 🇰🇪</div>
                     <div class="info-pill">Chicago · oct. 2023</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,200,255,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,200,255,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#003399,#0055ff,#00ccff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h03'36"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,200,255,0.9);font-weight:600;">B. Abdi 🇧🇪</div>
                     <div class="info-pill">Rotterdam · oct. 2021</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0,255,136,0.2);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,255,136,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇫🇷 RECORD FRANCE</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00cc55,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h03'47"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,136,0.9);font-weight:600;">M. Amdouni 🇫🇷</div>
                     <div class="info-pill">Séville · fév. 2024</div>
                 </div>
-                <div class="glass-card p-5 text-center" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
+                <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0, 255, 249, 0.15);box-shadow:0 0 25px rgba(0, 255, 249, 0.15);">
                     <div class="text-xs font-bold tracking-widets mb-2" style="color:rgba(0,255,249,0.7);">⚡ TON RECORD</div>
                     <div class="speed-number" style="background:linear-gradient(135deg,#00fff9,#bc13fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">3h06'21"</div>
                     <div class="text-xs mt-2" style="color:rgba(0,255,249,0.9);font-weight:600;">Greg 🔥</div>
@@ -919,5 +955,42 @@
             document.getElementById(panels[dist]).style.display = 'block';
         }
     </script>
+
+    <script>
+    // ── STAMP ANIMATION ───────────────────────────────────────────────────
+    (function() {
+        const ROTS  = [-4, 2, -2, 3];   // slight rotation per card position
+        const SOUND_DUR = 260;           // ms
+
+        // Assign rotation vars
+        document.querySelectorAll('.grid.grid-cols-2.md\\:grid-cols-4').forEach(grid => {
+            const cards = grid.querySelectorAll('.stamp-card');
+            cards.forEach((card, i) => {
+                card.style.setProperty('--stamp-rot', ROTS[i % 4] + 'deg');
+                card.style.position = 'relative';  // needed for ::after
+            });
+        });
+
+        // Observe each grid — when it enters viewport, stamp cards one by one
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                observer.unobserve(entry.target);
+
+                const cards = entry.target.querySelectorAll('.stamp-card:not(.stamped)');
+                cards.forEach((card, i) => {
+                    setTimeout(() => {
+                        card.classList.add('stamped');
+                    }, i * 260);  // 260ms between each stamp
+                });
+            });
+        }, { threshold: 0.25 });
+
+        document.querySelectorAll('.grid.grid-cols-2.md\\:grid-cols-4').forEach(grid => {
+            observer.observe(grid);
+        });
+    })();
+    </script>
+
 </body>
 </html>
