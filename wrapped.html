@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Année en Course — Running Wrapped</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --c1:#00fff9;--c2:#bc13fe;--c3:#ff006e;--c4:#ff6b35;--c5:#00ff88;--c6:#ffd700;
+  --bg:#07070e;
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-family:'Barlow Condensed',sans-serif;color:#fff;}
+
+/* ── CANVAS BG ── */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* ── YEAR SELECTOR ── */
+#year-selector{
+  position:fixed;inset:0;z-index:100;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2rem;
+  background:var(--bg);
+}
+#year-selector h1{
+  font-family:'Orbitron',sans-serif;font-size:clamp(2.25rem, 6.2vw, 4.38rem);font-weight:900;
+  letter-spacing:.1em;text-align:center;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 30px rgba(0,255,249,.5));
+}
+#year-selector p{font-size:1rem;letter-spacing:.2em;color:rgba(255,255,255,.35);text-transform:uppercase;}
+.year-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;max-width:500px;}
+.yr-btn{
+  font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;
+  padding:.65rem 1.6rem;border-radius:12px;cursor:pointer;
+  border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);
+  color:rgba(255,255,255,.5);transition:all .25s;letter-spacing:.05em;
+}
+.yr-btn:hover{border-color:var(--c1);color:var(--c1);background:rgba(0,255,249,.1);box-shadow:0 0 20px rgba(0,255,249,.3);}
+
+/* ── SLIDE CONTAINER ── */
+#show{position:fixed;inset:0;z-index:50;display:none;}
+
+/* ── SLIDE ── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;opacity:0;pointer-events:none;
+  transition:opacity .15s;
+}
+.slide.active{opacity:1;pointer-events:auto;}
+
+/* ── PROGRESS BAR ── */
+#progress-bar{
+  position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  z-index:200;transition:width .4s linear;width:0%;
+  box-shadow:0 0 12px rgba(0,255,249,.7);
+}
+
+/* ── BACK BTN ── */
+#back-btn{
+  position:fixed;top:18px;left:72px;z-index:300;
+  font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.08em;
+  padding:.4rem .9rem;border-radius:10px;cursor:pointer;
+  border:1.5px solid rgba(0,255,249,.35);background:rgba(0,255,249,.08);color:#00fff9;
+  transition:all .2s;display:none;
+}
+#back-btn:hover{background:rgba(0,255,249,.18);}
+
+/* ── NAV ARROWS ── */
+.nav-arrow{
+  position:fixed;top:50%;transform:translateY(-50%);z-index:300;
+  width:44px;height:44px;border-radius:50%;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);
+  display:none;align-items:center;justify-content:center;font-size:1.2rem;
+  transition:all .2s;color:rgba(255,255,255,.5);
+}
+.nav-arrow:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4);color:#fff;}
+#nav-prev{left:16px;}
+#nav-next{right:16px;}
+
+/* ── SLIDE COUNTER ── */
+#slide-counter{
+  position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+  font-family:'Orbitron',sans-serif;font-size:.6rem;letter-spacing:.15em;
+  color:rgba(255,255,255,.6);z-index:300;display:none;
+}
+
+/* ─────────── SLIDE STYLES ─────────── */
+
+/* S0 — INTRO */
+.s0-year{
+  font-family:'Orbitron',sans-serif;font-size:clamp(7.5rem, 27.5vw, 21.25rem);font-weight:900;
+  line-height:.85;letter-spacing:-.02em;
+  background:linear-gradient(135deg,var(--c1) 0%,var(--c2) 50%,var(--c3) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:yearPop 1s cubic-bezier(.175,.885,.32,1.275) both;
+  filter:drop-shadow(0 0 40px rgba(0,255,249,.4));
+}
+@keyframes yearPop{
+  0%{opacity:0;transform:scale(.5) rotate(-8deg);}
+  60%{transform:scale(1.07) rotate(2deg);}
+  100%{opacity:1;transform:scale(1) rotate(0deg);}
+}
+.s0-label{
+  font-size:clamp(1.25rem, 3.8vw, 2.0rem);letter-spacing:.4em;color:rgba(255,255,255,.35);
+  text-transform:uppercase;margin-top:.5rem;
+  color:rgba(255,255,255,.8);
+  animation:fadeUp .8s .6s both;
+}
+.s0-sub{
+  font-size:clamp(0.94rem, 2.5vw, 1.25rem);letter-spacing:.2em;color:rgba(255,255,255,.7);
+  margin-top:1.5rem;animation:fadeUp .8s 1s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+/* S1 — KM TOTAL */
+.big-number{
+  font-family:'Orbitron',sans-serif;font-weight:900;line-height:1;
+  font-size:clamp(6.25rem, 22.5vw, 16.25rem);
+  animation:countUp .8s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes countUp{from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
+.big-unit{font-size:clamp(1.88rem, 5.0vw, 3.75rem);font-weight:300;opacity:.5;margin-left:.2em;}
+.slide-label{
+  font-size:clamp(1.12rem, 3.8vw, 1.75rem);letter-spacing:.3em;color:rgba(255,255,255,.85);
+  text-transform:uppercase;margin-top:.6rem;animation:fadeUp .6s .4s both;
+}
+.slide-sub{
+  font-size:clamp(1.0rem, 2.8vw, 1.38rem);letter-spacing:.06em;color:rgba(255,255,255,.75);
+  margin-top:.8rem;animation:fadeUp .6s .7s both;text-align:center;
+}
+
+/* S2 — RACES GRID */
+.races-grid{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;
+  max-width:700px;margin-top:1rem;
+  animation:fadeUp .6s .3s both;
+}
+.race-pill{
+  font-size:clamp(0.69rem, 1.9vw, 0.94rem);font-weight:600;letter-spacing:.04em;
+  padding:.3rem .7rem;border-radius:8px;border:1px solid;
+  animation:pilPop .4s both;
+}
+@keyframes pilPop{from{opacity:0;transform:scale(.7);}to{opacity:1;transform:scale(1);}}
+
+/* S3 — BEST PERF */
+.perf-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;padding:1.5rem 2rem;text-align:center;max-width:600px;width:90vw;
+  animation:fadeUp .7s .2s both;position:relative;overflow:visible;
+}
+.perf-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%,rgba(0,255,249,.08),transparent 60%);
+}
+.perf-time{
+  font-family:'Orbitron',sans-serif;font-size:clamp(4.5rem, 13vw, 9rem);font-weight:900;
+  color:var(--c1);filter:drop-shadow(0 0 20px rgba(0,255,249,.5));
+  animation:countUp .8s .4s both;
+  white-space:nowrap;
+}
+.perf-race{font-size:clamp(1.3rem, 3.8vw, 1.9rem);font-weight:600;letter-spacing:.05em;margin-top:.4rem;color:rgba(255,255,255,.92);}
+.perf-meta{font-size:clamp(1rem, 2.8vw, 1.35rem);letter-spacing:.08em;color:rgba(255,255,255,.8);margin-top:.3rem;}
+
+/* S4 — CLASSEMENT */
+.rank-number{
+  font-family:'Orbitron',sans-serif;font-weight:900;
+  font-size:clamp(6.25rem, 21.2vw, 16.25rem);line-height:1;
+  color:var(--c6);filter:drop-shadow(0 0 30px rgba(255,215,0,.5));
+  animation:countUp .8s both;
+}
+.rank-suffix{font-size:clamp(1.88rem, 5.0vw, 3.75rem);color:rgba(255,215,0,.5);}
+
+/* S5 — VMA */
+.vma-bar-wrap{width:min(400px,80vw);margin-top:1.5rem;animation:fadeUp .7s .4s both;}
+.vma-bar-bg{height:12px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden;margin-bottom:.5rem;}
+.vma-bar-fill{height:100%;border-radius:6px;transition:width 1.5s cubic-bezier(.23,1,.32,1);}
+.vma-bar-label{display:flex;justify-content:space-between;font-size:.7rem;color:rgba(255,255,255,.75);letter-spacing:.05em;}
+
+/* S6 — FC */
+.heart-wrap{position:relative;display:inline-block;}
+.heart-icon{font-size:clamp(5.0rem, 15.0vw, 10.0rem);animation:heartbeat 1s ease-in-out infinite;}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  15%{transform:scale(1.18);}
+  30%{transform:scale(1);}
+  45%{transform:scale(1.1);}
+}
+
+/* S7 — CITIES */
+.cities-list{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;
+  max-width:600px;margin-top:1rem;animation:fadeUp .6s .3s both;
+}
+.city-tag{
+  font-size:clamp(0.88rem, 2.5vw, 1.19rem);font-weight:600;letter-spacing:.06em;
+  padding:.35rem .85rem;border-radius:20px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);
+  animation:pilPop .4s both;
+}
+
+/* S8 — PODIUM */
+.podium-wrap{display:flex;align-items:flex-end;justify-content:center;gap:1rem;margin-top:1.5rem;}
+.pod-col{display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.pod-medal{font-size:2rem;}
+.pod-block{
+  width:clamp(88px, 18.8vw, 125px);border-radius:10px 10px 0 0;
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:.5rem;font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:900;
+  animation:podRise 1s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes podRise{from{transform:scaleY(0);transform-origin:bottom;}to{transform:scaleY(1);transform-origin:bottom;}}
+.pod-name{font-size:clamp(0.69rem, 1.9vw, 0.94rem);font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.5);text-align:center;max-width:100px;}
+.pod-time{font-family:'Orbitron',sans-serif;font-size:clamp(0.88rem, 2.5vw, 1.12rem);font-weight:700;}
+
+/* S9 — OUTRO */
+.outro-line{
+  font-family:'Orbitron',sans-serif;font-size:clamp(1.25rem, 4.4vw, 2.5rem);font-weight:700;
+  letter-spacing:.06em;text-align:center;animation:fadeUp .7s both;
+}
+.outro-stat{
+  font-size:clamp(4.5rem, 13vw, 9rem);font-weight:900;font-family:'Orbitron',sans-serif;
+  animation:countUp .8s .3s both;
+}
+
+/* SPARKS */
+.spark{position:fixed;pointer-events:none;z-index:400;border-radius:50%;animation:sparkFly 1s ease-out forwards;}
+@keyframes sparkFly{
+  0%{opacity:1;transform:translate(0,0) scale(1);}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0);}
+}
+
+/* ── TRANSITIONS ── */
+.slide{transition:opacity .4s, transform .4s, filter .4s;}
+
+/* Slide-in variants */
+.slide.anim-swipe-left  { animation: swipeFromRight .55s cubic-bezier(.23,1,.32,1) both; }
+.slide.anim-swipe-right { animation: swipeFromLeft  .55s cubic-bezier(.23,1,.32,1) both; }
+.slide.anim-zoom-in     { animation: zoomIn   .6s cubic-bezier(.175,.885,.32,1.275) both; }
+.slide.anim-zoom-out    { animation: zoomOut  .5s cubic-bezier(.23,1,.32,1) both; }
+.slide.anim-flip        { animation: flipIn   .6s cubic-bezier(.23,1,.32,1) both; }
+.slide.anim-glitch      { animation: glitchIn .5s steps(1) both; }
+.slide.anim-drop        { animation: dropIn   .6s cubic-bezier(.175,.885,.32,1.275) both; }
+.slide.anim-fade        { animation: fadeIn   .6s ease both; }
+
+@keyframes swipeFromRight{ from{opacity:0;transform:translateX(80px);filter:blur(4px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes swipeFromLeft { from{opacity:0;transform:translateX(-80px);filter:blur(4px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes zoomIn  { from{opacity:0;transform:scale(.6) rotate(-4deg);filter:blur(8px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes zoomOut { from{opacity:0;transform:scale(1.4);filter:blur(6px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes flipIn  { from{opacity:0;transform:rotateY(-45deg) scale(.85);filter:blur(4px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes glitchIn{
+  0%  {opacity:0;transform:translate(-6px,0) skewX(-5deg);filter:hue-rotate(90deg) blur(3px);}
+  20% {opacity:1;transform:translate(5px,0)  skewX(3deg); filter:hue-rotate(180deg);}
+  40% {transform:translate(-3px,0) skewX(-2deg);filter:hue-rotate(270deg);}
+  60% {transform:translate(2px,0)  skewX(1deg); filter:hue-rotate(0deg);}
+  80% {transform:translate(-1px,0);}
+  100%{opacity:1;transform:none;filter:none;}
+}
+@keyframes dropIn  { from{opacity:0;transform:translateY(-60px) scale(1.1);filter:blur(4px);} to{opacity:1;transform:none;filter:none;} }
+@keyframes fadeIn  { from{opacity:0;} to{opacity:1;} }
+
+/* ── FLASH OVERLAY ── */
+#flash-overlay{
+  position:fixed;inset:0;z-index:499;pointer-events:none;
+  opacity:0;
+}
+@keyframes flashBurst{
+  0%{opacity:.7;}
+  100%{opacity:0;}
+}
+.flash-active{ animation:flashBurst .35s ease-out forwards; }
+
+/* ── SCANLINES overlay (glitch slide) ── */
+#scanlines{
+  position:fixed;inset:0;z-index:498;pointer-events:none;opacity:0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.15) 2px, rgba(0,0,0,.15) 4px);
+  transition:opacity .2s;
+}
+#scanlines.visible{opacity:1;}
+
+/* ── NUMBER COUNTER ── */
+.count-animated{ display:inline-block; }
+
+@media(max-width:480px){
+  .perf-card{padding:1.2rem 1.4rem;}
+  .vma-bar-wrap{width:90vw;}
+  .pod-block{width:60px;}
+}
+
+/* ── SITE NAV ── */
+.site-nav{
+  display:flex;flex-wrap:nowrap;justify-content:center;
+  gap:.28rem;margin-bottom:1.5rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;padding:.2rem 1rem .2rem 4rem;
+}
+.site-nav::-webkit-scrollbar{display:none;}
+.site-nav a{
+  flex-shrink:0;display:inline-flex;align-items:center;gap:.2rem;
+  padding:.28rem .45rem;border-radius:10px;
+  font-size:.62rem;font-weight:700;letter-spacing:.03em;
+  text-decoration:none;white-space:nowrap;
+  border:1.5px solid rgba(255,255,255,.15);
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);
+  transition:all .2s;
+}
+.site-nav a:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff;}
+.site-nav a.active{border-color:var(--c1);color:var(--c1);background:rgba(0,255,249,.1);box-shadow:0 0 10px rgba(0,255,249,.2);}
+@media(max-width:600px){.site-nav{justify-content:flex-start;padding:.2rem .5rem .2rem 4rem;}}
+</style>
+</head>
+<body>
+
+<a href="index.html" title="Tableau de bord" style="position:fixed;top:18px;left:18px;z-index:999;width:44px;height:44px;border-radius:13px;background:rgba(0,255,249,.1);border:1.5px solid rgba(0,255,249,.35);display:flex;align-items:center;justify-content:center;text-decoration:none;backdrop-filter:blur(20px);transition:all .3s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 0 24px rgba(0,255,249,.4)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
+    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
+</a>
+<canvas id="bg-canvas"></canvas>
+<div id="flash-overlay"></div>
+<div id="scanlines"></div>
+<div id="progress-bar"></div>
+<button id="back-btn" onclick="backToSelector()">← CHOISIR</button>
+<div class="nav-arrow" id="nav-prev" onclick="prevSlide()">‹</div>
+<div class="nav-arrow" id="nav-next" onclick="nextSlide()">›</div>
+<div id="slide-counter"></div>
+
+<!-- YEAR SELECTOR -->
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="#" class="active">🎬 WRAPPED</a>
+</nav>
+<div id="year-selector">
+  <h1>ANNÉE EN COURSE</h1>
+  <p>Ton running wrapped</p>
+  <div class="year-grid" id="year-grid"></div>
+</div>
+
+<!-- SLIDESHOW -->
+<div id="show"></div>
+
+<script>
+// ── DATA ────────────────────────────────────────────────────────────────────
+const ALL_RACES = [
+  {date:"2026-03-01",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",fc:162},
+  {date:"2025-10-05",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",perf:"01:38:50",allure:"4:11",fc:171},
+  {date:"2025-09-28",course:"Semi-Marathon Route Du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",record:true,fc:172},
+  {date:"2025-05-31",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",perf:"01:29:51",allure:"4:14",fc:174},
+  {date:"2025-04-27",course:"Marathon du lac d'Annecy",ville:"Annecy",km:42.195,classement:"583/3845",perf:"03:26:08",allure:"4:53",fc:167},
+  {date:"2025-03-16",course:"Semi Marathon Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",perf:"01:25:34",allure:"4:03",fc:168},
+  {date:"2024-10-06",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",perf:"01:40:51",allure:"4:16",fc:170},
+  {date:"2024-09-29",course:"Semi Marathon Route Du Vin",ville:"Remich",km:21.1,classement:"178/1895",perf:"01:26:33",allure:"4:06",fc:174},
+  {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",perf:"01:00:59",allure:"5:10",fc:168},
+  {date:"2024-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",fc:179},
+  {date:"2024-05-11",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"176/6909",perf:"01:31:20",allure:"4:19",fc:178},
+  {date:"2024-05-08",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",perf:"00:37:41",allure:"3:46",record:true,fc:181},
+  {date:"2024-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"14/199",perf:"00:39:17",allure:"3:56",fc:183},
+  {date:"2024-04-21",course:"Semi-Marathon de Thionville",ville:"Thionville",km:21.1,classement:"80/1089",perf:"01:25:30",allure:"4:03",fc:171},
+  {date:"2024-04-07",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"3058/54175",perf:"03:06:21",allure:"4:24",record:true,fc:174},
+  {date:"2024-03-17",course:"Semi Marathon Vallée de l'Orne",ville:"Moyeuvre-Grande",km:21.1,classement:"34/416",perf:"01:30:06",allure:"4:16",fc:166},
+  {date:"2024-03-10",course:"Postlaf",ville:"Luxembourg",km:10,classement:"144/2440",perf:"00:40:29",allure:"4:02",fc:176},
+  {date:"2023-10-14",course:"Haard Trail Dudelange",ville:"Dudelange",km:15,classement:"27/94",perf:"01:11:15",allure:"4:45",fc:178},
+  {date:"2023-10-01",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",perf:"01:48:54",allure:"4:36",fc:182},
+  {date:"2023-09-24",course:"Semi Marathon Route Du Vin",ville:"Remich",km:21.1,classement:"179/1370",perf:"01:30:39",allure:"4:17",fc:174},
+  {date:"2023-07-09",course:"La Forestière",ville:"Moyeuvre-Grande",km:10,classement:"39/164",perf:"00:50:30",allure:"5:03",fc:181},
+  {date:"2023-06-25",course:"Foulées de Saint-Hubert",ville:"Gandrange",km:10,classement:"24/169",perf:"00:41:37",allure:"4:10",fc:183},
+  {date:"2023-06-02",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",fc:184},
+  {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",perf:"03:47:13",allure:"5:23",fc:175},
+  {date:"2023-04-23",course:"Semi Marathon de Thionville",ville:"Thionville",km:21.1,classement:"82/690",perf:"01:27:20",allure:"4:08",fc:178},
+  {date:"2023-03-19",course:"Semi Marathon Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",perf:"01:28:36",allure:"4:12",fc:179},
+  {date:"2023-03-12",course:"Postlaf",ville:"Luxembourg",km:10,classement:"142/2067",perf:"00:42:44",allure:"4:16",fc:178},
+  {date:"2022-10-16",course:"TCS Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",perf:"03:13:45",allure:"4:35",fc:173},
+  {date:"2022-09-18",course:"Semi-Marathon Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",perf:"01:32:20",allure:"4:23",fc:178},
+  {date:"2022-06-26",course:"Foulées de Saint-Hubert",ville:"Gandrange",km:10,classement:"21/147",perf:"00:41:27",allure:"4:09",fc:177},
+  {date:"2022-06-03",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",fc:182},
+  {date:"2022-05-28",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"456/4498",perf:"01:37:46",allure:"4:38",fc:174},
+  {date:"2022-05-15",course:"Semi-Marathon de Thionville",ville:"Thionville",km:21.1,classement:"289/798",perf:"01:51:28",allure:"5:17",fc:177},
+  {date:"2022-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",perf:"00:40:34",allure:"4:03",fc:176},
+  {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"77/325",perf:"00:40:16",allure:"4:02",fc:186},
+  {date:"2022-03-20",course:"Semi Marathon Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",perf:"01:33:58",allure:"4:27",fc:179},
+  {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",perf:"03:29:02",allure:"4:57",fc:172},
+  {date:"2021-09-19",course:"Semi-Marathon Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",perf:"01:33:14",allure:"4:25",fc:178},
+  {date:"2021-07-04",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"78/250",perf:"00:40:49",allure:"4:05",fc:186},
+  {date:"2020-03-01",course:"Semi Marathon Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",perf:"01:42:59",allure:"4:53",fc:178},
+  {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",perf:"01:59:38",allure:"5:04",fc:182},
+  {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",perf:"01:15:11",allure:"5:01",fc:185},
+  {date:"2019-06-30",course:"Foulées de Saint-Hubert",ville:"Gandrange",km:10,classement:"73/234",perf:"00:46:42",allure:"4:40",fc:185},
+  {date:"2019-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",fc:181},
+  {date:"2019-06-01",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"1564/6470",perf:"01:55:51",allure:"5:29",fc:185},
+  {date:"2019-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"121/248",perf:"00:49:03",allure:"4:54",fc:185},
+  {date:"2019-04-28",course:"Semi Marathon de Thionville",ville:"Thionville",km:21.1,classement:"521/987",perf:"01:49:48",allure:"5:12",fc:186},
+  {date:"2019-03-17",course:"Semi-Marathon Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",perf:"01:53:04",allure:"5:22"},
+];
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function perfToSec(p){const a=p.split(':').map(Number);return a[0]*3600+a[1]*60+a[2];}
+function secToPerf(s){const h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;return h>0?`${h}h${String(m).padStart(2,'0')}'${String(ss).padStart(2,'0')}"`:`${m}'${String(ss).padStart(2,'0')}"`;}
+function allureToSec(a){const[m,s]=a.split(':').map(Number);return m*60+s;}
+function pct(cl){const[p,t]=cl.split('/').map(Number);return(p/t*100);}
+function vma(a){return(60/allureToSec(a)*60);}
+function distCat(km){if(km>=40)return'mar';if(km>=18)return'semi';if(km>=9&&km<=14)return'10k';return'trail';}
+const DIST_COLORS={'mar':['rgba(188,19,254,1)','#bc13fe'],'semi':['rgba(0,255,249,1)','#00fff9'],'10k':['rgba(0,255,136,1)','#00ff88'],'trail':['rgba(255,107,53,1)','#ff6b35']};
+
+// ── YEAR STATS ────────────────────────────────────────────────────────────────
+function computeYear(year){
+  const races = ALL_RACES.filter(r=>r.date.startsWith(String(year)));
+  if(!races.length) return null;
+  const km = races.reduce((s,r)=>s+parseFloat(r.km),0);
+  const pcts = races.map(r=>pct(r.classement));
+  const avgPct = pcts.reduce((a,b)=>a+b,0)/pcts.length;
+  const bestPctRace = races.reduce((best,r)=>pct(r.classement)<pct(best.classement)?r:best);
+  const vmas = races.map(r=>vma(r.allure));
+  const avgVma = vmas.reduce((a,b)=>a+b,0)/vmas.length;
+  const bestVma = Math.max(...vmas);
+  const fcRaces = races.filter(r=>r.fc);
+  const avgFc = fcRaces.length ? Math.round(fcRaces.reduce((s,r)=>s+r.fc,0)/fcRaces.length) : null;
+  const cities = [...new Set(races.map(r=>r.ville))];
+  const prs = races.filter(r=>r.record);
+  const sortedByPct = [...races].sort((a,b)=>pct(a.classement)-pct(b.classement));
+  const top3 = sortedByPct.slice(0,3);
+  const allureSecs = races.map(r=>allureToSec(r.allure));
+  const bestAllureSec = Math.min(...allureSecs);
+  const bestAllureRace = races[allureSecs.indexOf(bestAllureSec)];
+  return {races,km,avgPct,bestPctRace,avgVma,bestVma,avgFc,cities,prs,top3,bestAllureRace,bestAllureSec,year};
+}
+
+const YEARS = [2019,2020,2021,2022,2023,2024,2025,2026].filter(y=>ALL_RACES.some(r=>r.date.startsWith(String(y))));
+
+// ── YEAR SELECTOR ─────────────────────────────────────────────────────────────
+const grid = document.getElementById('year-grid');
+YEARS.forEach(y=>{
+  const d = computeYear(y);
+  const btn = document.createElement('button');
+  btn.className='yr-btn';
+  btn.innerHTML=`${y}<br><span style="font-size:.6rem;opacity:.4;font-family:'Barlow Condensed';letter-spacing:.05em;">${d.races.length} course${d.races.length>1?'s':''}</span>`;
+  btn.onclick=()=>startWrapped(y);
+  grid.appendChild(btn);
+});
+
+// ── CANVAS BG ─────────────────────────────────────────────────────────────────
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles=[], W, H, animId;
+
+function resizeCanvas(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+resizeCanvas();
+window.addEventListener('resize',resizeCanvas);
+
+for(let i=0;i<60;i++) particles.push({
+  x:Math.random()*1920,y:Math.random()*1080,
+  vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,
+  r:Math.random()*2+.5,
+  col:['rgba(0,255,249,','rgba(188,19,254,','rgba(255,0,110,','rgba(0,255,136,'][Math.floor(Math.random()*4)],
+  a:Math.random()*.4+.1
+});
+
+function drawBg(){
+  ctx.clearRect(0,0,W,H);
+  particles.forEach(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0)p.x=W; if(p.x>W)p.x=0;
+    if(p.y<0)p.y=H; if(p.y>H)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=p.col+p.a+')';ctx.fill();
+  });
+  animId=requestAnimationFrame(drawBg);
+}
+drawBg();
+
+// ── SLIDE BUILDER ─────────────────────────────────────────────────────────────
+let slides=[], currentSlide=0, slideTimer=null, data=null, isRunning=false;
+const SLIDE_DURATION = 6000;
+
+function buildSlides(d){
+  const y = d.year;
+  const ss = [];
+
+  // S0 — INTRO ANNÉE
+  ss.push({
+    bg:'radial-gradient(ellipse at center, rgba(0,255,249,.12) 0%, transparent 70%)',
+    html:`
+      <div class="s0-year">${y}</div>
+      <div class="s0-label">Ton année en course</div>
+      <div class="s0-sub">${d.races.length} course${d.races.length>1?'s':''} · ${Math.round(d.km)} km · ${d.cities.length} ville${d.cities.length>1?'s':''}</div>
+    `
+  });
+
+  // S1 — KM TOTAL
+  ss.push({
+    bg:'radial-gradient(ellipse at 30% 60%, rgba(0,255,136,.1) 0%, transparent 65%)',
+    html:`
+      <div class="slide-label" style="animation:fadeUp .6s both;letter-spacing:.4em;margin-bottom:.5rem;">cette année tu as couru</div>
+      <div class="big-number" style="color:var(--c5);">${Math.round(d.km)}<span class="big-unit">km</span></div>
+      <div class="slide-sub">${d.races.length} courses officielles · soit ${Math.round(d.km/40)} tours de stade</div>
+    `
+  });
+
+  // S2 — LISTE COURSES
+  const pillsHTML = d.races.map((r,i)=>{
+    const cat=distCat(r.km);
+    const [col]=DIST_COLORS[cat];
+    return `<div class="race-pill" style="border-color:${col};color:${col};background:${col.replace('1)','0.08)')};animation-delay:${i*.05}s">
+      ${r.course.length>30?r.course.slice(0,28)+'…':r.course} · ${r.ville}
+    </div>`;
+  }).join('');
+  ss.push({
+    bg:'radial-gradient(ellipse at 70% 30%, rgba(188,19,254,.1) 0%, transparent 65%)',
+    html:`
+      <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.3rem;">toutes tes courses</div>
+      <div class="races-grid">${pillsHTML}</div>
+    `
+  });
+
+  // S3 — MEILLEURE PERF (allure)
+  const br = d.bestAllureRace;
+  const cat=distCat(br.km);
+  const [col]=DIST_COLORS[cat];
+  ss.push({
+    bg:`radial-gradient(ellipse at 50% 40%, ${col.replace('1)','.12)')} 0%, transparent 65%)`,
+    html:`
+      <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:1rem;">ta meilleure allure</div>
+      <div class="perf-card">
+        <div class="perf-time" style="color:${col};filter:drop-shadow(0 0 20px ${col.replace('1)','.5)')});">
+          ${br.allure}<span style="font-size:.4em;opacity:.6;">/km</span>
+        </div>
+        <div class="perf-race">${br.course}</div>
+        <div class="perf-meta">${br.ville} · ${br.date.split('-').reverse().join('/')} · ${secToPerf(perfToSec(br.perf))}</div>
+        ${br.record?`<div style="margin-top:.8rem;font-size:.85rem;color:var(--c6);letter-spacing:.1em;">⭐ RECORD PERSONNEL</div>`:''}
+      </div>
+    `
+  });
+
+  // S4 — MEILLEUR CLASSEMENT
+  const bp = d.bestPctRace;
+  const bpv = pct(bp.classement);
+  ss.push({
+    bg:'radial-gradient(ellipse at 60% 40%, rgba(255,215,0,.1) 0%, transparent 65%)',
+    html:`
+      <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.3rem;">ton meilleur classement</div>
+      <div class="rank-number">top <span style="color:var(--c6);">${bpv.toFixed(1)}<span class="rank-suffix">%</span></span></div>
+      <div style="animation:fadeUp .6s .4s both;text-align:center;max-width:400px;">
+        <div style="font-size:clamp(1.12rem, 3.1vw, 1.62rem);font-weight:600;color:rgba(255,255,255,.7);margin-top:.5rem;">${bp.course}</div>
+        <div style="font-size:clamp(0.81rem, 2.2vw, 1.06rem);letter-spacing:.08em;color:rgba(255,255,255,.3);margin-top:.3rem;">${bp.classement} · ${bp.ville}</div>
+      </div>
+    `
+  });
+
+  // S5 — VMA
+  const maxVma=20, refVma=10;
+  ss.push({
+    bg:'radial-gradient(ellipse at 40% 60%, rgba(0,255,249,.1) 0%, transparent 65%)',
+    html:`
+      <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.5rem;">ta vitesse maximale aérobie</div>
+      <div class="big-number" style="color:var(--c1);">${d.bestVma.toFixed(1)}<span class="big-unit">km/h</span></div>
+      <div class="vma-bar-wrap">
+        <div class="vma-bar-bg"><div class="vma-bar-fill" id="vma-fill" style="width:0%;background:linear-gradient(90deg,var(--c1),var(--c2));"></div></div>
+        <div class="vma-bar-label"><span>Amateur moyen (~11)</span><span>Élite mondiale (22+)</span></div>
+      </div>
+      <div class="slide-sub">moy. saison : ${d.avgVma.toFixed(1)} km/h · soit ${Math.round((d.bestVma/22)*100)}% de l'élite mondiale</div>
+    `,
+    onEnter:()=>{
+      setTimeout(()=>{
+        const f=document.getElementById('vma-fill');
+        if(f) f.style.width=Math.min(((d.bestVma-refVma)/(maxVma-refVma))*100,100)+'%';
+      },300);
+    }
+  });
+
+  // S6 — FC
+  if(d.avgFc){
+    const fcColor = d.avgFc>=185?'#ff006e':d.avgFc>=175?'#ff6b35':'#00ff88';
+    const fcLabel = d.avgFc>=185?'Zone haute':d.avgFc>=175?'Zone modérée':'Zone endurance';
+    ss.push({
+      bg:'radial-gradient(ellipse at 50% 40%, rgba(255,0,110,.12) 0%, transparent 65%)',
+      html:`
+        <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.5rem;">ton cœur cette année</div>
+        <div class="heart-wrap"><span style="font-size:clamp(3.75rem, 12.5vw, 8.75rem);">❤️</span></div>
+        <div class="big-number" style="color:${fcColor};margin-top:.3rem;">${d.avgFc}<span class="big-unit">bpm</span></div>
+        <div class="slide-sub">FC moyenne · ${fcLabel}</div>
+      `
+    });
+  }
+
+  // S7 — VILLES
+  ss.push({
+    bg:'radial-gradient(ellipse at 70% 50%, rgba(255,107,53,.1) 0%, transparent 65%)',
+    html:`
+      <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.5rem;">tu as couru dans</div>
+      <div class="big-number" style="color:var(--c4);">${d.cities.length}<span class="big-unit">ville${d.cities.length>1?'s':''}</span></div>
+      <div class="cities-list">
+        ${d.cities.map((c,i)=>`<div class="city-tag" style="animation-delay:${i*.07}s;">${c}</div>`).join('')}
+      </div>
+    `
+  });
+
+  // S8 — TOP 3 PODIUM
+  if(d.top3.length>=2){
+    const medals=['🥇','🥈','🥉'];
+    const heights=[140,100,75];
+    const cols=['rgba(255,215,0,.25)','rgba(192,192,192,.2)','rgba(205,127,50,.18)'];
+    const borders=['rgba(255,215,0,.5)','rgba(192,192,192,.4)','rgba(205,127,50,.35)'];
+    const podOrder=[1,0,2].map(i=>d.top3[i]).filter(Boolean);
+    const hOrder=[heights[1],heights[0],heights[2]];
+    ss.push({
+      bg:'radial-gradient(ellipse at 50% 30%, rgba(255,215,0,.1) 0%, transparent 65%)',
+      html:`
+        <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.5rem;">ton podium de l'année</div>
+        <div class="podium-wrap">
+          ${podOrder.map((r,i)=>{
+            const orig=d.top3.indexOf(r);
+            const cat=distCat(r.km);
+            const [col]=DIST_COLORS[cat];
+            return `<div class="pod-col" style="animation-delay:${i*.15}s">
+              <div class="pod-medal">${medals[orig]}</div>
+              <div class="pod-time" style="color:${col}">${r.allure}/km</div>
+              <div class="pod-block" style="height:${hOrder[i]}px;background:${cols[orig]};border:1px solid ${borders[orig]};color:${['rgba(255,215,0,.8)','rgba(192,192,192,.7)','rgba(205,127,50,.7)'][orig]};animation-delay:${i*.1}s">${orig+1}</div>
+              <div class="pod-name">${r.course.length>22?r.course.slice(0,20)+'…':r.course}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      `
+    });
+  }
+
+  // S9 — PR
+  if(d.prs.length){
+    ss.push({
+      bg:'radial-gradient(ellipse at 50% 40%, rgba(255,215,0,.15) 0%, transparent 60%)',
+      html:`
+        <div class="slide-label" style="animation:fadeUp .5s both;margin-bottom:.5rem;">records personnels battus</div>
+        <div class="big-number" style="color:var(--c6);">${d.prs.length}<span class="big-unit">RP</span></div>
+        <div style="animation:fadeUp .6s .5s both;display:flex;flex-direction:column;gap:.5rem;margin-top:.8rem;max-width:450px;">
+          ${d.prs.map(r=>`<div style="font-size:clamp(1.0rem, 3.1vw, 1.38rem);font-weight:600;color:rgba(255,255,255,.65);text-align:center;">${r.course} · ${r.perf}</div>`).join('')}
+        </div>
+      `
+    });
+  }
+
+  // S10 — OUTRO
+  const progress = ((d.avgPct / (ALL_RACES.filter(r=>r.date<d.year+'-01-01').length?pct(ALL_RACES.filter(r=>r.date.startsWith(String(d.year-1)))[0]?.classement||'50/100'):50)) - 1) * 100;
+  ss.push({
+    bg:'radial-gradient(ellipse at 50% 50%, rgba(0,255,249,.08) 0%, rgba(188,19,254,.06) 50%, transparent 70%)',
+    html:`
+      <div style="animation:yearPop 1s both">
+        <div style="font-family:'Orbitron',sans-serif;font-size:clamp(6.25rem, 18.8vw, 12.5rem);font-weight:900;line-height:.85;
+          background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3),var(--c4));
+          -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+          filter:drop-shadow(0 0 30px rgba(0,255,249,.4));text-align:center;">${y}</div>
+      </div>
+      <div style="animation:fadeUp .7s .7s both;margin-top:1.2rem;text-align:center;">
+        <div style="font-size:clamp(1.12rem, 3.8vw, 1.88rem);letter-spacing:.15em;color:rgba(255,255,255,.5);">${Math.round(d.km)} km · ${d.races.length} courses · ${d.cities.length} villes</div>
+        <div style="font-size:clamp(0.88rem, 2.5vw, 1.25rem);letter-spacing:.08em;color:rgba(255,255,255,.25);margin-top:.5rem;">top ${d.avgPct.toFixed(1)}% de classement moyen</div>
+      </div>
+      <div style="animation:fadeUp .6s 1.2s both;margin-top:1.5rem;">
+        <div style="font-size:clamp(1.25rem, 3.8vw, 2.0rem);font-weight:700;letter-spacing:.06em;color:rgba(255,255,255,.7);">Bonne route pour la suite 🔥</div>
+      </div>
+    `,
+    isLast:true
+  });
+
+  return ss;
+}
+
+// ── TRANSITION ANIMS (one per slide index, cycling) ──────────────────────────
+const ANIM_SEQUENCE = [
+  'anim-zoom-in',     // S0 intro
+  'anim-swipe-left',  // S1 km
+  'anim-drop',        // S2 courses list
+  'anim-flip',        // S3 best allure
+  'anim-zoom-out',    // S4 classement
+  'anim-glitch',      // S5 vma
+  'anim-swipe-left',  // S6 fc
+  'anim-drop',        // S7 cities
+  'anim-swipe-left',  // S8 podium
+  'anim-flip',        // S9 prs
+  'anim-zoom-in',     // S10 outro
+];
+
+const FLASH_COLORS = [
+  'rgba(0,255,249,.25)',   // cyan
+  'rgba(0,255,136,.2)',    // green
+  'rgba(188,19,254,.2)',   // purple
+  'rgba(0,255,249,.2)',    // cyan
+  'rgba(255,215,0,.25)',   // gold
+  'rgba(255,0,110,.2)',    // pink (glitch)
+  'rgba(255,0,110,.18)',
+  'rgba(255,107,53,.2)',
+  'rgba(255,215,0,.2)',
+  'rgba(255,215,0,.3)',
+  'rgba(0,255,249,.3)',
+];
+
+// ── NUMBER COUNTER ANIMATION ──────────────────────────────────────────────────
+function animateNumber(el, target, duration=900, suffix=''){
+  const isFloat = String(target).includes('.');
+  const decimals = isFloat ? (String(target).split('.')[1]||'').length : 0;
+  const start = performance.now();
+  function tick(now){
+    const t = Math.min((now-start)/duration,1);
+    const ease = 1-Math.pow(1-t,3);
+    const val = target * ease;
+    el.textContent = isFloat ? val.toFixed(decimals)+suffix : Math.round(val)+suffix;
+    if(t<1) requestAnimationFrame(tick);
+    else el.textContent = isFloat ? target.toFixed(decimals)+suffix : target+suffix;
+  }
+  requestAnimationFrame(tick);
+}
+
+// ── BG PULSE ─────────────────────────────────────────────────────────────────
+let bgPulseId=null, bgPulsePhase=0;
+function startBgPulse(color){
+  stopBgPulse();
+  const show=document.getElementById('show');
+  const base = slides[currentSlide]?.bg||'transparent';
+  function pulse(){
+    bgPulsePhase+=0.04;
+    const intensity=0.5+0.5*Math.sin(bgPulsePhase);
+    const extra=`radial-gradient(ellipse at 50% 50%, ${color.replace(')',','+(0.04*intensity)+')')} 0%, transparent 60%)`;
+    show.style.background = base+', '+extra;
+    bgPulseId=requestAnimationFrame(pulse);
+  }
+  bgPulseId=requestAnimationFrame(pulse);
+}
+function stopBgPulse(){
+  if(bgPulseId){cancelAnimationFrame(bgPulseId);bgPulseId=null;}
+}
+
+// ── SHOW ENGINE ───────────────────────────────────────────────────────────────
+function startWrapped(year){
+  data = computeYear(year);
+  slides = buildSlides(data);
+  currentSlide = 0;
+  isRunning = true;
+
+  document.getElementById('year-selector').style.display='none';
+  document.querySelector('.site-nav') && (document.querySelector('.site-nav').style.display='none');
+  const show = document.getElementById('show');
+  show.style.display='block';
+  show.innerHTML='';
+  document.getElementById('back-btn').style.display='block';
+  document.getElementById('nav-prev').style.display='flex';
+  document.getElementById('nav-next').style.display='flex';
+  document.getElementById('slide-counter').style.display='block';
+
+  slides.forEach((s,i)=>{
+    const div=document.createElement('div');
+    div.className='slide';
+    div.id='slide-'+i;
+    div.innerHTML=s.html;
+    show.appendChild(div);
+  });
+
+  showSlide(0);
+}
+
+let prevSlideIdx = -1;
+
+function showSlide(idx){
+  clearTimeout(slideTimer);
+  stopBgPulse();
+  if(idx<0) idx=0;
+  if(idx>=slides.length) idx=slides.length-1;
+  const direction = idx > prevSlideIdx ? 1 : -1;
+  prevSlideIdx = currentSlide;
+  currentSlide = idx;
+
+  // ── Flash effect ──
+  const flash = document.getElementById('flash-overlay');
+  flash.style.background = FLASH_COLORS[idx % FLASH_COLORS.length];
+  flash.classList.remove('flash-active');
+  void flash.offsetWidth; // reflow
+  flash.classList.add('flash-active');
+
+  // ── Scanlines on glitch slide ──
+  const scanlines = document.getElementById('scanlines');
+  if(ANIM_SEQUENCE[idx]==='anim-glitch'){
+    scanlines.classList.add('visible');
+    setTimeout(()=>scanlines.classList.remove('visible'),600);
+  }
+
+  // ── Swap slides with animation ──
+  const animClass = ANIM_SEQUENCE[idx] || (direction>0 ? 'anim-swipe-left' : 'anim-swipe-right');
+  document.querySelectorAll('.slide').forEach((el,i)=>{
+    el.classList.remove('active','anim-swipe-left','anim-swipe-right','anim-zoom-in',
+      'anim-zoom-out','anim-flip','anim-glitch','anim-drop','anim-fade');
+    el.style.opacity='0';
+    el.style.pointerEvents='none';
+    if(i===idx){
+      el.style.opacity='';
+      el.style.pointerEvents='auto';
+      el.classList.add('active', animClass);
+    }
+  });
+
+  // ── Background ──
+  const showEl = document.getElementById('show');
+  showEl.style.transition='background 0.8s ease';
+  showEl.style.background = slides[idx].bg||'transparent';
+
+  // ── Progress bar ──
+  const pctSlide = ((idx+1)/slides.length)*100;
+  document.getElementById('progress-bar').style.width = pctSlide+'%';
+
+  // ── Slide counter ──
+  const counter = document.getElementById('slide-counter');
+  counter.style.animation='none';
+  counter.textContent = `${idx+1} / ${slides.length}`;
+  void counter.offsetWidth;
+  counter.style.animation='fadeUp .3s both';
+
+  // ── Animated numbers ──
+  setTimeout(()=>{
+    document.querySelectorAll('#slide-'+idx+' [data-count]').forEach(el=>{
+      const val=parseFloat(el.dataset.count);
+      const suf=el.dataset.suffix||'';
+      animateNumber(el,val,900,suf);
+    });
+  }, 200);
+
+  // ── BG pulse ──
+  const pulseColors = ['rgba(0,255,249','rgba(0,255,136','rgba(188,19,254','rgba(255,215,0','rgba(255,0,110','rgba(255,107,53'];
+  startBgPulse(pulseColors[idx % pulseColors.length]);
+
+  // ── onEnter callback ──
+  if(slides[idx].onEnter) slides[idx].onEnter();
+
+  // ── Burst particles on PR slide ──
+  if(slides[idx].isPR) burstConfetti();
+
+  // ── More sparks on certain slides ──
+  const sparkCount = [20,8,5,12,15,25,10,8,12,30,20][idx]||8;
+  spawnSparks(sparkCount);
+
+  // ── Auto advance ──
+  if(!slides[idx].isLast){
+    slideTimer = setTimeout(()=>nextSlide(), SLIDE_DURATION);
+  }
+}
+
+function nextSlide(){if(currentSlide<slides.length-1) showSlide(currentSlide+1);}
+function prevSlide(){if(currentSlide>0) showSlide(currentSlide-1);}
+
+function backToSelector(){
+  clearTimeout(slideTimer);
+  stopBgPulse();
+  isRunning=false;
+  document.getElementById('show').style.display='none';
+  document.getElementById('year-selector').style.display='flex';
+  document.querySelector('.site-nav') && (document.querySelector('.site-nav').style.display='');
+  document.getElementById('back-btn').style.display='none';
+  document.getElementById('nav-prev').style.display='none';
+  document.getElementById('nav-next').style.display='none';
+  document.getElementById('slide-counter').style.display='none';
+  document.getElementById('progress-bar').style.width='0%';
+}
+
+// keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' ') nextSlide();
+  if(e.key==='ArrowLeft') prevSlide();
+  if(e.key==='Escape') backToSelector();
+});
+
+// touch swipe
+let touchX=0;
+document.addEventListener('touchstart',e=>touchX=e.touches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-touchX;
+  if(Math.abs(dx)>50){if(dx<0)nextSlide();else prevSlide();}
+},{passive:true});
+
+// ── SPARKS ────────────────────────────────────────────────────────────────────
+function spawnSparks(count=10){
+  const colors=['#00fff9','#bc13fe','#ff006e','#ffd700','#00ff88','#ff6b35'];
+  for(let i=0;i<count;i++){
+    const spark=document.createElement('div');
+    spark.className='spark';
+    const size=Math.random()*7+2;
+    const angle=Math.random()*360;
+    const dist=80+Math.random()*200;
+    const tx=Math.cos(angle*Math.PI/180)*dist+'px';
+    const ty=Math.sin(angle*Math.PI/180)*dist+'px';
+    const isLine = Math.random()<.3;
+    spark.style.cssText=`
+      width:${isLine?size*4:size}px;height:${size}px;
+      border-radius:${isLine?'2px':'50%'};
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${10+Math.random()*80}vw;top:${10+Math.random()*80}vh;
+      --tx:${tx};--ty:${ty};
+      animation-duration:${.5+Math.random()*.8}s;
+      animation-delay:${Math.random()*.3}s;
+      opacity:${.6+Math.random()*.4};
+    `;
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),1600);
+  }
+}
+</script>
+</body>
+</html>
