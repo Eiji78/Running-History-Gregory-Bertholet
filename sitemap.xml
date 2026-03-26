@@ -5,44 +5,62 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/index.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/progression.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/radar.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/elite.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/carte.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/comparaison.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/meteo.html</loc>
-    <lastmod>2026-03-09</lastmod>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/timeline.html</loc>
+    <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/galerie.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://eiji78.github.io/Running-History-Gregory-Bertholet/wrapped.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>
