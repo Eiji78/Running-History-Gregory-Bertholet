@@ -4,17 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carte des Courses — Running History</title>
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/carte.html" />
-    <meta property="og:title" content="Carte des Courses — Running History" />
-    <meta property="og:description" content="51 courses dans 18 villes et 5 pays." />
-    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/preview.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Carte des Courses — Running History" />
-    <meta name="twitter:description" content="51 courses dans 18 villes et 5 pays." />
-    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/preview.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -247,13 +236,13 @@
         <!-- Header -->
         <div class="text-center mb-10 fade-in">
             <h1 class="main-title mb-3">CARTE DES COURSES</h1>
-            <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">51 COURSES · 18 VILLES · 5 PAYS</p>
+            <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">52 COURSES · 19 VILLES · 6 PAYS</p>
             <style>
 .site-nav {
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.45rem;
     margin-bottom: 2rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -310,23 +299,23 @@
         <!-- Stats pills -->
         <div class="flex flex-wrap justify-center gap-4 mb-8 fade-in" style="animation-delay:0.1s;">
             <div class="stat-pill">
-                <div class="stat-pill-val" style="color:#00fff9;">51</div>
+                <div class="stat-pill-val" style="color:#00fff9;">52</div>
                 <div class="stat-pill-label">COURSES</div>
             </div>
             <div class="stat-pill">
-                <div class="stat-pill-val" style="color:#00ff88;">18</div>
+                <div class="stat-pill-val" style="color:#00ff88;">19</div>
                 <div class="stat-pill-label">VILLES</div>
             </div>
             <div class="stat-pill">
-                <div class="stat-pill-val" style="color:#bc13fe;">5</div>
+                <div class="stat-pill-val" style="color:#bc13fe;">6</div>
                 <div class="stat-pill-label">PAYS</div>
             </div>
             <div class="stat-pill">
-                <div class="stat-pill-val" style="color:#ffd700;">5</div>
+                <div class="stat-pill-val" style="color:#ffd700;">6</div>
                 <div class="stat-pill-label">MARATHONS</div>
             </div>
             <div class="stat-pill">
-                <div class="stat-pill-val" style="color:#ff6b35;">~960</div>
+                <div class="stat-pill-val" style="color:#ff6b35;">~1002</div>
                 <div class="stat-pill-label">KM COURUS</div>
             </div>
         </div>
@@ -386,6 +375,9 @@
     const STRAVA_SVG = `<svg width="11" height="11" viewBox="0 0 24 24" fill="#FC4C02"><path d="M15.387 17.944l-2.089-4.116h-3.065L15.387 24l5.15-10.172h-3.066m-7.008-5.599l2.836 5.598h4.172L10.463 0l-7 13.828h4.169"/></svg>`;
 
     const markers_data = [
+        { ville:"Milan",          lat:45.4654, lng:9.1859,  pays:"🇮🇹", races:[
+            {date:"2026-04-12",course:"Wizz Air Milano Marathon",km:42.195,perf:"02:59:51",classement:"1017/15050",indice:6.76,record:true,strava:"https://www.strava.com/activities/18075963697"},
+        ]},
         { ville:"Clouange",      lat:49.2662, lng:6.0894,  pays:"🇫🇷", races:[
             {date:"2026-03-01",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",km:21.1,perf:"01:25:52",classement:"48/673",indice:7.13,strava:"https://www.strava.com/activities/17561583056"},
             {date:"2024-07-06",course:"Ronde Nocturne",km:10,perf:"00:38:18",classement:"20/161",indice:12.42,strava:"https://www.strava.com/activities/11597795067"},
@@ -432,7 +424,7 @@
             {date:"2020-01-03",course:"Semi Marathon Intercommunal de La Vallée de l'Orne",km:21.1,perf:"01:42:59",classement:"247/582",indice:42.44,strava:"https://www.strava.com/activities/3144210898"},
         ]},
         { ville:"Paris",         lat:48.8575, lng:2.3514,  pays:"🇫🇷", races:[
-            {date:"2024-07-04",course:"Schneider Electric Marathon De Paris",km:42.195,perf:"03:06:21",classement:"3058/54175",indice:5.64,strava:"https://www.strava.com/activities/11124704539",record:true},
+            {date:"2024-07-04",course:"Schneider Electric Marathon De Paris",km:42.195,perf:"03:06:21",classement:"3058/54175",indice:5.64,strava:"https://www.strava.com/activities/11124704539"},
             {date:"2021-10-17",course:"Schneider Electric Marathon de Paris",km:42.195,perf:"03:29:02",classement:"4587/27071",indice:16.94,strava:"https://www.strava.com/activities/6125599297"},
             {date:"2020-12-24",course:"5Km Athlé - Open de France virtuel",km:5,perf:"00:20:25",classement:"1666/11608",indice:14.35,strava:"https://www.strava.com/activities/4494773509",virtual:true},
             {date:"2020-07-14",course:"5km Athlé - Open de France Virtuel",km:5,perf:"00:21:15",classement:"1413/7990",indice:17.68,strava:"https://www.strava.com/activities/3756329596",virtual:true},
@@ -493,67 +485,91 @@
         return '#ff8855';
     }
 
-    function buildPopup(loc) {
-        const count = loc.races.length;
-        const hasRecord = loc.races.some(r => r.record);
-        const sorted = [...loc.races].sort((a,b) => b.date.localeCompare(a.date));
+    // ── RACE-LEVEL DATA ───────────────────────────────────────────────────────
+    // On "aplatit" markers_data en une liste de courses individuelles,
+    // chacune avec ses propres coordonnées (légèrement décalées si plusieurs
+    // courses partagent la même ville, pour éviter la superposition).
+    function buildRacesList() {
+        const all = [];
+        markers_data.forEach(loc => {
+            const n = loc.races.length;
+            loc.races.forEach((r, i) => {
+                // Décalage en cercle autour du point original si n > 1
+                let lat = loc.lat, lng = loc.lng;
+                if (n > 1) {
+                    const angle = (i / n) * 2 * Math.PI;
+                    const radius = 0.0035; // ~380 m, visible même zoomé à l'échelle ville
+                    lat = loc.lat + Math.cos(angle) * radius;
+                    lng = loc.lng + Math.sin(angle) * radius / Math.cos(loc.lat * Math.PI / 180);
+                }
+                all.push({ ...r, ville: loc.ville, pays: loc.pays, lat, lng, origLat: loc.lat, origLng: loc.lng });
+            });
+        });
+        return all;
+    }
+    const allRaces = buildRacesList();
 
-        const racesHTML = sorted.map(r => {
-            const dc = distClass(r.km);
-            const pct = (() => {
-                const [pos, tot] = r.classement.split('/').map(Number);
-                return ((pos/tot)*100).toFixed(1)+'%';
-            })();
-            return `
+    function raceColor(r) {
+        if (r.record) return '#ffd700';
+        if (r.km >= 42) return '#bc13fe';
+        if (r.km > 10 && r.km < 30) return '#00fff9';
+        if (r.km <= 10) return '#00ff88';
+        return '#ff8855';
+    }
+
+    function raceMatchesFilter(r, filter) {
+        if (filter === 'all') return true;
+        if (filter === 'record') return !!r.record;
+        if (filter === '10k') return r.km <= 10;
+        if (filter === '21k') return r.km > 10 && r.km < 30;
+        if (filter === '42k') return r.km >= 42;
+        return true;
+    }
+
+    function buildRacePopup(r) {
+        const dc = distClass(r.km);
+        const [pos, tot] = r.classement.split('/').map(Number);
+        const pct = ((pos/tot)*100).toFixed(1)+'%';
+        return `
+        <div class="popup-header">
+            <div class="popup-city">${r.pays} ${r.ville}</div>
+            <div class="popup-count">${fmtDate(r.date)}</div>
+        </div>
+        <div class="popup-races">
             <div class="popup-race">
                 <div class="popup-race-name">${r.course}${r.record ? ' <span style="color:#ffd700;font-size:0.7rem;">★ RP</span>': ''}${r.virtual ? ' <span style="color:rgba(255,255,255,0.35);font-size:0.65rem;">(virtuel)</span>': ''}</div>
                 <div class="popup-race-meta">
-                    <span class="popup-tag tag-date">${fmtDate(r.date)}</span>
                     <span class="popup-tag ${dc.cls}">${dc.label}</span>
                     <span class="popup-tag tag-time">${r.perf}</span>
                     <span class="popup-tag tag-class">top ${pct}</span>
-                    ${r.strava ? `<a href="${r.strava}" target="_blank" class="strava-link">${STRAVA_SVG} Strava</a>
-                <a href="comparaison.html" class="back-btn" style="background:linear-gradient(135deg,rgba(255,215,0,0.15),rgba(255,165,0,0.2));border-color:rgba(255,215,0,0.4);color:#ffd700;box-shadow:0 0 20px rgba(255,215,0,0.25);">⚡ COMPARER</a>
-                <a href="meteo.html" class="back-btn" style="background:linear-gradient(135deg,rgba(100,170,255,0.15),rgba(50,120,255,0.2));border-color:rgba(100,170,255,0.4);color:#6af;box-shadow:0 0 20px rgba(100,170,255,0.25);">🌤️ MÉTÉO</a>` : ''}
+                    ${r.strava ? `<a href="${r.strava}" target="_blank" class="strava-link">${STRAVA_SVG} Strava</a>` : ''}
                 </div>
-            </div>`;
-        }).join('');
-
-        return `
-        <div class="popup-header">
-            <div class="popup-city">${loc.pays} ${loc.ville}</div>
-            <div class="popup-count">${count} course${count>1?'s':''} · ${[...new Set(loc.races.map(r=>r.date.slice(0,4)))].sort().join(', ')}</div>
-        </div>
-        <div class="popup-races">${racesHTML}</div>`;
+            </div>
+        </div>`;
     }
 
-    // ── MARKER ICON ───────────────────────────────────────────────────────────
-    function makeIcon(loc, isFiltered) {
-        const col = isFiltered ? markerColor(loc) : 'rgba(255,255,255,0.15)';
-        const count = loc.races.length;
-        const hasRecord = loc.races.some(r => r.record);
-        const size = Math.min(48, 28 + count * 2.5);
-        const pulse = hasRecord && isFiltered ? `
+    function makeRaceIcon(r) {
+        const col = raceColor(r);
+        const size = r.record ? 32 : 26;
+        const pulse = r.record ? `
             <div style="position:absolute;inset:-6px;border-radius:50%;border:2px solid ${col};opacity:0.5;animation:ping 1.8s ease-in-out infinite;"></div>` : '';
-
+        const label = r.km >= 42 ? '42' : (r.km >= 21 && r.km < 22 ? '21' : Math.round(r.km));
         const svg = `
         <div style="position:relative;width:${size}px;height:${size}px;">
             ${pulse}
             <div style="
                 width:${size}px;height:${size}px;border-radius:50%;
-                background:${isFiltered ? col : 'rgba(255,255,255,0.12)'};
-                border:2px solid ${isFiltered ? col : 'rgba(255,255,255,0.2)'};
-                box-shadow:${isFiltered ? `0 0 14px ${col}88, 0 0 30px ${col}44` : 'none'};
+                background:${col};
+                border:2px solid ${col};
+                box-shadow:0 0 14px ${col}88, 0 0 30px ${col}44;
                 display:flex;align-items:center;justify-content:center;
-                font-family:'Orbitron',sans-serif;font-size:${count > 9 ? '0.6rem' : '0.7rem'};
-                font-weight:800;color:${isFiltered ? '#000' : 'rgba(255,255,255,0.25)'};
+                font-family:'Orbitron',sans-serif;font-size:0.62rem;
+                font-weight:800;color:#000;
                 cursor:pointer;transition:all 0.3s;
-            ">${count}</div>
+            ">${label}</div>
         </div>`;
-
         return L.divIcon({
-            html: svg,
-            className: '',
+            html: svg, className: '',
             iconSize: [size, size],
             iconAnchor: [size/2, size/2],
             popupAnchor: [0, -size/2 - 4],
@@ -562,8 +578,6 @@
 
     // ── MAP INIT ──────────────────────────────────────────────────────────────
     const map = L.map('map', {
-        center: [49.5, 6.3],
-        zoom: 8,
         zoomControl: true,
     });
 
@@ -572,35 +586,38 @@
         maxZoom: 18,
     }).addTo(map);
 
+    // Calcule les limites englobant toutes les courses pour un cadrage initial
+    // qui montre Amsterdam, Paris, Milan, etc. en un coup d'œil.
+    const allBounds = L.latLngBounds(allRaces.map(r => [r.origLat, r.origLng]));
+    map.fitBounds(allBounds, { padding: [50, 50] });
+
     // Pulse animation CSS
     const style = document.createElement('style');
     style.textContent = `@keyframes ping { 0%{transform:scale(1);opacity:0.5} 70%{transform:scale(1.6);opacity:0} 100%{transform:scale(1.6);opacity:0} }`;
     document.head.appendChild(style);
 
     let activeFilter = 'all';
-    let leafletMarkers = [];
-
-    function passesFilter(loc, filter) {
-        if (filter === 'all') return true;
-        if (filter === 'record') return loc.races.some(r => r.record);
-        if (filter === '10k') return loc.races.some(r => r.km <= 10);
-        if (filter === '21k') return loc.races.some(r => r.km > 10 && r.km < 30);
-        if (filter === '42k') return loc.races.some(r => r.km >= 42);
-        return true;
-    }
+    let raceMarkers = []; // aligné sur allRaces (null si masqué)
+    const cityList = document.getElementById('city-list');
 
     function renderMarkers() {
-        leafletMarkers.forEach(m => m.remove());
-        leafletMarkers = [];
+        raceMarkers.forEach(m => m && m.remove());
+        raceMarkers = [];
 
-        markers_data.forEach(loc => {
-            const active = passesFilter(loc, activeFilter);
-            const icon = makeIcon(loc, active);
-            const m = L.marker([loc.lat, loc.lng], { icon, zIndexOffset: active ? 100 : 0 })
-                .bindPopup(buildPopup(loc), { maxWidth: 320, minWidth: 280 })
-                .addTo(map);
-            leafletMarkers.push(m);
+        allRaces.forEach(r => {
+            if (!raceMatchesFilter(r, activeFilter)) {
+                raceMarkers.push(null);
+                return;
+            }
+            const m = L.marker([r.lat, r.lng], {
+                icon: makeRaceIcon(r),
+                zIndexOffset: r.record ? 200 : 100,
+            }).bindPopup(buildRacePopup(r), { maxWidth: 320, minWidth: 260 })
+              .addTo(map);
+            raceMarkers.push(m);
         });
+
+        renderCityList();
     }
 
     function setFilter(f, btn) {
@@ -615,35 +632,57 @@
     function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
     // ── CITY LIST ─────────────────────────────────────────────────────────────
-    const cityList = document.getElementById('city-list');
-    const sorted_locs = [...markers_data].sort((a,b) => b.races.length - a.races.length);
-    cityList.innerHTML = sorted_locs.map(loc => {
-        const col = markerColor(loc);
-        const hasRecord = loc.races.some(r => r.record);
-        const years = [...new Set(loc.races.map(r => r.date.slice(0,4)))].sort();
-        return `
-        <div onclick="focusCity('${loc.ville}')" style="
-            padding:0.75rem 1rem;border-radius:12px;cursor:pointer;
-            background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
-            transition:all 0.3s;
-        " onmouseover="this.style.background='rgba(255,255,255,0.07)';this.style.borderColor='${col}55'"
-           onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)'">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-                <span style="font-weight:700;font-size:0.85rem;color:white;">${loc.pays} ${loc.ville}</span>
-                <span style="font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:800;color:${col};">${loc.races.length}</span>
-            </div>
-            <div style="font-size:0.62rem;color:rgba(255,255,255,0.3);">${years.join(' · ')}${hasRecord ? ' <span style="color:#ffd700;">★ RP</span>' : ''}</div>
-        </div>`;
-    }).join('');
+
+    function renderCityList() {
+        // Regrouper les courses filtrées par ville
+        const byCity = new Map();
+        allRaces.forEach((r, idx) => {
+            if (!raceMatchesFilter(r, activeFilter)) return;
+            if (!byCity.has(r.ville)) byCity.set(r.ville, { ville: r.ville, pays: r.pays, races: [], firstIdx: idx });
+            byCity.get(r.ville).races.push(r);
+        });
+
+        const sorted_locs = [...byCity.values()].sort((a,b) => b.races.length - a.races.length);
+
+        if (sorted_locs.length === 0) {
+            cityList.innerHTML = `<div style="padding:1rem;text-align:center;color:rgba(255,255,255,0.35);font-size:0.75rem;">Aucune course ne correspond à ce filtre.</div>`;
+            return;
+        }
+
+        cityList.innerHTML = sorted_locs.map(loc => {
+            const hasRecord = loc.races.some(r => r.record);
+            const col = hasRecord ? '#ffd700' : raceColor(loc.races[0]);
+            const years = [...new Set(loc.races.map(r => r.date.slice(0,4)))].sort();
+            return `
+            <div onclick="focusCity('${loc.ville}')" style="
+                padding:0.75rem 1rem;border-radius:12px;cursor:pointer;
+                background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);
+                transition:all 0.3s;
+            " onmouseover="this.style.background='rgba(255,255,255,0.07)';this.style.borderColor='${col}55'"
+               onmouseout="this.style.background='rgba(255,255,255,0.03)';this.style.borderColor='rgba(255,255,255,0.07)'">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                    <span style="font-weight:700;font-size:0.85rem;color:white;">${loc.pays} ${loc.ville}</span>
+                    <span style="font-family:'Orbitron',sans-serif;font-size:0.8rem;font-weight:800;color:${col};">${loc.races.length}</span>
+                </div>
+                <div style="font-size:0.62rem;color:rgba(255,255,255,0.3);">${years.join(' · ')}${hasRecord ? ' <span style="color:#ffd700;">★ RP</span>' : ''}</div>
+            </div>`;
+        }).join('');
+    }
 
     function focusCity(ville) {
-        const loc = markers_data.find(l => l.ville === ville);
-        if (!loc) return;
-        map.setView([loc.lat, loc.lng], 13, { animate: true });
-        // open popup
-        const idx = markers_data.indexOf(loc);
-        if (leafletMarkers[idx]) leafletMarkers[idx].openPopup();
+        // Trouver la première course visible de cette ville
+        let target = null;
+        for (let i = 0; i < allRaces.length; i++) {
+            if (allRaces[i].ville === ville && raceMarkers[i]) {
+                target = { race: allRaces[i], marker: raceMarkers[i] };
+                break;
+            }
+        }
+        if (!target) return;
+        map.setView([target.race.origLat, target.race.origLng], 13, { animate: true });
+        target.marker.openPopup();
     }
+
     
     // ── REPLAY ────────────────────────────────────────────────────────────────
     // Flatten all races from markers_data sorted chronologically
@@ -682,7 +721,7 @@
         btn.style.background = 'rgba(255,0,110,0.12)';
 
         // Hide normal markers
-        leafletMarkers.forEach(m => m.remove());
+        raceMarkers.forEach(m => m && m.remove());
 
         // Show progress bar
         document.getElementById('replay-progress').classList.add('visible');
@@ -692,7 +731,7 @@
         let idx = 0;
 
         // Zoom out to show all
-        map.flyTo([49.5, 6.3], 7, { duration: 1 });
+        map.flyToBounds(allBounds, { duration: 1, padding: [50, 50] });
 
         function showNext() {
             if (!_replayActive || idx >= total) {
@@ -747,7 +786,7 @@
         btn.style.background = 'rgba(0,255,136,0.1)';
 
         // Fly to full view
-        map.flyTo([49.5, 6.3], 7, { duration: 1.2 });
+        map.flyToBounds(allBounds, { duration: 1.2, padding: [50, 50] });
     }
 
     function stopReplay() {

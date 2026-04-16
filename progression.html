@@ -4,17 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Progression - Running History</title>
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/progression.html" />
-    <meta property="og:title" content="Progression — Running History" />
-    <meta property="og:description" content="Évolution des performances de Gregory Bertholet depuis 2019." />
-    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/preview.png" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Progression — Running History" />
-    <meta name="twitter:description" content="Évolution des performances de Gregory Bertholet depuis 2019." />
-    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/preview.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -512,7 +501,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 0.3rem;
+    gap: 0.45rem;
     margin-bottom: 2rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -620,6 +609,7 @@
         function fmtDate(d){const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
         const racesData = [
+            {date: "2026-04-12", course: "Wizz Air Milano Marathon", ville: "Milan", dept: "0", km: "42.195", classement: "1017/15050", indice: "6.76", perf: "02:59:51", tempsMoyenKm: "4:15", record: true},
             {date: "2026-03-01", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "48/673", indice: "7.13", perf: "01:25:52", tempsMoyenKm: "4:04"},
             {date: "2025-10-05", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
             {date: "2025-09-28", course: "Semi-Marathon - Route Du Vin", ville: "Luxembourg", dept: "0", km: "21.1", classement: "145/2499", indice: "5.8", perf: "01:23:48", tempsMoyenKm: "3:58", record: true},
@@ -634,7 +624,7 @@
             {date: "2024-05-08", course: "Course du Muguet", ville: "Vitry-sur-Orne", dept: "57", km: "10", classement: "10/134", indice: "7.46", perf: "00:37:41", tempsMoyenKm: "3:46", record: true},
             {date: "2024-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "14/199", indice: "7.04", perf: "00:39:17", tempsMoyenKm: "3:56"},
             {date: "2024-04-21", course: "Semi-Marathon de Thionville", ville: "Thionville", dept: "57", km: "21.1", classement: "80/1089", indice: "7.35", perf: "01:25:30", tempsMoyenKm: "4:03"},
-            {date: "2024-04-07", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24", record: true},
+            {date: "2024-04-07", course: "Schneider Electric Marathon De Paris", ville: "Paris", dept: "75", km: "42.195", classement: "3058/54175", indice: "5.64", perf: "03:06:21", tempsMoyenKm: "4:24"},
             {date: "2024-03-17", course: "Semi-Marathon Intercommunal de la Vallée de l'Orne", ville: "Moyeuvre-Grande", dept: "57", km: "21.1", classement: "34/416", indice: "8.17", perf: "01:30:06", tempsMoyenKm: "4:16"},
             {date: "2024-03-10", course: "Postlaf", ville: "Luxembourg", dept: "0", km: "10", classement: "144/2440", indice: "5.9", perf: "00:40:29", tempsMoyenKm: "4:02"},
             {date: "2023-10-14", course: "Haard Trail Dudelange", ville: "Dudelange", dept: "0", km: "15", classement: "27/94", indice: "28.72", perf: "01:11:15", tempsMoyenKm: "4:45"},
