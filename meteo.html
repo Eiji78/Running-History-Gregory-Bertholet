@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Météo & Perfs — Running History</title>
+    <title>Météo & Perfs Running — Gregory Bertholet (Grand Est)</title>
+    <meta name="description" content="Comment la météo influence les performances running de Gregory Bertholet : température, humidité, vent vs chrono sur 52 courses dans le Grand Est." />
+<meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon, 10K, trail, Grand Est, Thionville, Clouange, Luxembourg, Milano Marathon, marathon sub 3h" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/meteo.html" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#07070e">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Running — Gregory Bertholet">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Météo & Perfs — Running History">
+    <meta property="og:description" content="Comment la météo influence mes performances : température, humidité, vent vs chrono.">
+    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Running — Gregory Bertholet">
+    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/meteo.html">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Météo & Perfs — Running History">
+    <meta name="twitter:description" content="Comment la météo influence mes performances : température, humidité, vent vs chrono.">
+    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -46,6 +69,89 @@
         .npill.elite { color:#ffd700; border-color:rgba(255,215,0,.35); background:rgba(255,215,0,.07); }
         .npill.carte { color:#00ff88; border-color:rgba(0,255,136,.35); background:rgba(0,255,136,.07); }
         .npill.comp  { color:#ffd700; border-color:rgba(255,215,0,.35); background:rgba(255,215,0,.07); }
+
+        /* ── Featured preview (above loading bar) ── */
+        .featured-preview {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+            margin: 1rem 0 1.8rem;
+        }
+        @media(max-width: 780px) { .featured-preview { grid-template-columns: 1fr; } }
+        .feat-card {
+            position: relative; overflow: hidden;
+            padding: 1.2rem 1.1rem 1.3rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+        .feat-card:hover { transform: translateY(-3px); border-color: rgba(0,255,249,0.3); box-shadow: 0 8px 24px rgba(0,0,0,0.35); }
+        .feat-card::before {
+            content: ''; position: absolute; inset: 0;
+            background: var(--feat-gradient); opacity: 0.08; pointer-events: none;
+        }
+        .feat-card.cool  { --feat-gradient: linear-gradient(135deg, #6af, #7cf); }
+        .feat-card.hot   { --feat-gradient: linear-gradient(135deg, #fa6, #ff6b35); }
+        .feat-card.wind  { --feat-gradient: linear-gradient(135deg, #c8f, #bc13fe); }
+        .feat-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .feat-tag {
+            display: inline-block; font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em;
+            padding: 2px 8px; border-radius: 5px; text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+        .feat-card.cool .feat-tag { background: rgba(100,200,255,0.18); color: #9cf; }
+        .feat-card.hot .feat-tag  { background: rgba(255,150,80,0.18); color: #fb8; }
+        .feat-card.wind .feat-tag { background: rgba(200,140,255,0.18); color: #d8f; }
+        .feat-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.88rem; font-weight: 700; color: #fff;
+            margin-bottom: 0.4rem; line-height: 1.3;
+        }
+        .feat-meta {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.75rem; color: rgba(255,255,255,0.55);
+            margin-bottom: 0.7rem; letter-spacing: 0.04em;
+        }
+        .feat-stats { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .feat-stat {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            color: rgba(255,255,255,0.85);
+        }
+        .feat-stat .stat-label {
+            display: block;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.58rem; font-weight: 500;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.1em; margin-bottom: 1px;
+            text-transform: uppercase;
+        }
+        .feat-hero {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.15rem; font-weight: 900;
+            letter-spacing: 0.04em;
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent; color: transparent;
+            margin-bottom: 0.3rem;
+        }
+        .feat-card.cool .feat-hero { background-image: linear-gradient(90deg, #6af, #9cf); }
+        .feat-card.hot  .feat-hero { background-image: linear-gradient(90deg, #fa6, #ff6b35); }
+        .feat-card.wind .feat-hero { background-image: linear-gradient(90deg, #c8f, #e0a8ff); }
+
+        .featured-intro {
+            display: flex; align-items: center; gap: 0.55rem;
+            margin: 0.3rem 0 0.9rem;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.72rem; letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+        }
+        .featured-intro::before {
+            content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+        }
+        .featured-intro::after {
+            content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08);
+        }
 
         /* Loading */
         #loading-bar-wrap { margin:2rem auto; max-width:500px; }
@@ -221,6 +327,34 @@
 </style>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F7JZPPYNEK');</script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/meteo.html",
+  "name": "Météo & Perfs Running — Gregory Bertholet (Grand Est)",
+  "description": "Comment la météo influence les performances running de Gregory Bertholet : température, humidité, vent vs chrono sur 52 courses dans le Grand Est.",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "name": "Running History — Gregory Bertholet"
+  },
+  "about": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "jobTitle": "Coureur à pied / Marathonien"
+  },
+  "primaryImageOfPage": "https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg"
+}
+</script>
+
+<script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
 </head>
 <body>
 <div class="animated-bg"></div>
@@ -296,9 +430,53 @@
 </nav>
         </div>
 
+        <!-- Featured preview (visible immediately) -->
+        <div class="featured-intro">3 courses marquantes côté météo</div>
+        <div class="featured-preview">
+            <!-- Cool conditions = best perf -->
+            <div class="feat-card cool">
+                <div class="feat-icon">❄️</div>
+                <div class="feat-tag">Temps frais · perf optimale</div>
+                <div class="feat-title">Wizz Air Milano Marathon</div>
+                <div class="feat-meta">Milan · 12/04/2026 · ~12 °C · ciel clair</div>
+                <div class="feat-hero">02:59:51</div>
+                <div class="feat-stats">
+                    <div class="feat-stat"><span class="stat-label">Distance</span>42.195 km</div>
+                    <div class="feat-stat"><span class="stat-label">Allure</span>4:15/km</div>
+                    <div class="feat-stat"><span class="stat-label">FC</span>167 bpm</div>
+                </div>
+            </div>
+            <!-- Hot/humid day = performance impact -->
+            <div class="feat-card hot">
+                <div class="feat-icon">🔥</div>
+                <div class="feat-tag">Chaleur · ralentissement</div>
+                <div class="feat-title">Marathon du lac d'Annecy</div>
+                <div class="feat-meta">Annecy · 27/04/2025 · ~22 °C · ensoleillé</div>
+                <div class="feat-hero">03:26:08</div>
+                <div class="feat-stats">
+                    <div class="feat-stat"><span class="stat-label">Distance</span>42.195 km</div>
+                    <div class="feat-stat"><span class="stat-label">Allure</span>4:53/km</div>
+                    <div class="feat-stat"><span class="stat-label">FC</span>167 bpm</div>
+                </div>
+            </div>
+            <!-- Windy urban race -->
+            <div class="feat-card wind">
+                <div class="feat-icon">💨</div>
+                <div class="feat-tag">Vent · urbain</div>
+                <div class="feat-title">ING Night Semi Luxembourg</div>
+                <div class="feat-meta">Luxembourg · 31/05/2025 · nocturne · vent en rafales</div>
+                <div class="feat-hero">01:29:51</div>
+                <div class="feat-stats">
+                    <div class="feat-stat"><span class="stat-label">Distance</span>21.1 km</div>
+                    <div class="feat-stat"><span class="stat-label">Allure</span>4:14/km</div>
+                    <div class="feat-stat"><span class="stat-label">FC</span>174 bpm</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Loading bar -->
         <div id="loading-bar-wrap">
-            <div class="load-label">Récupération des données météo via Open-Meteo</div>
+            <div class="load-label">Analyse météo détaillée en cours — Open-Meteo</div>
             <div class="load-bar-bg"><div class="load-bar-fill" id="load-bar"></div></div>
             <div id="load-status">Initialisation…</div>
         </div>
@@ -314,19 +492,23 @@
                 <div class="card chart-card">
                     <div class="sec-title">Allure vs Température ressentie</div>
                     <div class="chart-sub">Chaque point = une course. Allure en secondes/km (axe Y).</div>
-                    <canvas id="chartTemp" height="200"></canvas>
+                    <canvas id="chartTemp" height="200" role="img" aria-label="Nuage de points corrélant l'allure de course (axe Y, en secondes par kilomètre) à la température ressentie (axe X, en degrés Celsius). Les courses par temps froid entre 5 et 12°C montrent généralement les meilleures allures."></canvas>
                 </div>
                 <div class="card chart-card">
                     <div class="sec-title">Allure vs Vitesse du vent</div>
                     <div class="chart-sub">Chaque point = une course. Points plus grands = plus de pluie.</div>
-                    <canvas id="chartWind" height="200"></canvas>
+                    <canvas id="chartWind" height="200" role="img" aria-label="Nuage de points corrélant l'allure (axe Y, secondes par kilomètre) à la vitesse du vent (axe X, km/h). La taille des points reflète le niveau de précipitation lors de la course."></canvas>
                 </div>
                 <div class="card chart-card">
                     <div class="sec-title">FC moyenne vs Allure</div>
                     <div class="chart-sub">Corrélation fréquence cardiaque / vitesse. Couleur = distance.</div>
-                    <canvas id="chartFC" height="200"></canvas>
+                    <canvas id="chartFC" height="200" role="img" aria-label="Nuage de points corrélant la fréquence cardiaque moyenne (axe Y, en bpm) à l'allure (axe X, secondes par kilomètre). La couleur des points encode la distance de la course (10K, semi, marathon, trail)."></canvas>
                 </div>
             </div>
+            <details class="data-toggle" style="margin:4px 0 24px;">
+                <summary style="cursor:pointer;padding:9px 14px;background:rgba(0,180,255,0.08);border:1px solid rgba(0,180,255,0.3);border-radius:8px;color:rgba(0,180,255,0.9);font-size:0.75rem;letter-spacing:0.1em;font-weight:700;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données météo</summary>
+                <div id="meteo-table-wrap" style="margin-top:14px;overflow-x:auto;"></div>
+            </details>
 
             <!-- Conditions summary -->
             <div class="conditions-grid" id="conditions-grid" style="margin-bottom:1.5rem;"></div>
@@ -546,6 +728,40 @@ function buildUI() {
     buildConditions(races);
     buildFilters();
     buildTable('all');
+    buildAccessibleMeteoTable(races);
+}
+
+function buildAccessibleMeteoTable(races) {
+    const wrap = document.getElementById('meteo-table-wrap');
+    if (!wrap) return;
+    const sorted = [...races].sort((a,b)=>b.date.localeCompare(a.date));
+    wrap.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:0.8rem;color:rgba(255,255,255,0.82);">
+        <caption style="caption-side:top;text-align:left;padding:4px 0 10px;color:rgba(255,255,255,0.5);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">Météo de chaque course — ${sorted.length} courses avec données météo</caption>
+        <thead>
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.18);">
+                <th scope="col" style="padding:7px 10px;text-align:left;color:#00b4ff;">Date</th>
+                <th scope="col" style="padding:7px 10px;text-align:left;">Course</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">Temp.</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">Ressentie</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">Vent</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">Pluie</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">Allure</th>
+                <th scope="col" style="padding:7px 10px;text-align:right;">FC moy</th>
+            </tr>
+        </thead>
+        <tbody>
+            ${sorted.map(r => { const w = getW(r); return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:7px 10px;text-align:left;color:rgba(0,180,255,0.75);font-weight:600;">${r.date}</th>
+                <td style="padding:7px 10px;">${r.course}</td>
+                <td style="padding:7px 10px;text-align:right;">${w ? w.temp+'°C' : '—'}</td>
+                <td style="padding:7px 10px;text-align:right;">${w ? w.apparent+'°C' : '—'}</td>
+                <td style="padding:7px 10px;text-align:right;">${w ? w.wind+' km/h' : '—'}</td>
+                <td style="padding:7px 10px;text-align:right;">${w ? (w.rain||0)+' mm' : '—'}</td>
+                <td style="padding:7px 10px;text-align:right;">${r.allure}/km</td>
+                <td style="padding:7px 10px;text-align:right;">${r.fc ? r.fc+' bpm' : '—'}</td>
+            </tr>`; }).join('')}
+        </tbody>
+    </table>`;
 }
 
 function buildInsights(races) {

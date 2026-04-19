@@ -1,0 +1,20 @@
+{
+  "name": "Running History — Gregory Bertholet",
+  "short_name": "Running Bertholet",
+  "description": "Palmarès running officiel de Gregory Bertholet : 52 courses en Moselle, Grand Est et Luxembourg.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0b",
+  "theme_color": "#0a0a0b",
+  "lang": "fr-FR",
+  "icons": [
+    {
+      "src": "og-cover.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

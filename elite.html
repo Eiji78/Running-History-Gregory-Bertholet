@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparaison Élite — Running History</title>
+    <title>Marathon Sub-3h — Gregory Bertholet vs Élite Mondiale</title>
+    <meta name="description" content="Mon marathon sub-3h (02:59:51 à Milan) comparé aux records mondiaux, européens et français sur marathon, semi et 10K. Analyse par Gregory Bertholet." />
+<meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon, 10K, trail, Grand Est, Thionville, Clouange, Luxembourg, Milano Marathon, marathon sub 3h" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/elite.html" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#07070e">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Running — Gregory Bertholet">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Comparaison Élite — Running History">
+    <meta property="og:description" content="Mon marathon sub-3h comparé aux records mondiaux, européens et français sur marathon, semi et 10K.">
+    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Running — Gregory Bertholet">
+    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/elite.html">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comparaison Élite — Running History">
+    <meta name="twitter:description" content="Mon marathon sub-3h comparé aux records mondiaux, européens et français sur marathon, semi et 10K.">
+    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -402,6 +425,34 @@
       gtag('js', new Date());
       gtag('config', 'G-F7JZPPYNEK');
     </script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/elite.html",
+  "name": "Marathon Sub-3h — Gregory Bertholet vs Élite Mondiale",
+  "description": "Mon marathon sub-3h (02:59:51 à Milan) comparé aux records mondiaux, européens et français sur marathon, semi et 10K. Analyse par Gregory Bertholet.",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "name": "Running History — Gregory Bertholet"
+  },
+  "about": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "jobTitle": "Coureur à pied / Marathonien"
+  },
+  "primaryImageOfPage": "https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg"
+}
+</script>
+
+<script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -483,9 +534,9 @@
 
         <!-- Distance selector -->
         <div class="flex flex-wrap justify-center gap-3 mb-10 fade-in" style="animation-delay:0.1s;">
-            <button class="dist-tab active" onclick="showDistance('10k')">🏃 10 KM</button>
-            <button class="dist-tab" onclick="showDistance('21k')">🏃 SEMI-MARATHON</button>
-            <button class="dist-tab" onclick="showDistance('42k')">🏃 MARATHON</button>
+            <button class="dist-tab active" onclick="showDistance('10k', event)">🏃 10 KM</button>
+            <button class="dist-tab" onclick="showDistance('21k', event)">🏃 SEMI-MARATHON</button>
+            <button class="dist-tab" onclick="showDistance('42k', event)">🏃 MARATHON</button>
         </div>
 
         <!-- === 10 KM PANEL === -->
@@ -983,12 +1034,36 @@
         const tabs = document.querySelectorAll('.dist-tab');
         const panels = { '10k': 'panel-10k', '21k': 'panel-21k', '42k': 'panel-42k' };
 
-        function showDistance(dist) {
+        function showDistance(dist, evt) {
             tabs.forEach(t => t.classList.remove('active'));
-            event.target.classList.add('active');
+            // Si appelé par un clic, on active l'onglet cliqué
+            if (evt && evt.target) {
+                evt.target.classList.add('active');
+            } else {
+                // Appel programmatique : on active le bouton correspondant à la distance
+                const btnIdx = { '10k': 0, '21k': 1, '42k': 2 }[dist];
+                if (btnIdx !== undefined && tabs[btnIdx]) tabs[btnIdx].classList.add('active');
+            }
             Object.values(panels).forEach(id => document.getElementById(id).style.display = 'none');
             document.getElementById(panels[dist]).style.display = 'block';
         }
+
+        // ── Activation d'onglet via le hash de l'URL ──────────────────────
+        // Accepte #10k, #21k, #42k mais aussi les alias #10km, #semi, #marathon
+        function activateFromHash() {
+            const raw = (window.location.hash || '').replace('#', '').toLowerCase();
+            if (!raw) return;
+            const alias = { '10km': '10k', '10k': '10k', 'semi': '21k', '21k': '21k', 'marathon': '42k', '42k': '42k' };
+            const dist = alias[raw];
+            if (dist) {
+                showDistance(dist);
+                // petit scroll vers la zone des onglets pour que l'utilisateur voie le résultat
+                const tabsZone = document.querySelector('.dist-tab');
+                if (tabsZone) tabsZone.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        window.addEventListener('DOMContentLoaded', activateFromHash);
+        window.addEventListener('hashchange', activateFromHash);
     </script>
 
     <script>
