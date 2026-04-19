@@ -317,3 +317,203 @@ html[data-theme="light"] .pro-theme-toggle {
     html { transition: none; }
     .pro-theme-toggle[data-rotating] .pto-icon { transform: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   NAVBAR STICKY + MOBILE HAMBURGER
+   La .site-nav existante reçoit un comportement sticky + surlignage
+   plus marqué sur l'item .active. Sous 768px, on cache la nav et on
+   affiche un bouton hamburger qui ouvre un panneau plein écran.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Sticky + backdrop blur */
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
+    background: rgba(10, 10, 18, 0.72);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-top: 0.55rem !important;
+    padding-bottom: 0.55rem !important;
+    margin-bottom: 2rem;
+    transition: box-shadow .25s ease-out, background .25s ease-out;
+}
+.site-nav.pro-nav-scrolled {
+    box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.55);
+    background: rgba(10, 10, 18, 0.88);
+}
+
+/* Surlignage .active plus marqué : underline néon animé + glow */
+.site-nav a.active {
+    position: relative;
+    border-color: var(--neon-cyan, #00fff9) !important;
+    color: #00fff9 !important;
+    background: linear-gradient(180deg, rgba(0,255,249,0.18), rgba(188,19,254,0.12)) !important;
+    box-shadow:
+        0 0 16px rgba(0,255,249,0.45),
+        inset 0 0 12px rgba(0,255,249,0.12) !important;
+    text-shadow: 0 0 8px rgba(0,255,249,0.45);
+    transform: translateY(-1px);
+}
+.site-nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 14%;
+    right: 14%;
+    bottom: -4px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, #00fff9 20%, #bc13fe 80%, transparent);
+    box-shadow: 0 0 8px rgba(0,255,249,0.8);
+    animation: pro-active-glow 2.4s ease-in-out infinite;
+}
+@keyframes pro-active-glow {
+    0%, 100% { opacity: 0.85; filter: brightness(1); }
+    50%      { opacity: 1;    filter: brightness(1.25); }
+}
+
+/* Hamburger button (invisible par défaut, visible < 768px via @media) */
+.pro-hamburger {
+    display: none;
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    z-index: 952;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    padding: 0;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    transition: all .25s cubic-bezier(.4,0,.2,1);
+}
+.pro-hamburger:hover {
+    border-color: rgba(0,255,249,0.45);
+    box-shadow: 0 6px 20px rgba(0,255,249,0.3);
+}
+.pro-hamburger:active { transform: scale(0.94); }
+.pro-hamburger .pro-ham-bars {
+    position: relative;
+    width: 20px;
+    height: 14px;
+    display: block;
+}
+.pro-hamburger .pro-ham-bars span {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #00fff9, #bc13fe);
+    border-radius: 2px;
+    transition: all .3s cubic-bezier(.4,0,.2,1);
+}
+.pro-hamburger .pro-ham-bars span:nth-child(1) { top: 0; }
+.pro-hamburger .pro-ham-bars span:nth-child(2) { top: 6px; }
+.pro-hamburger .pro-ham-bars span:nth-child(3) { top: 12px; }
+.pro-hamburger[aria-expanded="true"] .pro-ham-bars span:nth-child(1) {
+    top: 6px;
+    transform: rotate(45deg);
+}
+.pro-hamburger[aria-expanded="true"] .pro-ham-bars span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+.pro-hamburger[aria-expanded="true"] .pro-ham-bars span:nth-child(3) {
+    top: 6px;
+    transform: rotate(-45deg);
+}
+
+/* Panneau mobile : cloné depuis .site-nav, injecté dans <body> */
+.pro-mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 951;
+    background: rgba(8, 8, 14, 0.96);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 82px 22px 28px;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity .28s ease-out, transform .28s ease-out;
+    overflow-y: auto;
+}
+.pro-mobile-nav.open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+.pro-mobile-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: rgba(255, 255, 255, 0.85);
+    text-transform: uppercase;
+    transition: all .2s;
+}
+.pro-mobile-nav a:hover,
+.pro-mobile-nav a:focus-visible {
+    background: rgba(0, 255, 249, 0.08);
+    border-color: rgba(0, 255, 249, 0.35);
+    color: #fff;
+    transform: translateX(4px);
+}
+.pro-mobile-nav a.active {
+    border-color: #00fff9;
+    background: linear-gradient(135deg, rgba(0,255,249,0.18), rgba(188,19,254,0.12));
+    color: #00fff9;
+    box-shadow: 0 0 18px rgba(0,255,249,0.35);
+    text-shadow: 0 0 8px rgba(0,255,249,0.45);
+}
+
+/* Lock body scroll quand le menu mobile est ouvert */
+body.pro-mobile-nav-open {
+    overflow: hidden;
+}
+
+/* Activation mobile */
+@media (max-width: 768px) {
+    .site-nav {
+        /* On cache la nav desktop, le hamburger la remplace */
+        display: none !important;
+    }
+    .pro-hamburger {
+        display: flex;
+    }
+    /* En mobile, on décale le breadcrumb à droite du hamburger */
+    .pro-breadcrumb {
+        top: 22px;
+        left: 74px;
+    }
+}
+
+/* En mode reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .site-nav a.active::after { animation: none; }
+    .pro-mobile-nav { transition: opacity .05s, transform .05s; }
+    .pro-hamburger .pro-ham-bars span { transition: none; }
+}

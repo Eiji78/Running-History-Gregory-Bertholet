@@ -175,6 +175,121 @@
         }
     })();
 
+    // ── Navbar : auto-assign .active + sticky scroll state + hamburger ─
+    function currentPageFile() {
+        let p = location.pathname.split('/').pop() || 'index.html';
+        if (p === '') p = 'index.html';
+        return p;
+    }
+
+    function syncActiveLink(nav) {
+        if (!nav) return false;
+        const cur = currentPageFile();
+        const links = nav.querySelectorAll('a');
+        let matched = false;
+        links.forEach(function (a) {
+            const href = (a.getAttribute('href') || '').split('#')[0].split('?')[0];
+            if (href && href === cur) {
+                a.classList.add('active');
+                matched = true;
+            } else if (href && href !== '#') {
+                a.classList.remove('active');
+            }
+        });
+        return matched;
+    }
+
+    function bindNavScrollState(nav) {
+        if (!nav) return;
+        const update = function () {
+            if (window.scrollY > 4) nav.classList.add('pro-nav-scrolled');
+            else nav.classList.remove('pro-nav-scrolled');
+        };
+        update();
+        window.addEventListener('scroll', update, { passive: true });
+    }
+
+    function injectHamburger(sourceNav) {
+        if (!sourceNav) return;
+        if (document.querySelector('.pro-hamburger')) return;
+
+        const btn = document.createElement('button');
+        btn.className = 'pro-hamburger';
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'Ouvrir le menu');
+        btn.setAttribute('aria-expanded', 'false');
+        btn.setAttribute('aria-controls', 'pro-mobile-nav');
+        btn.innerHTML =
+            '<span class="pro-ham-bars" aria-hidden="true">' +
+                '<span></span><span></span><span></span>' +
+            '</span>';
+
+        const panel = document.createElement('nav');
+        panel.className = 'pro-mobile-nav';
+        panel.id = 'pro-mobile-nav';
+        panel.setAttribute('aria-label', 'Navigation principale');
+        panel.setAttribute('aria-hidden', 'true');
+
+        const cur = currentPageFile();
+        const links = sourceNav.querySelectorAll('a');
+        links.forEach(function (src) {
+            const a = document.createElement('a');
+            let href = src.getAttribute('href') || '#';
+            // Les liens "#" = page courante → les remplacer
+            if (href === '#') href = cur;
+            a.href = href;
+            a.textContent = src.textContent.trim();
+            const hrefFile = href.split('#')[0].split('?')[0];
+            if (hrefFile === cur) a.classList.add('active');
+            panel.appendChild(a);
+        });
+
+        const close = function () {
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Ouvrir le menu');
+            panel.classList.remove('open');
+            panel.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('pro-mobile-nav-open');
+        };
+        const open = function () {
+            btn.setAttribute('aria-expanded', 'true');
+            btn.setAttribute('aria-label', 'Fermer le menu');
+            panel.classList.add('open');
+            panel.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('pro-mobile-nav-open');
+        };
+
+        btn.addEventListener('click', function () {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            if (expanded) close(); else open();
+        });
+
+        panel.addEventListener('click', function (e) {
+            const a = e.target.closest('a');
+            if (a) close();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && panel.classList.contains('open')) close();
+        });
+
+        const mq = window.matchMedia('(min-width: 769px)');
+        if (mq.addEventListener) {
+            mq.addEventListener('change', function (ev) { if (ev.matches) close(); });
+        }
+
+        document.body.appendChild(btn);
+        document.body.appendChild(panel);
+    }
+
+    function setupNav() {
+        const nav = document.querySelector('.site-nav');
+        if (!nav) return;
+        syncActiveLink(nav);
+        bindNavScrollState(nav);
+        injectHamburger(nav);
+    }
+
     // ── Init ───────────────────────────────────────────────────────────
     function init() {
         injectBreadcrumb();
@@ -183,6 +298,7 @@
         bindLoader(loader);
         injectThemeToggle();
         applyTheme(getSavedTheme());
+        setupNav();
     }
 
     if (document.readyState === 'loading') {
