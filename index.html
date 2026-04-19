@@ -327,16 +327,20 @@
     .hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:32px}
     .hero-meta{text-align:left}
     .kpis{grid-template-columns:repeat(2,1fr)}
-    .kpi{border-bottom:1px solid var(--line)}
+    .kpi{border-bottom:1px solid var(--line);padding:28px 20px}
     .kpi:nth-child(2){border-right:none}
+    .kpi-value{font-size:44px;letter-spacing:-1.2px}
     .flagship{grid-template-columns:1fr;padding:48px 20px}
     .flagship-main{padding:32px}
     .flagship-time{font-size:56px}
     .flagship-main::before{font-size:100px;top:-10px}
     .flagship-stats{gap:20px}
+    .section-head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:32px;padding-bottom:18px}
     .section-title{font-size:32px}
     .explorer{padding:48px 20px}
     .grid{grid-template-columns:repeat(6,1fr)}
+    .card{padding:24px}
+    .card-title{font-size:24px;letter-spacing:-0.5px;word-break:break-word;hyphens:auto}
     .card-timeline,.card-carte{grid-column:span 6}
     .card-progression,.card-radar,.card-comparaison{grid-column:span 3}
     .card-elite,.card-meteo,.card-galerie,.card-wrapped{grid-column:span 6}
@@ -347,6 +351,26 @@
     .topbar{padding:14px 20px}
     .brand{font-size:11px}
     .status{font-size:9px}
+  }
+
+  /* Téléphone étroit : on passe tout en pleine largeur et on réduit encore */
+  @media (max-width:600px){
+    .kpi{padding:22px 14px}
+    .kpi-value{font-size:34px;letter-spacing:-0.8px}
+    .kpi-label{font-size:9px;letter-spacing:1.5px;margin-bottom:8px}
+    .kpi-unit{font-size:10px;margin-top:6px}
+    .section-title{font-size:26px;letter-spacing:-1px}
+    .section-count{font-size:10px;letter-spacing:1.5px}
+    .grid{grid-template-columns:1fr;gap:12px}
+    .card{min-height:auto;padding:22px}
+    .card-progression,.card-radar,.card-comparaison,
+    .card-timeline,.card-carte,
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped{grid-column:span 1}
+    .card-title{font-size:22px}
+    .card-title br{display:none}
+    .card-icon{font-size:22px;margin-bottom:12px}
+    .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
+    .card-desc{font-size:12.5px;margin-bottom:14px}
   }
 
   /* Entrance animation */
