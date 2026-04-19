@@ -2,8 +2,33 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Année en Course — Running Wrapped</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover">
+<title>Running Wrapped — Gregory Bertholet · Stats Année après Année</title>
+<meta name="description" content="Running Wrapped de Gregory Bertholet : stats, meilleures performances, villes visitées et records personnels, année par année. Format stories partageables." />
+<meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon, 10K, trail, Grand Est, Thionville, Clouange, Luxembourg, Milano Marathon, marathon sub 3h" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/wrapped.html" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#07070e">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Running — Gregory Bertholet">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Année en Course — Running Wrapped">
+<meta property="og:description" content="Stories partageables : kilomètres parcourus, records, villes visitées et meilleures allures, année après année.">
+<meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Running Wrapped — Année en course">
+<meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/wrapped.html">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Année en Course — Running Wrapped">
+<meta name="twitter:description" content="Mes stats running en stories : km, PR, villes, meilleures allures.">
+<meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -40,6 +65,81 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 }
 .yr-btn:hover{border-color:var(--c1);color:var(--c1);background:rgba(0,255,249,.1);box-shadow:0 0 20px rgba(0,255,249,.3);}
 
+/* ── FEATURED YEAR TEASER (preview of most recent year) ── */
+.year-teaser{
+  position:relative;cursor:pointer;
+  width:min(620px,92vw);
+  padding:1.6rem 1.8rem;
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(0,255,249,0.15), transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(188,19,254,0.15), transparent 55%),
+    linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border:1.5px solid rgba(255,255,255,0.12);
+  box-shadow:0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow:hidden;
+  transition:all .3s ease;
+}
+.year-teaser:hover{transform:translateY(-3px);border-color:rgba(0,255,249,0.4);box-shadow:0 15px 50px rgba(0,255,249,0.18);}
+.year-teaser::before{
+  content:'▶ DÉMARRER';
+  position:absolute;top:14px;right:18px;
+  font-family:'Orbitron',sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.2em;
+  color:#000;background:var(--c1);
+  padding:.32rem .7rem;border-radius:5px;
+  box-shadow:0 0 18px rgba(0,255,249,0.5);
+}
+.teaser-label{
+  display:inline-block;font-family:'Barlow Condensed',sans-serif;
+  font-size:.68rem;letter-spacing:.2em;font-weight:700;text-transform:uppercase;
+  color:#ffd700;
+  padding:.25rem .7rem;border-radius:5px;
+  background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);
+  margin-bottom:1rem;
+}
+.teaser-year{
+  font-family:'Orbitron',sans-serif;font-size:clamp(2.4rem, 5vw, 3.5rem);font-weight:900;
+  line-height:1;letter-spacing:.04em;
+  background:linear-gradient(135deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:.3rem;
+}
+.teaser-subtitle{
+  font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:500;
+  color:rgba(255,255,255,.5);letter-spacing:.08em;text-transform:uppercase;
+  margin-bottom:1.3rem;
+}
+.teaser-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;
+  padding-top:1.1rem;border-top:1px solid rgba(255,255,255,0.07);
+}
+@media(max-width:540px){.teaser-stats{grid-template-columns:repeat(2,1fr);}}
+.teaser-stat{text-align:left;}
+.teaser-stat-val{
+  font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:800;line-height:1;
+  color:#fff;margin-bottom:.3rem;
+}
+.teaser-stat-val.accent{color:var(--c1);}
+.teaser-stat-val.gold{color:#ffd700;}
+.teaser-stat-val.pink{color:#ff006e;}
+.teaser-stat-label{
+  font-family:'Barlow Condensed',sans-serif;font-size:.6rem;
+  letter-spacing:.12em;color:rgba(255,255,255,.35);text-transform:uppercase;
+}
+.teaser-highlight{
+  margin-top:1.1rem;padding-top:1rem;border-top:1px dashed rgba(255,255,255,0.08);
+  font-family:'Barlow Condensed',sans-serif;font-size:.85rem;color:rgba(255,255,255,.7);
+  display:flex;align-items:center;gap:.6rem;
+}
+.teaser-highlight .th-ico{font-size:1.1rem;}
+.teaser-highlight strong{color:#fff;font-weight:700;}
+
+.year-grid-label{
+  font-family:'Barlow Condensed',sans-serif;font-size:.72rem;letter-spacing:.18em;
+  color:rgba(255,255,255,.4);text-transform:uppercase;
+  margin-top:1.4rem;
+}
+
 /* ── SLIDE CONTAINER ── */
 #show{position:fixed;inset:0;z-index:50;display:none;}
 
@@ -52,16 +152,56 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 }
 .slide.active{opacity:1;pointer-events:auto;}
 
-/* ── PROGRESS BAR ── */
-#progress-bar{
-  position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
-  z-index:200;transition:width .4s linear;width:0%;
-  box-shadow:0 0 12px rgba(0,255,249,.7);
+/* ── STORIES PROGRESS BAR (Instagram-style segmented) ── */
+#stories-bar{
+  position:fixed;top:10px;left:10px;right:10px;z-index:200;
+  display:none;gap:4px;pointer-events:none;
 }
+#stories-bar.visible{display:flex;}
+.story-seg{
+  flex:1;height:3px;border-radius:2px;
+  background:rgba(255,255,255,.18);
+  overflow:hidden;position:relative;
+}
+.story-seg-fill{
+  position:absolute;top:0;left:0;bottom:0;width:0;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  box-shadow:0 0 8px rgba(0,255,249,.5);
+}
+.story-seg.done .story-seg-fill{width:100%;}
+.story-seg.active .story-seg-fill{animation:storyFill var(--dur,6000ms) linear forwards;}
+.story-seg.paused .story-seg-fill{animation-play-state:paused;}
+@keyframes storyFill{from{width:0;}to{width:100%;}}
+
+/* Fallback legacy bar kept for initial state; hidden once stories start */
+#progress-bar{display:none;}
+
+/* ── TAP ZONES (Instagram-style) ── */
+.tap-zone{
+  position:fixed;top:0;bottom:0;width:33%;z-index:150;
+  display:none;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;
+}
+#tap-prev{left:0;}
+#tap-next{right:0;}
+.tap-zone.visible{display:block;}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(30px);
+  z-index:500;padding:.6rem 1.2rem;border-radius:22px;
+  background:rgba(0,0,0,.75);backdrop-filter:blur(10px);
+  border:1px solid rgba(0,255,249,.4);color:#fff;
+  font-size:.85rem;letter-spacing:.04em;font-weight:600;
+  opacity:0;pointer-events:none;transition:all .3s;
+}
+#toast.visible{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── PAUSED VISUAL ── */
+body.story-paused .slide{filter:brightness(.85);}
 
 /* ── BACK BTN ── */
 #back-btn{
-  position:fixed;top:18px;left:72px;z-index:300;
+  position:fixed;top:56px;left:18px;z-index:300;
   font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;letter-spacing:.08em;
   padding:.4rem .9rem;border-radius:10px;cursor:pointer;
   border:1.5px solid rgba(0,255,249,.35);background:rgba(0,255,249,.08);color:#00fff9;
@@ -311,20 +451,59 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 .site-nav a.active{border-color:var(--c1);color:var(--c1);background:rgba(0,255,249,.1);box-shadow:0 0 10px rgba(0,255,249,.2);}
 @media(max-width:600px){.site-nav{justify-content:flex-start;padding:.2rem .5rem .2rem 4rem;}}
 </style>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/wrapped.html",
+  "name": "Running Wrapped — Gregory Bertholet · Stats Année après Année",
+  "description": "Running Wrapped de Gregory Bertholet : stats, meilleures performances, villes visitées et records personnels, année par année. Format stories partageables.",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "name": "Running History — Gregory Bertholet"
+  },
+  "about": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "jobTitle": "Coureur à pied / Marathonien"
+  },
+  "primaryImageOfPage": "https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg"
+}
+</script>
+
+<script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
 </head>
 <body>
 
-<a href="index.html" title="Tableau de bord" style="position:fixed;top:18px;left:18px;z-index:999;width:44px;height:44px;border-radius:13px;background:rgba(0,255,249,.1);border:1.5px solid rgba(0,255,249,.35);display:flex;align-items:center;justify-content:center;text-decoration:none;backdrop-filter:blur(20px);transition:all .3s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 0 24px rgba(0,255,249,.4)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
+<a href="index.html" class="home-btn-fixed" title="Tableau de bord" style="position:fixed;top:18px;left:18px;z-index:999;width:44px;height:44px;border-radius:13px;background:rgba(0,255,249,.1);border:1.5px solid rgba(0,255,249,.35);display:flex;align-items:center;justify-content:center;text-decoration:none;backdrop-filter:blur(20px);transition:all .3s;" onmouseover="this.style.transform='scale(1.12)';this.style.boxShadow='0 0 24px rgba(0,255,249,.4)'" onmouseout="this.style.transform='scale(1)';this.style.boxShadow='none'">
     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/><polyline points="9 21 9 12 15 12 15 21"/></svg>
 </a>
 <canvas id="bg-canvas"></canvas>
 <div id="flash-overlay"></div>
 <div id="scanlines"></div>
 <div id="progress-bar"></div>
+
+<!-- Stories segmented progress bar (Instagram-like) -->
+<div id="stories-bar" aria-hidden="true"></div>
+
+<!-- Tap zones for story-style nav + hold-to-pause -->
+<div id="tap-prev" class="tap-zone" aria-label="Slide précédent"></div>
+<div id="tap-next" class="tap-zone" aria-label="Slide suivant"></div>
+
 <button id="back-btn" onclick="backToSelector()">← CHOISIR</button>
 <div class="nav-arrow" id="nav-prev" onclick="prevSlide()">‹</div>
 <div class="nav-arrow" id="nav-next" onclick="nextSlide()">›</div>
 <div id="slide-counter"></div>
+
+<!-- Toast (feedback) -->
+<div id="toast" role="status" aria-live="polite"></div>
 
 <!-- YEAR SELECTOR -->
 <nav class="site-nav">
@@ -342,6 +521,37 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);font-famil
 <div id="year-selector">
   <h1>ANNÉE EN COURSE</h1>
   <p>Ton running wrapped</p>
+
+  <!-- Featured year teaser: pre-loaded preview of most recent year -->
+  <div class="year-teaser" id="year-teaser" onclick="startWrapped(2026)">
+    <div class="teaser-label">🏆 Édition en cours</div>
+    <div class="teaser-year">2026</div>
+    <div class="teaser-subtitle">La meilleure saison · Marathon sub-3h</div>
+    <div class="teaser-stats">
+      <div class="teaser-stat">
+        <div class="teaser-stat-val accent">2</div>
+        <div class="teaser-stat-label">Courses</div>
+      </div>
+      <div class="teaser-stat">
+        <div class="teaser-stat-val">63.3</div>
+        <div class="teaser-stat-label">km cumulés</div>
+      </div>
+      <div class="teaser-stat">
+        <div class="teaser-stat-val gold">1</div>
+        <div class="teaser-stat-label">Record perso</div>
+      </div>
+      <div class="teaser-stat">
+        <div class="teaser-stat-val pink">4:10</div>
+        <div class="teaser-stat-label">Allure moy.</div>
+      </div>
+    </div>
+    <div class="teaser-highlight">
+      <span class="th-ico">⚡</span>
+      <span><strong>02:59:51</strong> au Wizz Air Milano Marathon — sub-3h officialisé, 1017ᵉ / 15050.</span>
+    </div>
+  </div>
+
+  <div class="year-grid-label">Ou choisis une autre année</div>
   <div class="year-grid" id="year-grid"></div>
 </div>
 
@@ -741,6 +951,8 @@ function startWrapped(year){
   slides = buildSlides(data);
   currentSlide = 0;
   isRunning = true;
+  isPaused = false;
+  document.body.classList.remove('story-paused');
 
   document.getElementById('year-selector').style.display='none';
   document.querySelector('.site-nav') && (document.querySelector('.site-nav').style.display='none');
@@ -751,6 +963,8 @@ function startWrapped(year){
   document.getElementById('nav-prev').style.display='flex';
   document.getElementById('nav-next').style.display='flex';
   document.getElementById('slide-counter').style.display='block';
+  document.getElementById('tap-prev').classList.add('visible');
+  document.getElementById('tap-next').classList.add('visible');
 
   slides.forEach((s,i)=>{
     const div=document.createElement('div');
@@ -759,6 +973,17 @@ function startWrapped(year){
     div.innerHTML=s.html;
     show.appendChild(div);
   });
+
+  // Build segmented stories bar
+  const bar = document.getElementById('stories-bar');
+  bar.innerHTML = '';
+  slides.forEach(()=>{
+    const seg = document.createElement('div');
+    seg.className = 'story-seg';
+    seg.innerHTML = '<div class="story-seg-fill"></div>';
+    bar.appendChild(seg);
+  });
+  bar.classList.add('visible');
 
   showSlide(0);
 }
@@ -807,9 +1032,23 @@ function showSlide(idx){
   showEl.style.transition='background 0.8s ease';
   showEl.style.background = slides[idx].bg||'transparent';
 
-  // ── Progress bar ──
-  const pctSlide = ((idx+1)/slides.length)*100;
-  document.getElementById('progress-bar').style.width = pctSlide+'%';
+  // ── Segmented stories bar ──
+  const segs = document.querySelectorAll('#stories-bar .story-seg');
+  segs.forEach((seg,i)=>{
+    seg.classList.remove('active','done','paused');
+    const fill = seg.querySelector('.story-seg-fill');
+    fill.style.animation = 'none';
+    if(i < idx){ seg.classList.add('done'); }
+    else if(i === idx){
+      // Force reflow so animation restarts
+      void fill.offsetWidth;
+      const dur = slides[idx].isLast ? 0 : SLIDE_DURATION;
+      seg.style.setProperty('--dur', dur + 'ms');
+      seg.classList.add('active');
+      fill.style.animation = '';
+      if(isPaused) seg.classList.add('paused');
+    }
+  });
 
   // ── Slide counter ──
   const counter = document.getElementById('slide-counter');
@@ -842,18 +1081,24 @@ function showSlide(idx){
   spawnSparks(sparkCount);
 
   // ── Auto advance ──
+  slideStartedAt = performance.now();
+  remainingDuration = SLIDE_DURATION;
   if(!slides[idx].isLast){
-    slideTimer = setTimeout(()=>nextSlide(), SLIDE_DURATION);
+    if(!isPaused){
+      slideTimer = setTimeout(()=>nextSlide(), SLIDE_DURATION);
+    }
   }
 }
 
-function nextSlide(){if(currentSlide<slides.length-1) showSlide(currentSlide+1);}
-function prevSlide(){if(currentSlide>0) showSlide(currentSlide-1);}
+function nextSlide(){if(currentSlide<slides.length-1){ resumeStory(true); showSlide(currentSlide+1); } }
+function prevSlide(){if(currentSlide>0){ resumeStory(true); showSlide(currentSlide-1); } }
 
 function backToSelector(){
   clearTimeout(slideTimer);
   stopBgPulse();
   isRunning=false;
+  isPaused=false;
+  document.body.classList.remove('story-paused');
   document.getElementById('show').style.display='none';
   document.getElementById('year-selector').style.display='flex';
   document.querySelector('.site-nav') && (document.querySelector('.site-nav').style.display='');
@@ -861,7 +1106,70 @@ function backToSelector(){
   document.getElementById('nav-prev').style.display='none';
   document.getElementById('nav-next').style.display='none';
   document.getElementById('slide-counter').style.display='none';
+  document.getElementById('tap-prev').classList.remove('visible');
+  document.getElementById('tap-next').classList.remove('visible');
+  document.getElementById('stories-bar').classList.remove('visible');
   document.getElementById('progress-bar').style.width='0%';
+}
+
+// ── PAUSE / RESUME ──────────────────────────────────────────────────────────
+let isPaused = false;
+let slideStartedAt = 0;
+let remainingDuration = SLIDE_DURATION;
+
+function pauseStory(){
+  if(!isRunning || isPaused) return;
+  isPaused = true;
+  clearTimeout(slideTimer);
+  remainingDuration = Math.max(0, remainingDuration - (performance.now() - slideStartedAt));
+  document.body.classList.add('story-paused');
+  const seg = document.querySelector('#stories-bar .story-seg.active');
+  if(seg) seg.classList.add('paused');
+}
+
+function resumeStory(force){
+  if(!isRunning || (!isPaused && !force)) return;
+  if(!isPaused) return;
+  isPaused = false;
+  document.body.classList.remove('story-paused');
+  const seg = document.querySelector('#stories-bar .story-seg.active');
+  if(seg) seg.classList.remove('paused');
+  if(!slides[currentSlide].isLast){
+    slideStartedAt = performance.now();
+    slideTimer = setTimeout(()=>nextSlide(), remainingDuration);
+  }
+}
+
+// ── TAP ZONES (Instagram style: tap = nav, hold = pause) ────────────────────
+function bindTapZone(el, action){
+  let downAt = 0, holdTimer = null, didHold = false;
+  const HOLD_MS = 280;
+  const start = (e)=>{
+    downAt = performance.now();
+    didHold = false;
+    holdTimer = setTimeout(()=>{ didHold = true; pauseStory(); }, HOLD_MS);
+  };
+  const end = (e)=>{
+    clearTimeout(holdTimer);
+    if(didHold){ resumeStory(); }
+    else { action(); }
+  };
+  const cancel = ()=>{ clearTimeout(holdTimer); if(didHold) resumeStory(); };
+  el.addEventListener('pointerdown', start);
+  el.addEventListener('pointerup', end);
+  el.addEventListener('pointercancel', cancel);
+  el.addEventListener('pointerleave', cancel);
+}
+bindTapZone(document.getElementById('tap-prev'), prevSlide);
+bindTapZone(document.getElementById('tap-next'), nextSlide);
+
+// ── TOAST ───────────────────────────────────────────────────────────────────
+function showToast(msg, duration=2200){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('visible');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(()=>t.classList.remove('visible'), duration);
 }
 
 // keyboard

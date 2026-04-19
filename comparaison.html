@@ -3,7 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparaison — Running History</title>
+    <title>Comparer Mes Courses — Gregory Bertholet Running History</title>
+    <meta name="description" content="Comparer deux courses de Gregory Bertholet côte à côte : allures, fréquence cardiaque, classement, chrono. Moselle, Grand Est, Luxembourg." />
+<meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon, 10K, trail, Grand Est, Thionville, Clouange, Luxembourg, Milano Marathon, marathon sub 3h" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/comparaison.html" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#07070e">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Running — Gregory Bertholet">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Comparaison — Running History">
+    <meta property="og:description" content="Comparer deux courses côte à côte : allures, FC, classement, chrono.">
+    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Running — Gregory Bertholet">
+    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/comparaison.html">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Comparaison — Running History">
+    <meta name="twitter:description" content="Comparer deux courses côte à côte : allures, FC, classement, chrono.">
+    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -102,9 +125,22 @@
         }
 
         /* ── Empty state ─────────────────────── */
-        #empty-state { text-align:center; padding:4rem 1rem; color:rgba(255,255,255,.25); }
+        #empty-state { display:none; text-align:center; padding:4rem 1rem; color:rgba(255,255,255,.25); }
         #empty-state .big-icon { font-size:3rem; margin-bottom:1rem; opacity:.4; }
         #empty-state p { font-size:.9rem; letter-spacing:.05em; }
+        .preview-banner {
+            display: flex; align-items: center; gap: 0.6rem;
+            margin: 0.8rem 0 1.4rem;
+            padding: 0.65rem 1rem;
+            background: linear-gradient(90deg, rgba(255,215,0,0.08), rgba(188,19,254,0.06));
+            border: 1px solid rgba(255,215,0,0.25);
+            border-radius: 10px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 0.78rem; letter-spacing: 0.04em; font-weight: 500;
+            color: rgba(255,255,255,0.78);
+        }
+        .preview-banner .pb-ico { font-size: 1.1rem; }
+        .preview-banner strong { color: #ffd700; font-weight: 700; letter-spacing: 0.06em; }
 
         /* ── Comparison output ───────────────── */
         #comparison { display:none; }
@@ -283,6 +319,34 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-F7JZPPYNEK');</script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/comparaison.html",
+  "name": "Comparer Mes Courses — Gregory Bertholet Running History",
+  "description": "Comparer deux courses de Gregory Bertholet côte à côte : allures, fréquence cardiaque, classement, chrono. Moselle, Grand Est, Luxembourg.",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "name": "Running History — Gregory Bertholet"
+  },
+  "about": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "jobTitle": "Coureur à pied / Marathonien"
+  },
+  "primaryImageOfPage": "https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg"
+}
+</script>
+
+<script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
 </head>
 <body>
 <div class="animated-bg"></div>
@@ -390,6 +454,11 @@
 
         <!-- Comparison output -->
         <div id="comparison">
+            <!-- Preview banner (default view hint) -->
+            <div class="preview-banner" id="preview-banner">
+                <span class="pb-ico">💡</span>
+                <span><strong>Aperçu par défaut</strong> · comparaison automatique de mes marathons du plus ancien au plus récent. Clique une autre course ci-dessus pour explorer.</span>
+            </div>
             <!-- Head-to-head banner -->
             <div class="h2h-banner" id="h2h-banner"></div>
             <!-- Delta hero -->
@@ -404,12 +473,16 @@
             <!-- History chart -->
             <div class="chart-panel">
                 <div class="chart-title" id="chart-title"></div>
-                <canvas id="historyChart" height="120"></canvas>
+                <canvas id="historyChart" height="120" role="img" aria-label="Graphique d'évolution historique de l'allure ou du temps sur les différentes éditions de la course sélectionnée. Permet de visualiser la progression de Gregory Bertholet sur cette épreuve au fil des années."></canvas>
             </div>
             <!-- All editions -->
             <div>
                 <div class="duel-title">Toutes les éditions de cette course</div>
                 <div class="history-list" id="history-list"></div>
+                <details class="data-toggle" style="margin-top:22px;">
+                    <summary style="cursor:pointer;padding:9px 14px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.25);border-radius:8px;color:rgba(255,215,0,0.85);font-size:0.75rem;letter-spacing:0.1em;font-weight:700;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données (tableau)</summary>
+                    <div id="history-table-wrap" style="margin-top:14px;overflow-x:auto;"></div>
+                </details>
             </div>
         </div>
     </div>
@@ -609,6 +682,10 @@
         renderEditionPicker(g);
         document.getElementById('comparison').style.display = 'none';
         document.getElementById('empty-state').style.display = 'none';
+        // Hide the default-preview banner as soon as the user makes an explicit choice
+        const pb = document.getElementById('preview-banner');
+        if (pb && !window.__previewDefault) pb.style.display = 'none';
+        window.__previewDefault = false;
     }
 
     // ── Render edition picker ─────────────────────────────────────────────────
@@ -863,14 +940,49 @@
                 <div class="hi-strava">${e.strava ? `<a href="${e.strava}" target="_blank" title="Strava">${STRAVA_SVG}</a>` : ''}</div>
             </div>`;
         }).join('');
+
+        // Build accessible table version
+        const tableWrap = document.getElementById('history-table-wrap');
+        if (tableWrap) {
+            tableWrap.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:0.82rem;color:rgba(255,255,255,0.8);">
+                <caption style="caption-side:top;text-align:left;padding:4px 0 10px;color:rgba(255,255,255,0.5);font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;">Données complètes — ${editions.length} édition${editions.length>1?'s':''}</caption>
+                <thead>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                        <th scope="col" style="padding:7px 10px;text-align:left;color:#ffd700;">Date</th>
+                        <th scope="col" style="padding:7px 10px;text-align:left;">Ville</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">Temps</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">Allure</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">VMA</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">Classement</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">Percentile</th>
+                        <th scope="col" style="padding:7px 10px;text-align:right;">FC moy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${editions.map(e => `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                        <th scope="row" style="padding:7px 10px;text-align:left;color:rgba(255,215,0,0.75);font-weight:600;">${e.date}</th>
+                        <td style="padding:7px 10px;">${e.ville}</td>
+                        <td style="padding:7px 10px;text-align:right;font-variant-numeric:tabular-nums;">${e.perf}${e.record?' ★':''}</td>
+                        <td style="padding:7px 10px;text-align:right;">${e.allure}/km</td>
+                        <td style="padding:7px 10px;text-align:right;">${vma(e.allure)} km/h</td>
+                        <td style="padding:7px 10px;text-align:right;">${e.classement}</td>
+                        <td style="padding:7px 10px;text-align:right;">top ${pct(e.classement).toFixed(1)}%</td>
+                        <td style="padding:7px 10px;text-align:right;">${e.fc ? e.fc+' bpm' : '—'}</td>
+                    </tr>`).join('')}
+                </tbody>
+            </table>`;
+        }
     }
 
     // ── Init ──────────────────────────────────────────────────────────────────
     renderGroups();
 
-    // Auto-select most interesting (most editions)
-    const firstBtn = document.querySelector('.group-btn');
-    if(firstBtn) firstBtn.click();
+    // ── Default preview: auto-select "Tous mes Marathons" for dramatic impact ──
+    // This pre-loads the most compelling comparison (oldest marathon vs Milan sub-3h)
+    window.__previewDefault = true;
+    const defaultBtn = document.querySelector('.group-btn[data-key="all-mar"]')
+                    || document.querySelector('.group-btn');
+    if (defaultBtn) defaultBtn.click();
     </script>
 </body>
 </html>

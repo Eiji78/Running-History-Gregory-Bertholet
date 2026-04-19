@@ -1,4 +1,19 @@
+# robots.txt — Running History Gregory Bertholet
 User-agent: *
 Allow: /
 
+# Bots SEO & IA autorisés explicitement
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Sitemap
 Sitemap: https://eiji78.github.io/Running-History-Gregory-Bertholet/sitemap.xml
