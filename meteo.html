@@ -371,8 +371,12 @@
         <div class="header">
             <h1 class="title">MÉTÉO & PERFORMANCES</h1>
             <p class="subtitle">Données climatiques réelles · Corrélation avec tes résultats</p>
+        </div>
             <style>
 .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -381,7 +385,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.55rem 0.5rem;
+    background: rgba(10, 10, 18, 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
@@ -428,7 +436,6 @@
     <a href="galerie.html">📸 GALERIE</a>
     <a href="wrapped.html">🎬 WRAPPED</a>
 </nav>
-        </div>
 
         <!-- Featured preview (visible immediately) -->
         <div class="featured-intro">3 courses marquantes côté météo</div>
