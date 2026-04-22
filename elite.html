@@ -473,8 +473,12 @@
         <div class="text-center mb-14 fade-in">
             <h1 class="main-title mb-3">TOI vs L'ÉLITE MONDIALE</h1>
             <p style="font-family:'Montserrat',sans-serif;font-size:0.9rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">RECORDS FRANCE · EUROPE · MONDE — ACTUALISÉS 2026</p>
+        </div>
             <style>
 .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -483,7 +487,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.55rem 0.5rem;
+    background: rgba(10, 10, 18, 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
@@ -530,7 +538,6 @@
     <a href="galerie.html">📸 GALERIE</a>
     <a href="wrapped.html">🎬 WRAPPED</a>
 </nav>
-        </div>
 
         <!-- Distance selector -->
         <div class="flex flex-wrap justify-center gap-3 mb-10 fade-in" style="animation-delay:0.1s;">

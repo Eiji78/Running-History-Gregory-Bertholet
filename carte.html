@@ -99,9 +99,9 @@
             z-index: 1;
         }
 
-        /* Dark tile filter */
-        .leaflet-tile { filter: brightness(0.45) saturate(0.3) hue-rotate(200deg); }
-        .leaflet-container { background: #0a0a14; }
+        /* Carte CARTO Voyager — rendu natif, fond crème léger pour le chargement */
+        .leaflet-tile { filter: none; }
+        .leaflet-container { background: #f5f2ec; }
 
         /* Custom popup */
         .leaflet-popup-content-wrapper {
@@ -288,8 +288,12 @@
         <div class="text-center mb-10 fade-in">
             <h1 class="main-title mb-3">CARTE DES COURSES</h1>
             <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">52 COURSES · 19 VILLES · 6 PAYS</p>
+        </div>
             <style>
 .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -298,7 +302,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.55rem 0.5rem;
+    background: rgba(10, 10, 18, 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
@@ -345,7 +353,6 @@
     <a href="galerie.html">📸 GALERIE</a>
     <a href="wrapped.html">🎬 WRAPPED</a>
 </nav>
-        </div>
 
         <!-- Stats pills -->
         <div class="flex flex-wrap justify-center gap-4 mb-8 fade-in" style="animation-delay:0.1s;">
@@ -632,9 +639,13 @@
         zoomControl: true,
     });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-        maxZoom: 18,
+    // Carte CARTO Voyager — style clair design avec accents pastel (crème, bleu eau, vert parcs)
+    // Plus lisible et légèrement plus détaillée que Positron, tout en restant épurée
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
+        detectRetina: true,
     }).addTo(map);
 
     // Calcule les limites englobant toutes les courses pour un cadrage initial

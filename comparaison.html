@@ -142,6 +142,43 @@
         .preview-banner .pb-ico { font-size: 1.1rem; }
         .preview-banner strong { color: #ffd700; font-weight: 700; letter-spacing: 0.06em; }
 
+        /* ── New comparison toggle button ────── */
+        .btn-new-comp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(0,255,249,0.12), rgba(188,19,254,0.1));
+            border: 1.5px solid rgba(0,255,249,0.4);
+            border-radius: 12px;
+            color: #00fff9;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.25s;
+        }
+        .btn-new-comp:hover {
+            border-color: #00fff9;
+            background: linear-gradient(135deg, rgba(0,255,249,0.22), rgba(188,19,254,0.18));
+            box-shadow: 0 0 22px rgba(0,255,249,0.35);
+            transform: translateY(-1px);
+        }
+        .btn-new-comp-wrap { display:flex; justify-content:center; margin: 0.5rem 0 0.5rem; }
+        .btn-new-comp.variant-close {
+            color: #ffd700;
+            border-color: rgba(255,215,0,0.5);
+            background: linear-gradient(135deg, rgba(255,215,0,0.12), rgba(255,107,53,0.08));
+        }
+        .btn-new-comp.variant-close:hover {
+            border-color: #ffd700;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,107,53,0.14));
+            box-shadow: 0 0 22px rgba(255,215,0,0.35);
+        }
+
         /* ── Comparison output ───────────────── */
         #comparison { display:none; }
 
@@ -363,8 +400,12 @@
         <div class="page-header">
             <h1 class="page-title">COMPARAISON</h1>
             <p class="page-sub">Deux éditions · Une évolution</p>
+        </div>
             <style>
 .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
     display: flex;
     flex-wrap: nowrap;
     justify-content: center;
@@ -373,7 +414,11 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding: 0.25rem 0.5rem;
+    padding: 0.55rem 0.5rem;
+    background: rgba(10, 10, 18, 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .site-nav::-webkit-scrollbar { display: none; }
 .site-nav a {
@@ -420,29 +465,45 @@
     <a href="galerie.html">📸 GALERIE</a>
     <a href="wrapped.html">🎬 WRAPPED</a>
 </nav>
+
+        <!-- New comparison button (shown only after first comparison is built) -->
+        <div class="btn-new-comp-wrap" id="new-comparison-btn-wrap" style="display:none;">
+            <button id="new-comparison-btn" class="btn-new-comp" onclick="openRaceChooser()">
+                <span>🔄</span> Nouvelle comparaison
+            </button>
         </div>
 
-        <!-- Selector -->
-        <div class="selector-panel">
-            <div class="selector-label">1 — Choisir une course</div>
-            <div class="race-groups" id="race-groups"></div>
-        </div>
+        <!-- Race chooser (visible by default on page load) -->
+        <div id="race-chooser">
+            <!-- Selector -->
+            <div class="selector-panel">
+                <div class="selector-label">1 — Choisir une course</div>
+                <div class="race-groups" id="race-groups"></div>
+            </div>
 
-        <!-- Edition pickers -->
-        <div id="edition-picker" style="display:none;">
-            <div class="selector-panel" style="margin-bottom:1.5rem;">
-                <div class="selector-label">2 — Choisir deux éditions à comparer</div>
-                <div class="editions-row">
-                    <div class="edition-col">
-                        <div class="edition-label lbl-a">COURSE A</div>
-                        <div id="editions-a"></div>
-                    </div>
-                    <div class="vs-badge">VS</div>
-                    <div class="edition-col">
-                        <div class="edition-label lbl-b">COURSE B</div>
-                        <div id="editions-b"></div>
+            <!-- Edition pickers -->
+            <div id="edition-picker" style="display:none;">
+                <div class="selector-panel" style="margin-bottom:1.5rem;">
+                    <div class="selector-label">2 — Choisir deux éditions à comparer</div>
+                    <div class="editions-row">
+                        <div class="edition-col">
+                            <div class="edition-label lbl-a">COURSE A</div>
+                            <div id="editions-a"></div>
+                        </div>
+                        <div class="vs-badge">VS</div>
+                        <div class="edition-col">
+                            <div class="edition-label lbl-b">COURSE B</div>
+                            <div id="editions-b"></div>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Cancel/Close chooser (visible only if a prior comparison exists) -->
+            <div class="btn-new-comp-wrap" id="cancel-chooser-wrap" style="display:none;">
+                <button class="btn-new-comp variant-close" onclick="cancelRaceChooser()">
+                    <span>✕</span> Annuler
+                </button>
             </div>
         </div>
 
@@ -454,10 +515,10 @@
 
         <!-- Comparison output -->
         <div id="comparison">
-            <!-- Preview banner (default view hint) -->
-            <div class="preview-banner" id="preview-banner">
+            <!-- Preview banner (legacy, always hidden now) -->
+            <div class="preview-banner" id="preview-banner" style="display:none;">
                 <span class="pb-ico">💡</span>
-                <span><strong>Aperçu par défaut</strong> · comparaison automatique de mes marathons du plus ancien au plus récent. Clique une autre course ci-dessus pour explorer.</span>
+                <span><strong>Aperçu par défaut</strong></span>
             </div>
             <!-- Head-to-head banner -->
             <div class="h2h-banner" id="h2h-banner"></div>
@@ -642,6 +703,8 @@
     let activeGroup = null;
     let selA = null, selB = null;
     let histChart = null;
+    // Snapshot of last-successful comparison (for cancel-chooser restore)
+    let prevGroup = null, prevA = null, prevB = null;
 
     // ── Render groups ────────────────────────────────────────────────────────
     function renderGroups(){
@@ -679,13 +742,13 @@
         btn.classList.add('active');
         activeGroup = g;
         selA = null; selB = null;
-        renderEditionPicker(g);
+        // Hide previous output BEFORE re-rendering (order matters: buildComparison re-shows it)
         document.getElementById('comparison').style.display = 'none';
         document.getElementById('empty-state').style.display = 'none';
-        // Hide the default-preview banner as soon as the user makes an explicit choice
         const pb = document.getElementById('preview-banner');
-        if (pb && !window.__previewDefault) pb.style.display = 'none';
-        window.__previewDefault = false;
+        if (pb) pb.style.display = 'none';
+        // Build new edition picker + comparison (will re-show comparison + auto-close chooser)
+        renderEditionPicker(g);
     }
 
     // ── Render edition picker ─────────────────────────────────────────────────
@@ -694,13 +757,13 @@
         const picker = document.getElementById('edition-picker');
         picker.style.display = 'block';
 
-        // Default: oldest vs newest (most dramatic evolution)
-        selA = editions[0];
-        selB = editions[editions.length-1];
+        // No default selection — user picks both sides manually
+        selA = null;
+        selB = null;
 
-        renderSideEditions('a', editions, selA);
-        renderSideEditions('b', editions, selB);
-        buildComparison();
+        renderSideEditions('a', editions, null);
+        renderSideEditions('b', editions, null);
+        // Do NOT build comparison yet — wait for both picks
     }
 
     function renderSideEditions(side, editions, selected){
@@ -731,6 +794,10 @@
         if(!selA || !selB || selA===selB) return;
         document.getElementById('empty-state').style.display = 'none';
         document.getElementById('comparison').style.display = 'block';
+        // Snapshot for cancel-restore
+        prevGroup = activeGroup; prevA = selA; prevB = selB;
+        // Auto-close the chooser once a valid comparison is ready
+        autoCloseChooserAfterBuild();
 
         const a = selA, b = selB;
         const secA = perfToSec(a.perf), secB = perfToSec(b.perf);
@@ -974,15 +1041,46 @@
         }
     }
 
+    // ── Race chooser toggle (show/hide selector + edition-picker) ────────────
+    function openRaceChooser(){
+        document.getElementById('race-chooser').style.display = 'block';
+        document.getElementById('new-comparison-btn-wrap').style.display = 'none';
+        document.getElementById('comparison').style.display = 'none';
+        // Reset the chooser to a clean state: no active group, picker hidden until re-pick
+        document.querySelectorAll('.group-btn').forEach(b => b.classList.remove('active'));
+        const picker = document.getElementById('edition-picker');
+        if (picker) picker.style.display = 'none';
+        activeGroup = null;
+        selA = null;
+        selB = null;
+        // Show cancel button since a prior comparison exists
+        document.getElementById('cancel-chooser-wrap').style.display = 'flex';
+        setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 30);
+    }
+    function cancelRaceChooser(){
+        // Close chooser and restore the previous comparison (if any)
+        document.getElementById('race-chooser').style.display = 'none';
+        document.getElementById('new-comparison-btn-wrap').style.display = 'flex';
+        if (prevA && prevB && prevA !== prevB) {
+            activeGroup = prevGroup;
+            selA = prevA; selB = prevB;
+            document.getElementById('comparison').style.display = 'block';
+        }
+        setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 30);
+    }
+    // Called from buildComparison when a valid comparison is ready — hide chooser, show button
+    function autoCloseChooserAfterBuild(){
+        const chooser = document.getElementById('race-chooser');
+        if (chooser.style.display !== 'none') {
+            chooser.style.display = 'none';
+            document.getElementById('new-comparison-btn-wrap').style.display = 'flex';
+            setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 30);
+        }
+    }
+
     // ── Init ──────────────────────────────────────────────────────────────────
     renderGroups();
-
-    // ── Default preview: auto-select "Tous mes Marathons" for dramatic impact ──
-    // This pre-loads the most compelling comparison (oldest marathon vs Milan sub-3h)
-    window.__previewDefault = true;
-    const defaultBtn = document.querySelector('.group-btn[data-key="all-mar"]')
-                    || document.querySelector('.group-btn');
-    if (defaultBtn) defaultBtn.click();
+    // No default preview — user sees only the race chooser on page load.
     </script>
 </body>
 </html>

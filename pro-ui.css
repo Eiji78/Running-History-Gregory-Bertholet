@@ -327,16 +327,16 @@ html[data-theme="light"] .pro-theme-toggle {
 
 /* Sticky + backdrop blur */
 .site-nav {
-    position: sticky;
-    top: 0;
-    z-index: 940;
-    background: rgba(10, 10, 18, 0.72);
-    backdrop-filter: blur(16px) saturate(160%);
-    -webkit-backdrop-filter: blur(16px) saturate(160%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 940 !important;
+    background: rgba(10, 10, 18, 0.72) !important;
+    backdrop-filter: blur(16px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
     padding-top: 0.55rem !important;
     padding-bottom: 0.55rem !important;
-    margin-bottom: 2rem;
+    margin-bottom: 2rem !important;
     transition: box-shadow .25s ease-out, background .25s ease-out;
 }
 .site-nav.pro-nav-scrolled {
