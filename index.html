@@ -287,6 +287,15 @@
   .card-meteo{grid-column:span 4;--card-accent:var(--accent-blue)}
   .card-galerie{grid-column:span 4;--card-accent:var(--accent)}
   .card-wrapped{grid-column:span 4;--card-accent:var(--accent-hot);background:linear-gradient(135deg,#1a0f12,var(--bg-card))}
+  .card-adn{grid-column:span 12;--card-accent:#b347ff;background:linear-gradient(135deg,#14021f 0%,var(--bg-card) 40%,#0f001a 100%);position:relative;overflow:hidden}
+  .card-adn::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 85% 40%, rgba(255,0,212,.14) 0%, transparent 55%),
+      radial-gradient(ellipse at 15% 80%, rgba(0,255,249,.10) 0%, transparent 55%);
+  }
+  .card-adn .card-title{background:linear-gradient(90deg,#00fff9,#b347ff,#ff00d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card-adn .card-icon{filter:drop-shadow(0 0 12px rgba(179,71,255,.5))}
 
   /* Featured card visual */
   .card-timeline .card-viz{
@@ -348,6 +357,7 @@
     .card-timeline,.card-carte{grid-column:span 6}
     .card-progression,.card-radar,.card-comparaison{grid-column:span 3}
     .card-elite,.card-meteo,.card-galerie,.card-wrapped{grid-column:span 6}
+    .card-adn{grid-column:span 6}
     .recent{padding:48px 20px}
     .race{grid-template-columns:1fr auto;gap:12px}
     .race-date,.race-dist{display:none}
@@ -369,7 +379,7 @@
     .card{min-height:auto;padding:22px}
     .card-progression,.card-radar,.card-comparaison,
     .card-timeline,.card-carte,
-    .card-elite,.card-meteo,.card-galerie,.card-wrapped{grid-column:span 1}
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn{grid-column:span 1}
     .card-title{font-size:22px}
     .card-icon{font-size:22px;margin-bottom:12px}
     .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
@@ -405,7 +415,7 @@
     <div class="hero-label fade-up d1">DASHBOARD PERSONNEL · 2019—2026</div>
     <h1 class="fade-up d2">
       52 COURSES.<br/>
-      <span class="outline">6 PAYS.</span><br/>
+      <span class="outline">4 PAYS.</span><br/>
       UN <span class="accent">SUB-3H</span>.
     </h1>
   </div>
@@ -433,7 +443,7 @@
   </a>
   <a class="kpi fade-up d3" href="carte.html">
     <div class="kpi-label">Pays visités</div>
-    <div class="kpi-value">6</div>
+    <div class="kpi-value">4</div>
     <div class="kpi-unit">19 villes</div>
   </a>
   <a class="kpi fade-up d4" href="timeline.html#marathon">
@@ -490,7 +500,7 @@
 <section class="explorer">
   <div class="section-head">
     <h2 class="section-title">Explorer</h2>
-    <div class="section-count">9 VUES · TOUS LES ANGLES</div>
+    <div class="section-count">10 VUES · TOUS LES ANGLES</div>
   </div>
 
   <div class="grid">
@@ -552,7 +562,7 @@
       <div>
         <div class="card-icon">🗺️</div>
         <div class="card-title">Carte<br/>Interactive</div>
-        <div class="card-desc">52 courses, 19 villes, 6 pays. Mode replay pour revivre le parcours chronologique.</div>
+        <div class="card-desc">52 courses, 19 villes, 4 pays. Mode replay pour revivre le parcours chronologique.</div>
       </div>
       <div class="card-preview">Ouvrir la carte</div>
     </a>
@@ -595,6 +605,16 @@
         <div class="card-desc">Ton running wrapped. Le best-of de chaque saison en format stories.</div>
       </div>
       <div class="card-preview">Lancer le wrapped</div>
+    </a>
+
+    <a class="card card-adn" href="adn.html">
+      <span class="card-num">10</span>
+      <div>
+        <div class="card-icon">🧬</div>
+        <div class="card-title">Running<br/>DNA</div>
+        <div class="card-desc">Ta signature unique de coureur. Une double hélice procédurale générée à partir de tes 52 courses.</div>
+      </div>
+      <div class="card-preview">Découvrir ton ADN</div>
     </a>
 
   </div>
