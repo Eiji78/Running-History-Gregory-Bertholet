@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🧬 Running DNA — Greg</title>
 <link rel="stylesheet" href="pro-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script defer src="pro-ui.js"></script>
 <style>
     :root {
         --neon-cyan: #00fff9;
@@ -30,14 +32,18 @@
         margin-bottom: 1.2rem;
     }
     .page-title {
-        font-size: 2rem;
-        letter-spacing: 0.12em;
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(1.8rem, 5vw, 3.5rem);
         font-weight: 900;
-        background: linear-gradient(90deg, #00fff9, #b347ff, #ff00d4);
+        letter-spacing: 0.06em;
+        background: linear-gradient(135deg, #00fff9, #b347ff, #ff00d4);
         -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         background-clip: text;
         color: transparent;
-        text-shadow: 0 0 40px rgba(179,71,255,.35);
+        filter: drop-shadow(0 0 18px rgba(179,71,255,.55)) drop-shadow(0 0 40px rgba(255,0,212,.3));
+        text-align: center;
+        display: block;
     }
     .page-sub {
         color: rgba(255,255,255,.55);
@@ -64,6 +70,9 @@
         backdrop-filter: blur(16px) saturate(160%);
         -webkit-backdrop-filter: blur(16px) saturate(160%);
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    @media (max-width: 600px) {
+        .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
     }
     .site-nav::-webkit-scrollbar { display: none; }
     .site-nav a {
@@ -337,12 +346,6 @@
 </style>
 </head>
 <body>
-    <div class="wrap">
-        <div class="page-header">
-            <h1 class="page-title">🧬 RUNNING DNA</h1>
-            <p class="page-sub">Ta signature unique de coureur · 52 courses, 1 empreinte</p>
-        </div>
-
 <nav class="site-nav">
     <a href="index.html">🏠 ACCUEIL</a>
     <a href="timeline.html">📅 TIMELINE</a>
@@ -355,7 +358,13 @@
     <a href="galerie.html">📸 GALERIE</a>
     <a href="wrapped.html">🎬 WRAPPED</a>
     <a href="#" class="active">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
 </nav>
+    <div class="wrap">
+        <div class="page-header">
+            <h1 class="page-title">🧬 RUNNING DNA</h1>
+            <p class="page-sub">Ta signature unique de coureur · 52 courses, 1 empreinte</p>
+        </div>
 
         <!-- Stats -->
         <div class="dna-stats" id="dna-stats"></div>

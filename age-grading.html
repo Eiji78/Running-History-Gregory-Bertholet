@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚖️ Age Grading — Greg</title>
+<link rel="stylesheet" href="pro-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script defer src="pro-ui.js"></script>
+<style>
+    :root {
+        --neon-cyan: #00fff9;
+        --neon-magenta: #ff00d4;
+        --neon-gold: #ffd700;
+        --neon-silver: #d6d9e0;
+        --neon-bronze: #cd7f32;
+        --neon-blue: #4da6ff;
+        --neon-violet: #b347ff;
+    }
+    body {
+        background: radial-gradient(ellipse at top, #0b1a24 0%, #050912 60%, #000 100%);
+        min-height: 100vh;
+    }
+    .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem 4rem;
+    }
+    .page-header { text-align: center; margin-bottom: 1.2rem; }
+    .page-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(1.8rem, 5vw, 3.5rem);
+        font-weight: 900;
+        letter-spacing: 0.06em;
+        background: linear-gradient(135deg, #ffd700, #d6d9e0, #00fff9);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        color: transparent;
+        filter: drop-shadow(0 0 18px rgba(255,215,0,.55)) drop-shadow(0 0 40px rgba(0,255,249,.3));
+        text-align: center;
+        display: block;
+    }
+    .page-sub {
+        color: rgba(255,255,255,.55);
+        font-size: .85rem;
+        letter-spacing: .08em;
+        margin-top: .4rem;
+    }
+
+    /* ── Navbar ─────────────────────── */
+    .site-nav {
+        position: sticky; top: 0; z-index: 940;
+        display: flex; flex-wrap: nowrap; justify-content: center;
+        gap: 0.3rem; margin-bottom: 2rem;
+        overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+        padding: 0.55rem 0.5rem;
+        background: rgba(10, 10, 18, 0.85);
+        backdrop-filter: blur(16px) saturate(160%);
+        -webkit-backdrop-filter: blur(16px) saturate(160%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .site-nav::-webkit-scrollbar { display: none; }
+    .site-nav a {
+        flex-shrink: 0; display: inline-flex; align-items: center;
+        gap: 0.3rem; padding: 0.32rem 0.55rem; border-radius: 10px;
+        font-size: 0.65rem; font-weight: 700; letter-spacing: 0.04em;
+        text-decoration: none; border: 1.5px solid rgba(255,255,255,0.15);
+        background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.75);
+        transition: all 0.2s; white-space: nowrap;
+    }
+    .site-nav a:hover { background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.35); color: #fff; }
+    .site-nav a.active {
+        border-color: var(--neon-gold);
+        color: var(--neon-gold);
+        background: rgba(255,215,0,0.1);
+        box-shadow: 0 0 14px rgba(255,215,0,0.3);
+    }
+
+    /* ── Config panel ─────────────── */
+    .config {
+        display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+        gap: 1rem; padding: .9rem 1.2rem; margin: .5rem auto 1.5rem;
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 16px;
+        max-width: 700px;
+    }
+    .config label { font-size: .65rem; color: rgba(255,255,255,.55); letter-spacing: .1em; font-weight: 700; text-transform: uppercase; }
+    .config input[type=date] {
+        background: rgba(255,255,255,.06);
+        border: 1.5px solid rgba(255,255,255,.2);
+        color: #fff; padding: .4rem .7rem; border-radius: 8px;
+        font-size: .85rem; font-family: inherit;
+    }
+    .config input[type=date]:focus { border-color: var(--neon-gold); outline: none; }
+    .age-display {
+        background: rgba(255,215,0,.08);
+        border: 1px solid rgba(255,215,0,.3);
+        color: var(--neon-gold);
+        padding: .35rem .7rem;
+        border-radius: 8px;
+        font-weight: 800; font-size: .85rem;
+    }
+
+    /* ── KPIs ────────────────────── */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+        gap: .6rem;
+        margin-bottom: 1.8rem;
+    }
+    .kpi-card {
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 14px;
+        padding: 1rem .9rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .kpi-card::before {
+        content: ""; position: absolute; inset: 0;
+        background: linear-gradient(135deg, var(--k-color,transparent) 0%, transparent 50%);
+        opacity: .12; pointer-events: none;
+    }
+    .kpi-icon { font-size: 1.4rem; margin-bottom: .2rem; }
+    .kpi-val {
+        font-size: 1.6rem; font-weight: 900; letter-spacing: -.02em;
+        color: var(--k-color, #fff);
+        line-height: 1; margin-bottom: .25rem;
+        text-shadow: 0 0 14px rgba(255,215,0,.2);
+    }
+    .kpi-lbl {
+        font-size: .6rem; color: rgba(255,255,255,.55);
+        letter-spacing: .14em; font-weight: 700; text-transform: uppercase;
+    }
+    .kpi-sub {
+        font-size: .7rem; color: rgba(255,255,255,.4);
+        margin-top: .3rem; font-weight: 500;
+    }
+
+    /* ── Section titles ─────────── */
+    section { margin-top: 2.5rem; }
+    .sec-title {
+        display: flex; align-items: center; gap: .5rem;
+        font-size: 1.05rem; font-weight: 800;
+        letter-spacing: .04em; color: #fff;
+        margin-bottom: 1rem;
+        padding-bottom: .4rem;
+        border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .sec-desc {
+        color: rgba(255,255,255,.55);
+        font-size: .78rem;
+        margin-top: -.6rem;
+        margin-bottom: 1rem;
+    }
+
+    /* ── WMA class badges ────────── */
+    .cls-badge {
+        display: inline-flex; align-items: center;
+        padding: .15rem .5rem;
+        border-radius: 6px;
+        font-size: .62rem;
+        font-weight: 800;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+        border: 1px solid currentColor;
+    }
+    .cls-world    { color: var(--neon-gold); background: rgba(255,215,0,.1); }
+    .cls-national { color: var(--neon-silver); background: rgba(214,217,224,.08); }
+    .cls-regional { color: var(--neon-bronze); background: rgba(205,127,50,.12); }
+    .cls-local    { color: var(--neon-blue); background: rgba(77,166,255,.1); }
+    .cls-amateur  { color: #999; background: rgba(255,255,255,.04); }
+
+    /* ── Hall of Fame / Top scores ─ */
+    .top-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: .6rem;
+    }
+    .top-item {
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+        padding: .9rem 1rem;
+        position: relative;
+        border-left: 4px solid var(--item-accent, rgba(255,215,0,.6));
+    }
+    .top-item .rank {
+        position: absolute; top: -10px; right: 10px;
+        background: rgba(8,6,16,.95); color: var(--neon-gold);
+        width: 28px; height: 28px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-weight: 900; font-size: .75rem;
+        border: 2px solid var(--neon-gold);
+    }
+    .top-item .ti-perf { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -.02em; }
+    .top-item .ti-score { font-size: 1.8rem; font-weight: 900; color: var(--neon-gold); line-height: 1; }
+    .top-item .ti-meta { font-size: .72rem; color: rgba(255,255,255,.55); margin-top: .3rem; line-height: 1.4; }
+    .top-item .ti-eq { font-size: .72rem; color: var(--neon-cyan); margin-top: .2rem; }
+
+    /* ── Per-distance cards ──────── */
+    .dist-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: .6rem;
+    }
+    .dist-card {
+        background: rgba(255,255,255,.03);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 14px;
+        padding: 1rem;
+        position: relative;
+    }
+    .dist-head {
+        display: flex; justify-content: space-between; align-items: center;
+        margin-bottom: .6rem;
+    }
+    .dist-title {
+        font-size: .8rem; letter-spacing: .1em;
+        font-weight: 800; color: #fff; text-transform: uppercase;
+    }
+    .dist-perf { font-size: 1.4rem; font-weight: 900; color: #fff; }
+    .dist-score { font-size: 1.1rem; font-weight: 800; }
+    .dist-row { display: flex; justify-content: space-between; font-size: .7rem; color: rgba(255,255,255,.55); margin-top: .3rem; }
+    .dist-bar {
+        height: 6px; background: rgba(255,255,255,.06);
+        border-radius: 3px; overflow: hidden; margin-top: .5rem;
+        position: relative;
+    }
+    .dist-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #4da6ff, #cd7f32, #d6d9e0, #ffd700);
+        border-radius: 3px;
+    }
+    .dist-bar-marker {
+        position: absolute;
+        top: -3px; width: 2px; height: 12px;
+        background: #fff;
+        box-shadow: 0 0 8px #fff;
+    }
+    .dist-tick-legend {
+        display: flex; justify-content: space-between;
+        font-size: .55rem; color: rgba(255,255,255,.35);
+        margin-top: .25rem;
+        letter-spacing: .05em;
+    }
+
+    /* ── Scatter chart ───────────── */
+    .scatter-box {
+        background: rgba(255,255,255,.02);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 14px;
+        padding: 1.2rem .6rem .6rem;
+        position: relative;
+    }
+    .scatter-svg { width: 100%; height: 420px; display: block; }
+    .legend-row {
+        display: flex; flex-wrap: wrap; justify-content: center;
+        gap: .5rem 1rem; font-size: .7rem; color: rgba(255,255,255,.55);
+        margin-top: .6rem;
+    }
+    .legend-row .swatch {
+        display: inline-block;
+        width: 14px; height: 8px;
+        border-radius: 2px;
+        margin-right: .35rem;
+        vertical-align: middle;
+    }
+
+    /* ── Table ───────────────────── */
+    .full-table-wrap {
+        background: rgba(255,255,255,.02);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 14px;
+        overflow-x: auto;
+    }
+    table.age-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .78rem;
+    }
+    .age-table th, .age-table td {
+        padding: .55rem .8rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255,255,255,.04);
+    }
+    .age-table th {
+        font-size: .65rem;
+        letter-spacing: .08em;
+        color: rgba(255,255,255,.5);
+        font-weight: 700;
+        text-transform: uppercase;
+        background: rgba(255,255,255,.03);
+        cursor: pointer;
+        user-select: none;
+        white-space: nowrap;
+    }
+    .age-table th:hover { color: #fff; }
+    .age-table td { color: rgba(255,255,255,.85); }
+    .age-table td.score { font-weight: 800; }
+    .age-table tr:hover td { background: rgba(255,255,255,.02); }
+    .num { font-variant-numeric: tabular-nums; text-align: right; }
+    .rec-star { color: var(--neon-gold); }
+    .age-table a { color: #FC4C02; text-decoration: none; font-weight: 700; font-size: .7rem; }
+
+    /* ── Projection ──────────────── */
+    .proj-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: .55rem;
+    }
+    .proj-card {
+        background: linear-gradient(135deg, rgba(179,71,255,.08), rgba(0,255,249,.06));
+        border: 1px solid rgba(179,71,255,.25);
+        border-radius: 12px;
+        padding: .9rem;
+        text-align: center;
+    }
+    .proj-age { font-size: .7rem; color: rgba(255,255,255,.5); letter-spacing: .1em; font-weight: 700; text-transform: uppercase; }
+    .proj-time { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -.02em; margin: .3rem 0 .2rem; }
+    .proj-sub { font-size: .68rem; color: rgba(255,255,255,.55); }
+
+    /* Info box explaining WMA */
+    .info-box {
+        background: rgba(0,255,249,.04);
+        border: 1px solid rgba(0,255,249,.15);
+        border-radius: 14px;
+        padding: 1.3rem 1.5rem;
+        margin: 1.2rem 0 1.8rem;
+        font-size: 1rem;
+        color: rgba(255,255,255,.82);
+        line-height: 1.65;
+    }
+    .info-box strong { color: var(--neon-cyan); font-weight: 700; }
+    .info-box .info-head {
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: .6rem;
+        color: var(--neon-cyan);
+        letter-spacing: .02em;
+    }
+    @media (max-width: 600px) {
+        .info-box { font-size: .92rem; padding: 1.1rem 1.15rem; }
+        .info-box .info-head { font-size: 1rem; }
+    }
+
+    @media (max-width: 600px) {
+        .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
+        .page-title { font-size: 1.4rem; }
+        .kpi-val { font-size: 1.3rem; }
+        .scatter-svg { height: 320px; }
+    }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="#" class="active">⚖️ AGE GRADING</a>
+</nav>
+<div class="wrap">
+    <div class="page-header">
+        <h1 class="page-title">⚖️ AGE GRADING</h1>
+        <p class="page-sub">Tes performances à l'échelle WMA · Recalibrées par âge</p>
+    </div>
+
+    <!-- Config: birth date -->
+    <div class="config">
+        <label for="dob">📅 Ta date de naissance</label>
+        <input id="dob" type="date" value="1978-04-05" min="1900-01-01" max="2020-01-01">
+        <span class="age-display" id="age-display">—</span>
+    </div>
+
+    <!-- KPI pills -->
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <!-- Info explainer -->
+    <div class="info-box">
+        <strong class="info-head">C'est quoi l'age grading ?</strong>
+        Un système <strong>WMA</strong> (World Masters Athletics) qui recalibre ton temps comme si tu avais 25 ans. Ton <strong>Performance Score</strong> te compare au record du monde de ta catégorie&nbsp;: <strong>World Class</strong> (≥ 90 %) est pro, <strong>National Class</strong> (80-90 %) élite amateur, <strong>Regional</strong> (70-80 %) très bon coureur, <strong>Local</strong> (60-70 %) coureur confirmé. Les références utilisées sont les records du monde hommes&nbsp;: 5K 12:35, 10K 26:11, Semi 57:31, Marathon 2:00:35.
+    </div>
+
+    <!-- Hall of Fame: top 5 scores -->
+    <section>
+        <h2 class="sec-title">🏆 Hall of Fame · Tes 5 meilleurs scores</h2>
+        <p class="sec-desc">Les performances où tu brilles le plus à l'échelle mondiale, tout âge confondu.</p>
+        <div class="top-list" id="top-list"></div>
+    </section>
+
+    <!-- Per-distance best -->
+    <section>
+        <h2 class="sec-title">📏 Meilleur par distance</h2>
+        <p class="sec-desc">Ton record dans chaque catégorie, avec score WMA et équivalent à 25 ans.</p>
+        <div class="dist-grid" id="dist-grid"></div>
+    </section>
+
+    <!-- Timeline scatter -->
+    <section>
+        <h2 class="sec-title">📈 Évolution au fil des courses</h2>
+        <p class="sec-desc">Chaque point est une course. Y : score WMA. X : date. Les lignes horizontales marquent les paliers de classe.</p>
+        <div class="scatter-box">
+            <svg class="scatter-svg" id="scatter" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+        <div class="legend-row">
+            <span><span class="swatch" style="background:#4da6ff;"></span>5 km</span>
+            <span><span class="swatch" style="background:#00fff9;"></span>10 km</span>
+            <span><span class="swatch" style="background:#ff8800;"></span>Semi</span>
+            <span><span class="swatch" style="background:#ff00d4;"></span>Marathon</span>
+            <span><span class="swatch" style="background:#888;"></span>Distance non standard</span>
+            <span><span class="swatch" style="background:#ffd700;"></span>★ Record personnel</span>
+        </div>
+    </section>
+
+    <!-- Full table -->
+    <section>
+        <h2 class="sec-title">📋 Toutes tes courses — triées par score</h2>
+        <p class="sec-desc">Clique sur les en-têtes pour trier. Les Sedan-Charleville (23,6 km) et le trail Dudelange sont recalibrés sur la distance la plus proche.</p>
+        <div class="full-table-wrap">
+            <table class="age-table" id="age-table">
+                <thead>
+                    <tr>
+                        <th data-sort="score" class="num">SCORE</th>
+                        <th data-sort="class">CLASSE</th>
+                        <th data-sort="date">DATE</th>
+                        <th data-sort="course">COURSE</th>
+                        <th data-sort="km" class="num">KM</th>
+                        <th data-sort="age" class="num">ÂGE</th>
+                        <th data-sort="perf">TEMPS</th>
+                        <th data-sort="aged">÷25 ANS</th>
+                        <th>STRAVA</th>
+                    </tr>
+                </thead>
+                <tbody id="age-tbody"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Projection -->
+    <section>
+        <h2 class="sec-title">🔮 Si tu maintiens ton niveau actuel...</h2>
+        <p class="sec-desc">Ta meilleure performance récente projetée aux âges futurs. Chaque ligne suppose que tu conserves ton Performance Score actuel — un exploit en soi à ces âges.</p>
+        <div class="proj-grid" id="proj-grid"></div>
+    </section>
+
+</div>
+
+<script>
+    // ── Race data ──────────────────────────────────────────────────────
+    const ALL_RACES = [
+        {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",km:42.195,classement:"1017/15050",indice:6.76,perf:"02:59:51",allure:"4:15",record:true,strava:"https://www.strava.com/activities/18075963697",fc:167},
+        {date:"2026-03-01",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",indice:7.13,perf:"01:25:52",allure:"4:04",strava:"https://www.strava.com/activities/17561583056",fc:162},
+        {date:"2025-05-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",indice:5.29,perf:"01:38:50",allure:"4:11",strava:"https://www.strava.com/activities/16041281275",fc:171},
+        {date:"2025-09-28",course:"Semi-Marathon - Route Du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",indice:5.8,perf:"01:23:48",allure:"3:58",record:true,strava:"https://www.strava.com/activities/15961102163",fc:172},
+        {date:"2025-05-31",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",indice:2.09,perf:"01:29:51",allure:"4:14",strava:"https://www.strava.com/activities/14654980086",fc:174},
+        {date:"2025-04-27",course:"Marathon du lac d'Annecy",ville:"Annecy",km:42.195,classement:"583/3845",indice:15.16,perf:"03:26:08",allure:"4:53",strava:"https://www.strava.com/activities/14299457228",fc:167},
+        {date:"2025-03-30",course:"5 km - Record personnel",ville:"—",km:5,classement:"—",indice:0,perf:"00:18:36",allure:"3:43",record:true},
+        {date:"2025-03-16",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",indice:6.51,perf:"01:25:34",allure:"4:03",strava:"https://www.strava.com/activities/13895827191",fc:168},
+        {date:"2024-06-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",indice:7.94,perf:"01:40:51",allure:"4:16",strava:"https://www.strava.com/activities/12589698929",fc:170},
+        {date:"2024-09-29",course:"Ing Semi Marathon - Route Du Vin",ville:"Remich",km:21.1,classement:"178/1895",indice:9.39,perf:"01:26:33",allure:"4:06",strava:"https://www.strava.com/activities/12530152817",fc:174},
+        {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",indice:13.63,perf:"01:00:59",allure:"5:10",strava:"https://www.strava.com/activities/12235936176",fc:168},
+        {date:"2024-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",indice:12.42,perf:"00:38:18",allure:"3:50",strava:"https://www.strava.com/activities/11597795067",fc:179},
+        {date:"2024-11-05",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"176/6909",indice:2.55,perf:"01:31:20",allure:"4:19",strava:"https://www.strava.com/activities/11387709862",fc:178},
+        {date:"2024-08-05",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",indice:7.46,perf:"00:37:41",allure:"3:46",record:true,strava:"https://www.strava.com/activities/11359052509",fc:181},
+        {date:"2024-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"14/199",indice:7.04,perf:"00:39:17",allure:"3:56",strava:"https://www.strava.com/activities/11304839621",fc:183},
+        {date:"2024-04-21",course:"Semi-Marathon de Thionville",ville:"Thionville",km:21.1,classement:"80/1089",indice:7.35,perf:"01:25:30",allure:"4:03",strava:"https://www.strava.com/activities/11229080745",fc:171},
+        {date:"2024-07-04",course:"Schneider Electric Marathon De Paris",ville:"Paris",km:42.195,classement:"3058/54175",indice:5.64,perf:"03:06:21",allure:"4:24",strava:"https://www.strava.com/activities/11124704539",fc:174},
+        {date:"2024-03-17",course:"Semi-Marathon Intercommunal de la Vallée de l'Orne",ville:"Moyeuvre-Grande",km:21.1,classement:"34/416",indice:8.17,perf:"01:30:06",allure:"4:16",strava:"https://www.strava.com/activities/10977086066",fc:166},
+        {date:"2024-10-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"144/2440",indice:5.9,perf:"00:40:29",allure:"4:02",strava:"https://www.strava.com/activities/10928040300",fc:176},
+        {date:"2023-10-14",course:"Haard Trail Dudelange",ville:"Dudelange",km:15,classement:"27/94",indice:28.72,perf:"01:11:15",allure:"4:45",strava:"https://www.strava.com/activities/10037221696",fc:178},
+        {date:"2023-01-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",indice:11.93,perf:"01:48:54",allure:"4:36",strava:"https://www.strava.com/activities/9955737974",fc:182},
+        {date:"2023-09-24",course:"Ing Semi Marathon - Route Du Vin",ville:"Remich",km:21.1,classement:"179/1370",indice:13.07,perf:"01:30:39",allure:"4:17",strava:"https://www.strava.com/activities/9909962182",fc:174},
+        {date:"2023-09-07",course:"La Forestière",ville:"Moyeuvre-Grande",km:10,classement:"39/164",indice:23.78,perf:"00:50:30",allure:"5:03",strava:"https://www.strava.com/activities/9416504602",fc:181},
+        {date:"2023-06-25",course:"Foulées de Saint-Hubert",ville:"Gandrange",km:10,classement:"24/169",indice:14.2,perf:"00:41:37",allure:"4:10",strava:"https://www.strava.com/activities/9330053741",fc:183},
+        {date:"2023-02-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",indice:15.13,perf:"00:40:17",allure:"4:02",strava:"https://www.strava.com/activities/9189866875",fc:184},
+        {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",indice:21.22,perf:"03:47:13",allure:"5:23",strava:"https://www.strava.com/activities/9108818382",fc:175},
+        {date:"2023-04-23",course:"Semi Marathon de Thionville",ville:"Thionville",km:21.1,classement:"82/690",indice:11.88,perf:"01:27:20",allure:"4:08",strava:"https://www.strava.com/activities/8940931342",fc:178},
+        {date:"2023-03-19",course:"Semi Marathon Intercommunal de La Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",indice:8.35,perf:"01:28:36",allure:"4:12",strava:"https://www.strava.com/activities/8739505302",fc:179},
+        {date:"2023-12-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"142/2067",indice:6.87,perf:"00:42:44",allure:"4:16",strava:"https://www.strava.com/activities/8700435543",fc:178},
+        {date:"2022-10-16",course:"Tcs Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",indice:12.88,perf:"03:13:45",allure:"4:35",strava:"https://www.strava.com/activities/7970754505",fc:173},
+        {date:"2022-09-18",course:"Semi-Marathon Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",indice:24.19,perf:"01:32:20",allure:"4:23",strava:"https://www.strava.com/activities/7826241352",fc:178},
+        {date:"2022-06-26",course:"Foulées de Saint-Hubert",ville:"Gandrange",km:10,classement:"21/147",indice:14.29,perf:"00:41:27",allure:"4:09",strava:"https://www.strava.com/activities/7369943097",fc:177},
+        {date:"2022-03-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",indice:28,perf:"00:40:05",allure:"4:01",strava:"https://www.strava.com/activities/7249627360",fc:182},
+        {date:"2022-05-28",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"456/4498",indice:10.14,perf:"01:37:46",allure:"4:38",strava:"https://www.strava.com/activities/7217953463",fc:174},
+        {date:"2022-05-15",course:"Semi-Marathon de Thionville",ville:"Thionville",km:21.1,classement:"289/798",indice:36.22,perf:"01:51:28",allure:"5:17",strava:"https://www.strava.com/activities/7145622553",fc:177},
+        {date:"2022-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",indice:15.44,perf:"00:40:34",allure:"4:03",strava:"https://www.strava.com/activities/7068557851",fc:176},
+        {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"77/325",indice:23.69,perf:"00:40:16",allure:"4:02",strava:"https://www.strava.com/activities/6889279481",fc:186},
+        {date:"2022-03-20",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",indice:26.54,perf:"01:33:58",allure:"4:27",strava:"https://www.strava.com/activities/6852262326",fc:179},
+        {date:"2021-10-17",course:"Schneider Electric Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",indice:16.94,perf:"03:29:02",allure:"4:57",strava:"https://www.strava.com/activities/6125599297",fc:172},
+        {date:"2021-09-19",course:"Semi-Marathon du Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",indice:31.91,perf:"01:33:14",allure:"4:25",strava:"https://www.strava.com/activities/5983824622",fc:178},
+        {date:"2021-04-07",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"78/250",indice:31.2,perf:"00:40:49",allure:"4:05",strava:"https://www.strava.com/activities/5572013481",fc:186},
+        {date:"2020-12-24",course:"5Km Athlé - Open de France virtuel",ville:"Partout",km:5,classement:"1666/11608",indice:14.35,perf:"00:20:25",allure:"4:05",strava:"https://www.strava.com/activities/4494773509",fc:189},
+        {date:"2020-07-14",course:"5km Athlé - Open de France Virtuel",ville:"Partout",km:5,classement:"1413/7990",indice:17.68,perf:"00:21:15",allure:"4:15",strava:"https://www.strava.com/activities/3756329596",fc:180},
+        {date:"2020-01-03",course:"Semi Marathon Intercommunal de La Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",indice:42.44,perf:"01:42:59",allure:"4:53",strava:"https://www.strava.com/activities/3144210898",fc:178},
+        {date:"2019-03-11",course:"Course Marcel Kiefer",ville:"Hussigny-Godbrange",km:21,classement:"41/102",indice:40.2,perf:"01:52:47",allure:"5:22",strava:"https://www.strava.com/activities/2838102426",fc:184},
+        {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",indice:27.33,perf:"01:59:38",allure:"5:04",strava:"https://www.strava.com/activities/2767774831",fc:182},
+        {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",indice:33.22,perf:"01:15:11",allure:"5:01",strava:"https://www.strava.com/activities/2649386092",fc:185},
+        {date:"2019-06-30",course:"Les Foulées de Saint Hubert",ville:"Gandrange",km:10,classement:"73/234",indice:31.2,perf:"00:46:42",allure:"4:40",strava:"https://www.strava.com/activities/2491818770",fc:185},
+        {date:"2019-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",indice:44.27,perf:"00:45:11",allure:"4:31",strava:"https://www.strava.com/activities/2431537538",fc:181},
+        {date:"2019-01-06",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"1564/6470",indice:24.17,perf:"01:55:51",allure:"5:29",strava:"https://www.strava.com/activities/2415438474",fc:185},
+        {date:"2019-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"121/248",indice:48.79,perf:"00:49:03",allure:"4:54",strava:"https://www.strava.com/activities/2332583576",fc:185},
+        {date:"2019-04-28",course:"Semi Marathon de Thionville",ville:"Thionville",km:21.1,classement:"521/987",indice:52.79,perf:"01:49:48",allure:"5:12",strava:"https://www.strava.com/activities/2325102723",fc:186},
+        {date:"2019-03-17",course:"Semi-Marathon de La Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",indice:68.86,perf:"01:53:04",allure:"5:22",strava:"https://www.strava.com/activities/2220974946"},
+    ];
+
+    // ── WMA Age Factors (approximation of WMA 2020, men) ──────────────
+    // Factor to multiply your time by to get "age-graded time" (time as if aged 25)
+    // Based on anchor points from WMA tables; linearly interpolated between anchors.
+    const AGE_FACTORS = {
+        mar: {20:0.960, 25:1.000, 30:0.998, 35:0.988, 40:0.967, 45:0.940, 50:0.894, 55:0.842, 60:0.785, 65:0.722, 70:0.654, 75:0.581},
+        hm:  {20:0.965, 25:1.000, 30:0.997, 35:0.985, 40:0.965, 45:0.933, 50:0.891, 55:0.842, 60:0.788, 65:0.727, 70:0.661, 75:0.590},
+        t10: {20:0.970, 25:1.000, 30:0.998, 35:0.986, 40:0.966, 45:0.937, 50:0.898, 55:0.850, 60:0.795, 65:0.735, 70:0.668, 75:0.598},
+        t5:  {20:0.972, 25:1.000, 30:0.998, 35:0.987, 40:0.968, 45:0.939, 50:0.901, 55:0.852, 60:0.798, 65:0.738, 70:0.672, 75:0.604},
+    };
+    // Open Standard (world records as of 2024)
+    const OPEN_STANDARDS = {
+        mar: 7235, // 2:00:35 Kiptum
+        hm:  3451, // 57:31 Kandie
+        t10: 1571, // 26:11 Cheptegei
+        t5:  755,  // 12:35 Aregawi
+    };
+    // Distance display labels
+    const DIST_LABELS = { t5:'5 km', t10:'10 km', hm:'Semi-marathon', mar:'Marathon' };
+    const DIST_COLORS = { t5:'#4da6ff', t10:'#00fff9', hm:'#ff8800', mar:'#ff00d4', other:'#888' };
+
+    // ── Helpers ──────────────────────────────────────────────────────
+    function perfToSec(p){
+        const parts = p.split(':').map(Number);
+        if(parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+        return parts[0]*60 + parts[1];
+    }
+    function secToPerf(s){
+        s = Math.round(s);
+        const h = Math.floor(s/3600), m = Math.floor((s%3600)/60), sec = s%60;
+        if(h) return `${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+        return `${m}:${String(sec).padStart(2,'0')}`;
+    }
+    function ageAtDate(dobStr, dateStr){
+        const d1 = new Date(dobStr), d2 = new Date(dateStr);
+        let age = d2.getFullYear() - d1.getFullYear();
+        const m = d2.getMonth() - d1.getMonth();
+        if(m < 0 || (m === 0 && d2.getDate() < d1.getDate())) age--;
+        return age;
+    }
+    function interpFactor(table, age){
+        const ages = Object.keys(table).map(Number).sort((a,b)=>a-b);
+        if(age <= ages[0]) return table[ages[0]];
+        if(age >= ages[ages.length-1]) return table[ages[ages.length-1]];
+        for(let i=0;i<ages.length-1;i++){
+            if(age >= ages[i] && age <= ages[i+1]){
+                const t = (age - ages[i])/(ages[i+1]-ages[i]);
+                return table[ages[i]] + (table[ages[i+1]]-table[ages[i]])*t;
+            }
+        }
+    }
+    function distKey(km){
+        if(km <= 6)           return 't5';
+        if(km >= 8 && km <= 12) return 't10';
+        if(km >= 19 && km <= 22) return 'hm';
+        if(km >= 40)          return 'mar';
+        return null; // non standard (15K trail, 23.6K, etc.)
+    }
+    function nearestDistKey(km){
+        // For unusual distances, use nearest standard so we can still grade
+        if(km <= 7)           return 't5';
+        if(km <= 14)          return 't10';
+        if(km <= 30)          return 'hm';
+        return 'mar';
+    }
+    function classify(score){
+        if(score >= 90) return ['World Class','cls-world'];
+        if(score >= 80) return ['National Class','cls-national'];
+        if(score >= 70) return ['Regional Class','cls-regional'];
+        if(score >= 60) return ['Local Class','cls-local'];
+        return ['Amateur','cls-amateur'];
+    }
+
+    // Compute age-graded fields for one race given a DOB
+    function gradeRace(r, dob){
+        const age = ageAtDate(dob, r.date);
+        const standard = distKey(r.km) !== null;
+        const dk = distKey(r.km) || nearestDistKey(r.km);
+        const factor = interpFactor(AGE_FACTORS[dk], age);
+        const actualSec = perfToSec(r.perf);
+        // For non-standard distance, scale the open standard proportionally to keep score meaningful
+        let openStd = OPEN_STANDARDS[dk];
+        if(!standard){
+            // adjust OS proportionally by (r.km / standard-km-of-dk)
+            const refKm = {t5:5, t10:10, hm:21.0975, mar:42.195}[dk];
+            openStd = openStd * (r.km / refKm);
+        }
+        const agedSec = actualSec * factor;
+        const score = openStd / agedSec * 100;
+        return { age, factor, actualSec, agedSec, openStd, score, dk, standard };
+    }
+
+    // ── State ────────────────────────────────────────────────────────
+    let DOB = '1978-04-05';
+    let graded = []; // enriched race list
+    let sortKey = 'score';
+    let sortDir = -1; // descending
+
+    // ── Compute all ──────────────────────────────────────────────────
+    function computeAll(){
+        graded = ALL_RACES.map(r => ({ ...r, grade: gradeRace(r, DOB) }));
+        graded.sort((a,b) => b.grade.score - a.grade.score);
+    }
+
+    // ── Render: age display ─────────────────────────────────────────
+    function renderAgeDisplay(){
+        const today = new Date().toISOString().slice(0,10);
+        const age = ageAtDate(DOB, today);
+        const dobDate = new Date(DOB);
+        const dateFmt = dobDate.toLocaleDateString('fr-FR', { day:'2-digit', month:'short', year:'numeric' });
+        document.getElementById('age-display').textContent = `→ ${age} ans aujourd'hui (né le ${dateFmt})`;
+    }
+
+    // ── Render: KPIs ────────────────────────────────────────────────
+    function renderKPIs(){
+        const box = document.getElementById('kpi-grid');
+        const best = graded[0];
+        const countsByClass = { world:0, national:0, regional:0, local:0, amateur:0 };
+        graded.forEach(g => {
+            const s = g.grade.score;
+            if(s >= 90) countsByClass.world++;
+            else if(s >= 80) countsByClass.national++;
+            else if(s >= 70) countsByClass.regional++;
+            else if(s >= 60) countsByClass.local++;
+            else countsByClass.amateur++;
+        });
+        const avgScore = graded.reduce((s,g) => s + g.grade.score, 0) / graded.length;
+        const topScoreClass = classify(best.grade.score);
+
+        box.innerHTML = `
+            <div class="kpi-card" style="--k-color: #ffd700;">
+                <div class="kpi-icon">🏆</div>
+                <div class="kpi-val">${best.grade.score.toFixed(1)}%</div>
+                <div class="kpi-lbl">Meilleur score</div>
+                <div class="kpi-sub">${best.course.length > 30 ? best.course.slice(0,28)+'…' : best.course}<br>${DIST_LABELS[best.grade.dk]||'—'}</div>
+            </div>
+            <div class="kpi-card" style="--k-color: #00fff9;">
+                <div class="kpi-icon">📊</div>
+                <div class="kpi-val">${avgScore.toFixed(1)}%</div>
+                <div class="kpi-lbl">Moyenne</div>
+                <div class="kpi-sub">Sur ${graded.length} courses</div>
+            </div>
+            <div class="kpi-card" style="--k-color: #d6d9e0;">
+                <div class="kpi-icon">🥈</div>
+                <div class="kpi-val">${countsByClass.national}</div>
+                <div class="kpi-lbl">National Class</div>
+                <div class="kpi-sub">Scores ≥ 80 %</div>
+            </div>
+            <div class="kpi-card" style="--k-color: #cd7f32;">
+                <div class="kpi-icon">🥉</div>
+                <div class="kpi-val">${countsByClass.regional}</div>
+                <div class="kpi-lbl">Regional Class</div>
+                <div class="kpi-sub">Scores 70-80 %</div>
+            </div>
+            <div class="kpi-card" style="--k-color: #b347ff;">
+                <div class="kpi-icon">⏱️</div>
+                <div class="kpi-val">${secToPerf(best.grade.agedSec)}</div>
+                <div class="kpi-lbl">Best à 25 ans</div>
+                <div class="kpi-sub">${best.perf} × facteur ${best.grade.factor.toFixed(3)}</div>
+            </div>
+        `;
+    }
+
+    // ── Render: top 5 ──────────────────────────────────────────────
+    function renderTop5(){
+        const box = document.getElementById('top-list');
+        const top5 = graded.slice(0, 5);
+        box.innerHTML = top5.map((g, i) => {
+            const [cls, clsCss] = classify(g.grade.score);
+            const accent = g.grade.score >= 80 ? '#ffd700' : g.grade.score >= 70 ? '#cd7f32' : '#4da6ff';
+            return `
+                <div class="top-item" style="--item-accent:${accent};">
+                    <div class="rank">${i+1}</div>
+                    <div class="ti-score">${g.grade.score.toFixed(1)}% <span class="cls-badge ${clsCss}">${cls}</span></div>
+                    <div style="font-weight:800;color:#fff;margin-top:.5rem;font-size:.92rem;">${g.course}${g.record ? ' <span class="rec-star">★</span>' : ''}</div>
+                    <div class="ti-perf">${g.perf} <span style="font-size:.85rem;color:rgba(255,255,255,.55);font-weight:600;">· ${DIST_LABELS[g.grade.dk]||r.km+' km'}</span></div>
+                    <div class="ti-meta">${g.ville} · ${g.date} · ${g.grade.age} ans · classé ${g.classement}</div>
+                    <div class="ti-eq">→ Équivaut à ${secToPerf(g.grade.agedSec)} à 25 ans (facteur ${g.grade.factor.toFixed(3)})</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ── Render: best per distance ──────────────────────────────────
+    function renderPerDistance(){
+        const box = document.getElementById('dist-grid');
+        const best = {};
+        graded.forEach(g => {
+            if(!g.grade.standard) return;
+            const k = g.grade.dk;
+            if(!best[k] || g.grade.score > best[k].grade.score) best[k] = g;
+        });
+        const order = ['t5','t10','hm','mar'];
+        box.innerHTML = order.map(k => {
+            const g = best[k];
+            if(!g) return `<div class="dist-card"><div class="dist-title">${DIST_LABELS[k]}</div><div style="color:rgba(255,255,255,.3);">—</div></div>`;
+            const [cls, clsCss] = classify(g.grade.score);
+            const pct = Math.min(100, Math.max(0, g.grade.score));
+            return `
+                <div class="dist-card">
+                    <div class="dist-head">
+                        <div class="dist-title" style="color:${DIST_COLORS[k]};">${DIST_LABELS[k]}</div>
+                        <span class="cls-badge ${clsCss}">${cls}</span>
+                    </div>
+                    <div class="dist-perf">${g.perf}${g.record ? ' <span class="rec-star">★</span>' : ''}</div>
+                    <div class="dist-score" style="color:#ffd700;">${g.grade.score.toFixed(1)}%</div>
+                    <div class="dist-row"><span>${g.ville} · ${g.date.slice(0,4)}</span><span>${g.grade.age} ans</span></div>
+                    <div class="dist-row"><span>Record du monde</span><span style="color:#fff;">${secToPerf(OPEN_STANDARDS[k])}</span></div>
+                    <div class="dist-row"><span>À 25 ans</span><span style="color:#00fff9;">${secToPerf(g.grade.agedSec)}</span></div>
+                    <div class="dist-bar"><div class="dist-bar-fill"></div><div class="dist-bar-marker" style="left:${pct}%;"></div></div>
+                    <div class="dist-tick-legend"><span>0%</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100%</span></div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ── Render: scatter chart ──────────────────────────────────────
+    function renderScatter(){
+        const svg = document.getElementById('scatter');
+        svg.innerHTML = '';
+        const W = svg.clientWidth || 1000, H = 420;
+        svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+        const m = { l:40, r:20, t:20, b:40 };
+        const plotW = W - m.l - m.r, plotH = H - m.t - m.b;
+
+        // Sort chronologically for the plot (but keep score ranking elsewhere)
+        const chrono = [...graded].sort((a,b) => a.date.localeCompare(b.date));
+        const minDate = new Date(chrono[0].date).getTime();
+        const maxDate = new Date(chrono[chrono.length-1].date).getTime();
+        const scoreMin = 40, scoreMax = 100;
+        const xOf = d => m.l + ((new Date(d).getTime() - minDate) / (maxDate - minDate)) * plotW;
+        const yOf = s => m.t + (1 - (s - scoreMin) / (scoreMax - scoreMin)) * plotH;
+
+        // Gridlines at 60, 70, 80, 90
+        const tiers = [
+            {v:90, label:'World Class', color:'#ffd700'},
+            {v:80, label:'National Class', color:'#d6d9e0'},
+            {v:70, label:'Regional Class', color:'#cd7f32'},
+            {v:60, label:'Local Class', color:'#4da6ff'},
+        ];
+        tiers.forEach(t => {
+            const y = yOf(t.v);
+            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', m.l); line.setAttribute('x2', W - m.r);
+            line.setAttribute('y1', y); line.setAttribute('y2', y);
+            line.setAttribute('stroke', t.color); line.setAttribute('stroke-dasharray','3,4');
+            line.setAttribute('stroke-width','1'); line.setAttribute('opacity','.32');
+            svg.appendChild(line);
+            const lbl = document.createElementNS('http://www.w3.org/2000/svg','text');
+            lbl.setAttribute('x', W - m.r); lbl.setAttribute('y', y - 3);
+            lbl.setAttribute('text-anchor','end');
+            lbl.setAttribute('fill', t.color); lbl.setAttribute('font-size','10');
+            lbl.setAttribute('font-weight','800'); lbl.setAttribute('letter-spacing','1.5');
+            lbl.textContent = `${t.label} (${t.v}%)`;
+            svg.appendChild(lbl);
+        });
+
+        // Y-axis ticks
+        for(let s = scoreMin; s <= scoreMax; s += 10){
+            const y = yOf(s);
+            const tick = document.createElementNS('http://www.w3.org/2000/svg','text');
+            tick.setAttribute('x', m.l - 6); tick.setAttribute('y', y + 3);
+            tick.setAttribute('text-anchor','end'); tick.setAttribute('fill','rgba(255,255,255,0.45)');
+            tick.setAttribute('font-size','9'); tick.setAttribute('font-family','ui-monospace, monospace');
+            tick.textContent = s + '%';
+            svg.appendChild(tick);
+        }
+
+        // X-axis year labels
+        const minY = new Date(chrono[0].date).getFullYear();
+        const maxY = new Date(chrono[chrono.length-1].date).getFullYear();
+        for(let y = minY; y <= maxY; y++){
+            const x = xOf(`${y}-07-01`);
+            const tick = document.createElementNS('http://www.w3.org/2000/svg','text');
+            tick.setAttribute('x', x); tick.setAttribute('y', H - m.b + 20);
+            tick.setAttribute('text-anchor','middle'); tick.setAttribute('fill','rgba(255,255,255,0.45)');
+            tick.setAttribute('font-size','10'); tick.setAttribute('font-weight','700');
+            tick.textContent = y;
+            svg.appendChild(tick);
+        }
+
+        // Trend line: rolling average of last 5 races
+        const trendPts = [];
+        for(let i = 0; i < chrono.length; i++){
+            const window = chrono.slice(Math.max(0,i-4), i+1);
+            const avg = window.reduce((s,g) => s + g.grade.score, 0) / window.length;
+            trendPts.push([xOf(chrono[i].date), yOf(avg)]);
+        }
+        const trendPath = document.createElementNS('http://www.w3.org/2000/svg','path');
+        trendPath.setAttribute('d', 'M' + trendPts.map(p => p.join(',')).join(' L'));
+        trendPath.setAttribute('fill','none');
+        trendPath.setAttribute('stroke','rgba(255,255,255,0.35)');
+        trendPath.setAttribute('stroke-width','2');
+        trendPath.setAttribute('stroke-dasharray','5,3');
+        svg.appendChild(trendPath);
+
+        // Data points
+        chrono.forEach(g => {
+            const cx = xOf(g.date), cy = yOf(g.grade.score);
+            const color = g.grade.standard ? DIST_COLORS[g.grade.dk] : DIST_COLORS.other;
+            const r = g.record ? 7 : 5;
+            if(g.record){
+                const halo = document.createElementNS('http://www.w3.org/2000/svg','circle');
+                halo.setAttribute('cx', cx); halo.setAttribute('cy', cy);
+                halo.setAttribute('r', 10); halo.setAttribute('fill','none');
+                halo.setAttribute('stroke','#ffd700'); halo.setAttribute('stroke-width','1.5');
+                halo.setAttribute('opacity','.6');
+                svg.appendChild(halo);
+            }
+            const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+            c.setAttribute('cx', cx); c.setAttribute('cy', cy);
+            c.setAttribute('r', r); c.setAttribute('fill', g.record ? '#ffd700' : color);
+            c.setAttribute('stroke', '#0d0f17'); c.setAttribute('stroke-width','1.5');
+            c.setAttribute('opacity', g.grade.standard ? '.95' : '.65');
+            c.style.cursor = 'pointer';
+            c.addEventListener('click', () => { if(g.strava) window.open(g.strava,'_blank'); });
+            // Simple SVG title for hover
+            const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+            title.textContent = `${g.date} · ${g.course} · ${g.perf} (${g.grade.score.toFixed(1)}%)`;
+            c.appendChild(title);
+            svg.appendChild(c);
+        });
+    }
+
+    // ── Render: full table ─────────────────────────────────────────
+    function renderTable(){
+        const sortFns = {
+            score:  (a,b) => a.grade.score - b.grade.score,
+            class:  (a,b) => a.grade.score - b.grade.score,
+            date:   (a,b) => a.date.localeCompare(b.date),
+            course: (a,b) => a.course.localeCompare(b.course),
+            km:     (a,b) => a.km - b.km,
+            age:    (a,b) => a.grade.age - b.grade.age,
+            perf:   (a,b) => perfToSec(a.perf) - perfToSec(b.perf),
+            aged:   (a,b) => a.grade.agedSec - b.grade.agedSec,
+        };
+        const sorted = [...graded].sort((a,b) => sortDir * sortFns[sortKey](a,b));
+        const tb = document.getElementById('age-tbody');
+        tb.innerHTML = sorted.map(g => {
+            const [cls, clsCss] = classify(g.grade.score);
+            const scoreColor = g.grade.score >= 80 ? '#d6d9e0'
+                            : g.grade.score >= 70 ? '#cd7f32'
+                            : g.grade.score >= 60 ? '#4da6ff' : 'rgba(255,255,255,.5)';
+            return `
+                <tr>
+                    <td class="score num" style="color:${scoreColor};">${g.grade.score.toFixed(1)}%</td>
+                    <td><span class="cls-badge ${clsCss}">${cls}</span></td>
+                    <td class="num" style="font-family:ui-monospace,monospace;color:rgba(255,255,255,.65);">${g.date}</td>
+                    <td>${g.record ? '<span class="rec-star">★</span> ' : ''}${g.course}${g.grade.standard ? '' : ' <span style="color:rgba(255,255,255,.35);font-size:.7rem;">(${DIST_LABELS[g.grade.dk]})</span>'}</td>
+                    <td class="num">${g.km}</td>
+                    <td class="num">${g.grade.age}</td>
+                    <td class="num" style="font-weight:700;">${g.perf}</td>
+                    <td class="num" style="color:#00fff9;">${secToPerf(g.grade.agedSec)}</td>
+                    <td>${g.strava ? `<a href="${g.strava}" target="_blank">↗</a>` : ''}</td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    // ── Render: projection ─────────────────────────────────────────
+    function renderProjection(){
+        const box = document.getElementById('proj-grid');
+        // Use best score as baseline, and show what time it would correspond to at future ages
+        const best = graded[0];
+        const ages = [50, 55, 60, 65, 70, 75];
+        const distK = best.grade.dk;
+        const openStd = OPEN_STANDARDS[distK];
+        box.innerHTML = `
+            <div class="proj-card" style="grid-column: 1 / -1; background: rgba(255,215,0,.08); border-color: rgba(255,215,0,.3);">
+                <div class="proj-age">BASE · ${best.grade.age} ans</div>
+                <div class="proj-time">${best.perf}</div>
+                <div class="proj-sub">${DIST_LABELS[distK]} à Milan, Luxembourg, etc. · score ${best.grade.score.toFixed(1)}%</div>
+            </div>
+        ` + ages.filter(a => a > best.grade.age).map(a => {
+            const f = interpFactor(AGE_FACTORS[distK], a);
+            // If maintaining same score, time at age A: Score% = OS / (time × factor) × 100
+            //   → time = OS / (score/100 × factor)
+            const time = openStd / (best.grade.score/100 * f);
+            return `
+                <div class="proj-card">
+                    <div class="proj-age">À ${a} ans</div>
+                    <div class="proj-time">${secToPerf(time)}</div>
+                    <div class="proj-sub">facteur ${f.toFixed(3)} · même score maintenu</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ── All together ───────────────────────────────────────────────
+    function render(){
+        renderAgeDisplay();
+        computeAll();
+        renderKPIs();
+        renderTop5();
+        renderPerDistance();
+        renderScatter();
+        renderTable();
+        renderProjection();
+    }
+
+    // ── DOB picker change ─────────────────────────────────────────
+    document.getElementById('dob').addEventListener('change', e => {
+        if(!e.target.value) return;
+        DOB = e.target.value;
+        render();
+    });
+
+    // ── Table sorting ──────────────────────────────────────────────
+    document.querySelectorAll('.age-table th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+            const k = th.dataset.sort;
+            if(sortKey === k) sortDir = -sortDir;
+            else { sortKey = k; sortDir = -1; }
+            renderTable();
+        });
+    });
+
+    // ── Resize handler for scatter ────────────────────────────────
+    window.addEventListener('resize', () => renderScatter());
+
+    // ── Init ──────────────────────────────────────────────────────
+    render();
+</script>
+</body>
+</html>
