@@ -287,24 +287,33 @@
   .card-meteo{grid-column:span 4;--card-accent:var(--accent-blue)}
   .card-galerie{grid-column:span 4;--card-accent:var(--accent)}
   .card-wrapped{grid-column:span 4;--card-accent:var(--accent-hot);background:linear-gradient(135deg,#1a0f12,var(--bg-card))}
-  .card-adn{grid-column:span 12;--card-accent:#b347ff;background:linear-gradient(135deg,#14021f 0%,var(--bg-card) 40%,#0f001a 100%);position:relative;overflow:hidden}
+  .card-adn{grid-column:span 4;--card-accent:#b347ff;background:linear-gradient(135deg,#14021f 0%,var(--bg-card) 60%,#0f001a 100%);position:relative;overflow:hidden}
   .card-adn::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
-      radial-gradient(ellipse at 85% 40%, rgba(255,0,212,.14) 0%, transparent 55%),
-      radial-gradient(ellipse at 15% 80%, rgba(0,255,249,.10) 0%, transparent 55%);
+      radial-gradient(ellipse at 85% 40%, rgba(255,0,212,.14) 0%, transparent 60%),
+      radial-gradient(ellipse at 15% 80%, rgba(0,255,249,.10) 0%, transparent 60%);
   }
   .card-adn .card-title{background:linear-gradient(90deg,#00fff9,#b347ff,#ff00d4);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-adn .card-icon{filter:drop-shadow(0 0 12px rgba(179,71,255,.5))}
-  .card-age-grading{grid-column:span 12;--card-accent:#ffd700;background:linear-gradient(135deg,#1a1405 0%,var(--bg-card) 40%,#0a0903 100%);position:relative;overflow:hidden}
+  .card-age-grading{grid-column:span 4;--card-accent:#ffd700;background:linear-gradient(135deg,#1a1405 0%,var(--bg-card) 60%,#0a0903 100%);position:relative;overflow:hidden}
   .card-age-grading::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
-      radial-gradient(ellipse at 80% 30%, rgba(255,215,0,.12) 0%, transparent 55%),
-      radial-gradient(ellipse at 20% 75%, rgba(255,179,71,.08) 0%, transparent 55%);
+      radial-gradient(ellipse at 80% 30%, rgba(255,215,0,.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 75%, rgba(255,179,71,.08) 0%, transparent 60%);
   }
   .card-age-grading .card-title{background:linear-gradient(90deg,#ffd700,#ffb347,#ff9500);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-age-grading .card-icon{filter:drop-shadow(0 0 12px rgba(255,215,0,.5))}
+  .card-trophees{grid-column:span 4;--card-accent:#ffae00;background:linear-gradient(135deg,#1d1207 0%,var(--bg-card) 60%,#0a0703 100%);position:relative;overflow:hidden}
+  .card-trophees::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 70% 25%, rgba(255,174,0,.14) 0%, transparent 60%),
+      radial-gradient(ellipse at 25% 80%, rgba(255,107,53,.10) 0%, transparent 60%);
+  }
+  .card-trophees .card-title{background:linear-gradient(90deg,#ffd700,#ff8800,#ff006e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card-trophees .card-icon{filter:drop-shadow(0 0 12px rgba(255,174,0,.55))}
 
   /* Featured card visual */
   .card-timeline .card-viz{
@@ -368,6 +377,7 @@
     .card-elite,.card-meteo,.card-galerie,.card-wrapped{grid-column:span 6}
     .card-adn{grid-column:span 6}
     .card-age-grading{grid-column:span 6}
+    .card-trophees{grid-column:span 6}
     .recent{padding:48px 20px}
     .race{grid-template-columns:1fr auto;gap:12px}
     .race-date,.race-dist{display:none}
@@ -389,7 +399,7 @@
     .card{min-height:auto;padding:22px}
     .card-progression,.card-radar,.card-comparaison,
     .card-timeline,.card-carte,
-    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading{grid-column:span 1}
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees{grid-column:span 1}
     .card-title{font-size:22px}
     .card-icon{font-size:22px;margin-bottom:12px}
     .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
@@ -510,7 +520,7 @@
 <section class="explorer">
   <div class="section-head">
     <h2 class="section-title">Explorer</h2>
-    <div class="section-count">11 VUES · TOUS LES ANGLES</div>
+    <div class="section-count">12 VUES · TOUS LES ANGLES</div>
   </div>
 
   <div class="grid">
@@ -622,7 +632,7 @@
       <div>
         <div class="card-icon">🧬</div>
         <div class="card-title">Running<br/>DNA</div>
-        <div class="card-desc">Ta signature unique de coureur. Une double hélice procédurale générée à partir de tes 52 courses.</div>
+        <div class="card-desc">Ta signature unique de coureur. Double hélice procédurale issue de tes 52 courses.</div>
       </div>
       <div class="card-preview">Découvrir ton ADN</div>
     </a>
@@ -632,9 +642,19 @@
       <div>
         <div class="card-icon">⚖️</div>
         <div class="card-title">Age<br/>Grading</div>
-        <div class="card-desc">Tes performances comparées au standard mondial WMA. Ce que tes temps vaudraient à 25 ou 30 ans, et ta cote V2H à 48 ans.</div>
+        <div class="card-desc">Tes perfs au standard mondial WMA. Tes temps équivalents à 25 ou 30 ans.</div>
       </div>
       <div class="card-preview">Voir tes équivalences</div>
+    </a>
+
+    <a class="card card-trophees" href="trophees.html">
+      <span class="card-num">12</span>
+      <div>
+        <div class="card-icon">🏆</div>
+        <div class="card-title">Mur des<br/>Trophées</div>
+        <div class="card-desc">52 dossards en collection + une trentaine de quêtes : sub-3h, 4 pays, top 10…</div>
+      </div>
+      <div class="card-preview">Voir la collection</div>
     </a>
 
   </div>

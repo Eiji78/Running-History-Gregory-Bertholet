@@ -1,7 +1,65 @@
 /* ═══════════════════════════════════════════════════════════════════════
    PRO-UI.CSS — micro-détails transverses
-   Breadcrumb · loader top · view transitions · hover races
+   Breadcrumb · loader top · view transitions · hover races · site-nav
    ═══════════════════════════════════════════════════════════════════ */
+
+/* ── SITE-NAV unifié (toutes les pages — calé sur timeline.html) ─────── */
+nav.site-nav {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 940 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: center !important;
+    gap: 0.3rem !important;
+    margin: 0 0 2rem !important;
+    padding: 0.25rem 0.5rem !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    background: rgba(10, 10, 18, 0.72) !important;
+    backdrop-filter: blur(16px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}
+nav.site-nav::-webkit-scrollbar { display: none !important; }
+nav.site-nav a {
+    flex-shrink: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.3rem !important;
+    padding: 0.32rem 0.55rem !important;
+    border-radius: 10px !important;
+    font-family: inherit !important;
+    font-size: 0.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-decoration: none !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+    background: rgba(255, 255, 255, 0.06) !important;
+    color: rgba(255, 255, 255, 0.75) !important;
+    transition: all 0.2s !important;
+    white-space: nowrap !important;
+    text-transform: none !important;
+}
+nav.site-nav a:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    color: #fff !important;
+}
+nav.site-nav a.active {
+    border-color: #00fff9 !important;
+    color: #00fff9 !important;
+    background: rgba(0, 255, 249, 0.10) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 249, 0.25) !important;
+}
+@media (max-width: 600px) {
+    nav.site-nav {
+        justify-content: flex-start !important;
+        padding: 0.25rem 1rem 0.25rem 3.8rem !important;
+    }
+}
+
 
 /* ── View Transitions (navigation douce Chrome/Edge) ─────────────────── */
 @view-transition { navigation: auto; }
@@ -325,53 +383,16 @@ html[data-theme="light"] .pro-theme-toggle {
    affiche un bouton hamburger qui ouvre un panneau plein écran.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* Sticky + backdrop blur */
+/* Sticky + backdrop blur (les valeurs précises sont dans le bloc nav.site-nav en tête de fichier) */
 .site-nav {
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 940 !important;
-    background: rgba(10, 10, 18, 0.72) !important;
-    backdrop-filter: blur(16px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
-    padding-top: 0.55rem !important;
-    padding-bottom: 0.55rem !important;
-    margin-bottom: 2rem !important;
     transition: box-shadow .25s ease-out, background .25s ease-out;
 }
 .site-nav.pro-nav-scrolled {
-    box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.55);
-    background: rgba(10, 10, 18, 0.88);
+    box-shadow: 0 6px 22px -8px rgba(0, 0, 0, 0.55) !important;
+    background: rgba(10, 10, 18, 0.88) !important;
 }
 
-/* Surlignage .active plus marqué : underline néon animé + glow */
-.site-nav a.active {
-    position: relative;
-    border-color: var(--neon-cyan, #00fff9) !important;
-    color: #00fff9 !important;
-    background: linear-gradient(180deg, rgba(0,255,249,0.18), rgba(188,19,254,0.12)) !important;
-    box-shadow:
-        0 0 16px rgba(0,255,249,0.45),
-        inset 0 0 12px rgba(0,255,249,0.12) !important;
-    text-shadow: 0 0 8px rgba(0,255,249,0.45);
-    transform: translateY(-1px);
-}
-.site-nav a.active::after {
-    content: '';
-    position: absolute;
-    left: 14%;
-    right: 14%;
-    bottom: -4px;
-    height: 2px;
-    border-radius: 2px;
-    background: linear-gradient(90deg, transparent, #00fff9 20%, #bc13fe 80%, transparent);
-    box-shadow: 0 0 8px rgba(0,255,249,0.8);
-    animation: pro-active-glow 2.4s ease-in-out infinite;
-}
-@keyframes pro-active-glow {
-    0%, 100% { opacity: 0.85; filter: brightness(1); }
-    50%      { opacity: 1;    filter: brightness(1.25); }
-}
+/* État .active : style timeline, simple et cohérent (cf. nav.site-nav a.active en tête) */
 
 /* Hamburger button (invisible par défaut, visible < 768px via @media) */
 .pro-hamburger {
@@ -513,7 +534,6 @@ body.pro-mobile-nav-open {
 
 /* En mode reduced-motion */
 @media (prefers-reduced-motion: reduce) {
-    .site-nav a.active::after { animation: none; }
     .pro-mobile-nav { transition: opacity .05s, transform .05s; }
     .pro-hamburger .pro-ham-bars span { transition: none; }
 }
