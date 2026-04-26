@@ -47,7 +47,7 @@
             font-family: 'Space Grotesk', sans-serif;
             background: #0a0a0f;
             color: white;
-            overflow-x: hidden;
+            overflow-x: clip;
         }
 
         .animated-bg {
@@ -319,7 +319,7 @@
         /* ── MOBILE RESPONSIVE ─────────────────────────────────────── */
         @media (max-width: 768px) {
             .container { padding: 0 1rem; }
-            body { overflow-x: hidden; }
+            body { overflow-x: clip; }
             .main-title { font-size: 1.4rem !important; letter-spacing: 0.02em !important; }
             .glass-card { border-radius: 16px; }
             .back-btn { font-size: 0.7rem; padding: 0.45rem 0.9rem; letter-spacing: 0.04em; }
@@ -468,6 +468,7 @@
     <a href="wrapped.html">🎬 WRAPPED</a>
     <a href="adn.html">🧬 ADN</a>
     <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="trophees.html">🏆 TROPHÉES</a>
 </nav>
     <div class="animated-bg"></div>
     <div class="grain"></div>
@@ -485,7 +486,7 @@
 
         <!-- Header -->
         <div class="text-center mb-14 fade-in">
-            <h1 class="main-title mb-3">TOI vs L'ÉLITE MONDIALE</h1>
+            <h1 class="main-title mb-3">👑 TOI vs L'ÉLITE MONDIALE</h1>
             <p style="font-family:'Montserrat',sans-serif;font-size:0.9rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">RECORDS FRANCE · EUROPE · MONDE — ACTUALISÉS 2026</p>
         </div>
             <style>
@@ -849,9 +850,9 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5 mb-8">
                 <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(255,215,0,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🌍 RECORD MONDE</div>
-                    <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">2h00'35"</div>
-                    <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">K. Kiptum 🇰🇪</div>
-                    <div class="info-pill">Chicago · oct. 2023</div>
+                    <div class="speed-number" style="background:linear-gradient(135deg,#ffd700,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1.5rem;">1h59'30"</div>
+                    <div class="text-xs mt-2" style="color:rgba(255,215,0,0.7);font-weight:600;">S. Sawe 🇰🇪 · SUB-2H</div>
+                    <div class="info-pill">Londres · 26 avr. 2026</div>
                 </div>
                 <div class="glass-card p-5 text-center stamp-card" style="border-color:rgba(0,200,255,0.2);">
                     <div class="text-xs font-bold tracking-widest mb-2" style="color:rgba(255,255,255,0.4);">🇪🇺 RECORD EUROPE</div>
@@ -878,31 +879,31 @@
                 <div class="space-y-5">
                     <div>
                         <div class="flex justify-between items-center mb-2">
-                            <div class="flex items-center gap-2"><span class="flag">🌍</span><span class="font-bold text-sm" style="color:#ffd700;">Record Monde — K. Kiptum</span></div>
-                            <span class="text-sm font-bold" style="color:#ffd700;">2h00'35" — 2'51"/km</span>
+                            <div class="flex items-center gap-2"><span class="flag">🌍</span><span class="font-bold text-sm" style="color:#ffd700;">Record Monde — S. Sawe</span></div>
+                            <span class="text-sm font-bold" style="color:#ffd700;">1h59'30" — 2'50"/km</span>
                         </div>
                         <div class="compare-bar"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,#ffd700,#ff8c00);"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex items-center gap-2"><span class="flag">🇪🇺</span><span class="font-bold text-sm" style="color:#00c8ff;">Record Europe — B. Abdi</span></div>
-                            <span class="text-sm font-bold" style="color:#00c8ff;">2h03'36" — 2'56"/km (+2.9%)</span>
+                            <span class="text-sm font-bold" style="color:#00c8ff;">2h03'36" — 2'56"/km (+3.4%)</span>
                         </div>
-                        <div class="compare-bar"><div class="bar-fill" style="width:97.2%;background:linear-gradient(90deg,#0044cc,#00c8ff);"></div></div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:96.7%;background:linear-gradient(90deg,#0044cc,#00c8ff);"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex items-center gap-2"><span class="flag">🇫🇷</span><span class="font-bold text-sm" style="color:rgba(0,255,136,0.8);">Record France — M. Amdouni</span></div>
-                            <span class="text-sm font-bold" style="color:rgba(0,255,136,0.7);">2h03'47" — 2'56"/km (+3.0%)</span>
+                            <span class="text-sm font-bold" style="color:rgba(0,255,136,0.7);">2h03'47" — 2'56"/km (+3.6%)</span>
                         </div>
-                        <div class="compare-bar"><div class="bar-fill" style="width:97.0%;background:linear-gradient(90deg,rgba(0,200,100,0.8),rgba(0,255,136,0.8));"></div></div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:96.5%;background:linear-gradient(90deg,rgba(0,200,100,0.8),rgba(0,255,136,0.8));"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex items-center gap-2"><span class="flag">🏃</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.6);">Elite amateur (&lt;2h30)</span></div>
-                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.5);">2h30'00" — 3'33"/km (+24.5%)</span>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.5);">2h30'00" — 3'33"/km (+25.5%)</span>
                         </div>
-                        <div class="compare-bar"><div class="bar-fill" style="width:80.3%;background:rgba(255,255,255,0.25);"></div></div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:79.7%;background:rgba(255,255,255,0.25);"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-2">
@@ -911,24 +912,24 @@
                                 <span class="font-bold text-sm" style="color:#00fff9;">Greg — Record Personnel</span>
                                 <span class="tier-badge" style="background:rgba(0,255,249,0.15);border:1px solid rgba(0,255,249,0.4);color:#00fff9;">TOP 7% COURSE</span>
                             </div>
-                            <span class="text-sm font-bold" style="color:#00fff9;">2h59'51" — 4'15"/km (+49.1%)</span>
+                            <span class="text-sm font-bold" style="color:#00fff9;">2h59'51" — 4'15"/km (+50.5%)</span>
                         </div>
-                        <div class="compare-bar"><div class="bar-fill" style="width:67.1%;background:linear-gradient(90deg,rgba(0,255,249,0.8),rgba(188,19,254,0.8));"></div></div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:66.4%;background:linear-gradient(90deg,rgba(0,255,249,0.8),rgba(188,19,254,0.8));"></div></div>
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-2">
                             <div class="flex items-center gap-2"><span class="flag">👤</span><span class="font-bold text-sm" style="color:rgba(255,255,255,0.35);">Runner amateur moyen (4h13)</span></div>
-                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.3);">4h13'00" — 5'59"/km (+110%)</span>
+                            <span class="text-sm font-bold" style="color:rgba(255,255,255,0.3);">4h13'00" — 5'59"/km (+112%)</span>
                         </div>
-                        <div class="compare-bar"><div class="bar-fill" style="width:47.7%;background:rgba(255,255,255,0.1);"></div></div>
+                        <div class="compare-bar"><div class="bar-fill" style="width:47.2%;background:rgba(255,255,255,0.1);"></div></div>
                     </div>
                 </div>
 
                 <div class="mt-8 grid grid-cols-3 gap-4">
                     <div class="p-4 text-center" style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.15);border-radius:14px;">
                         <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(255,215,0,0.5);">ÉCART vs MONDE</div>
-                        <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:1.2rem;">+59'16"</div>
-                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">3 556 secondes</div>
+                        <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;font-size:1.2rem;">+1h00'21"</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">3 621 secondes</div>
                     </div>
                     <div class="p-4 text-center" style="background:rgba(0,200,255,0.05);border:1px solid rgba(0,200,255,0.15);border-radius:14px;">
                         <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,200,255,0.5);">ÉCART vs EUROPE</div>
@@ -938,7 +939,7 @@
                     <div class="p-4 text-center" style="background:rgba(0,255,249,0.05);border:1px solid rgba(0,255,249,0.2);border-radius:14px;">
                         <div class="text-xs font-bold tracking-widest mb-1" style="color:rgba(0,255,249,0.5);">TON ALLURE</div>
                         <div class="font-bold" style="color:#00fff9;font-family:'Orbitron',sans-serif;font-size:1.2rem;">4'15"/km</div>
-                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">vs 2'51" Monde</div>
+                        <div class="text-xs mt-1" style="color:rgba(255,255,255,0.3);">vs 2'50" Monde</div>
                     </div>
                 </div>
             </div>
@@ -947,8 +948,8 @@
                 <h3 class="text-lg font-bold mb-6 tracking-wider" style="color:var(--neon-gold);">TABLEAU DE RÉFÉRENCE — MARATHON</h3>
                 <div class="podium-row" style="background:linear-gradient(90deg,rgba(255,215,0,0.08),transparent);border-color:rgba(255,215,0,0.3);">
                     <div class="rank-num" style="color:#ffd700;">🥇</div>
-                    <div><div class="font-bold text-sm">Kelvin Kiptum <span class="flag">🇰🇪</span> <span style="font-size:0.65rem;color:rgba(255,215,0,0.6);letter-spacing:0.1em;">RECORD MONDE</span></div><div class="info-pill">Chicago · 8 oct. 2023 (†)</div></div>
-                    <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;">2h00'35"</div>
+                    <div><div class="font-bold text-sm">Sabastian Sawe <span class="flag">🇰🇪</span> <span style="font-size:0.65rem;color:rgba(255,215,0,0.6);letter-spacing:0.1em;">RECORD MONDE — SUB-2H</span></div><div class="info-pill">Londres · 26 avr. 2026</div></div>
+                    <div class="font-bold" style="color:#ffd700;font-family:'Orbitron',sans-serif;">1h59'30"</div>
                 </div>
                 <div class="podium-row" style="background:linear-gradient(90deg,rgba(0,200,255,0.06),transparent);border-color:rgba(0,200,255,0.2);">
                     <div class="rank-num" style="color:#00c8ff;">🥈</div>
@@ -995,7 +996,7 @@
                     <div class="text-sm" style="color:rgba(255,255,255,0.6);line-height:1.9;">
                         Sur le marathon, ton record de <span style="color:#00fff9;font-weight:700;">2h59'51"</span> à Milan te place dans le <span style="color:#00fff9;font-weight:700;">top 7%</span> des finishers. 
                         Tu as franchi le mur symbolique du <span style="color:#ffd700;font-weight:700;">sub-3h</span> — une barrière que seule une minorité de marathoniens atteint.
-                        L'écart avec le record du monde (<span style="color:#ffd700;font-weight:700;">2h00'35"</span>) est de <span style="color:#ffd700;font-weight:700;">59 minutes</span>, 
+                        L'écart avec le record du monde (<span style="color:#ffd700;font-weight:700;">1h59'30"</span> — S. Sawe, Londres 26 avr. 2026, première barrière des 2h franchie) est de <span style="color:#ffd700;font-weight:700;">1h00 min</span>,
                         mais tu cours <span style="color:var(--neon-green);font-weight:700;">1h13 plus vite</span> que la moyenne des runners amateurs (4h13). 
                         Les athlètes élites mondiaux courent à <span style="color:#ffd700;font-weight:700;">21+ km/h</span> en moyenne — toi, tu maintiens <span style="color:#00fff9;font-weight:700;">~14 km/h</span> pendant 42 km : une performance de haut niveau amateur.
                     </div>

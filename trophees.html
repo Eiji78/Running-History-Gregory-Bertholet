@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏆 Mur des Trophées — Greg</title>
+<meta name="description" content="Mur des dossards et quêtes débloquées : 52 courses, 4 pays, sub-3h marathon, semi sous 1:25, podiums et achievements."/>
+<meta name="author" content="Gregory Bertholet"/>
+<meta name="theme-color" content="#0a0a0b">
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/trophees.html"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cyan:#00fff9;--purple:#bc13fe;--pink:#ff006e;--orange:#ff6b35;
+  --green:#00ff88;--gold:#ffd700;--silver:#d6d9e0;--bronze:#cd7f32;
+  --red:#ff3344;--blue:#4da6ff;--bg:#07070e;
+}
+html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-serif;color:#fff;overflow-x:clip;}
+
+.animated-bg{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at top,#1f1308 0%,#07070e 55%);}
+.animated-bg::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;
+  background:radial-gradient(circle at 20% 50%,rgba(255,215,0,.10) 0%,transparent 50%),
+             radial-gradient(circle at 80% 80%,rgba(255,107,53,.08) 0%,transparent 50%);
+  animation:rot 22s linear infinite;}
+@keyframes rot{to{transform:rotate(360deg);}}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.neon-border{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;
+  background:linear-gradient(90deg,var(--gold),var(--orange),var(--pink),var(--purple),var(--cyan),var(--gold));
+  background-size:200%;animation:slide 5s linear infinite;box-shadow:0 0 12px rgba(255,215,0,.6);}
+@keyframes slide{to{background-position:-200% 0;}}
+
+.wrap{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:0 1.5rem 4rem;}
+
+/* ── NAV ── */
+.site-nav{position:sticky;top:0;z-index:940;display:flex;flex-wrap:nowrap;justify-content:center;gap:.35rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:.5rem 3.5rem;
+  background:rgba(7,7,14,.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06);}
+.site-nav::-webkit-scrollbar{display:none;}
+.site-nav a{flex-shrink:0;display:inline-flex;align-items:center;gap:.25rem;
+  padding:.3rem .55rem;border-radius:10px;font-size:.65rem;font-weight:700;
+  letter-spacing:.03em;text-decoration:none;
+  border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.75);transition:all .2s;white-space:nowrap;font-family:'Barlow Condensed',sans-serif;}
+.site-nav a:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff;}
+.site-nav a.active{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.1);box-shadow:0 0 12px rgba(255,215,0,.25);}
+@media(max-width:600px){.site-nav{justify-content:flex-start;padding:.5rem 1rem .5rem 3.5rem;}}
+
+/* ── HEADER ── */
+.header{text-align:center;padding:3rem 0 1.5rem;}
+.page-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:900;
+  letter-spacing:.06em;
+  background:linear-gradient(135deg,var(--gold),var(--orange),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 18px rgba(255,215,0,.55)) drop-shadow(0 0 40px rgba(255,107,53,.3));margin-bottom:.4rem;
+  text-align:center;display:block;}
+.page-sub{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;letter-spacing:.25em;
+  color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:1.5rem;}
+
+/* ── STATS BANNER ── */
+.stats-banner{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem 2.4rem;margin:0 auto 2rem;
+  padding:1.2rem 1.5rem;border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,107,53,.05));
+  border:1px solid rgba(255,215,0,.18);backdrop-filter:blur(8px);max-width:1100px;}
+.stat-item{text-align:center;min-width:80px;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.3rem;}
+
+/* ── TABS ── */
+.view-tabs{display:flex;justify-content:center;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+.view-tab{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;
+  letter-spacing:.12em;padding:.6rem 1.4rem;border-radius:11px;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.5);transition:all .25s;text-transform:uppercase;}
+.view-tab:hover{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.85);}
+.view-tab.active{border-color:var(--gold);background:rgba(255,215,0,.12);color:var(--gold);
+  box-shadow:0 0 18px rgba(255,215,0,.25);}
+
+/* ── FILTERS ── */
+.filter-section{display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;margin-bottom:2rem;}
+.filter-group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
+.filter-sep{width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 .2rem;}
+.f-btn{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.07em;padding:.32rem .8rem;border-radius:9px;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.4);transition:all .22s;white-space:nowrap;}
+.f-btn:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.8);}
+.f-btn.active{color:#fff;}
+.f-btn.fy.active{border-color:rgba(0,255,249,.6);background:rgba(0,255,249,.1);color:var(--cyan);}
+.f-btn.fd-all.active{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08);color:#fff;}
+.f-btn.fd-5k.active{border-color:#ff6b35;background:rgba(255,107,53,.1);color:#ff8855;}
+.f-btn.fd-10k.active{border-color:var(--green);background:rgba(0,255,136,.1);color:var(--green);}
+.f-btn.fd-semi.active{border-color:var(--cyan);background:rgba(0,255,249,.1);color:var(--cyan);}
+.f-btn.fd-mar.active{border-color:#cc66ff;background:rgba(188,19,254,.1);color:#cc66ff;}
+.f-btn.fd-pr.active{border-color:var(--gold);background:rgba(255,215,0,.1);color:var(--gold);}
+
+/* ── BIB GRID ── */
+.bib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:1.1rem;}
+@media(max-width:520px){.bib-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.8rem;}}
+
+/* ── BIB CARD ── */
+.bib{
+  position:relative;border-radius:14px;overflow:hidden;cursor:pointer;
+  background:linear-gradient(160deg,#fafafa 0%,#e6e6e6 100%);
+  color:#0a0a0b;
+  border:2px solid rgba(255,255,255,.85);
+  box-shadow:0 6px 20px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.6);
+  transition:transform .25s cubic-bezier(.23,1,.32,1),box-shadow .3s,filter .3s;
+  display:flex;flex-direction:column;
+  /* perforated holes top */
+  --perfH:8px;
+}
+.bib::before,.bib::after{content:'';position:absolute;left:0;right:0;height:var(--perfH);
+  background-image:radial-gradient(circle,#0a0a0b 0,#0a0a0b 3px,transparent 3.5px);
+  background-size:18px var(--perfH);background-repeat:repeat-x;background-position:center;
+  opacity:.2;pointer-events:none;}
+.bib::before{top:42px;}
+.bib::after{bottom:46px;}
+
+.bib:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 14px 40px rgba(0,0,0,.55),0 0 30px rgba(255,215,0,.2);}
+.bib.locked{filter:grayscale(.85) brightness(.55);cursor:default;}
+.bib.locked:hover{transform:none;}
+
+.bib-top{display:flex;justify-content:space-between;align-items:center;
+  padding:.55rem .85rem;background:#0a0a0b;color:#fff;
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;letter-spacing:.18em;
+  font-size:.65rem;text-transform:uppercase;}
+.bib-top .race-flag{font-size:1rem;letter-spacing:0;}
+.bib-top .race-yr{color:rgba(255,255,255,.7);}
+
+.bib-body{padding:1.4rem 1rem 1rem;text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:.4rem;}
+.bib-event{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.05em;
+  text-transform:uppercase;color:#222;line-height:1.2;max-width:100%;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.bib-num{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(2.6rem,7vw,3.6rem);
+  line-height:.95;letter-spacing:.02em;
+  color:#0a0a0b;text-shadow:0 1px 0 rgba(255,255,255,.4);margin:.1rem 0;}
+.bib-distance{font-family:'Orbitron',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.18em;
+  padding:.2rem .55rem;border-radius:999px;color:#fff;}
+.bib-bottom{padding:.7rem .85rem;background:#0a0a0b;color:#fff;
+  display:flex;justify-content:space-between;align-items:center;gap:.3rem;
+  font-family:'Orbitron',sans-serif;font-weight:700;font-size:.78rem;}
+.bib-bottom .b-loc{font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:.65rem;
+  letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.65);
+  max-width:60%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.bib-bottom .b-time{color:var(--cyan);}
+
+/* distance themes */
+.bib.d-mar{background:linear-gradient(160deg,#fff8d6 0%,#ffe07a 100%);}
+.bib.d-mar .bib-distance{background:linear-gradient(135deg,#ffae00,#ff6b00);}
+.bib.d-mar .bib-top{background:linear-gradient(90deg,#7a4f00,#0a0a0b);}
+.bib.d-mar .bib-bottom{background:linear-gradient(90deg,#7a4f00,#0a0a0b);}
+
+.bib.d-semi{background:linear-gradient(160deg,#e3f7ff 0%,#a8d9ff 100%);}
+.bib.d-semi .bib-distance{background:linear-gradient(135deg,#0090ff,#bc13fe);}
+.bib.d-semi .bib-top{background:linear-gradient(90deg,#003266,#0a0a0b);}
+.bib.d-semi .bib-bottom{background:linear-gradient(90deg,#003266,#0a0a0b);}
+
+.bib.d-10k{background:linear-gradient(160deg,#e9ffe9 0%,#a8ffce 100%);}
+.bib.d-10k .bib-distance{background:linear-gradient(135deg,#00b850,#00fff9);}
+.bib.d-10k .bib-top{background:linear-gradient(90deg,#003d22,#0a0a0b);}
+.bib.d-10k .bib-bottom{background:linear-gradient(90deg,#003d22,#0a0a0b);}
+
+.bib.d-5k{background:linear-gradient(160deg,#ffeee0 0%,#ffc7a8 100%);}
+.bib.d-5k .bib-distance{background:linear-gradient(135deg,#ff6b35,#ff006e);}
+.bib.d-5k .bib-top{background:linear-gradient(90deg,#5e1a00,#0a0a0b);}
+.bib.d-5k .bib-bottom{background:linear-gradient(90deg,#5e1a00,#0a0a0b);}
+
+.bib.d-trail{background:linear-gradient(160deg,#f0e3d2 0%,#c8a87c 100%);}
+.bib.d-trail .bib-distance{background:linear-gradient(135deg,#8b5a2b,#3d6b1e);}
+.bib.d-trail .bib-top{background:linear-gradient(90deg,#3d2410,#0a0a0b);}
+.bib.d-trail .bib-bottom{background:linear-gradient(90deg,#3d2410,#0a0a0b);}
+
+.bib.d-other{background:linear-gradient(160deg,#f4ebff 0%,#cdb0ff 100%);}
+.bib.d-other .bib-distance{background:linear-gradient(135deg,#bc13fe,#ff006e);}
+.bib.d-other .bib-top{background:linear-gradient(90deg,#3a0066,#0a0a0b);}
+.bib.d-other .bib-bottom{background:linear-gradient(90deg,#3a0066,#0a0a0b);}
+
+/* PR badge */
+.bib.is-pr{border:2px solid var(--gold);
+  box-shadow:0 6px 22px rgba(0,0,0,.4),0 0 28px rgba(255,215,0,.45),inset 0 1px 0 rgba(255,255,255,.6);
+  animation:prGlow 3s ease-in-out infinite;}
+@keyframes prGlow{0%,100%{box-shadow:0 6px 22px rgba(0,0,0,.4),0 0 28px rgba(255,215,0,.45),inset 0 1px 0 rgba(255,255,255,.6);}
+  50%{box-shadow:0 6px 22px rgba(0,0,0,.4),0 0 42px rgba(255,215,0,.7),inset 0 1px 0 rgba(255,255,255,.6);}}
+.pr-stamp{position:absolute;top:54px;right:-12px;
+  background:linear-gradient(135deg,var(--gold),#ff8800);
+  color:#0a0a0b;font-family:'Orbitron',sans-serif;font-weight:900;font-size:.7rem;
+  letter-spacing:.12em;padding:.3rem .65rem;border-radius:6px;transform:rotate(8deg);
+  box-shadow:0 4px 14px rgba(255,215,0,.5);z-index:5;}
+
+.test-stamp{position:absolute;top:90px;left:-10px;
+  background:linear-gradient(135deg,#7dd3fc,#38bdf8);
+  color:#0a0a0b;font-family:'Orbitron',sans-serif;font-weight:900;font-size:.62rem;
+  letter-spacing:.16em;padding:.25rem .55rem;border-radius:6px;transform:rotate(-7deg);
+  box-shadow:0 4px 14px rgba(56,189,248,.45);z-index:5;}
+.bib.is-test{filter:saturate(.85);}
+.bib-num-na{opacity:.55;}
+
+.bib-count{text-align:center;margin-bottom:1rem;
+  font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.15em;
+  color:rgba(255,255,255,.3);text-transform:uppercase;}
+.bib-count span{color:var(--gold);font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:700;}
+
+/* ── ACHIEVEMENTS ── */
+.ach-section{display:none;}
+.ach-section.active{display:block;}
+.ach-category{margin-bottom:2.5rem;}
+.ach-cat-title{font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:900;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:1rem;text-align:center;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;}
+
+.ach-card{position:relative;border-radius:16px;padding:1.3rem 1rem 1.1rem;
+  background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  border:1.5px solid rgba(255,255,255,.1);text-align:center;overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s;}
+.ach-card.unlocked{border-color:rgba(255,215,0,.5);
+  background:linear-gradient(160deg,rgba(255,215,0,.1),rgba(255,107,53,.04));
+  box-shadow:0 4px 18px rgba(255,215,0,.18);}
+.ach-card.unlocked::before{content:'';position:absolute;inset:-50%;
+  background:radial-gradient(circle,rgba(255,215,0,.15) 0%,transparent 60%);
+  pointer-events:none;animation:achShimmer 4s ease-in-out infinite;}
+@keyframes achShimmer{0%,100%{opacity:.4;}50%{opacity:.9;}}
+.ach-card.locked{filter:grayscale(.7) brightness(.55);}
+.ach-card:hover{transform:translateY(-4px);}
+.ach-card.unlocked:hover{box-shadow:0 8px 28px rgba(255,215,0,.35);border-color:var(--gold);}
+
+.ach-icon{font-size:2.6rem;line-height:1;margin-bottom:.5rem;display:inline-block;
+  filter:drop-shadow(0 0 12px rgba(255,215,0,.4));}
+.ach-card.locked .ach-icon{filter:none;}
+.ach-title{font-family:'Orbitron',sans-serif;font-size:.85rem;font-weight:900;letter-spacing:.04em;
+  text-transform:uppercase;margin-bottom:.35rem;color:#fff;}
+.ach-desc{font-family:'Barlow Condensed',sans-serif;font-size:.78rem;letter-spacing:.04em;
+  color:rgba(255,255,255,.55);line-height:1.35;}
+.ach-status{font-family:'Orbitron',sans-serif;font-size:.6rem;font-weight:900;letter-spacing:.18em;
+  text-transform:uppercase;margin-top:.7rem;display:inline-block;padding:.2rem .55rem;border-radius:999px;}
+.ach-card.unlocked .ach-status{background:rgba(255,215,0,.15);color:var(--gold);border:1px solid rgba(255,215,0,.4);}
+.ach-card.locked .ach-status{background:rgba(255,255,255,.04);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.12);}
+.ach-progress{margin-top:.7rem;height:5px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;}
+.ach-progress-bar{height:100%;background:linear-gradient(90deg,var(--gold),var(--orange));
+  border-radius:999px;transition:width 1s cubic-bezier(.22,.61,.36,1);}
+.ach-meta{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.1em;
+  color:rgba(255,255,255,.4);margin-top:.4rem;}
+
+/* MODAL */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;z-index:9000;padding:1rem;}
+.modal.open{display:flex;}
+.modal-content{max-width:480px;width:100%;background:linear-gradient(160deg,#161420,#0a0a0e);
+  border-radius:20px;padding:2rem 1.5rem;border:1.5px solid rgba(255,215,0,.3);
+  box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 40px rgba(255,215,0,.15);
+  position:relative;animation:modalIn .35s cubic-bezier(.23,1,.32,1);}
+@keyframes modalIn{from{transform:scale(.85) translateY(20px);opacity:0;}to{transform:none;opacity:1;}}
+.modal-close{position:absolute;top:.7rem;right:.9rem;width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:1.1rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.modal-close:hover{background:rgba(255,255,255,.14);}
+.modal h3{font-family:'Orbitron',sans-serif;font-size:1.1rem;letter-spacing:.06em;
+  text-align:center;margin-bottom:1rem;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.modal-stats{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1.2rem;}
+.modal-stat{padding:.7rem;background:rgba(255,255,255,.04);border-radius:10px;text-align:center;
+  border:1px solid rgba(255,255,255,.08);}
+.modal-stat-label{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;letter-spacing:.15em;
+  text-transform:uppercase;color:rgba(255,255,255,.45);}
+.modal-stat-val{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;color:#fff;margin-top:.2rem;}
+.modal-strava{display:inline-block;margin-top:1.2rem;padding:.55rem 1.2rem;
+  background:linear-gradient(135deg,#fc4c02,#f78838);color:#fff;text-decoration:none;
+  border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;font-size:.78rem;text-align:center;width:100%;}
+.modal-strava:hover{filter:brightness(1.15);}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="#" class="active">🏆 TROPHÉES</a>
+</nav>
+<div class="animated-bg"></div>
+<div class="grain"></div>
+<div class="neon-border"></div>
+
+<div class="wrap">
+  <div class="header">
+    <h1 class="page-title">🏆 MUR DES TROPHÉES</h1>
+    <p class="page-sub">collection de dossards · quêtes débloquées</p>
+  </div>
+
+  <!-- STATS BANNER -->
+  <div class="stats-banner" id="stats-banner"></div>
+
+  <!-- VIEW TABS -->
+  <div class="view-tabs">
+    <button class="view-tab active" data-view="bibs" onclick="setView('bibs',this)">🎽 Dossards</button>
+    <button class="view-tab" data-view="ach" onclick="setView('ach',this)">⭐ Quêtes</button>
+  </div>
+
+  <!-- BIB SECTION -->
+  <section id="bibs-section">
+    <div class="filter-section">
+      <div class="filter-group">
+        <button class="f-btn fy active" data-year="all" onclick="filterYear('all',this)">TOUTES</button>
+        <button class="f-btn fy" data-year="2026" onclick="filterYear('2026',this)">2026</button>
+        <button class="f-btn fy" data-year="2025" onclick="filterYear('2025',this)">2025</button>
+        <button class="f-btn fy" data-year="2024" onclick="filterYear('2024',this)">2024</button>
+        <button class="f-btn fy" data-year="2023" onclick="filterYear('2023',this)">2023</button>
+        <button class="f-btn fy" data-year="2022" onclick="filterYear('2022',this)">2022</button>
+        <button class="f-btn fy" data-year="2021" onclick="filterYear('2021',this)">2021</button>
+        <button class="f-btn fy" data-year="2020" onclick="filterYear('2020',this)">2020</button>
+        <button class="f-btn fy" data-year="2019" onclick="filterYear('2019',this)">2019</button>
+      </div>
+      <div class="filter-sep"></div>
+      <div class="filter-group">
+        <button class="f-btn fd-all active" data-dist="all" onclick="filterDist('all',this)">ALL</button>
+        <button class="f-btn fd-5k" data-dist="5k" onclick="filterDist('5k',this)">5 KM</button>
+        <button class="f-btn fd-10k" data-dist="10k" onclick="filterDist('10k',this)">10 KM</button>
+        <button class="f-btn fd-semi" data-dist="semi" onclick="filterDist('semi',this)">SEMI</button>
+        <button class="f-btn fd-mar" data-dist="mar" onclick="filterDist('mar',this)">MARATHON</button>
+        <button class="f-btn fd-pr" data-dist="pr" onclick="filterDist('pr',this)">⭐ RP</button>
+      </div>
+    </div>
+    <div class="bib-count"><span id="visible-count">52</span> dossards</div>
+    <div class="bib-grid" id="bib-grid"></div>
+  </section>
+
+  <!-- ACHIEVEMENTS SECTION -->
+  <section class="ach-section" id="ach-section"></section>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal" onclick="if(event.target.id==='modal')closeModal()">
+  <div class="modal-content" id="modal-content">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+/* ─── DATA ─────────────────────────────────────────── */
+const RACES = [
+  {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",pays:"IT",flag:"🇮🇹",km:42.195,perf:"02:59:51",allure:"4:15",classement:"1017/15050",record:true,fc:167,strava:"https://www.strava.com/activities/18075963697",note:"SUB-3H ! 🚀"},
+  {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:52",allure:"4:04",classement:"48/673",fc:162,strava:"https://www.strava.com/activities/17561583056"},
+  {date:"2025-09-28",course:"Semi Route du Vin",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:23:48",allure:"3:58",classement:"145/2499",record:true,fc:172,strava:"https://www.strava.com/activities/15961102163",note:"PR Semi"},
+  {date:"2025-05-31",course:"ING Night Semi",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:29:51",allure:"4:14",classement:"181/8646",fc:174,strava:"https://www.strava.com/activities/14654980086"},
+  {date:"2025-05-10",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:38:50",allure:"4:11",classement:"178/3365",fc:171,strava:"https://www.strava.com/activities/16041281275"},
+  {date:"2025-04-27",course:"Marathon du Lac d'Annecy",ville:"Annecy",pays:"FR",flag:"🇫🇷",km:42.195,perf:"03:26:08",allure:"4:53",classement:"583/3845",fc:167,strava:"https://www.strava.com/activities/14299457228"},
+  {date:"2025-03-30",course:"Test à l'entraînement",ville:"Solo",pays:"FR",flag:"🇫🇷",km:5,perf:"00:18:36",allure:"3:43",classement:"—",record:true,fc:173,strava:"https://www.strava.com/activities/14028111935/overview",unofficial:true,note:"Record perso 5K en autonomie"},
+  {date:"2025-03-16",course:"Semi Vallée de l'Orne",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:34",allure:"4:03",classement:"35/538",fc:168,strava:"https://www.strava.com/activities/13895827191"},
+  {date:"2024-11-05",course:"ING Night Semi",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:31:20",allure:"4:19",classement:"176/6909"},
+  {date:"2024-10-03",course:"Postlaf",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:10,perf:"00:40:29",allure:"4:02",classement:"144/2440",fc:176,strava:"https://www.strava.com/activities/10928040300"},
+  {date:"2024-09-29",course:"ING Semi Route du Vin",ville:"Remich",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:26:33",allure:"4:06",classement:"178/1895",fc:174,strava:"https://www.strava.com/activities/12530152817"},
+  {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",pays:"FR",flag:"🇫🇷",km:11.8,perf:"01:00:59",allure:"5:10",classement:"59/433",fc:168,strava:"https://www.strava.com/activities/12235936176"},
+  {date:"2024-08-05",course:"Course du Muguet",ville:"Vitry-sur-Orne",pays:"FR",flag:"🇫🇷",km:10,perf:"00:37:41",allure:"3:46",classement:"10/134",record:true,fc:181,strava:"https://www.strava.com/activities/11359052509",note:"PR 10K · Top 10"},
+  {date:"2024-07-06",course:"Ronde Nocturne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:38:18",allure:"3:50",classement:"20/161",fc:179,strava:"https://www.strava.com/activities/11597795067"},
+  {date:"2024-07-04",course:"Marathon de Paris",ville:"Paris",pays:"FR",flag:"🇫🇷",km:42.195,perf:"03:06:21",allure:"4:24",classement:"3058/54175",fc:174,strava:"https://www.strava.com/activities/11124704539"},
+  {date:"2024-06-10",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:40:51",allure:"4:16",classement:"217/2734",fc:170,strava:"https://www.strava.com/activities/12589698929"},
+  {date:"2024-04-21",course:"Semi de Thionville",ville:"Thionville",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:30",allure:"4:03",classement:"80/1089",fc:171,strava:"https://www.strava.com/activities/11229080745"},
+  {date:"2024-03-17",course:"Semi Vallée de l'Orne",ville:"Moyeuvre-Grande",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:30:06",allure:"4:16",classement:"34/416",fc:166,strava:"https://www.strava.com/activities/10977086066"},
+  {date:"2024-01-05",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:39:17",allure:"3:56",classement:"14/199",fc:183,strava:"https://www.strava.com/activities/11304839621"},
+  {date:"2023-12-03",course:"Postlaf",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:10,perf:"00:42:44",allure:"4:16",classement:"142/2067",fc:178,strava:"https://www.strava.com/activities/8700435543"},
+  {date:"2023-10-14",course:"Haard Trail",ville:"Dudelange",pays:"LU",flag:"🇱🇺",km:15,perf:"01:11:15",allure:"4:45",classement:"27/94",fc:178,strava:"https://www.strava.com/activities/10037221696",trail:true},
+  {date:"2023-09-24",course:"ING Semi Route du Vin",ville:"Remich",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:30:39",allure:"4:17",classement:"179/1370",fc:174,strava:"https://www.strava.com/activities/9909962182"},
+  {date:"2023-09-07",course:"La Forestière",ville:"Moyeuvre-Grande",pays:"FR",flag:"🇫🇷",km:10,perf:"00:50:30",allure:"5:03",classement:"39/164",fc:181,strava:"https://www.strava.com/activities/9416504602"},
+  {date:"2023-06-25",course:"Foulées de Saint-Hubert",ville:"Gandrange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:41:37",allure:"4:10",classement:"24/169",fc:183,strava:"https://www.strava.com/activities/9330053741"},
+  {date:"2023-05-20",course:"ING Night Marathon",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:42.195,perf:"03:47:13",allure:"5:23",classement:"222/1046",fc:175,strava:"https://www.strava.com/activities/9108818382"},
+  {date:"2023-04-23",course:"Semi de Thionville",ville:"Thionville",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:27:20",allure:"4:08",classement:"82/690",fc:178,strava:"https://www.strava.com/activities/8940931342"},
+  {date:"2023-03-19",course:"Semi Vallée de l'Orne",ville:"Rombas",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:28:36",allure:"4:12",classement:"33/395",fc:179,strava:"https://www.strava.com/activities/8739505302"},
+  {date:"2023-02-06",course:"Ronde Nocturne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:40:17",allure:"4:02",classement:"18/119",fc:184,strava:"https://www.strava.com/activities/9189866875"},
+  {date:"2023-01-10",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:48:54",allure:"4:36",classement:"259/2171",fc:182,strava:"https://www.strava.com/activities/9955737974"},
+  {date:"2022-10-16",course:"TCS Amsterdam Marathon",ville:"Amsterdam",pays:"NL",flag:"🇳🇱",km:42.195,perf:"03:13:45",allure:"4:35",classement:"1630/12658",fc:173,strava:"https://www.strava.com/activities/7970754505"},
+  {date:"2022-09-18",course:"Semi Fensch & Moselle",ville:"Uckange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:32:20",allure:"4:23",classement:"30/124",fc:178,strava:"https://www.strava.com/activities/7826241352"},
+  {date:"2022-06-26",course:"Foulées de Saint-Hubert",ville:"Gandrange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:41:27",allure:"4:09",classement:"21/147",fc:177,strava:"https://www.strava.com/activities/7369943097"},
+  {date:"2022-05-28",course:"ING Night Semi",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:37:46",allure:"4:38",classement:"456/4498",fc:174,strava:"https://www.strava.com/activities/7217953463"},
+  {date:"2022-05-15",course:"Semi de Thionville",ville:"Thionville",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:51:28",allure:"5:17",classement:"289/798",fc:177,strava:"https://www.strava.com/activities/7145622553"},
+  {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:40:16",allure:"4:02",classement:"77/325",fc:186,strava:"https://www.strava.com/activities/6889279481"},
+  {date:"2022-03-20",course:"Semi Vallée de l'Orne",ville:"Gandrange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:33:58",allure:"4:27",classement:"82/309",fc:179,strava:"https://www.strava.com/activities/6852262326"},
+  {date:"2022-03-06",course:"Ronde Nocturne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:40:05",allure:"4:01",classement:"28/100",fc:182,strava:"https://www.strava.com/activities/7249627360"},
+  {date:"2022-01-05",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:40:34",allure:"4:03",classement:"21/136",fc:176,strava:"https://www.strava.com/activities/7068557851"},
+  {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",pays:"FR",flag:"🇫🇷",km:42.195,perf:"03:29:02",allure:"4:57",classement:"4587/27071",fc:172,strava:"https://www.strava.com/activities/6125599297",note:"Premier marathon"},
+  {date:"2021-09-19",course:"Semi du Val de Fensch",ville:"Uckange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:33:14",allure:"4:25",classement:"60/188",fc:178,strava:"https://www.strava.com/activities/5983824622"},
+  {date:"2021-04-07",course:"Boucles de l'Acier",ville:"Florange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:40:49",allure:"4:05",classement:"78/250",fc:186,strava:"https://www.strava.com/activities/5572013481"},
+  {date:"2020-12-24",course:"5km Open de France virtuel",ville:"Partout",pays:"FR",flag:"🇫🇷",km:5,perf:"00:20:25",allure:"4:05",classement:"1666/11608",fc:189,strava:"https://www.strava.com/activities/4494773509"},
+  {date:"2020-07-14",course:"5km Open de France virtuel",ville:"Partout",pays:"FR",flag:"🇫🇷",km:5,perf:"00:21:15",allure:"4:15",classement:"1413/7990",fc:180,strava:"https://www.strava.com/activities/3756329596"},
+  {date:"2020-01-03",course:"Semi Vallée de l'Orne",ville:"Vitry-Sur-Orne",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:42:59",allure:"4:53",classement:"247/582",fc:178,strava:"https://www.strava.com/activities/3144210898"},
+  {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:59:38",allure:"5:04",classement:"2083/7623",fc:182,strava:"https://www.strava.com/activities/2767774831"},
+  {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",pays:"FR",flag:"🇫🇷",km:15,perf:"01:15:11",allure:"5:01",classement:"96/289",fc:185,strava:"https://www.strava.com/activities/2649386092"},
+  {date:"2019-07-06",course:"Ronde Nocturne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:45:11",allure:"4:31",classement:"58/131",fc:181,strava:"https://www.strava.com/activities/2431537538"},
+  {date:"2019-06-30",course:"Foulées de Saint-Hubert",ville:"Gandrange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:46:42",allure:"4:40",classement:"73/234",fc:185,strava:"https://www.strava.com/activities/2491818770"},
+  {date:"2019-04-28",course:"Semi de Thionville",ville:"Thionville",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:49:48",allure:"5:12",classement:"521/987",fc:186,strava:"https://www.strava.com/activities/2325102723"},
+  {date:"2019-03-17",course:"Semi Vallée de l'Orne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:53:04",allure:"5:22",classement:"314/456"},
+  {date:"2019-03-11",course:"Course Marcel Kiefer",ville:"Hussigny-Godbrange",pays:"FR",flag:"🇫🇷",km:21,perf:"01:52:47",allure:"5:22",classement:"41/102",fc:184,strava:"https://www.strava.com/activities/2838102426"},
+  {date:"2019-01-06",course:"ING Night Semi",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:55:51",allure:"5:29",classement:"1564/6470",fc:185,strava:"https://www.strava.com/activities/2415438474",note:"Première course internationale"},
+  {date:"2019-01-05",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:49:03",allure:"4:54",classement:"121/248",fc:185,strava:"https://www.strava.com/activities/2332583576",note:"Première course officielle"}
+];
+
+/* ─── HELPERS ─────────────────────────────────────────── */
+function distClass(km, trail){
+  if(trail) return 'd-trail';
+  if(km<=5) return 'd-5k';
+  if(km<=12) return 'd-10k';
+  if(km<=24 && km>=21) return 'd-semi';
+  if(km>=42) return 'd-mar';
+  return 'd-other';
+}
+function distLabel(km, trail){
+  if(trail) return 'TRAIL';
+  if(km==5) return '5 KM';
+  if(km==10) return '10 KM';
+  if(km==21.1) return 'SEMI';
+  if(km==42.195) return 'MARATHON';
+  return km+' KM';
+}
+function distCat(km, trail){
+  if(trail) return 'trail';
+  if(km<=5) return '5k';
+  if(km<=12) return '10k';
+  if(km<=24 && km>=21) return 'semi';
+  if(km>=42) return 'mar';
+  return 'other';
+}
+function paceToSec(p){const [m,s]=p.split(':').map(Number);return m*60+(s||0);}
+function timeToSec(t){const [h,m,s]=t.split(':').map(Number);return h*3600+m*60+(s||0);}
+function fmtRank(c){
+  if(c==='—') return '';
+  const [r,t]=c.split('/').map(Number);
+  if(!r||!t) return c;
+  const pct=(r/t*100).toFixed(1);
+  return `${r}<sup>e</sup>/${t}`;
+}
+function rankPct(c){
+  if(c==='—'||!c) return null;
+  const [r,t]=c.split('/').map(Number);
+  if(!r||!t) return null;
+  return r/t*100;
+}
+
+/* generate stable bib number from date+km */
+function bibNumber(r){
+  const d=r.date.replaceAll('-','');
+  const seed=parseInt(d.slice(2))^Math.round(r.km*7);
+  return (seed%9000+1000).toString();
+}
+
+/* ─── RENDER BIBS ─────────────────────────────────────────── */
+function renderBibs(){
+  const grid=document.getElementById('bib-grid');
+  grid.innerHTML=RACES.map(r=>{
+    const dc=distClass(r.km, r.trail);
+    const dl=distLabel(r.km, r.trail);
+    const cat=distCat(r.km, r.trail);
+    const yr=r.date.slice(0,4);
+    const num=bibNumber(r);
+    return `<div class="bib ${dc} ${r.record?'is-pr':''} ${r.unofficial?'is-test':''}" data-year="${yr}" data-dist="${cat}" data-pr="${r.record?1:0}" data-unofficial="${r.unofficial?1:0}" onclick='showRace(${JSON.stringify(r).replace(/'/g,"&#39;")})'>
+      ${r.record?'<div class="pr-stamp">⭐ PR</div>':''}
+      ${r.unofficial?'<div class="test-stamp">TEST</div>':''}
+      <div class="bib-top">
+        <span><span class="race-flag">${r.flag}</span> ${r.ville}</span>
+        <span class="race-yr">${yr}</span>
+      </div>
+      <div class="bib-body">
+        <div class="bib-event">${r.course}</div>
+        ${r.unofficial?'<div class="bib-num bib-num-na">—</div>':`<div class="bib-num">${num}</div>`}
+        <div class="bib-distance">${dl}</div>
+      </div>
+      <div class="bib-bottom">
+        <span class="b-loc">${formatDateShort(r.date)}</span>
+        <span class="b-time">${r.perf}</span>
+      </div>
+    </div>`;
+  }).join('');
+  // Compteur officiel : on exclut le test à l'entraînement
+  document.getElementById('visible-count').textContent=RACES.filter(r=>!r.unofficial).length;
+}
+
+function formatDateShort(d){
+  const [y,m,day]=d.split('-');
+  const months=['Jan','Fév','Mar','Avr','Mai','Juin','Juil','Aoû','Sep','Oct','Nov','Déc'];
+  return `${parseInt(day)} ${months[parseInt(m)-1]}`;
+}
+
+/* ─── FILTERS ─────────────────────────────────────────── */
+let filterY='all',filterD='all';
+function applyFilters(){
+  let visible=0;
+  document.querySelectorAll('.bib').forEach(b=>{
+    const yMatch=filterY==='all'||b.dataset.year===filterY;
+    const dMatch=filterD==='all'||(filterD==='pr'?b.dataset.pr==='1':b.dataset.dist===filterD);
+    const ok=yMatch&&dMatch;
+    b.style.display=ok?'flex':'none';
+    // Le test à l'entraînement reste visible mais ne compte pas comme course officielle
+    if(ok && b.dataset.unofficial!=='1') visible++;
+  });
+  document.getElementById('visible-count').textContent=visible;
+}
+function filterYear(y,btn){filterY=y;document.querySelectorAll('.fy').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+function filterDist(d,btn){filterD=d;document.querySelectorAll('[class*="fd-"]').forEach(b=>b.classList.remove('active'));btn.classList.add('active');applyFilters();}
+
+/* ─── VIEW SWITCH ─────────────────────────────────────────── */
+function setView(v,btn){
+  document.querySelectorAll('.view-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('bibs-section').style.display=v==='bibs'?'':'none';
+  document.getElementById('ach-section').classList.toggle('active',v==='ach');
+}
+
+/* ─── ACHIEVEMENTS ─────────────────────────────────────────── */
+function calcStats(){
+  // Pour les compteurs officiels (courses et km), on exclut les tests à l'entraînement
+  const official=RACES.filter(r=>!r.unofficial);
+  const total=official.length;
+  const marathons=official.filter(r=>r.km>=42).length;
+  const semis=official.filter(r=>r.km>=21&&r.km<=24).length;
+  const k10=official.filter(r=>r.km>=9.5&&r.km<=12).length;
+  const k5=official.filter(r=>r.km<=5).length;
+  const trails=official.filter(r=>r.trail).length;
+  const pays=[...new Set(official.map(r=>r.pays))];
+  const villes=[...new Set(official.map(r=>r.ville))];
+  const annees=[...new Set(RACES.map(r=>r.date.slice(0,4)))];
+  // Les records perso comprennent aussi le test 5K
+  const prs=RACES.filter(r=>r.record).length;
+  const km=official.reduce((s,r)=>s+r.km,0);
+  return {total,marathons,semis,k10,k5,trails,pays:pays.length,villes:villes.length,annees:annees.length,prs,km:Math.round(km)};
+}
+
+function renderStatsBanner(){
+  const s=calcStats();
+  document.getElementById('stats-banner').innerHTML=`
+    <div class="stat-item"><div class="stat-num">${s.total}</div><div class="stat-label">Courses</div></div>
+    <div class="stat-item"><div class="stat-num">${s.km}</div><div class="stat-label">km</div></div>
+    <div class="stat-item"><div class="stat-num">${s.pays}</div><div class="stat-label">Pays</div></div>
+    <div class="stat-item"><div class="stat-num">${s.marathons}</div><div class="stat-label">Marathons</div></div>
+    <div class="stat-item"><div class="stat-num">${s.semis}</div><div class="stat-label">Semis</div></div>
+    <div class="stat-item"><div class="stat-num">${s.k10}</div><div class="stat-label">10 km</div></div>
+    <div class="stat-item"><div class="stat-num">${s.prs}</div><div class="stat-label">Records</div></div>
+    <div class="stat-item"><div class="stat-num">${s.annees}</div><div class="stat-label">Années</div></div>
+  `;
+}
+
+const ACHIEVEMENTS=[
+  /* ─── Records ─── */
+  {cat:'records',icon:'🚀',title:'Sub-3h Marathon',desc:'Casser le mur des 3 heures sur marathon',unlocked:true,date:'12 avr. 2026',proof:'02:59:51 · Milano'},
+  {cat:'records',icon:'⚡',title:'Sub-1:25 Semi',desc:'Semi-marathon sous 1h25',unlocked:true,date:'28 sep. 2025',proof:'01:23:48 · Luxembourg'},
+  {cat:'records',icon:'💨',title:'Sub-1:30 Semi',desc:'Semi-marathon sous 1h30',unlocked:true,date:'19 mar. 2023',proof:'01:28:36 · Rombas'},
+  {cat:'records',icon:'🏃',title:'Sub-40 sur 10K',desc:'10 km sous les 40 minutes',unlocked:true,date:'5 août 2024',proof:'00:37:41 · Course du Muguet'},
+  {cat:'records',icon:'🔥',title:'Sub-19 sur 5K',desc:'5 km sous 19 minutes',unlocked:true,date:'30 mar. 2025',proof:'00:18:36'},
+  {cat:'records',icon:'👑',title:'Sub-2:50 Marathon',desc:'Casser 2h50 sur marathon',unlocked:false,target:170,current:179.85,unit:'min',progress:170/179.85*100},
+
+  /* ─── Distances ─── */
+  {cat:'distances',icon:'🥇',title:'Premier Marathon',desc:'Finir un premier 42.195 km',unlocked:true,date:'17 oct. 2021',proof:'Paris · 03:29:02'},
+  {cat:'distances',icon:'🏅',title:'Premier Semi',desc:'Finir un premier semi-marathon',unlocked:true,date:'6 jan. 2019',proof:'Luxembourg · 01:55:51'},
+  {cat:'distances',icon:'🥈',title:'5 Marathons',desc:'5 marathons terminés',unlocked:true,date:'27 avr. 2025',proof:'Annecy'},
+  {cat:'distances',icon:'🏆',title:'10 Marathons',desc:'10 marathons terminés',unlocked:false,target:10,current:7,unit:'',progress:70},
+  {cat:'distances',icon:'🎽',title:'10 Semis',desc:'10 semi-marathons terminés',unlocked:true,date:'2023',proof:'19 semis au compteur'},
+  {cat:'distances',icon:'⛰️',title:'Premier Trail',desc:'Premier trail terminé',unlocked:true,date:'14 oct. 2023',proof:'Haard Trail · Dudelange'},
+
+  /* ─── Géographie ─── */
+  {cat:'geographie',icon:'🇫🇷',title:'Marathon en France',desc:'Finir un marathon en France',unlocked:true,date:'2021',proof:'Paris'},
+  {cat:'geographie',icon:'🇱🇺',title:'Marathon au Luxembourg',desc:'Finir un marathon au Luxembourg',unlocked:true,date:'20 mai 2023',proof:'ING Night Marathon'},
+  {cat:'geographie',icon:'🇳🇱',title:'Marathon aux Pays-Bas',desc:'Finir un marathon aux Pays-Bas',unlocked:true,date:'16 oct. 2022',proof:'TCS Amsterdam'},
+  {cat:'geographie',icon:'🇮🇹',title:'Marathon en Italie',desc:'Finir un marathon en Italie',unlocked:true,date:'12 avr. 2026',proof:'Milano'},
+  {cat:'geographie',icon:'🌍',title:'4 pays différents',desc:'Courir dans 4 pays différents',unlocked:true,date:'2026',proof:'FR · LU · NL · IT'},
+  {cat:'geographie',icon:'🌎',title:'5 pays différents',desc:'Courir dans 5 pays',unlocked:false,target:5,current:4,progress:80},
+  {cat:'geographie',icon:'🗺️',title:'Tour des capitales',desc:'Courir dans 3 capitales européennes',unlocked:true,proof:'Paris · Luxembourg · Amsterdam'},
+  {cat:'geographie',icon:'🏛️',title:'15 villes différentes',desc:'Courir dans 15 villes différentes',unlocked:true,date:'2024',proof:'21 villes au compteur'},
+
+  /* ─── Quantité ─── */
+  {cat:'quantite',icon:'🎖️',title:'10 dossards',desc:'10 courses terminées',unlocked:true,date:'2022'},
+  {cat:'quantite',icon:'🎫',title:'25 dossards',desc:'25 courses terminées',unlocked:true,date:'2023'},
+  {cat:'quantite',icon:'📜',title:'50 dossards',desc:'50 courses terminées',unlocked:true,date:'2025',proof:'52 dossards au compteur'},
+  {cat:'quantite',icon:'💯',title:'100 dossards',desc:'100 courses terminées',unlocked:false,target:100,current:52,progress:52},
+  {cat:'quantite',icon:'🛣️',title:'1000 km en course',desc:'Cumuler 1000 km en compétition',unlocked:true,date:'2026',proof:'1002 km cumulés'},
+  {cat:'quantite',icon:'🌐',title:'2000 km en course',desc:'Cumuler 2000 km en compétition',unlocked:false,target:2000,current:1002,progress:50},
+
+  /* ─── Spéciales ─── */
+  {cat:'speciales',icon:'🔁',title:'Récidiviste',desc:'5 éditions de la même course',unlocked:true,proof:'Semi Vallée de l\'Orne · 5 fois'},
+  {cat:'speciales',icon:'📅',title:'Vétéran fidèle',desc:'Courir 7 années consécutives',unlocked:true,proof:'2019 → 2026'},
+  {cat:'speciales',icon:'🌃',title:'Coureur nocturne',desc:'Finir une course de nuit',unlocked:true,proof:'Ronde Nocturne · Clouange'},
+  {cat:'speciales',icon:'🎯',title:'Top 10 absolu',desc:'Top 10 général sur une course',unlocked:true,date:'5 août 2024',proof:'10/134 · Course du Muguet'},
+  {cat:'speciales',icon:'🥉',title:'Top 5%',desc:'Finir dans les 5% d\'une course',unlocked:true,proof:'Plusieurs fois'},
+  {cat:'speciales',icon:'⚖️',title:'WMA 75%+',desc:'Score age-grading supérieur à 75%',unlocked:true,date:'21 avr. 2024',proof:'76.6% · Semi de Thionville'},
+  {cat:'speciales',icon:'🏔️',title:'Semaine de feu',desc:'2 courses la même semaine',unlocked:true,proof:'10K + Marathon Paris (juillet 2024)'},
+  {cat:'speciales',icon:'💪',title:'PR à 47 ans',desc:'Établir un PR sur marathon après 45 ans',unlocked:true,date:'12 avr. 2026',proof:'Sub-3h à Milano'},
+  {cat:'speciales',icon:'🚂',title:'Boucles de l\'Acier',desc:'Courir Florange (industrial)',unlocked:true,proof:'2021 + 2022'},
+  {cat:'speciales',icon:'❄️',title:'Course en janvier',desc:'Finir une course en plein hiver',unlocked:true,proof:'La Conviviale · janvier'},
+
+  /* ─── Quêtes futures ─── */
+  {cat:'futures',icon:'⏱️',title:'Sub-1:20 Semi',desc:'Semi-marathon sous 1h20',unlocked:false,target:80,current:83.8,unit:'min',progress:80/83.8*100},
+  {cat:'futures',icon:'🎢',title:'Marathon dans 5 pays',desc:'Marathon dans 5 pays différents',unlocked:false,target:5,current:4,progress:80},
+  {cat:'futures',icon:'🏝️',title:'Course hors-Europe',desc:'Une course sur un autre continent',unlocked:false,progress:0},
+  {cat:'futures',icon:'🌋',title:'Ultra (50 km+)',desc:'Finir une course de 50 km ou plus',unlocked:false,progress:0},
+  {cat:'futures',icon:'🎽',title:'Top 1%',desc:'Top 1% d\'une grosse course (>5000 part.)',unlocked:false,progress:0},
+  {cat:'futures',icon:'🔄',title:'10 ans consécutifs',desc:'Courir 10 années de suite',unlocked:false,target:10,current:8,progress:80},
+];
+
+const CAT_LABELS={
+  records:'⚡ Records personnels',
+  distances:'📏 Distances & catégories',
+  geographie:'🌍 Géographie & voyage',
+  quantite:'🔢 Quantité & accumulation',
+  speciales:'✨ Quêtes spéciales',
+  futures:'🔮 Quêtes futures'
+};
+
+function renderAchievements(){
+  const cats={};
+  ACHIEVEMENTS.forEach(a=>{(cats[a.cat]=cats[a.cat]||[]).push(a);});
+  const html=Object.keys(CAT_LABELS).map(catKey=>{
+    const list=cats[catKey]||[];
+    return `<div class="ach-category">
+      <h2 class="ach-cat-title">${CAT_LABELS[catKey]}</h2>
+      <div class="ach-grid">${list.map(a=>achCard(a)).join('')}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('ach-section').innerHTML=html;
+}
+
+function achCard(a){
+  const u=a.unlocked;
+  const status=u?'✅ Débloqué':'🔒 Verrouillé';
+  let progressBar='';
+  if(!u && a.progress!==undefined){
+    progressBar=`<div class="ach-progress"><div class="ach-progress-bar" style="width:${Math.min(a.progress,100)}%"></div></div>
+      <div class="ach-meta">${a.current!==undefined?a.current+(a.unit||''):''}${a.target?' / '+a.target+(a.unit||''):''}</div>`;
+  }
+  return `<div class="ach-card ${u?'unlocked':'locked'}">
+    <div class="ach-icon">${a.icon}</div>
+    <div class="ach-title">${a.title}</div>
+    <div class="ach-desc">${a.desc}</div>
+    ${u && a.proof?`<div class="ach-meta">${a.proof}</div>`:''}
+    ${u && a.date?`<div class="ach-meta">📅 ${a.date}</div>`:''}
+    ${progressBar}
+    <div class="ach-status">${status}</div>
+  </div>`;
+}
+
+/* ─── MODAL ─────────────────────────────────────────── */
+function showRace(r){
+  const m=document.getElementById('modal');
+  const dc=distClass(r.km,r.trail);
+  const dl=distLabel(r.km,r.trail);
+  const num=bibNumber(r);
+  const pct=rankPct(r.classement);
+  document.getElementById('modal-body').innerHTML=`
+    <div class="bib ${dc} ${r.record?'is-pr':''} ${r.unofficial?'is-test':''}" style="margin:0 auto 1rem;cursor:default;" onclick="event.stopPropagation()">
+      ${r.record?'<div class="pr-stamp">⭐ PR</div>':''}
+      ${r.unofficial?'<div class="test-stamp">TEST</div>':''}
+      <div class="bib-top">
+        <span><span class="race-flag">${r.flag}</span> ${r.ville}</span>
+        <span class="race-yr">${r.date.slice(0,4)}</span>
+      </div>
+      <div class="bib-body">
+        <div class="bib-event">${r.course}</div>
+        ${r.unofficial?'<div class="bib-num bib-num-na">—</div>':`<div class="bib-num">${num}</div>`}
+        <div class="bib-distance">${dl}</div>
+      </div>
+      <div class="bib-bottom">
+        <span class="b-loc">${formatDateShort(r.date)}</span>
+        <span class="b-time">${r.perf}</span>
+      </div>
+    </div>
+    <h3>${r.course}</h3>
+    <div style="text-align:center;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;font-size:.85rem;">${r.flag} ${r.ville} · ${formatFullDate(r.date)}</div>
+    ${r.note?`<div style="text-align:center;color:var(--gold);font-family:'Orbitron',sans-serif;letter-spacing:.1em;font-size:.8rem;margin-top:.6rem;">⭐ ${r.note}</div>`:''}
+    <div class="modal-stats">
+      <div class="modal-stat"><div class="modal-stat-label">Temps</div><div class="modal-stat-val">${r.perf}</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Allure</div><div class="modal-stat-val">${r.allure}/km</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Classement</div><div class="modal-stat-val">${fmtRank(r.classement)}</div></div>
+      <div class="modal-stat"><div class="modal-stat-label">Distance</div><div class="modal-stat-val">${r.km} km</div></div>
+      ${r.fc?`<div class="modal-stat"><div class="modal-stat-label">FC moy</div><div class="modal-stat-val">${r.fc} bpm</div></div>`:''}
+      ${pct!==null?`<div class="modal-stat"><div class="modal-stat-label">Top</div><div class="modal-stat-val">${pct.toFixed(1)}%</div></div>`:''}
+    </div>
+    ${r.strava?`<a href="${r.strava}" target="_blank" rel="noopener" class="modal-strava">Voir sur Strava →</a>`:''}
+  `;
+  m.classList.add('open');
+}
+function closeModal(){document.getElementById('modal').classList.remove('open');}
+function formatFullDate(d){
+  const [y,mo,da]=d.split('-');
+  const months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  return `${parseInt(da)} ${months[parseInt(mo)-1]} ${y}`;
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+
+/* ─── INIT ─────────────────────────────────────────── */
+renderStatsBanner();
+renderBibs();
+renderAchievements();
+</script>
+</body>
+</html>
