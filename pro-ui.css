@@ -518,6 +518,7 @@ body.pro-mobile-nav-open {
 
 /* Activation mobile */
 @media (max-width: 768px) {
+    nav.site-nav,
     .site-nav {
         /* On cache la nav desktop, le hamburger la remplace */
         display: none !important;
@@ -529,6 +530,10 @@ body.pro-mobile-nav-open {
     .pro-breadcrumb {
         top: 22px;
         left: 74px;
+    }
+    /* Sur l'index, on cache aussi le topbar (brand + statut) */
+    .topbar {
+        display: none !important;
     }
 }
 
