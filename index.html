@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gregory Bertholet — Running History (Moselle, Grand Est, Luxembourg)</title>
-<meta name="description" content="Records personnels de Gregory Bertholet — marathon 2h59'51 (Milano 2026), semi 1h23'48 (Luxembourg 2025), 10 km 37'41. Palmarès de 52 courses depuis 2019." />
+<meta name="description" content="Records personnels de Gregory Bertholet — marathon 2h59'51 (Milano 2026), semi 1h23'48 (Luxembourg 2025), 10 km 37'41. Palmarès de 53 courses depuis 2019." />
 <meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon Moselle, Thionville, Clouange, Gandrange, Bousse, Rosselange, Sedan-Charleville, marathon sub 3h, Milano Marathon" />
 <meta name="author" content="Gregory Bertholet" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -18,7 +18,7 @@
 <meta property="og:site_name" content="Running — Gregory Bertholet" />
 <meta property="og:locale" content="fr_FR" />
 <meta property="og:title" content="Running History — Gregory Bertholet" />
-<meta property="og:description" content="Marathon 2h59'51 · Semi 1h23'48 · 10 km 37'41. Records personnels et palmarès de Gregory Bertholet, 52 courses depuis 2019." />
+<meta property="og:description" content="Marathon 2h59'51 · Semi 1h23'48 · 10 km 37'41. Records personnels et palmarès de Gregory Bertholet, 53 courses depuis 2019." />
 <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -52,7 +52,7 @@
       "alternateName": "Grégory Bertholet",
       "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
       "jobTitle": "Coureur à pied / Marathonien",
-      "description": "Coureur à pied. Records personnels : marathon 02:59:51 (Milano Marathon 2026), semi-marathon 01:23:48 (Route du Vin Luxembourg 2025), 10 km 00:37:41 (Course du Muguet Vitry-sur-Orne 2024). 52 courses disputées depuis 2019 en Moselle, Grand Est, Luxembourg et Ardennes.",
+      "description": "Coureur à pied. Records personnels : marathon 02:59:51 (Milano Marathon 2026), semi-marathon 01:23:48 (Route du Vin Luxembourg 2025), 10 km 00:37:41 (Course du Muguet Vitry-sur-Orne 2024). 53 courses disputées depuis 2019 en Moselle, Grand Est, Luxembourg et Ardennes.",
       "knowsAbout": ["Marathon", "Semi-marathon", "10 km", "Course à pied", "Running", "Athlétisme", "Grand Est", "Moselle", "Luxembourg"],
       "nationality": { "@type": "Country", "name": "France" },
       "homeLocation": { "@type": "Place", "address": { "@type": "PostalAddress", "addressRegion": "Grand Est", "addressCountry": "FR" } },
@@ -181,7 +181,7 @@
   /* ---------- FLAGSHIP RECORD ---------- */
   .flagship{
     max-width:1400px;margin:0 auto;padding:80px 32px;
-    display:grid;grid-template-columns:2fr 1fr;gap:40px;
+    display:grid;grid-template-columns:2fr 1fr;gap:24px;align-items:stretch;
     border-bottom:1px solid var(--line);
   }
   .flagship-main{
@@ -191,12 +191,24 @@
   }
   .flagship-main:hover{border-color:var(--accent)}
   .flagship-main::before{
-    content:"SUB-3H";
+    content:attr(data-watermark);
     position:absolute;top:-40px;right:-20px;
     font-family:'Archivo Black',sans-serif;font-size:200px;
     color:var(--line);letter-spacing:-10px;
     pointer-events:none;user-select:none;
+    white-space:nowrap;
   }
+  /* Side records (semi + 10k) — same look as marathon, but more compact */
+  .flagship-side{display:flex;flex-direction:column;gap:16px}
+  .flagship-side .flagship-main{padding:20px 22px;display:flex;flex-direction:column;flex:1}
+  .flagship-side .flagship-tag{font-size:8px;margin-bottom:10px;padding:4px 8px;letter-spacing:1.5px}
+  .flagship-side .flagship-time{font-size:36px;margin-bottom:6px;letter-spacing:-1px;line-height:1}
+  .flagship-side .flagship-race{font-size:11px;line-height:1.45}
+  .flagship-side .flagship-main::before{font-size:80px;top:-12px;right:-8px;letter-spacing:-4px}
+  .flagship-side .flagship-stats{gap:14px;margin-top:14px;padding-top:14px;flex-wrap:wrap}
+  .flagship-side .flagship-stats > div{min-width:0}
+  .flagship-side .flagship-stat-label{font-size:8px;letter-spacing:0.8px;margin-bottom:2px}
+  .flagship-side .flagship-stat-val{font-size:12px}
   .flagship-tag{
     display:inline-block;padding:6px 12px;background:var(--accent);color:#000;
     font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;
@@ -361,11 +373,15 @@
     .kpi{border-bottom:1px solid var(--line);padding:28px 20px}
     .kpi:nth-child(2){border-right:none}
     .kpi-value{font-size:44px;letter-spacing:-1.2px}
-    .flagship{grid-template-columns:1fr;padding:48px 20px}
+    .flagship{grid-template-columns:1fr;padding:48px 20px;gap:18px}
     .flagship-main{padding:32px}
     .flagship-time{font-size:56px}
     .flagship-main::before{font-size:100px;top:-10px}
     .flagship-stats{gap:20px}
+    .flagship-side{gap:14px}
+    .flagship-side .flagship-main{padding:22px}
+    .flagship-side .flagship-time{font-size:42px}
+    .flagship-side .flagship-main::before{font-size:80px}
     .section-head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:32px;padding-bottom:18px}
     .section-title{font-size:32px}
     .explorer{padding:48px 20px}
@@ -417,6 +433,23 @@
 </head>
 <body>
 
+<!-- Hidden source nav for the mobile burger menu (cloned by pro-ui.js) -->
+<nav class="site-nav" aria-hidden="true" style="display:none !important;">
+  <a href="index.html" class="active">🏠 ACCUEIL</a>
+  <a href="timeline.html">📅 TIMELINE</a>
+  <a href="progression.html">📊 PROGRESSION</a>
+  <a href="radar.html">🕸️ RADAR</a>
+  <a href="elite.html">🏅 ÉLITE</a>
+  <a href="carte.html">🗺️ CARTE</a>
+  <a href="comparaison.html">⚡ COMPARER</a>
+  <a href="meteo.html">🌤️ MÉTÉO</a>
+  <a href="galerie.html">📸 GALERIE</a>
+  <a href="wrapped.html">🎬 WRAPPED</a>
+  <a href="adn.html">🧬 ADN</a>
+  <a href="age-grading.html">⚖️ AGE GRADING</a>
+  <a href="trophees.html">🏆 TROPHÉES</a>
+</nav>
+
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="brand">
@@ -425,7 +458,7 @@
   </div>
   <div class="status">
     <span class="live-dot"></span>
-    DERNIÈRE MAJ · AVR 2026
+    DERNIÈRE MAJ · MAI 2026
   </div>
 </div>
 
@@ -434,7 +467,7 @@
   <div>
     <div class="hero-label fade-up d1">DASHBOARD PERSONNEL · 2019—2026</div>
     <h1 class="fade-up d2">
-      52 COURSES.<br/>
+      53 COURSES.<br/>
       <span class="outline">4 PAYS.</span><br/>
       UN <span class="accent">SUB-3H</span>.
     </h1>
@@ -453,12 +486,12 @@
 <section class="kpis">
   <a class="kpi fade-up d1" href="timeline.html">
     <div class="kpi-label">Courses</div>
-    <div class="kpi-value">52</div>
+    <div class="kpi-value">53</div>
     <div class="kpi-unit">depuis 2019</div>
   </a>
   <a class="kpi fade-up d2" href="carte.html">
     <div class="kpi-label">Km cumulés</div>
-    <div class="kpi-value">~1002</div>
+    <div class="kpi-value">~1012</div>
     <div class="kpi-unit">en compétition</div>
   </a>
   <a class="kpi fade-up d3" href="carte.html">
@@ -475,7 +508,7 @@
 
 <!-- FLAGSHIP -->
 <section class="flagship">
-  <a class="flagship-main" href="elite.html#marathon" style="display:block">
+  <a class="flagship-main" data-watermark="SUB-3H" href="elite.html#marathon" style="display:block">
     <div class="flagship-tag">★ RECORD PERSONNEL · MARATHON</div>
     <div class="flagship-time">2:59:51</div>
     <div class="flagship-race">
@@ -503,15 +536,58 @@
   </a>
 
   <div class="flagship-side">
-    <a class="flagship-card" href="elite.html#semi">
-      <div class="label">Semi-marathon PR</div>
-      <div class="val">1:23:48</div>
-      <div class="sub">Luxembourg · sept. 2025</div>
+    <a class="flagship-main" data-watermark="SUB-1H24" href="elite.html#semi" style="display:flex">
+      <div class="flagship-tag">★ RECORD PERSONNEL · SEMI-MARATHON</div>
+      <div class="flagship-time">1:23:48</div>
+      <div class="flagship-race">
+        <strong>Semi-Marathon Route du Vin</strong> · Luxembourg<br/>
+        28 septembre 2025 · 145e / 2499 finishers
+      </div>
+      <div class="flagship-stats">
+        <div>
+          <div class="flagship-stat-label">Allure</div>
+          <div class="flagship-stat-val">3'58"/km</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Vitesse</div>
+          <div class="flagship-stat-val">15,11 km/h</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Classement</div>
+          <div class="flagship-stat-val">TOP 6%</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Monde</div>
+          <div class="flagship-stat-val">~0,003%</div>
+        </div>
+      </div>
     </a>
-    <a class="flagship-card" href="elite.html#10km">
-      <div class="label">10 km PR</div>
-      <div class="val">37:41</div>
-      <div class="sub">Vitry-sur-Orne · mai 2024</div>
+
+    <a class="flagship-main" data-watermark="SUB-38" href="elite.html#10km" style="display:flex">
+      <div class="flagship-tag">★ RECORD PERSONNEL · 10 KM</div>
+      <div class="flagship-time">37:41</div>
+      <div class="flagship-race">
+        <strong>Course du Muguet</strong> · Vitry-sur-Orne<br/>
+        8 mai 2024 · 10e / 134 finishers
+      </div>
+      <div class="flagship-stats">
+        <div>
+          <div class="flagship-stat-label">Allure</div>
+          <div class="flagship-stat-val">3'46"/km</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Vitesse</div>
+          <div class="flagship-stat-val">15,92 km/h</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Classement</div>
+          <div class="flagship-stat-val">TOP 8%</div>
+        </div>
+        <div>
+          <div class="flagship-stat-label">Monde</div>
+          <div class="flagship-stat-val">~0,01%</div>
+        </div>
+      </div>
     </a>
   </div>
 </section>
@@ -582,7 +658,7 @@
       <div>
         <div class="card-icon">🗺️</div>
         <div class="card-title">Carte<br/>Interactive</div>
-        <div class="card-desc">52 courses, 19 villes, 4 pays. Mode replay pour revivre le parcours chronologique.</div>
+        <div class="card-desc">53 courses, 19 villes, 4 pays. Mode replay pour revivre le parcours chronologique.</div>
       </div>
       <div class="card-preview">Ouvrir la carte</div>
     </a>
@@ -632,7 +708,7 @@
       <div>
         <div class="card-icon">🧬</div>
         <div class="card-title">Running<br/>DNA</div>
-        <div class="card-desc">Ta signature unique de coureur. Double hélice procédurale issue de tes 52 courses.</div>
+        <div class="card-desc">Ta signature unique de coureur. Double hélice procédurale issue de tes 53 courses.</div>
       </div>
       <div class="card-preview">Découvrir ton ADN</div>
     </a>
@@ -667,6 +743,15 @@
     <a class="section-count" href="timeline.html" style="color:var(--accent)">VOIR TOUT →</a>
   </div>
   <div class="race-list">
+    <div class="race">
+      <div class="race-date">01.05.26</div>
+      <div>
+        <div class="race-name">La Conviviale</div>
+        <div class="race-sub">ROSSELANGE · 57 · TOP 12</div>
+      </div>
+      <div class="race-dist">10 KM</div>
+      <div class="race-time">38:43</div>
+    </div>
     <div class="race pr">
       <div class="race-date">12.04.26</div>
       <div>
@@ -685,21 +770,12 @@
       <div class="race-dist">21,1 KM</div>
       <div class="race-time">1:25:52</div>
     </div>
-    <div class="race">
-      <div class="race-date">05.10.25</div>
-      <div>
-        <div class="race-name">Sedan-Charleville</div>
-        <div class="race-sub">SEDAN · 08</div>
-      </div>
-      <div class="race-dist">23,6 KM</div>
-      <div class="race-time">1:38:50</div>
-    </div>
   </div>
 </section>
 
 <footer>
   <div>© 2026 GREGORY BERTHOLET · RUNNING HISTORY</div>
-  <div>DONNÉES RÉELLES · MIS À JOUR AVR 2026</div>
+  <div>DONNÉES RÉELLES · MIS À JOUR MAI 2026</div>
 </footer>
 
 </body>

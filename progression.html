@@ -691,10 +691,10 @@
                             <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><th scope="row" style="padding:7px 10px;text-align:left;color:#f7b801;">2023</th><td style="padding:7px 10px;text-align:right;">10</td><td style="padding:7px 10px;text-align:right;">15,5%</td><td style="padding:7px 10px;text-align:right;">6,9%</td><td style="padding:7px 10px;text-align:right;">13,48 km/h</td><td style="padding:7px 10px;text-align:right;">4:29/km</td><td style="padding:7px 10px;text-align:right;">184 km</td></tr>
                             <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><th scope="row" style="padding:7px 10px;text-align:left;color:#bc13fe;">2024</th><td style="padding:7px 10px;text-align:right;">11</td><td style="padding:7px 10px;text-align:right;">8,0%</td><td style="padding:7px 10px;text-align:right;">2,5%</td><td style="padding:7px 10px;text-align:right;">14,40 km/h</td><td style="padding:7px 10px;text-align:right;">4:12/km</td><td style="padding:7px 10px;text-align:right;">202 km</td></tr>
                             <tr style="border-bottom:1px solid rgba(255,255,255,0.06);"><th scope="row" style="padding:7px 10px;text-align:left;color:#00fff9;">2025</th><td style="padding:7px 10px;text-align:right;">5</td><td style="padding:7px 10px;text-align:right;">7,0%</td><td style="padding:7px 10px;text-align:right;">2,1%</td><td style="padding:7px 10px;text-align:right;">14,15 km/h</td><td style="padding:7px 10px;text-align:right;">4:16/km</td><td style="padding:7px 10px;text-align:right;">129 km</td></tr>
-                            <tr><th scope="row" style="padding:7px 10px;text-align:left;color:#ff006e;">2026*</th><td style="padding:7px 10px;text-align:right;">2</td><td style="padding:7px 10px;text-align:right;">7,0%</td><td style="padding:7px 10px;text-align:right;">6,8%</td><td style="padding:7px 10px;text-align:right;">14,41 km/h</td><td style="padding:7px 10px;text-align:right;">4:10/km</td><td style="padding:7px 10px;text-align:right;">63 km</td></tr>
+                            <tr><th scope="row" style="padding:7px 10px;text-align:left;color:#ff006e;">2026*</th><td style="padding:7px 10px;text-align:right;">3</td><td style="padding:7px 10px;text-align:right;">5,7%</td><td style="padding:7px 10px;text-align:right;">3,1%</td><td style="padding:7px 10px;text-align:right;">14,77 km/h</td><td style="padding:7px 10px;text-align:right;">4:04/km</td><td style="padding:7px 10px;text-align:right;">73 km</td></tr>
                         </tbody>
                     </table>
-                    <p style="margin-top:10px;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;">* Saison 2026 en cours — chiffres partiels au 12 avril 2026</p>
+                    <p style="margin-top:10px;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;">* Saison 2026 en cours — chiffres partiels au 1 mai 2026</p>
                 </div>
             </details>
         </div>
@@ -704,6 +704,7 @@
         function fmtDate(d){const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
 
         const racesData = [
+            {date: "2026-05-01", course: "La Conviviale", ville: "Rosselange", dept: "57", km: "10", classement: "12/389", indice: "3.08", perf: "00:38:43", tempsMoyenKm: "3:52"},
             {date: "2026-04-12", course: "Wizz Air Milano Marathon", ville: "Milan", dept: "0", km: "42.195", classement: "1017/15050", indice: "6.76", perf: "02:59:51", tempsMoyenKm: "4:15", record: true},
             {date: "2026-03-01", course: "Semi Marathon Intercommunal de la Vallée de l'Orne", ville: "Clouange", dept: "57", km: "21.1", classement: "48/673", indice: "7.13", perf: "01:25:52", tempsMoyenKm: "4:04"},
             {date: "2025-10-05", course: "Sedan-Charleville", ville: "Sedan", dept: "08", km: "23.6", classement: "178/3365", indice: "5.29", perf: "01:38:50", tempsMoyenKm: "4:11"},
@@ -1410,7 +1411,7 @@ function buildProgressionRecords() {
                     <div class="podium-year-badge" style="border:1px solid ${podiumColors[rankIdx]};color:${podiumColors[rankIdx]};background:${podiumColors[rankIdx].replace('0.8','0.08').replace('0.7','0.07')};">${s.year}</div>
                     <div class="podium-medal">${medals[rankIdx]}</div>
                     <div class="podium-score" style="color:${podiumColors[rankIdx]};">${scoreLabel}</div>
-                    <div class="podium-block" style="height:${podiumHeights[colIdx]}px;">${rankIdx+1}</div>
+                    <div class="podium-block" style="height:${podiumHeights[rankIdx]}px;">${rankIdx+1}</div>
                     <div class="podium-stats">
                         <div><strong>${s.count}</strong> courses</div>
                         <div><strong>${s.km}</strong> km</div>

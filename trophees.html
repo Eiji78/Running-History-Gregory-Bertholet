@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🏆 Mur des Trophées — Greg</title>
-<meta name="description" content="Mur des dossards et quêtes débloquées : 52 courses, 4 pays, sub-3h marathon, semi sous 1:25, podiums et achievements."/>
+<meta name="description" content="Mur des dossards et quêtes débloquées : 53 courses, 4 pays, sub-3h marathon, semi sous 1:25, podiums et achievements."/>
 <meta name="author" content="Gregory Bertholet"/>
 <meta name="theme-color" content="#0a0a0b">
 <link rel="manifest" href="manifest.webmanifest"/>
@@ -359,6 +359,7 @@ html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-
 <script>
 /* ─── DATA ─────────────────────────────────────────── */
 const RACES = [
+  {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:38:43",allure:"3:52",classement:"12/389",fc:174,strava:"https://strava.app.link/X3NCSNYtN2b",bib:"438",note:"Top 12 · Reprise post-Milano"},
   {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",pays:"IT",flag:"🇮🇹",km:42.195,perf:"02:59:51",allure:"4:15",classement:"1017/15050",record:true,fc:167,strava:"https://www.strava.com/activities/18075963697",note:"SUB-3H ! 🚀"},
   {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:52",allure:"4:04",classement:"48/673",fc:162,strava:"https://www.strava.com/activities/17561583056"},
   {date:"2025-09-28",course:"Semi Route du Vin",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:23:48",allure:"3:58",classement:"145/2499",record:true,fc:172,strava:"https://www.strava.com/activities/15961102163",note:"PR Semi"},
@@ -457,6 +458,7 @@ function rankPct(c){
 
 /* generate stable bib number from date+km */
 function bibNumber(r){
+  if(r.bib) return r.bib;
   const d=r.date.replaceAll('-','');
   const seed=parseInt(d.slice(2))^Math.round(r.km*7);
   return (seed%9000+1000).toString();
