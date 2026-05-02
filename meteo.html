@@ -556,57 +556,57 @@
 // Each race: date, course, ville, km, classement, perf, allure, lat, lng, strava, record
 // Hour is estimated: most road races start 9h-10h
 const RACES = [
-  {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"12/389",perf:"00:38:43",allure:"3:52",lat:49.2582,lng:6.0681,hour:9,strava:"https://strava.app.link/X3NCSNYtN2b",fc:174},
-  {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",km:42.195,classement:"1017/15050",perf:"02:59:51",allure:"4:15",lat:45.4654,lng:9.1859,hour:9,strava:"https://www.strava.com/activities/18075963697",record:true,fc:167},
-  {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",lat:49.2662,lng:6.0894,hour:9,strava:"https://www.strava.com/activities/17561583056",fc:162},
-  {date:"2025-09-28",course:"Route du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/15961102163",record:true,fc:172},
-  {date:"2025-05-31",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",perf:"01:29:51",allure:"4:14",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/14654980086",fc:174},
-  {date:"2025-05-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",perf:"01:38:50",allure:"4:11",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/16041281275",fc:171},
-  {date:"2025-04-27",course:"Marathon Annecy",ville:"Annecy",km:42.195,classement:"583/3845",perf:"03:26:08",allure:"4:53",lat:45.8992,lng:6.1294,hour:8,strava:"https://www.strava.com/activities/14299457228",fc:167},
-  {date:"2025-03-16",course:"Semi Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",perf:"01:25:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/13895827191",fc:168},
-  {date:"2024-11-05",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"176/6909",perf:"01:31:20",allure:"4:19",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/11387709862",fc:178},
-  {date:"2024-10-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"144/2440",perf:"00:40:29",allure:"4:02",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/10928040300",fc:176},
-  {date:"2024-09-29",course:"Route du Vin",ville:"Remich",km:21.1,classement:"178/1895",perf:"01:26:33",allure:"4:06",lat:49.5474,lng:6.3624,hour:9,strava:"https://www.strava.com/activities/12530152817",fc:174},
-  {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",perf:"01:00:59",allure:"5:10",lat:49.2754,lng:6.2055,hour:9,strava:"https://www.strava.com/activities/12235936176",fc:168},
-  {date:"2024-08-05",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",perf:"00:37:41",allure:"3:46",lat:49.2687,lng:6.1055,hour:9,strava:"https://www.strava.com/activities/11359052509",record:true,fc:181},
-  {date:"2024-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",lat:49.2662,lng:6.0894,hour:21,strava:"https://www.strava.com/activities/11597795067",fc:179},
-  {date:"2024-07-04",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"3058/54175",perf:"03:06:21",allure:"4:24",lat:48.8575,lng:2.3514,hour:7,strava:"https://www.strava.com/activities/11124704539",fc:174},
-  {date:"2024-06-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",perf:"01:40:51",allure:"4:16",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/12589698929",fc:170},
-  {date:"2024-04-21",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"80/1089",perf:"01:25:30",allure:"4:03",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/11229080745",fc:171},
-  {date:"2024-03-17",course:"Semi Vallée de l'Orne",ville:"Moyeuvre-Grande",km:21.1,classement:"34/416",perf:"01:30:06",allure:"4:16",lat:49.2513,lng:6.0452,hour:9,strava:"https://www.strava.com/activities/10977086066",fc:166},
-  {date:"2024-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"14/199",perf:"00:39:17",allure:"3:56",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/11304839621",fc:183},
-  {date:"2023-12-03",course:"Postlaf",ville:"Luxembourg",km:10,classement:"142/2067",perf:"00:42:44",allure:"4:16",lat:49.6106,lng:6.1299,hour:9,strava:"https://www.strava.com/activities/8700435543",fc:178},
-  {date:"2023-10-14",course:"Haard Trail Dudelange",ville:"Dudelange",km:15,classement:"27/94",perf:"01:11:15",allure:"4:45",lat:49.4785,lng:6.0859,hour:9,strava:"https://www.strava.com/activities/10037221696",fc:178},
-  {date:"2023-09-24",course:"Route du Vin",ville:"Remich",km:21.1,classement:"179/1370",perf:"01:30:39",allure:"4:17",lat:49.5474,lng:6.3624,hour:9,strava:"https://www.strava.com/activities/9909962182",fc:174},
-  {date:"2023-09-07",course:"La Forestière",ville:"Moyeuvre-Grande",km:10,classement:"39/164",perf:"00:50:30",allure:"5:03",lat:49.2513,lng:6.0452,hour:9,strava:"https://www.strava.com/activities/9416504602",fc:181},
+  {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"12/389",perf:"00:38:43",allure:"3:52",lat:49.2582,lng:6.0681,hour:10,strava:"https://strava.app.link/X3NCSNYtN2b",fc:174},
+  {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",km:42.195,classement:"1017/15050",perf:"02:59:51",allure:"4:15",lat:45.4654,lng:9.1859,hour:10,strava:"https://www.strava.com/activities/18075963697",record:true,fc:167},
+  {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/17561583056",fc:162},
+  {date:"2025-09-28",course:"Route du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",lat:49.6106,lng:6.1299,hour:10,strava:"https://www.strava.com/activities/15961102163",record:true,fc:172},
+  {date:"2025-05-31",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",perf:"01:29:51",allure:"4:14",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/14654980086",fc:174},
+  {date:"2025-10-05",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",perf:"01:38:50",allure:"4:11",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/16041281275",fc:171},
+  {date:"2025-04-27",course:"Marathon Annecy",ville:"Annecy",km:42.195,classement:"583/3845",perf:"03:26:08",allure:"4:53",lat:45.8992,lng:6.1294,hour:10,strava:"https://www.strava.com/activities/14299457228",fc:167},
+  {date:"2025-03-16",course:"Semi Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",perf:"01:25:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:10,strava:"https://www.strava.com/activities/13895827191",fc:168},
+  {date:"2024-05-11",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"176/6909",perf:"01:31:20",allure:"4:19",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/11387709862",fc:178},
+  {date:"2024-03-10",course:"Postlaf",ville:"Luxembourg",km:10,classement:"144/2440",perf:"00:40:29",allure:"4:02",lat:49.6106,lng:6.1299,hour:10,strava:"https://www.strava.com/activities/10928040300",fc:176},
+  {date:"2024-09-29",course:"Route du Vin",ville:"Remich",km:21.1,classement:"178/1895",perf:"01:26:33",allure:"4:06",lat:49.5474,lng:6.3624,hour:10,strava:"https://www.strava.com/activities/12530152817",fc:174},
+  {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",perf:"01:00:59",allure:"5:10",lat:49.2754,lng:6.2055,hour:10,strava:"https://www.strava.com/activities/12235936176",fc:168},
+  {date:"2024-05-08",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",perf:"00:37:41",allure:"3:46",lat:49.2687,lng:6.1055,hour:10,strava:"https://www.strava.com/activities/11359052509",record:true,fc:181},
+  {date:"2024-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/11597795067",fc:179},
+  {date:"2024-04-07",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"3058/54175",perf:"03:06:21",allure:"4:24",lat:48.8575,lng:2.3514,hour:10,strava:"https://www.strava.com/activities/11124704539",fc:174},
+  {date:"2024-10-06",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",perf:"01:40:51",allure:"4:16",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/12589698929",fc:170},
+  {date:"2024-04-21",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"80/1089",perf:"01:25:30",allure:"4:03",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/11229080745",fc:171},
+  {date:"2024-03-17",course:"Semi Vallée de l'Orne",ville:"Moyeuvre-Grande",km:21.1,classement:"34/416",perf:"01:30:06",allure:"4:16",lat:49.2513,lng:6.0452,hour:10,strava:"https://www.strava.com/activities/10977086066",fc:166},
+  {date:"2024-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"14/199",perf:"00:39:17",allure:"3:56",lat:49.2582,lng:6.0681,hour:10,strava:"https://www.strava.com/activities/11304839621",fc:183},
+  {date:"2023-03-12",course:"Postlaf",ville:"Luxembourg",km:10,classement:"142/2067",perf:"00:42:44",allure:"4:16",lat:49.6106,lng:6.1299,hour:10,strava:"https://www.strava.com/activities/8700435543",fc:178},
+  {date:"2023-10-14",course:"Haard Trail Dudelange",ville:"Dudelange",km:15,classement:"27/94",perf:"01:11:15",allure:"4:45",lat:49.4785,lng:6.0859,hour:10,strava:"https://www.strava.com/activities/10037221696",fc:178},
+  {date:"2023-09-24",course:"Route du Vin",ville:"Remich",km:21.1,classement:"179/1370",perf:"01:30:39",allure:"4:17",lat:49.5474,lng:6.3624,hour:10,strava:"https://www.strava.com/activities/9909962182",fc:174},
+  {date:"2023-07-09",course:"La Forestière",ville:"Moyeuvre-Grande",km:10,classement:"39/164",perf:"00:50:30",allure:"5:03",lat:49.2513,lng:6.0452,hour:10,strava:"https://www.strava.com/activities/9416504602",fc:181},
   {date:"2023-06-25",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"24/169",perf:"00:41:37",allure:"4:10",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/9330053741",fc:183},
-  {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",perf:"03:47:13",allure:"5:23",lat:49.6106,lng:6.1299,hour:20,strava:"https://www.strava.com/activities/9108818382",fc:175},
-  {date:"2023-04-23",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"82/690",perf:"01:27:20",allure:"4:08",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/8940931342",fc:178},
-  {date:"2023-03-19",course:"Semi Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",perf:"01:28:36",allure:"4:12",lat:49.2513,lng:6.0934,hour:9,strava:"https://www.strava.com/activities/8739505302",fc:179},
-  {date:"2023-02-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/9189866875",fc:184},
-  {date:"2023-01-10",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",perf:"01:48:54",allure:"4:36",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/9955737974",fc:182},
-  {date:"2022-10-16",course:"Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",perf:"03:13:45",allure:"4:35",lat:52.3676,lng:4.9041,hour:9,strava:"https://www.strava.com/activities/7970754505",fc:173},
-  {date:"2022-09-18",course:"Semi Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",perf:"01:32:20",allure:"4:23",lat:49.3038,lng:6.1540,hour:9,strava:"https://www.strava.com/activities/7826241352",fc:178},
+  {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",perf:"03:47:13",allure:"5:23",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/9108818382",fc:175},
+  {date:"2023-04-23",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"82/690",perf:"01:27:20",allure:"4:08",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/8940931342",fc:178},
+  {date:"2023-03-19",course:"Semi Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",perf:"01:28:36",allure:"4:12",lat:49.2513,lng:6.0934,hour:10,strava:"https://www.strava.com/activities/8739505302",fc:179},
+  {date:"2023-06-02",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/9189866875",fc:184},
+  {date:"2023-10-01",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",perf:"01:48:54",allure:"4:36",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/9955737974",fc:182},
+  {date:"2022-10-16",course:"Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",perf:"03:13:45",allure:"4:35",lat:52.3676,lng:4.9041,hour:10,strava:"https://www.strava.com/activities/7970754505",fc:173},
+  {date:"2022-09-18",course:"Semi Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",perf:"01:32:20",allure:"4:23",lat:49.3038,lng:6.1540,hour:10,strava:"https://www.strava.com/activities/7826241352",fc:178},
   {date:"2022-06-26",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"21/147",perf:"00:41:27",allure:"4:09",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/7369943097",fc:177},
-  {date:"2022-05-28",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"456/4498",perf:"01:37:46",allure:"4:38",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/7217953463",fc:174},
-  {date:"2022-05-15",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"289/798",perf:"01:51:28",allure:"5:17",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/7145622553",fc:177},
+  {date:"2022-05-28",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"456/4498",perf:"01:37:46",allure:"4:38",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/7217953463",fc:174},
+  {date:"2022-05-15",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"289/798",perf:"01:51:28",allure:"5:17",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/7145622553",fc:177},
   {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"77/325",perf:"00:40:16",allure:"4:02",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/6889279481",fc:186},
-  {date:"2022-03-20",course:"Semi Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",perf:"01:33:58",allure:"4:27",lat:49.2722,lng:6.1353,hour:9,strava:"https://www.strava.com/activities/6852262326",fc:179},
-  {date:"2022-03-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/7249627360",fc:182},
-  {date:"2022-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",perf:"00:40:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/7068557851",fc:176},
-  {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",perf:"03:29:02",allure:"4:57",lat:48.8575,lng:2.3514,hour:8,strava:"https://www.strava.com/activities/6125599297",fc:172},
-  {date:"2021-09-19",course:"Semi Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",perf:"01:33:14",allure:"4:25",lat:49.3038,lng:6.1540,hour:9,strava:"https://www.strava.com/activities/5983824622",fc:178},
-  {date:"2021-04-07",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"78/250",perf:"00:40:49",allure:"4:05",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/5572013481",fc:186},
-  {date:"2020-01-03",course:"Semi Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",perf:"01:42:59",allure:"4:53",lat:49.2687,lng:6.1055,hour:9,strava:"https://www.strava.com/activities/3144210898",fc:178},
-  {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",perf:"01:59:38",allure:"5:04",lat:49.7035,lng:4.9386,hour:9,strava:"https://www.strava.com/activities/2767774831",fc:182},
-  {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",perf:"01:15:11",allure:"5:01",lat:49.2754,lng:6.2055,hour:9,strava:"https://www.strava.com/activities/2649386092",fc:185},
-  {date:"2019-07-06",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",lat:49.2662,lng:6.0894,hour:21,strava:"https://www.strava.com/activities/2431537538",fc:181},
+  {date:"2022-03-20",course:"Semi Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",perf:"01:33:58",allure:"4:27",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/6852262326",fc:179},
+  {date:"2022-06-03",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/7249627360",fc:182},
+  {date:"2022-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",perf:"00:40:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:10,strava:"https://www.strava.com/activities/7068557851",fc:176},
+  {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",perf:"03:29:02",allure:"4:57",lat:48.8575,lng:2.3514,hour:10,strava:"https://www.strava.com/activities/6125599297",fc:172},
+  {date:"2021-09-19",course:"Semi Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",perf:"01:33:14",allure:"4:25",lat:49.3038,lng:6.1540,hour:10,strava:"https://www.strava.com/activities/5983824622",fc:178},
+  {date:"2021-07-04",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"78/250",perf:"00:40:49",allure:"4:05",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/5572013481",fc:186},
+  {date:"2020-03-01",course:"Semi Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",perf:"01:42:59",allure:"4:53",lat:49.2687,lng:6.1055,hour:10,strava:"https://www.strava.com/activities/3144210898",fc:178},
+  {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",perf:"01:59:38",allure:"5:04",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/2767774831",fc:182},
+  {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",perf:"01:15:11",allure:"5:01",lat:49.2754,lng:6.2055,hour:10,strava:"https://www.strava.com/activities/2649386092",fc:185},
+  {date:"2019-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/2431537538",fc:181},
   {date:"2019-06-30",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"73/234",perf:"00:46:42",allure:"4:40",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/2491818770",fc:185},
-  {date:"2019-04-28",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"521/987",perf:"01:49:48",allure:"5:12",lat:49.3573,lng:6.1686,hour:9,strava:"https://www.strava.com/activities/2325102723",fc:186},
-  {date:"2019-03-17",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",perf:"01:53:04",allure:"5:22",lat:49.2662,lng:6.0894,hour:9,strava:"https://www.strava.com/activities/2220974946"},
-  {date:"2019-03-11",course:"Course Marcel Kiefer",ville:"Hussigny-Godbrange",km:21,classement:"41/102",perf:"01:52:47",allure:"5:22",lat:49.4927,lng:5.8734,hour:9,strava:"https://www.strava.com/activities/2838102426",fc:184},
-  {date:"2019-01-06",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"1564/6470",perf:"01:55:51",allure:"5:29",lat:49.6106,lng:6.1299,hour:21,strava:"https://www.strava.com/activities/2415438474",fc:185},
-  {date:"2019-01-05",course:"La Conviviale",ville:"Rosselange",km:10,classement:"121/248",perf:"00:49:03",allure:"4:54",lat:49.2582,lng:6.0681,hour:9,strava:"https://www.strava.com/activities/2332583576",fc:185},
+  {date:"2019-04-28",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"521/987",perf:"01:49:48",allure:"5:12",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/2325102723",fc:186},
+  {date:"2019-03-17",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",perf:"01:53:04",allure:"5:22",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/2220974946"},
+  {date:"2019-11-03",course:"Course Marcel Kiefer",ville:"Hussigny-Godbrange",km:21,classement:"41/102",perf:"01:52:47",allure:"5:22",lat:49.4927,lng:5.8734,hour:10,strava:"https://www.strava.com/activities/2838102426",fc:184},
+  {date:"2019-06-01",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"1564/6470",perf:"01:55:51",allure:"5:29",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/2415438474",fc:185},
+  {date:"2019-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"121/248",perf:"00:49:03",allure:"4:54",lat:49.2582,lng:6.0681,hour:10,strava:"https://www.strava.com/activities/2332583576",fc:185},
 ];
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -734,12 +734,67 @@ function getW(race) { return weatherData[race.date + '_' + race.ville]; }
 
 function buildUI() {
     const races = RACES.filter(r => getW(r));
+    buildFeatured(races);
     buildInsights(races);
     buildCharts(races);
     buildConditions(races);
     buildFilters();
     buildTable('all');
     buildAccessibleMeteoTable(races);
+}
+
+// ── 3 courses marquantes côté météo (recomputed from actual fetched data) ────
+function buildFeatured(races) {
+    const wrap = document.querySelector('.featured-preview');
+    if (!wrap || !races.length) return;
+
+    // 1) COOL / best perf: meilleur classement (en %) parmi les courses fraîches (ressentie ≤ 15°C)
+    const cool = races
+        .filter(r => { const w=getW(r); return w && w.apparent <= 15; })
+        .sort((a,b) => pct(a.classement) - pct(b.classement))[0];
+
+    // 2) HOT / ralentissement: course avec la ressentie la plus élevée
+    const hot = [...races]
+        .sort((a,b) => (getW(b).apparent) - (getW(a).apparent))[0];
+
+    // 3) WIND: course avec le vent le plus fort (priorité aux rafales)
+    const wind = [...races]
+        .sort((a,b) => {
+            const wa=getW(a), wb=getW(b);
+            const sa = Math.max(wa.wind||0, wa.gusts||0);
+            const sb = Math.max(wb.wind||0, wb.gusts||0);
+            return sb - sa;
+        })[0];
+
+    function condLabel(w) {
+        const o = wmoIcon(w.weatherCode);
+        return o.icon + ' ' + o.label.toLowerCase();
+    }
+
+    function card(cls, icon, tag, race, metaExtra) {
+        if (!race) return '';
+        const w = getW(race);
+        return `<div class="feat-card ${cls}">
+            <div class="feat-icon">${icon}</div>
+            <div class="feat-tag">${tag}</div>
+            <div class="feat-title">${race.course}</div>
+            <div class="feat-meta">${race.ville} · ${fmtDate(race.date)} · ${metaExtra} · ${condLabel(w)}</div>
+            <div class="feat-hero">${race.perf}</div>
+            <div class="feat-stats">
+                <div class="feat-stat"><span class="stat-label">Distance</span>${race.km} km</div>
+                <div class="feat-stat"><span class="stat-label">Allure</span>${race.allure}/km</div>
+                <div class="feat-stat"><span class="stat-label">${race.fc ? 'FC' : 'Classement'}</span>${race.fc ? race.fc+' bpm' : race.classement}</div>
+            </div>
+        </div>`;
+    }
+
+    const html = [
+        cool ? card('cool', '❄️', 'Temps frais · perf optimale', cool, `${getW(cool).apparent}°C ressentie`) : '',
+        hot  ? card('hot',  '🔥', 'Chaleur · ralentissement',     hot,  `${getW(hot).apparent}°C ressentie`)  : '',
+        wind ? card('wind', '💨', 'Vent · rafales',               wind, `${Math.round(Math.max(getW(wind).wind||0, getW(wind).gusts||0))} km/h vent`) : '',
+    ].join('');
+
+    wrap.innerHTML = html;
 }
 
 function buildAccessibleMeteoTable(races) {
@@ -762,7 +817,7 @@ function buildAccessibleMeteoTable(races) {
         </thead>
         <tbody>
             ${sorted.map(r => { const w = getW(r); return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
-                <th scope="row" style="padding:7px 10px;text-align:left;color:rgba(0,180,255,0.75);font-weight:600;">${r.date}</th>
+                <th scope="row" style="padding:7px 10px;text-align:left;color:rgba(0,180,255,0.75);font-weight:600;">${fmtDate(r.date)}</th>
                 <td style="padding:7px 10px;">${r.course}</td>
                 <td style="padding:7px 10px;text-align:right;">${w ? w.temp+'°C' : '—'}</td>
                 <td style="padding:7px 10px;text-align:right;">${w ? w.apparent+'°C' : '—'}</td>
