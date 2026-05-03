@@ -665,6 +665,24 @@
             <canvas id="paceChart" style="width:100%!important;" role="img" aria-label="Graphique d'évolution de l'allure moyenne en minutes par kilomètre, de 5:04 min/km en 2019 à 4:10 min/km en 2026. Progression nette de l'allure de compétition."></canvas>
         </div>
 
+        <!-- Volume d'entraînement -->
+        <div id="training" class="glass-card p-8 fade-in" style="animation-delay:0.18s; overflow:visible; margin-bottom:2rem; scroll-margin-top:100px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:1.25rem; padding-left:0.75rem; padding-top:0.25rem;">
+                <div style="flex:1; min-width:240px;">
+                    <h3 class="text-xl font-bold tracking-wider" style="color:var(--neon-purple);">🏃 VOLUME D'ENTRAÎNEMENT</h3>
+                    <p style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.05em;margin-top:0.3rem;line-height:1.5;">Kilomètres parcourus à l'entraînement chaque année — le socle invisible derrière les perfs en course</p>
+                </div>
+                <div style="text-align:right; flex-shrink:0;">
+                    <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:var(--neon-purple); line-height:1;">17 154 km</div>
+                    <div style="font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase; margin-top:5px;">cumulés depuis 2011</div>
+                </div>
+            </div>
+            <div style="position:relative; height:340px;">
+                <canvas id="trainingChart" role="img" aria-label="Histogramme du volume d'entraînement annuel de 2011 à 2025 superposé à une courbe cumulée. Volumes par année : 275 km en 2011, 169 en 2012, 53 en 2013, 32 en 2014, 81 en 2015, 546 en 2016, 538 en 2017, 763 en 2018, 1200 en 2019, 2065 en 2020, 2238 en 2021, 2123 en 2022, 2206 en 2023, 2391 en 2024, 2474 en 2025. Total cumulé 17 154 km."></canvas>
+            </div>
+            <p style="font-size:0.7rem; color:rgba(255,255,255,0.42); margin-top:1rem; padding-left:0.75rem; line-height:1.55; font-style:italic;">2026 en cours — non comptabilisé. Le déclic 2016 (546 km) suivi de l'envol 2019 (1 200 km) puis la stabilisation au‑dessus de 2 000 km/an depuis 2020 expliquent largement la trajectoire en compétition.</p>
+        </div>
+
         <!-- Accessible data table -->
         <div class="glass-card p-8 fade-in" style="animation-delay:0.2s; margin-bottom:2rem;">
             <details class="data-toggle">
@@ -1201,6 +1219,92 @@
                     }
                 }
             });
+
+            // ── VOLUME D'ENTRAÎNEMENT ──────────────────────────────────────
+            const trainingCtx = document.getElementById('trainingChart')?.getContext('2d');
+            if (trainingCtx) {
+                const trainingYears = ['2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
+                const trainingKm = [275,169,53,32,81,546,538,763,1200,2065,2238,2123,2206,2391,2474];
+                const trainingCum = trainingKm.reduce((acc, v, i) => { acc.push((acc[i-1]||0) + v); return acc; }, []);
+                new Chart(trainingCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: trainingYears,
+                        datasets: [
+                            {
+                                label: 'Volume annuel (km)',
+                                data: trainingKm,
+                                backgroundColor: trainingYears.map((_,i)=>`rgba(200,80,255,${0.35+0.55*(i/(trainingYears.length-1))})`),
+                                borderColor: 'rgba(200,80,255,1)',
+                                borderWidth: 1.5,
+                                borderRadius: 4,
+                                yAxisID: 'y',
+                                order: 2
+                            },
+                            {
+                                label: 'Cumul (km)',
+                                data: trainingCum,
+                                type: 'line',
+                                borderColor: 'rgba(0,255,136,0.9)',
+                                backgroundColor: 'rgba(0,255,136,0.12)',
+                                borderWidth: 2.5,
+                                pointRadius: 4,
+                                pointHoverRadius: 6,
+                                pointBackgroundColor: 'rgba(0,255,136,1)',
+                                pointBorderColor: '#000',
+                                pointBorderWidth: 1.5,
+                                fill: true,
+                                tension: 0.35,
+                                yAxisID: 'y1',
+                                order: 1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            x: {
+                                ticks: { color: 'rgba(255,255,255,0.55)', font: { size: 11 } },
+                                grid: { color: 'rgba(255,255,255,0.04)' }
+                            },
+                            y: {
+                                position: 'left',
+                                beginAtZero: true,
+                                ticks: { color: 'rgba(200,80,255,0.85)', callback: v => v + ' km', font: { size: 10 } },
+                                grid: { color: 'rgba(255,255,255,0.05)' },
+                                title: { display: true, text: 'Volume annuel', color: 'rgba(200,80,255,0.65)', font: { size: 10 } }
+                            },
+                            y1: {
+                                position: 'right',
+                                beginAtZero: true,
+                                ticks: { color: 'rgba(0,255,136,0.85)', callback: v => v + ' km', font: { size: 10 } },
+                                grid: { drawOnChartArea: false },
+                                title: { display: true, text: 'Cumul', color: 'rgba(0,255,136,0.65)', font: { size: 10 } }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                labels: { color: 'rgba(255,255,255,0.85)', usePointStyle: true, padding: 14, font: { size: 11 } }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(7,7,14,0.95)',
+                                titleColor: '#00fff9',
+                                bodyColor: '#fff',
+                                borderColor: 'rgba(200,80,255,0.5)',
+                                borderWidth: 1,
+                                padding: 10,
+                                callbacks: {
+                                    label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('fr-FR') + ' km'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
 
         }
 
