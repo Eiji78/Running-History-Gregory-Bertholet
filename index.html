@@ -94,6 +94,7 @@
     --accent-hot:#ff3d5a;
     --accent-blue:#5b8cff;
     --accent-yellow:#ffd400;
+    --accent-purple:#c850ff;
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
@@ -155,7 +156,7 @@
   /* ---------- KPI STRIP ---------- */
   .kpis{
     max-width:1400px;margin:0 auto;
-    display:grid;grid-template-columns:repeat(4,1fr);
+    display:grid;grid-template-columns:repeat(5,1fr);
     border-bottom:1px solid var(--line);
   }
   .kpi{
@@ -175,8 +176,9 @@
   .kpi-unit{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--fg-dim);margin-top:8px}
   .kpi:nth-child(1) .kpi-value{color:var(--accent)}
   .kpi:nth-child(2) .kpi-value{color:var(--accent-blue)}
-  .kpi:nth-child(3) .kpi-value{color:var(--accent-yellow)}
-  .kpi:nth-child(4) .kpi-value{color:var(--accent-hot)}
+  .kpi:nth-child(3) .kpi-value{color:var(--accent-purple)}
+  .kpi:nth-child(4) .kpi-value{color:var(--accent-yellow)}
+  .kpi:nth-child(5) .kpi-value{color:var(--accent-hot)}
 
   /* ---------- FLAGSHIP RECORD ---------- */
   .flagship{
@@ -371,7 +373,7 @@
     .hero-meta{text-align:left}
     .kpis{grid-template-columns:repeat(2,1fr)}
     .kpi{border-bottom:1px solid var(--line);padding:28px 20px}
-    .kpi:nth-child(2){border-right:none}
+    .kpi:nth-child(even){border-right:none}
     .kpi-value{font-size:44px;letter-spacing:-1.2px}
     .flagship{grid-template-columns:1fr;padding:48px 20px;gap:18px}
     .flagship-main{padding:32px}
@@ -425,7 +427,7 @@
   /* Entrance animation */
   .fade-up{opacity:0;transform:translateY(20px);animation:fadeUp 0.7s ease forwards}
   @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-  .d1{animation-delay:0.05s}.d2{animation-delay:0.1s}.d3{animation-delay:0.15s}.d4{animation-delay:0.2s}
+  .d1{animation-delay:0.05s}.d2{animation-delay:0.1s}.d3{animation-delay:0.15s}.d4{animation-delay:0.2s}.d5{animation-delay:0.25s}
 </style>
 <script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <link rel="stylesheet" href="pro-ui.css">
@@ -494,12 +496,17 @@
     <div class="kpi-value">~1012</div>
     <div class="kpi-unit">en compétition</div>
   </a>
-  <a class="kpi fade-up d3" href="carte.html">
+  <a class="kpi fade-up d3" href="progression.html#training">
+    <div class="kpi-label">Km cumulés</div>
+    <div class="kpi-value">17 154</div>
+    <div class="kpi-unit">à l'entraînement</div>
+  </a>
+  <a class="kpi fade-up d4" href="carte.html">
     <div class="kpi-label">Pays visités</div>
     <div class="kpi-value">4</div>
     <div class="kpi-unit">19 villes</div>
   </a>
-  <a class="kpi fade-up d4" href="timeline.html#marathon">
+  <a class="kpi fade-up d5" href="timeline.html#marathon">
     <div class="kpi-label">Marathons</div>
     <div class="kpi-value">6</div>
     <div class="kpi-unit">dont 1 sub-3h</div>
