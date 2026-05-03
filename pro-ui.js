@@ -273,7 +273,7 @@
             if (e.key === 'Escape' && panel.classList.contains('open')) close();
         });
 
-        const mq = window.matchMedia('(min-width: 769px)');
+        const mq = window.matchMedia('(min-width: 1025px)');
         if (mq.addEventListener) {
             mq.addEventListener('change', function (ev) { if (ev.matches) close(); });
         }

@@ -394,7 +394,7 @@ html[data-theme="light"] .pro-theme-toggle {
 
 /* État .active : style timeline, simple et cohérent (cf. nav.site-nav a.active en tête) */
 
-/* Hamburger button (invisible par défaut, visible < 768px via @media) */
+/* Hamburger button (invisible par défaut, visible <= 1024px via @media — iPad inclus) */
 .pro-hamburger {
     display: none;
     position: fixed;
@@ -516,8 +516,8 @@ body.pro-mobile-nav-open {
     overflow: hidden;
 }
 
-/* Activation mobile */
-@media (max-width: 768px) {
+/* Activation mobile + tablette (iPad portrait inclus) */
+@media (max-width: 1024px) {
     nav.site-nav,
     .site-nav {
         /* On cache la nav desktop, le hamburger la remplace */
@@ -526,12 +526,12 @@ body.pro-mobile-nav-open {
     .pro-hamburger {
         display: flex;
     }
-    /* En mobile, on décale le breadcrumb à droite du hamburger */
+    /* En mobile/tablette, on décale le breadcrumb à droite du hamburger */
     .pro-breadcrumb {
         top: 22px;
         left: 74px;
     }
-    /* Sur l'index, on cache aussi le topbar (brand + statut) */
+    /* Sur l'index, on cache aussi le topbar (brand + statut) pour laisser la place au hamburger */
     .topbar {
         display: none !important;
     }
