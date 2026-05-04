@@ -673,14 +673,14 @@
                     <p style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.05em;margin-top:0.3rem;line-height:1.5;">Kilomètres parcourus à l'entraînement chaque année — le socle invisible derrière les perfs en course</p>
                 </div>
                 <div style="text-align:right; flex-shrink:0;">
-                    <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:var(--neon-purple); line-height:1;">17 154 km</div>
+                    <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:var(--neon-purple); line-height:1;">18 240 km</div>
                     <div style="font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase; margin-top:5px;">cumulés depuis 2011</div>
                 </div>
             </div>
             <div style="position:relative; height:340px;">
-                <canvas id="trainingChart" role="img" aria-label="Histogramme du volume d'entraînement annuel de 2011 à 2025 superposé à une courbe cumulée. Volumes par année : 275 km en 2011, 169 en 2012, 53 en 2013, 32 en 2014, 81 en 2015, 546 en 2016, 538 en 2017, 763 en 2018, 1200 en 2019, 2065 en 2020, 2238 en 2021, 2123 en 2022, 2206 en 2023, 2391 en 2024, 2474 en 2025. Total cumulé 17 154 km."></canvas>
+                <canvas id="trainingChart" role="img" aria-label="Histogramme du volume d'entraînement annuel de 2011 à 2026 superposé à une courbe cumulée. Volumes par année : 275 km en 2011, 169 en 2012, 53 en 2013, 32 en 2014, 81 en 2015, 546 en 2016, 538 en 2017, 763 en 2018, 1200 en 2019, 2065 en 2020, 2238 en 2021, 2123 en 2022, 2206 en 2023, 2391 en 2024, 2474 en 2025, 1086 en 2026 (en cours). Total cumulé 18 240 km."></canvas>
             </div>
-            <p style="font-size:0.7rem; color:rgba(255,255,255,0.42); margin-top:1rem; padding-left:0.75rem; line-height:1.55; font-style:italic;">2026 en cours — non comptabilisé. Le déclic 2016 (546 km) suivi de l'envol 2019 (1 200 km) puis la stabilisation au‑dessus de 2 000 km/an depuis 2020 expliquent largement la trajectoire en compétition.</p>
+            <p style="font-size:0.7rem; color:rgba(255,255,255,0.42); margin-top:1rem; padding-left:0.75rem; line-height:1.55; font-style:italic;">2026 en cours — barre hachurée, 1 086 km à ce jour. Le déclic 2016 (546 km) suivi de l'envol 2019 (1 200 km) puis la stabilisation au‑dessus de 2 000 km/an depuis 2020 expliquent largement la trajectoire en compétition.</p>
         </div>
 
         <!-- Accessible data table -->
@@ -1223,9 +1223,29 @@
             // ── VOLUME D'ENTRAÎNEMENT ──────────────────────────────────────
             const trainingCtx = document.getElementById('trainingChart')?.getContext('2d');
             if (trainingCtx) {
-                const trainingYears = ['2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025'];
-                const trainingKm = [275,169,53,32,81,546,538,763,1200,2065,2238,2123,2206,2391,2474];
+                const trainingYears = ['2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
+                const trainingKm = [275,169,53,32,81,546,538,763,1200,2065,2238,2123,2206,2391,2474,1086];
+                const trainingInProgress = ['2026'];
                 const trainingCum = trainingKm.reduce((acc, v, i) => { acc.push((acc[i-1]||0) + v); return acc; }, []);
+
+                // Motif hachuré pour signaler une année en cours
+                function buildStripePattern() {
+                    const c = document.createElement('canvas');
+                    c.width = 10; c.height = 10;
+                    const cx = c.getContext('2d');
+                    cx.fillStyle = 'rgba(200,80,255,0.30)';
+                    cx.fillRect(0, 0, 10, 10);
+                    cx.strokeStyle = 'rgba(200,80,255,0.95)';
+                    cx.lineWidth = 2;
+                    cx.beginPath();
+                    cx.moveTo(-2, 4); cx.lineTo(4, -2);
+                    cx.moveTo(0, 10); cx.lineTo(10, 0);
+                    cx.moveTo(6, 12); cx.lineTo(12, 6);
+                    cx.stroke();
+                    return cx.createPattern(c, 'repeat');
+                }
+                const stripePattern = buildStripePattern();
+
                 new Chart(trainingCtx, {
                     type: 'bar',
                     data: {
@@ -1234,9 +1254,17 @@
                             {
                                 label: 'Volume annuel (km)',
                                 data: trainingKm,
-                                backgroundColor: trainingYears.map((_,i)=>`rgba(200,80,255,${0.35+0.55*(i/(trainingYears.length-1))})`),
-                                borderColor: 'rgba(200,80,255,1)',
-                                borderWidth: 1.5,
+                                backgroundColor: trainingYears.map((y,i) =>
+                                    trainingInProgress.includes(y)
+                                        ? stripePattern
+                                        : `rgba(200,80,255,${0.35+0.55*(i/(trainingYears.length-1))})`
+                                ),
+                                borderColor: trainingYears.map(y =>
+                                    trainingInProgress.includes(y)
+                                        ? 'rgba(200,80,255,1)'
+                                        : 'rgba(200,80,255,1)'
+                                ),
+                                borderWidth: trainingYears.map(y => trainingInProgress.includes(y) ? 2 : 1.5),
                                 borderRadius: 4,
                                 yAxisID: 'y',
                                 order: 2
@@ -1298,6 +1326,10 @@
                                 borderWidth: 1,
                                 padding: 10,
                                 callbacks: {
+                                    title: items => {
+                                        const y = items[0].label;
+                                        return trainingInProgress.includes(y) ? y + ' (en cours)' : y;
+                                    },
                                     label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('fr-FR') + ' km'
                                 }
                             }
