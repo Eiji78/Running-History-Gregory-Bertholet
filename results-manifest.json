@@ -4,7 +4,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/hussigny-godbrange-marcel-kieffer-2019.xlsx",
+        "path": "resultats/2019/hussigny-godbrange-marcel-kieffer-2019.xlsx",
         "filename": "hussigny-godbrange-marcel-kieffer-2019.xlsx",
         "type": "xlsx",
         "label": "Tableau résultats (Excel)"
@@ -16,7 +16,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/ing-night-marathon-luxembourg-2019.pdf",
+        "path": "resultats/2019/ing-night-marathon-luxembourg-2019.pdf",
         "filename": "ing-night-marathon-luxembourg-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -28,7 +28,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/la-boussoise-2019.pdf",
+        "path": "resultats/2019/la-boussoise-2019.pdf",
         "filename": "la-boussoise-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -40,7 +40,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/la-conviviale-2019.pdf",
+        "path": "resultats/2019/la-conviviale-2019.pdf",
         "filename": "la-conviviale-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -52,7 +52,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/la-ronde-nocturne-clouange-2019.pdf",
+        "path": "resultats/2019/la-ronde-nocturne-clouange-2019.pdf",
         "filename": "la-ronde-nocturne-clouange-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -64,7 +64,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/les-foulees-de-st-hubert-2019.pdf",
+        "path": "resultats/2019/les-foulees-de-st-hubert-2019.pdf",
         "filename": "les-foulees-de-st-hubert-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -76,7 +76,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/sedan-charleville-2019.pdf",
+        "path": "resultats/2019/sedan-charleville-2019.pdf",
         "filename": "sedan-charleville-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -88,7 +88,7 @@
     "year": 2019,
     "files": [
       {
-        "path": "Résultats/2019/smivo-2019.pdf",
+        "path": "resultats/2019/smivo-2019.pdf",
         "filename": "smivo-2019.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -100,7 +100,7 @@
     "year": 2020,
     "files": [
       {
-        "path": "Résultats/2020/smivo-2020.pdf",
+        "path": "resultats/2020/smivo-2020.pdf",
         "filename": "smivo-2020.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -112,7 +112,7 @@
     "year": 2021,
     "files": [
       {
-        "path": "Résultats/2021/les-boucles-de-lacier-2021.jpg",
+        "path": "resultats/2021/les-boucles-de-lacier-2021.jpg",
         "filename": "les-boucles-de-lacier-2021.jpg",
         "type": "photo",
         "label": "Photo"
@@ -124,19 +124,19 @@
     "year": 2021,
     "files": [
       {
-        "path": "Résultats/2021/marathon-paris-2021.jpg",
+        "path": "resultats/2021/marathon-paris-2021.jpg",
         "filename": "marathon-paris-2021.jpg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2021/marathon-paris-2021-2.jpg",
+        "path": "resultats/2021/marathon-paris-2021-2.jpg",
         "filename": "marathon-paris-2021-2.jpg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2021/marathon-paris-2021-3.jpg",
+        "path": "resultats/2021/marathon-paris-2021-3.jpg",
         "filename": "marathon-paris-2021-3.jpg",
         "type": "photo",
         "label": "Photo"
@@ -148,7 +148,7 @@
     "year": 2021,
     "files": [
       {
-        "path": "Résultats/2021/semi-marathon-val-de-fench-2021.pdf",
+        "path": "resultats/2021/semi-marathon-val-de-fench-2021.pdf",
         "filename": "semi-marathon-val-de-fench-2021.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -160,7 +160,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/ing-semi-marathon-luxembourg-2022.png",
+        "path": "resultats/2022/ing-semi-marathon-luxembourg-2022.png",
         "filename": "ing-semi-marathon-luxembourg-2022.png",
         "type": "photo",
         "label": "Photo"
@@ -172,7 +172,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/la-conviviale-2022.pdf",
+        "path": "resultats/2022/la-conviviale-2022.pdf",
         "filename": "la-conviviale-2022.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -184,7 +184,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/la-ronde-nocturne-clouange-2022.pdf",
+        "path": "resultats/2022/la-ronde-nocturne-clouange-2022.pdf",
         "filename": "la-ronde-nocturne-clouange-2022.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -196,7 +196,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/les-boucles-de-lacier-2022.jpg",
+        "path": "resultats/2022/les-boucles-de-lacier-2022.jpg",
         "filename": "les-boucles-de-lacier-2022.jpg",
         "type": "photo",
         "label": "Photo"
@@ -208,7 +208,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/les-foulees-de-st-hubert-2022.pdf",
+        "path": "resultats/2022/les-foulees-de-st-hubert-2022.pdf",
         "filename": "les-foulees-de-st-hubert-2022.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -220,13 +220,13 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/marathon-amsterdam-2022-01.jpeg",
+        "path": "resultats/2022/marathon-amsterdam-2022-01.jpeg",
         "filename": "marathon-amsterdam-2022-01.jpeg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2022/marathon-amsterdam-2022-02.jpeg",
+        "path": "resultats/2022/marathon-amsterdam-2022-02.jpeg",
         "filename": "marathon-amsterdam-2022-02.jpeg",
         "type": "photo",
         "label": "Photo"
@@ -238,13 +238,13 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/semi-marathon-thionville-2022.jpg",
+        "path": "resultats/2022/semi-marathon-thionville-2022.jpg",
         "filename": "semi-marathon-thionville-2022.jpg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2022/semi-marathon-thionville-2022-scratch.pdf",
+        "path": "resultats/2022/semi-marathon-thionville-2022-scratch.pdf",
         "filename": "semi-marathon-thionville-2022-scratch.pdf",
         "type": "pdf",
         "label": "Classement scratch (PDF)"
@@ -256,7 +256,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/semi-marathon-val-de-fench-2022.pdf",
+        "path": "resultats/2022/semi-marathon-val-de-fench-2022.pdf",
         "filename": "semi-marathon-val-de-fench-2022.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -268,7 +268,7 @@
     "year": 2022,
     "files": [
       {
-        "path": "Résultats/2022/smivo-2022.pdf",
+        "path": "resultats/2022/smivo-2022.pdf",
         "filename": "smivo-2022.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -280,7 +280,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/haard-trail-dudelange-2023.pdf",
+        "path": "resultats/2023/haard-trail-dudelange-2023.pdf",
         "filename": "haard-trail-dudelange-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -292,19 +292,19 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/route-du-vin-2023.pdf",
+        "path": "resultats/2023/route-du-vin-2023.pdf",
         "filename": "route-du-vin-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
       },
       {
-        "path": "Résultats/2023/route-du-vin-2023-1.jpg",
+        "path": "resultats/2023/route-du-vin-2023-1.jpg",
         "filename": "route-du-vin-2023-1.jpg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2023/route-du-vin-2023-2.jpg",
+        "path": "resultats/2023/route-du-vin-2023-2.jpg",
         "filename": "route-du-vin-2023-2.jpg",
         "type": "photo",
         "label": "Photo"
@@ -316,7 +316,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/la-forestiere-2023.pdf",
+        "path": "resultats/2023/la-forestiere-2023.pdf",
         "filename": "la-forestiere-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -328,7 +328,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/la-ronde-hivernale-saulnes-2023-general.pdf",
+        "path": "resultats/2023/la-ronde-hivernale-saulnes-2023-general.pdf",
         "filename": "la-ronde-hivernale-saulnes-2023-general.pdf",
         "type": "pdf",
         "label": "Classement général (PDF)"
@@ -340,7 +340,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/la-ronde-nocturne-2023.pdf",
+        "path": "resultats/2023/la-ronde-nocturne-2023.pdf",
         "filename": "la-ronde-nocturne-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -352,7 +352,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/foulees-saint-hubert-2023.pdf",
+        "path": "resultats/2023/foulees-saint-hubert-2023.pdf",
         "filename": "foulees-saint-hubert-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -364,7 +364,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/postlaf-2023.pdf",
+        "path": "resultats/2023/postlaf-2023.pdf",
         "filename": "postlaf-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -376,7 +376,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/sedan-charleville-2023.jpg",
+        "path": "resultats/2023/sedan-charleville-2023.jpg",
         "filename": "sedan-charleville-2023.jpg",
         "type": "photo",
         "label": "Photo"
@@ -388,13 +388,13 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/semi-marathon-de-thionville-2023-1.jpeg",
+        "path": "resultats/2023/semi-marathon-de-thionville-2023-1.jpeg",
         "filename": "semi-marathon-de-thionville-2023-1.jpeg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2023/semi-marathon-de-thionville-2023-2.jpeg",
+        "path": "resultats/2023/semi-marathon-de-thionville-2023-2.jpeg",
         "filename": "semi-marathon-de-thionville-2023-2.jpeg",
         "type": "photo",
         "label": "Photo"
@@ -406,7 +406,7 @@
     "year": 2023,
     "files": [
       {
-        "path": "Résultats/2023/smivo-2023.pdf",
+        "path": "resultats/2023/smivo-2023.pdf",
         "filename": "smivo-2023.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -418,7 +418,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/challenge-veolia-2024.pdf",
+        "path": "resultats/2024/challenge-veolia-2024.pdf",
         "filename": "challenge-veolia-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -430,7 +430,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/course-du-muguet-2024.pdf",
+        "path": "resultats/2024/course-du-muguet-2024.pdf",
         "filename": "course-du-muguet-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -442,7 +442,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/ing-semi-marathon-2024.jpeg",
+        "path": "resultats/2024/ing-semi-marathon-2024.jpeg",
         "filename": "ing-semi-marathon-2024.jpeg",
         "type": "photo",
         "label": "Photo"
@@ -454,13 +454,13 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/ing-route-du-vin-2024.pdf",
+        "path": "resultats/2024/ing-route-du-vin-2024.pdf",
         "filename": "ing-route-du-vin-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
       },
       {
-        "path": "Résultats/2024/remich-2024.jpg",
+        "path": "resultats/2024/remich-2024.jpg",
         "filename": "remich-2024.jpg",
         "type": "photo",
         "label": "Photo"
@@ -472,7 +472,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/la-boussoise-2024.pdf",
+        "path": "resultats/2024/la-boussoise-2024.pdf",
         "filename": "la-boussoise-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -484,7 +484,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/la-conviviale-2024.pdf",
+        "path": "resultats/2024/la-conviviale-2024.pdf",
         "filename": "la-conviviale-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -496,13 +496,13 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/la-ronde-hivernale-2024-classement-categories.pdf",
+        "path": "resultats/2024/la-ronde-hivernale-2024-classement-categories.pdf",
         "filename": "la-ronde-hivernale-2024-classement-categories.pdf",
         "type": "pdf",
         "label": "Classement par catégorie (PDF)"
       },
       {
-        "path": "Résultats/2024/la-ronde-hivernale-2024-classement-general.pdf",
+        "path": "resultats/2024/la-ronde-hivernale-2024-classement-general.pdf",
         "filename": "la-ronde-hivernale-2024-classement-general.pdf",
         "type": "pdf",
         "label": "Classement général (PDF)"
@@ -514,7 +514,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/la-ronde-nocturne-2024.pdf",
+        "path": "resultats/2024/la-ronde-nocturne-2024.pdf",
         "filename": "la-ronde-nocturne-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -526,19 +526,19 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/paris-2024-1.jpeg",
+        "path": "resultats/2024/paris-2024-1.jpeg",
         "filename": "paris-2024-1.jpeg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2024/paris-2024-2.jpeg",
+        "path": "resultats/2024/paris-2024-2.jpeg",
         "filename": "paris-2024-2.jpeg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2024/paris-2024-3.jpeg",
+        "path": "resultats/2024/paris-2024-3.jpeg",
         "filename": "paris-2024-3.jpeg",
         "type": "photo",
         "label": "Photo"
@@ -550,7 +550,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/postlaf-2024.pdf",
+        "path": "resultats/2024/postlaf-2024.pdf",
         "filename": "postlaf-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -562,7 +562,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/sedan-charleville-2024.pdf",
+        "path": "resultats/2024/sedan-charleville-2024.pdf",
         "filename": "sedan-charleville-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -574,13 +574,13 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/semi-de-thionville-2024.jpg",
+        "path": "resultats/2024/semi-de-thionville-2024.jpg",
         "filename": "semi-de-thionville-2024.jpg",
         "type": "photo",
         "label": "Photo"
       },
       {
-        "path": "Résultats/2024/semi-de-thionville-2024.pdf",
+        "path": "resultats/2024/semi-de-thionville-2024.pdf",
         "filename": "semi-de-thionville-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -592,7 +592,7 @@
     "year": 2024,
     "files": [
       {
-        "path": "Résultats/2024/smivo-2024.pdf",
+        "path": "resultats/2024/smivo-2024.pdf",
         "filename": "smivo-2024.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -604,7 +604,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/ing-night-marathon-luxembourg-2025.png",
+        "path": "resultats/2025/ing-night-marathon-luxembourg-2025.png",
         "filename": "ing-night-marathon-luxembourg-2025.png",
         "type": "photo",
         "label": "Photo"
@@ -616,7 +616,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/route-du-vin-2025.pdf",
+        "path": "resultats/2025/route-du-vin-2025.pdf",
         "filename": "route-du-vin-2025.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -628,7 +628,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/la-ronde-hivernale-2025.pdf",
+        "path": "resultats/2025/la-ronde-hivernale-2025.pdf",
         "filename": "la-ronde-hivernale-2025.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -640,7 +640,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/marathon-annecy-2025.pdf",
+        "path": "resultats/2025/marathon-annecy-2025.pdf",
         "filename": "marathon-annecy-2025.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -652,7 +652,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/sedan-charleville-2025.pdf",
+        "path": "resultats/2025/sedan-charleville-2025.pdf",
         "filename": "sedan-charleville-2025.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -664,7 +664,7 @@
     "year": 2025,
     "files": [
       {
-        "path": "Résultats/2025/smivo-2025.pdf",
+        "path": "resultats/2025/smivo-2025.pdf",
         "filename": "smivo-2025.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -676,7 +676,7 @@
     "year": 2026,
     "files": [
       {
-        "path": "Résultats/2026/conviviale.pdf",
+        "path": "resultats/2026/conviviale.pdf",
         "filename": "conviviale.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -688,7 +688,7 @@
     "year": 2026,
     "files": [
       {
-        "path": "Résultats/2026/smivo-2026.pdf",
+        "path": "resultats/2026/smivo-2026.pdf",
         "filename": "smivo-2026.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
@@ -700,13 +700,13 @@
     "year": 2026,
     "files": [
       {
-        "path": "Résultats/2026/milan-marathon.pdf",
+        "path": "resultats/2026/milan-marathon.pdf",
         "filename": "milan-marathon.pdf",
         "type": "pdf",
         "label": "Résultat officiel (PDF)"
       },
       {
-        "path": "Résultats/2026/diploma.pdf",
+        "path": "resultats/2026/diploma.pdf",
         "filename": "diploma.pdf",
         "type": "pdf",
         "label": "Diplôme finisseur (PDF)"
