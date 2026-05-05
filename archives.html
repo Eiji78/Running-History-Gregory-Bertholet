@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📂 Archives — Greg</title>
+<meta name="description" content="Archives officielles : PDF, photos et tableaux Excel de toutes mes courses depuis 2019."/>
+<meta name="author" content="Gregory Bertholet"/>
+<meta name="theme-color" content="#0a0a0b">
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/archives.html"/>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --cyan:#00fff9;--purple:#bc13fe;--pink:#ff006e;--orange:#ff6b35;
+  --green:#00ff88;--gold:#ffd700;--silver:#d6d9e0;--bronze:#cd7f32;
+  --red:#ff3344;--blue:#4da6ff;--bg:#07070e;
+}
+html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-serif;color:#fff;overflow-x:clip;}
+
+.animated-bg{position:fixed;inset:0;z-index:0;
+  background:radial-gradient(ellipse at top,#1f1308 0%,#07070e 55%);}
+.animated-bg::before{content:'';position:absolute;width:200%;height:200%;top:-50%;left:-50%;
+  background:radial-gradient(circle at 20% 50%,rgba(255,215,0,.10) 0%,transparent 50%),
+             radial-gradient(circle at 80% 80%,rgba(255,107,53,.08) 0%,transparent 50%);
+  animation:rot 22s linear infinite;}
+@keyframes rot{to{transform:rotate(360deg);}}
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.025;z-index:1;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.neon-border{position:fixed;top:0;left:0;right:0;height:3px;z-index:1000;
+  background:linear-gradient(90deg,var(--gold),var(--orange),var(--pink),var(--purple),var(--cyan),var(--gold));
+  background-size:200%;animation:slide 5s linear infinite;box-shadow:0 0 12px rgba(255,215,0,.6);}
+@keyframes slide{to{background-position:-200% 0;}}
+
+.wrap{position:relative;z-index:2;max-width:1400px;margin:0 auto;padding:0 1.5rem 4rem;}
+
+/* ── NAV ── */
+.site-nav{position:sticky;top:0;z-index:940;display:flex;flex-wrap:nowrap;justify-content:center;gap:.35rem;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:.5rem 3.5rem;
+  background:rgba(7,7,14,.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06);}
+.site-nav::-webkit-scrollbar{display:none;}
+.site-nav a{flex-shrink:0;display:inline-flex;align-items:center;gap:.25rem;
+  padding:.3rem .55rem;border-radius:10px;font-size:.65rem;font-weight:700;
+  letter-spacing:.03em;text-decoration:none;
+  border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.75);transition:all .2s;white-space:nowrap;font-family:'Barlow Condensed',sans-serif;}
+.site-nav a:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.35);color:#fff;}
+.site-nav a.active{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.1);box-shadow:0 0 12px rgba(255,215,0,.25);}
+@media(max-width:600px){.site-nav{justify-content:flex-start;padding:.5rem 1rem .5rem 3.5rem;}}
+
+/* ── HEADER ── */
+.header{text-align:center;padding:3rem 0 1.5rem;}
+.page-title{font-family:'Orbitron',sans-serif;font-size:clamp(1.8rem,5vw,3.5rem);font-weight:900;
+  letter-spacing:.06em;
+  background:linear-gradient(135deg,var(--gold),var(--orange),var(--pink));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 18px rgba(255,215,0,.55)) drop-shadow(0 0 40px rgba(255,107,53,.3));margin-bottom:.4rem;
+  text-align:center;display:block;}
+.page-sub{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;letter-spacing:.25em;
+  color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:1.5rem;}
+
+/* ── STATS BANNER ── */
+.stats-banner{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem 2.4rem;margin:0 auto 2rem;
+  padding:1.2rem 1.5rem;border-radius:16px;
+  background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(255,107,53,.05));
+  border:1px solid rgba(255,215,0,.18);backdrop-filter:blur(8px);max-width:1100px;}
+.stat-item{text-align:center;min-width:80px;}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1;}
+.stat-label{font-family:'Barlow Condensed',sans-serif;font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-top:.3rem;}
+
+/* ── FILTERS ── */
+.filter-section{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:2rem;align-items:center;}
+.filter-group{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;}
+.filter-sep{width:1px;height:28px;background:rgba(255,255,255,.1);margin:0 .2rem;}
+.f-btn{font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.07em;padding:.32rem .8rem;border-radius:9px;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);
+  color:rgba(255,255,255,.45);transition:all .22s;white-space:nowrap;}
+.f-btn:hover{border-color:rgba(255,255,255,.3);color:rgba(255,255,255,.85);}
+.f-btn.active{color:#fff;}
+.f-btn.fy.active{border-color:rgba(0,255,249,.6);background:rgba(0,255,249,.1);color:var(--cyan);}
+.f-btn.fy-all.active{border-color:var(--gold);background:rgba(255,215,0,.12);color:var(--gold);box-shadow:0 0 14px rgba(255,215,0,.25);}
+.f-btn.ft-all.active{border-color:var(--gold);background:rgba(255,215,0,.12);color:var(--gold);box-shadow:0 0 14px rgba(255,215,0,.25);}
+.f-btn.ft-pdf.active{border-color:#ff5566;background:rgba(255,80,90,.12);color:#ff7782;}
+.f-btn.ft-photo.active{border-color:var(--cyan);background:rgba(0,255,249,.1);color:var(--cyan);}
+.f-btn.ft-xlsx.active{border-color:var(--green);background:rgba(0,255,136,.1);color:var(--green);}
+
+/* ── YEAR SECTIONS ── */
+.year-section{margin-bottom:2.2rem;}
+.year-section.hidden{display:none;}
+.year-head{display:flex;align-items:baseline;gap:1rem;margin-bottom:1rem;padding-bottom:.55rem;
+  border-bottom:1px solid rgba(255,215,0,.18);}
+.year-num{font-family:'Orbitron',sans-serif;font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;
+  letter-spacing:.04em;
+  background:linear-gradient(135deg,var(--gold),var(--orange));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.year-meta{font-family:'Barlow Condensed',sans-serif;font-size:.75rem;letter-spacing:.18em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);}
+
+/* ── RACE GRID ── */
+.race-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:.95rem;}
+
+.race-card{position:relative;border-radius:14px;padding:1rem 1.05rem 1rem;
+  background:linear-gradient(160deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  border:1.5px solid rgba(255,255,255,.1);
+  transition:transform .25s,box-shadow .25s,border-color .25s;display:flex;flex-direction:column;gap:.7rem;}
+.race-card:hover{transform:translateY(-3px);border-color:rgba(255,215,0,.35);
+  box-shadow:0 6px 22px rgba(0,0,0,.35),0 0 22px rgba(255,215,0,.18);}
+.race-card.hidden{display:none;}
+
+.race-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:.95rem;
+  letter-spacing:.04em;line-height:1.25;color:#fff;text-transform:uppercase;}
+.race-files{display:flex;flex-wrap:wrap;gap:.4rem;}
+
+.f-pill{display:inline-flex;align-items:center;gap:.35rem;
+  padding:.35rem .65rem;border-radius:8px;cursor:pointer;text-decoration:none;
+  font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  border:1.3px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);
+  color:rgba(255,255,255,.75);transition:all .22s;}
+.f-pill:hover{transform:translateY(-2px);}
+.f-pill .pill-ic{font-size:.85rem;line-height:1;}
+
+.f-pill.t-pdf{border-color:rgba(255,80,90,.4);color:#ff8590;background:rgba(255,80,90,.06);}
+.f-pill.t-pdf:hover{border-color:#ff5566;background:rgba(255,80,90,.16);
+  box-shadow:0 4px 14px rgba(255,80,90,.25);color:#ffb0b8;}
+
+.f-pill.t-photo{border-color:rgba(0,255,249,.35);color:#7df7f7;background:rgba(0,255,249,.05);}
+.f-pill.t-photo:hover{border-color:var(--cyan);background:rgba(0,255,249,.13);
+  box-shadow:0 4px 14px rgba(0,255,249,.25);color:#cffafa;}
+
+.f-pill.t-xlsx{border-color:rgba(0,255,136,.35);color:#6cffac;background:rgba(0,255,136,.05);}
+.f-pill.t-xlsx:hover{border-color:var(--green);background:rgba(0,255,136,.13);
+  box-shadow:0 4px 14px rgba(0,255,136,.25);color:#bdf7d4;}
+
+/* photos count badge */
+.race-files .photos-grouped{display:inline-flex;align-items:center;gap:.4rem;}
+.photo-count{font-family:'Orbitron',sans-serif;font-size:.65rem;font-weight:700;
+  background:rgba(0,255,249,.2);color:var(--cyan);padding:.05rem .35rem;border-radius:5px;}
+
+/* empty state */
+.empty-state{text-align:center;padding:3rem 1rem;
+  font-family:'Barlow Condensed',sans-serif;font-size:.95rem;letter-spacing:.1em;
+  color:rgba(255,255,255,.4);}
+.empty-state .empty-icon{font-size:2.2rem;display:block;margin-bottom:.6rem;opacity:.4;}
+
+/* ── LIGHTBOX / MODAL ── */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(12px);
+  display:none;align-items:center;justify-content:center;z-index:9000;padding:2rem;cursor:pointer;}
+.lightbox.open{display:flex;}
+.lightbox-img{max-width:95vw;max-height:90vh;border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,.7),0 0 40px rgba(255,215,0,.15);
+  cursor:auto;animation:lbIn .25s ease-out;}
+@keyframes lbIn{from{transform:scale(.92);opacity:0;}to{transform:none;opacity:1;}}
+.lightbox-close{position:absolute;top:1.2rem;right:1.5rem;width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.2);color:#fff;font-size:1.4rem;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.lightbox-close:hover{background:rgba(255,255,255,.18);border-color:#fff;}
+
+/* ── PHOTO MODAL (multi) ── */
+.photo-stack{display:flex;flex-direction:column;align-items:center;gap:1rem;width:100%;}
+.photo-counter{font-family:'Orbitron',sans-serif;font-size:.85rem;letter-spacing:.18em;color:var(--gold);}
+.photo-nav{display:flex;gap:.6rem;}
+.photo-nav button{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;
+  padding:.5rem 1.2rem;border-radius:8px;background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,255,255,.2);color:#fff;cursor:pointer;transition:all .2s;}
+.photo-nav button:hover:not(:disabled){background:rgba(255,255,255,.16);border-color:#fff;}
+.photo-nav button:disabled{opacity:.3;cursor:not-allowed;}
+</style>
+</head>
+<body>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="trophees.html">🏆 TROPHÉES</a>
+    <a href="#" class="active">📂 ARCHIVES</a>
+</nav>
+<div class="animated-bg"></div>
+<div class="grain"></div>
+<div class="neon-border"></div>
+
+<div class="wrap">
+  <div class="header">
+    <h1 class="page-title">📂 ARCHIVES OFFICIELLES</h1>
+    <p class="page-sub">PDF · photos · classements · 2019 → 2026</p>
+  </div>
+
+  <!-- STATS BANNER -->
+  <div class="stats-banner" id="stats-banner"></div>
+
+  <!-- FILTERS -->
+  <div class="filter-section">
+    <div class="filter-group">
+      <button class="f-btn fy-all active" data-year="all" onclick="filterYear('all',this)">TOUTES</button>
+      <button class="f-btn fy" data-year="2026" onclick="filterYear('2026',this)">2026</button>
+      <button class="f-btn fy" data-year="2025" onclick="filterYear('2025',this)">2025</button>
+      <button class="f-btn fy" data-year="2024" onclick="filterYear('2024',this)">2024</button>
+      <button class="f-btn fy" data-year="2023" onclick="filterYear('2023',this)">2023</button>
+      <button class="f-btn fy" data-year="2022" onclick="filterYear('2022',this)">2022</button>
+      <button class="f-btn fy" data-year="2021" onclick="filterYear('2021',this)">2021</button>
+      <button class="f-btn fy" data-year="2020" onclick="filterYear('2020',this)">2020</button>
+      <button class="f-btn fy" data-year="2019" onclick="filterYear('2019',this)">2019</button>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-group">
+      <button class="f-btn ft-all active" data-type="all" onclick="filterType('all',this)">TOUS DOCUMENTS</button>
+      <button class="f-btn ft-pdf" data-type="pdf" onclick="filterType('pdf',this)">📄 PDF</button>
+      <button class="f-btn ft-photo" data-type="photo" onclick="filterType('photo',this)">📸 PHOTOS</button>
+      <button class="f-btn ft-xlsx" data-type="xlsx" onclick="filterType('xlsx',this)">📊 EXCEL</button>
+    </div>
+  </div>
+
+  <!-- ARCHIVES CONTENT -->
+  <div id="archives-root"></div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event,true)" aria-label="Fermer">✕</button>
+  <div class="photo-stack" id="photo-stack" onclick="event.stopPropagation()">
+    <img class="lightbox-img" id="lightbox-img" alt="">
+    <div class="photo-nav" id="photo-nav">
+      <button id="lb-prev" onclick="lbPrev()">← Précédent</button>
+      <span class="photo-counter" id="lb-counter">1 / 1</span>
+      <button id="lb-next" onclick="lbNext()">Suivant →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════
+//  MANIFESTE — inliné pour éviter CORS sur file:// et GitHub Pages
+// ═══════════════════════════════════════════════════════════════════════
+const RESULTS_MANIFEST = {
+  "marcel-kieffer-2019": {race_label:"Hussigny-Godbrange · Marcel Kieffer 2019",year:2019,files:[
+    {path:"Résultats/2019/hussigny-godbrange-marcel-kieffer-2019.xlsx",type:"xlsx",label:"Tableau résultats (Excel)"}
+  ]},
+  "ing-night-marathon-2019": {race_label:"ING Night Marathon Luxembourg 2019",year:2019,files:[
+    {path:"Résultats/2019/ing-night-marathon-luxembourg-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-boussoise-2019": {race_label:"La Boussoise 2019",year:2019,files:[
+    {path:"Résultats/2019/la-boussoise-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-conviviale-2019": {race_label:"La Conviviale 2019",year:2019,files:[
+    {path:"Résultats/2019/la-conviviale-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-ronde-nocturne-clouange-2019": {race_label:"La Ronde Nocturne Clouange 2019",year:2019,files:[
+    {path:"Résultats/2019/la-ronde-nocturne-clouange-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "foulees-st-hubert-2019": {race_label:"Les Foulées de St Hubert 2019",year:2019,files:[
+    {path:"Résultats/2019/les-foulees-de-st-hubert-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "sedan-charleville-2019": {race_label:"Sedan-Charleville 2019",year:2019,files:[
+    {path:"Résultats/2019/sedan-charleville-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "smivo-2019": {race_label:"SMIVO 2019",year:2019,files:[
+    {path:"Résultats/2019/smivo-2019.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "smivo-2020": {race_label:"SMIVO 2020",year:2020,files:[
+    {path:"Résultats/2020/smivo-2020.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "boucles-acier-2021": {race_label:"Les Boucles de l'Acier 2021",year:2021,files:[
+    {path:"Résultats/2021/les-boucles-de-lacier-2021.jpg",type:"photo",label:"Photo"}
+  ]},
+  "marathon-paris-2021": {race_label:"Marathon de Paris 2021",year:2021,files:[
+    {path:"Résultats/2021/marathon-paris-2021.jpg",type:"photo",label:"Photo"},
+    {path:"Résultats/2021/marathon-paris-2021-2.jpg",type:"photo",label:"Photo"},
+    {path:"Résultats/2021/marathon-paris-2021-3.jpg",type:"photo",label:"Photo"}
+  ]},
+  "val-de-fench-2021": {race_label:"Semi-Marathon Val de Fensch 2021",year:2021,files:[
+    {path:"Résultats/2021/semi-marathon-val-de-fench-2021.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ing-semi-marathon-2022": {race_label:"ING Night Semi-Marathon Luxembourg 2022",year:2022,files:[
+    {path:"Résultats/2022/ing-semi-marathon-luxembourg-2022.png",type:"photo",label:"Photo"}
+  ]},
+  "la-conviviale-2022": {race_label:"La Conviviale 2022",year:2022,files:[
+    {path:"Résultats/2022/la-conviviale-2022.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-ronde-nocturne-clouange-2022": {race_label:"La Ronde Nocturne Clouange 2022",year:2022,files:[
+    {path:"Résultats/2022/la-ronde-nocturne-clouange-2022.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "boucles-acier-2022": {race_label:"Les Boucles de l'Acier 2022",year:2022,files:[
+    {path:"Résultats/2022/les-boucles-de-lacier-2022.jpg",type:"photo",label:"Photo"}
+  ]},
+  "foulees-st-hubert-2022": {race_label:"Les Foulées de St Hubert 2022",year:2022,files:[
+    {path:"Résultats/2022/les-foulees-de-st-hubert-2022.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "marathon-amsterdam-2022": {race_label:"Marathon d'Amsterdam 2022",year:2022,files:[
+    {path:"Résultats/2022/marathon-amsterdam-2022-01.jpeg",type:"photo",label:"Photo"},
+    {path:"Résultats/2022/marathon-amsterdam-2022-02.jpeg",type:"photo",label:"Photo"}
+  ]},
+  "semi-thionville-2022": {race_label:"Semi-Marathon de Thionville 2022",year:2022,files:[
+    {path:"Résultats/2022/semi-marathon-thionville-2022.jpg",type:"photo",label:"Photo"},
+    {path:"Résultats/2022/semi-marathon-thionville-2022-scratch.pdf",type:"pdf",label:"Classement scratch (PDF)"}
+  ]},
+  "val-de-fench-2022": {race_label:"Semi-Marathon Val de Fensch 2022",year:2022,files:[
+    {path:"Résultats/2022/semi-marathon-val-de-fench-2022.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "smivo-2022": {race_label:"SMIVO 2022",year:2022,files:[
+    {path:"Résultats/2022/smivo-2022.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "haard-trail-2023": {race_label:"Haard Trail Dudelange 2023",year:2023,files:[
+    {path:"Résultats/2023/haard-trail-dudelange-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "route-du-vin-2023": {race_label:"ING Route du Vin Luxembourg 2023",year:2023,files:[
+    {path:"Résultats/2023/route-du-vin-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"},
+    {path:"Résultats/2023/route-du-vin-2023-1.jpg",type:"photo",label:"Photo"},
+    {path:"Résultats/2023/route-du-vin-2023-2.jpg",type:"photo",label:"Photo"}
+  ]},
+  "la-forestiere-2023": {race_label:"La Forestière 2023",year:2023,files:[
+    {path:"Résultats/2023/la-forestiere-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ronde-hivernale-2023": {race_label:"La Ronde Hivernale Saulnes 2023",year:2023,files:[
+    {path:"Résultats/2023/la-ronde-hivernale-saulnes-2023-general.pdf",type:"pdf",label:"Classement général (PDF)"}
+  ]},
+  "la-ronde-nocturne-clouange-2023": {race_label:"La Ronde Nocturne Clouange 2023",year:2023,files:[
+    {path:"Résultats/2023/la-ronde-nocturne-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "foulees-st-hubert-2023": {race_label:"Les Foulées de St Hubert 2023",year:2023,files:[
+    {path:"Résultats/2023/foulees-saint-hubert-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "postlaf-2023": {race_label:"Postlaf 2023",year:2023,files:[
+    {path:"Résultats/2023/postlaf-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "sedan-charleville-2023": {race_label:"Sedan-Charleville 2023",year:2023,files:[
+    {path:"Résultats/2023/sedan-charleville-2023.jpg",type:"photo",label:"Photo"}
+  ]},
+  "semi-thionville-2023": {race_label:"Semi-Marathon de Thionville 2023",year:2023,files:[
+    {path:"Résultats/2023/semi-marathon-de-thionville-2023-1.jpeg",type:"photo",label:"Photo"},
+    {path:"Résultats/2023/semi-marathon-de-thionville-2023-2.jpeg",type:"photo",label:"Photo"}
+  ]},
+  "smivo-2023": {race_label:"SMIVO 2023",year:2023,files:[
+    {path:"Résultats/2023/smivo-2023.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "challenge-veolia-2024": {race_label:"Challenge Veolia 2024",year:2024,files:[
+    {path:"Résultats/2024/challenge-veolia-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "course-du-muguet-2024": {race_label:"Course du Muguet 2024",year:2024,files:[
+    {path:"Résultats/2024/course-du-muguet-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ing-semi-marathon-2024": {race_label:"ING Night Semi-Marathon Luxembourg 2024",year:2024,files:[
+    {path:"Résultats/2024/ing-semi-marathon-2024.jpeg",type:"photo",label:"Photo"}
+  ]},
+  "route-du-vin-2024": {race_label:"ING Route du Vin Luxembourg 2024",year:2024,files:[
+    {path:"Résultats/2024/ing-route-du-vin-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"},
+    {path:"Résultats/2024/remich-2024.jpg",type:"photo",label:"Photo"}
+  ]},
+  "la-boussoise-2024": {race_label:"La Boussoise 2024",year:2024,files:[
+    {path:"Résultats/2024/la-boussoise-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-conviviale-2024": {race_label:"La Conviviale 2024",year:2024,files:[
+    {path:"Résultats/2024/la-conviviale-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ronde-hivernale-2024": {race_label:"La Ronde Hivernale Saulnes 2024",year:2024,files:[
+    {path:"Résultats/2024/la-ronde-hivernale-2024-classement-general.pdf",type:"pdf",label:"Classement général (PDF)"},
+    {path:"Résultats/2024/la-ronde-hivernale-2024-classement-categories.pdf",type:"pdf",label:"Classement par catégorie (PDF)"}
+  ]},
+  "la-ronde-nocturne-clouange-2024": {race_label:"La Ronde Nocturne Clouange 2024",year:2024,files:[
+    {path:"Résultats/2024/la-ronde-nocturne-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "marathon-paris-2024": {race_label:"Marathon de Paris 2024",year:2024,files:[
+    {path:"Résultats/2024/paris-2024-1.jpeg",type:"photo",label:"Photo"},
+    {path:"Résultats/2024/paris-2024-2.jpeg",type:"photo",label:"Photo"},
+    {path:"Résultats/2024/paris-2024-3.jpeg",type:"photo",label:"Photo"}
+  ]},
+  "postlaf-2024": {race_label:"Postlaf 2024",year:2024,files:[
+    {path:"Résultats/2024/postlaf-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "sedan-charleville-2024": {race_label:"Sedan-Charleville 2024",year:2024,files:[
+    {path:"Résultats/2024/sedan-charleville-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "semi-thionville-2024": {race_label:"Semi-Marathon de Thionville 2024",year:2024,files:[
+    {path:"Résultats/2024/semi-de-thionville-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"},
+    {path:"Résultats/2024/semi-de-thionville-2024.jpg",type:"photo",label:"Photo"}
+  ]},
+  "smivo-2024": {race_label:"SMIVO 2024",year:2024,files:[
+    {path:"Résultats/2024/smivo-2024.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ing-night-marathon-2025": {race_label:"ING Night Marathon Luxembourg 2025",year:2025,files:[
+    {path:"Résultats/2025/ing-night-marathon-luxembourg-2025.png",type:"photo",label:"Photo"}
+  ]},
+  "route-du-vin-2025": {race_label:"ING Route du Vin Luxembourg 2025",year:2025,files:[
+    {path:"Résultats/2025/route-du-vin-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "ronde-hivernale-2025": {race_label:"La Ronde Hivernale Saulnes 2025",year:2025,files:[
+    {path:"Résultats/2025/la-ronde-hivernale-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "marathon-annecy-2025": {race_label:"Marathon d'Annecy 2025",year:2025,files:[
+    {path:"Résultats/2025/marathon-annecy-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "sedan-charleville-2025": {race_label:"Sedan-Charleville 2025",year:2025,files:[
+    {path:"Résultats/2025/sedan-charleville-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "smivo-2025": {race_label:"SMIVO 2025",year:2025,files:[
+    {path:"Résultats/2025/smivo-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "la-conviviale-2026": {race_label:"La Conviviale 2026",year:2026,files:[
+    {path:"Résultats/2026/conviviale.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "smivo-2026": {race_label:"SMIVO 2026",year:2026,files:[
+    {path:"Résultats/2026/smivo-2026.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]},
+  "marathon-milano-2026": {race_label:"Wizz Air Milano Marathon 2026",year:2026,files:[
+    {path:"Résultats/2026/milan-marathon.pdf",type:"pdf",label:"Résultat officiel (PDF)"},
+    {path:"Résultats/2026/diploma.pdf",type:"pdf",label:"Diplôme finisseur (PDF)"}
+  ]}
+};
+
+// ═══════════════════════════════════════════════════════════════════════
+//  ÉTAT DES FILTRES
+// ═══════════════════════════════════════════════════════════════════════
+let activeYear = 'all';
+let activeType = 'all';
+
+// ═══════════════════════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════════════════════
+function typeIcon(t){
+  return t === 'pdf' ? '📄' : (t === 'photo' ? '📸' : (t === 'xlsx' ? '📊' : '📁'));
+}
+
+function shortLabel(label, type, count){
+  if (type === 'photo') {
+    return count > 1 ? 'Photos' : 'Photo';
+  }
+  if (type === 'xlsx') return 'Excel';
+  // pdf labels
+  if (/scratch/i.test(label)) return 'Scratch';
+  if (/cat[ée]gorie/i.test(label)) return 'Catégorie';
+  if (/g[ée]n[ée]ral/i.test(label)) return 'Général';
+  if (/dipl[ôo]me/i.test(label)) return 'Diplôme';
+  return 'Résultat';
+}
+
+function buildStats() {
+  let races = 0, pdfs = 0, photos = 0, xlsxs = 0, totalFiles = 0;
+  const yearsSet = new Set();
+  Object.values(RESULTS_MANIFEST).forEach(r => {
+    races++;
+    yearsSet.add(r.year);
+    r.files.forEach(f => {
+      totalFiles++;
+      if (f.type === 'pdf') pdfs++;
+      else if (f.type === 'photo') photos++;
+      else if (f.type === 'xlsx') xlsxs++;
+    });
+  });
+  const banner = document.getElementById('stats-banner');
+  banner.innerHTML = `
+    <div class="stat-item"><div class="stat-num">${races}</div><div class="stat-label">Courses</div></div>
+    <div class="stat-item"><div class="stat-num">${totalFiles}</div><div class="stat-label">Documents</div></div>
+    <div class="stat-item"><div class="stat-num">${pdfs}</div><div class="stat-label">PDF</div></div>
+    <div class="stat-item"><div class="stat-num">${photos}</div><div class="stat-label">Photos</div></div>
+    <div class="stat-item"><div class="stat-num">${xlsxs}</div><div class="stat-label">Excel</div></div>
+    <div class="stat-item"><div class="stat-num">${yearsSet.size}</div><div class="stat-label">Années</div></div>
+  `;
+}
+
+function buildArchives() {
+  const root = document.getElementById('archives-root');
+  // Group by year
+  const byYear = {};
+  Object.entries(RESULTS_MANIFEST).forEach(([key, race]) => {
+    if (!byYear[race.year]) byYear[race.year] = [];
+    byYear[race.year].push({ key, ...race });
+  });
+  // Sort year desc, races by label asc
+  const years = Object.keys(byYear).map(Number).sort((a, b) => b - a);
+
+  let html = '';
+  years.forEach(year => {
+    const races = byYear[year].sort((a, b) => a.race_label.localeCompare(b.race_label, 'fr'));
+    const docCount = races.reduce((s, r) => s + r.files.length, 0);
+    html += `
+      <section class="year-section" data-year="${year}">
+        <div class="year-head">
+          <div class="year-num">${year}</div>
+          <div class="year-meta">${races.length} courses · ${docCount} documents</div>
+        </div>
+        <div class="race-grid">
+    `;
+    races.forEach(r => {
+      // Group photos into a single pill if more than 1
+      const photos = r.files.filter(f => f.type === 'photo');
+      const others = r.files.filter(f => f.type !== 'photo');
+      const types = new Set(r.files.map(f => f.type));
+      const typeAttr = Array.from(types).join(',');
+
+      let pillsHtml = '';
+      others.forEach((f, i) => {
+        pillsHtml += `<a class="f-pill t-${f.type}" href="${encodeURI(f.path)}" target="_blank" rel="noopener" title="${f.label}" data-type="${f.type}">
+          <span class="pill-ic">${typeIcon(f.type)}</span><span>${shortLabel(f.label, f.type)}</span>
+        </a>`;
+      });
+      if (photos.length === 1) {
+        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo">
+          <span class="pill-ic">📸</span><span>Photo</span>
+        </a>`;
+      } else if (photos.length > 1) {
+        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo">
+          <span class="pill-ic">📸</span><span>Photos</span><span class="photo-count">${photos.length}</span>
+        </a>`;
+      }
+
+      html += `
+        <article class="race-card" data-types="${typeAttr}">
+          <div class="race-title">${r.race_label}</div>
+          <div class="race-files">${pillsHtml}</div>
+        </article>
+      `;
+    });
+    html += `</div></section>`;
+  });
+  html += `<div class="empty-state" id="empty-state" style="display:none">
+    <span class="empty-icon">🤷</span>
+    Aucun document ne correspond à ce filtre.
+  </div>`;
+  root.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  FILTRES
+// ═══════════════════════════════════════════════════════════════════════
+function applyFilters() {
+  const sections = document.querySelectorAll('.year-section');
+  let visibleCount = 0;
+  sections.forEach(sec => {
+    const yr = sec.dataset.year;
+    const yearMatch = (activeYear === 'all') || (activeYear === yr);
+    if (!yearMatch) {
+      sec.classList.add('hidden');
+      return;
+    }
+    sec.classList.remove('hidden');
+
+    let anyVisible = false;
+    sec.querySelectorAll('.race-card').forEach(card => {
+      const types = (card.dataset.types || '').split(',');
+      const typeMatch = (activeType === 'all') || types.includes(activeType);
+      if (typeMatch) {
+        card.classList.remove('hidden');
+        // Filter pills inside card by type if a specific type is selected
+        if (activeType !== 'all') {
+          card.querySelectorAll('.f-pill').forEach(p => {
+            p.style.display = (p.dataset.type === activeType) ? '' : 'none';
+          });
+        } else {
+          card.querySelectorAll('.f-pill').forEach(p => p.style.display = '');
+        }
+        anyVisible = true;
+        visibleCount++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    if (!anyVisible) sec.classList.add('hidden');
+  });
+
+  const empty = document.getElementById('empty-state');
+  if (empty) empty.style.display = (visibleCount === 0) ? '' : 'none';
+}
+
+function filterYear(y, btn) {
+  activeYear = y;
+  document.querySelectorAll('.f-btn[data-year]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+function filterType(t, btn) {
+  activeType = t;
+  document.querySelectorAll('.f-btn[data-type]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyFilters();
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  LIGHTBOX (photos)
+// ═══════════════════════════════════════════════════════════════════════
+let lbPhotos = [];
+let lbIndex = 0;
+let lbCaption = '';
+
+function openLightbox(photos, idx, caption) {
+  lbPhotos = photos;
+  lbIndex = idx || 0;
+  lbCaption = caption;
+  renderLb();
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderLb() {
+  document.getElementById('lightbox-img').src = encodeURI(lbPhotos[lbIndex]);
+  document.getElementById('lightbox-img').alt = lbCaption;
+  document.getElementById('lb-counter').textContent = `${lbIndex + 1} / ${lbPhotos.length}`;
+  document.getElementById('lb-prev').disabled = (lbIndex === 0);
+  document.getElementById('lb-next').disabled = (lbIndex === lbPhotos.length - 1);
+  document.getElementById('photo-nav').style.display = (lbPhotos.length > 1) ? '' : 'none';
+}
+
+function lbPrev() { if (lbIndex > 0) { lbIndex--; renderLb(); } }
+function lbNext() { if (lbIndex < lbPhotos.length - 1) { lbIndex++; renderLb(); } }
+
+function closeLightbox(e, force) {
+  if (e && !force && e.target.tagName === 'IMG') return;
+  if (e && !force && e.target.closest('.photo-nav')) return;
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox(null, true);
+  else if (e.key === 'ArrowLeft') lbPrev();
+  else if (e.key === 'ArrowRight') lbNext();
+});
+
+// ═══════════════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════════════
+buildStats();
+buildArchives();
+</script>
+</body>
+</html>

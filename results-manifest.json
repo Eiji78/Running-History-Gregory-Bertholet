@@ -1,0 +1,716 @@
+{
+  "marcel-kieffer-2019": {
+    "race_label": "Hussigny-Godbrange · Marcel Kieffer 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/hussigny-godbrange-marcel-kieffer-2019.xlsx",
+        "filename": "hussigny-godbrange-marcel-kieffer-2019.xlsx",
+        "type": "xlsx",
+        "label": "Tableau résultats (Excel)"
+      }
+    ]
+  },
+  "ing-night-marathon-2019": {
+    "race_label": "ING Night Marathon Luxembourg 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/ing-night-marathon-luxembourg-2019.pdf",
+        "filename": "ing-night-marathon-luxembourg-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-boussoise-2019": {
+    "race_label": "La Boussoise 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/la-boussoise-2019.pdf",
+        "filename": "la-boussoise-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-conviviale-2019": {
+    "race_label": "La Conviviale 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/la-conviviale-2019.pdf",
+        "filename": "la-conviviale-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-ronde-nocturne-clouange-2019": {
+    "race_label": "La Ronde Nocturne Clouange 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/la-ronde-nocturne-clouange-2019.pdf",
+        "filename": "la-ronde-nocturne-clouange-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "foulees-st-hubert-2019": {
+    "race_label": "Les Foulées de St Hubert 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/les-foulees-de-st-hubert-2019.pdf",
+        "filename": "les-foulees-de-st-hubert-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "sedan-charleville-2019": {
+    "race_label": "Sedan-Charleville 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/sedan-charleville-2019.pdf",
+        "filename": "sedan-charleville-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2019": {
+    "race_label": "SMIVO 2019",
+    "year": 2019,
+    "files": [
+      {
+        "path": "Résultats/2019/smivo-2019.pdf",
+        "filename": "smivo-2019.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2020": {
+    "race_label": "SMIVO 2020",
+    "year": 2020,
+    "files": [
+      {
+        "path": "Résultats/2020/smivo-2020.pdf",
+        "filename": "smivo-2020.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "boucles-acier-2021": {
+    "race_label": "Les Boucles de l'Acier 2021",
+    "year": 2021,
+    "files": [
+      {
+        "path": "Résultats/2021/les-boucles-de-lacier-2021.jpg",
+        "filename": "les-boucles-de-lacier-2021.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "marathon-paris-2021": {
+    "race_label": "Marathon de Paris 2021",
+    "year": 2021,
+    "files": [
+      {
+        "path": "Résultats/2021/marathon-paris-2021.jpg",
+        "filename": "marathon-paris-2021.jpg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2021/marathon-paris-2021-2.jpg",
+        "filename": "marathon-paris-2021-2.jpg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2021/marathon-paris-2021-3.jpg",
+        "filename": "marathon-paris-2021-3.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "val-de-fench-2021": {
+    "race_label": "Semi-Marathon Val de Fensch 2021",
+    "year": 2021,
+    "files": [
+      {
+        "path": "Résultats/2021/semi-marathon-val-de-fench-2021.pdf",
+        "filename": "semi-marathon-val-de-fench-2021.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ing-semi-marathon-2022": {
+    "race_label": "ING Night Semi-Marathon Luxembourg 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/ing-semi-marathon-luxembourg-2022.png",
+        "filename": "ing-semi-marathon-luxembourg-2022.png",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "la-conviviale-2022": {
+    "race_label": "La Conviviale 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/la-conviviale-2022.pdf",
+        "filename": "la-conviviale-2022.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-ronde-nocturne-clouange-2022": {
+    "race_label": "La Ronde Nocturne Clouange 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/la-ronde-nocturne-clouange-2022.pdf",
+        "filename": "la-ronde-nocturne-clouange-2022.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "boucles-acier-2022": {
+    "race_label": "Les Boucles de l'Acier 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/les-boucles-de-lacier-2022.jpg",
+        "filename": "les-boucles-de-lacier-2022.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "foulees-st-hubert-2022": {
+    "race_label": "Les Foulées de St Hubert 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/les-foulees-de-st-hubert-2022.pdf",
+        "filename": "les-foulees-de-st-hubert-2022.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "marathon-amsterdam-2022": {
+    "race_label": "Marathon d'Amsterdam 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/marathon-amsterdam-2022-01.jpeg",
+        "filename": "marathon-amsterdam-2022-01.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2022/marathon-amsterdam-2022-02.jpeg",
+        "filename": "marathon-amsterdam-2022-02.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "semi-thionville-2022": {
+    "race_label": "Semi-Marathon de Thionville 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/semi-marathon-thionville-2022.jpg",
+        "filename": "semi-marathon-thionville-2022.jpg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2022/semi-marathon-thionville-2022-scratch.pdf",
+        "filename": "semi-marathon-thionville-2022-scratch.pdf",
+        "type": "pdf",
+        "label": "Classement scratch (PDF)"
+      }
+    ]
+  },
+  "val-de-fench-2022": {
+    "race_label": "Semi-Marathon Val de Fensch 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/semi-marathon-val-de-fench-2022.pdf",
+        "filename": "semi-marathon-val-de-fench-2022.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2022": {
+    "race_label": "SMIVO 2022",
+    "year": 2022,
+    "files": [
+      {
+        "path": "Résultats/2022/smivo-2022.pdf",
+        "filename": "smivo-2022.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "haard-trail-2023": {
+    "race_label": "Haard Trail Dudelange 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/haard-trail-dudelange-2023.pdf",
+        "filename": "haard-trail-dudelange-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "route-du-vin-2023": {
+    "race_label": "ING Route du Vin Luxembourg 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/route-du-vin-2023.pdf",
+        "filename": "route-du-vin-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      },
+      {
+        "path": "Résultats/2023/route-du-vin-2023-1.jpg",
+        "filename": "route-du-vin-2023-1.jpg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2023/route-du-vin-2023-2.jpg",
+        "filename": "route-du-vin-2023-2.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "la-forestiere-2023": {
+    "race_label": "La Forestière 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/la-forestiere-2023.pdf",
+        "filename": "la-forestiere-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ronde-hivernale-2023": {
+    "race_label": "La Ronde Hivernale Saulnes 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/la-ronde-hivernale-saulnes-2023-general.pdf",
+        "filename": "la-ronde-hivernale-saulnes-2023-general.pdf",
+        "type": "pdf",
+        "label": "Classement général (PDF)"
+      }
+    ]
+  },
+  "la-ronde-nocturne-clouange-2023": {
+    "race_label": "La Ronde Nocturne Clouange 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/la-ronde-nocturne-2023.pdf",
+        "filename": "la-ronde-nocturne-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "foulees-st-hubert-2023": {
+    "race_label": "Les Foulées de St Hubert 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/foulees-saint-hubert-2023.pdf",
+        "filename": "foulees-saint-hubert-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "postlaf-2023": {
+    "race_label": "Postlaf 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/postlaf-2023.pdf",
+        "filename": "postlaf-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "sedan-charleville-2023": {
+    "race_label": "Sedan-Charleville 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/sedan-charleville-2023.jpg",
+        "filename": "sedan-charleville-2023.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "semi-thionville-2023": {
+    "race_label": "Semi-Marathon de Thionville 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/semi-marathon-de-thionville-2023-1.jpeg",
+        "filename": "semi-marathon-de-thionville-2023-1.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2023/semi-marathon-de-thionville-2023-2.jpeg",
+        "filename": "semi-marathon-de-thionville-2023-2.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "smivo-2023": {
+    "race_label": "SMIVO 2023",
+    "year": 2023,
+    "files": [
+      {
+        "path": "Résultats/2023/smivo-2023.pdf",
+        "filename": "smivo-2023.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "challenge-veolia-2024": {
+    "race_label": "Challenge Veolia 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/challenge-veolia-2024.pdf",
+        "filename": "challenge-veolia-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "course-du-muguet-2024": {
+    "race_label": "Course du Muguet 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/course-du-muguet-2024.pdf",
+        "filename": "course-du-muguet-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ing-semi-marathon-2024": {
+    "race_label": "ING Night Semi-Marathon Luxembourg 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/ing-semi-marathon-2024.jpeg",
+        "filename": "ing-semi-marathon-2024.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "route-du-vin-2024": {
+    "race_label": "ING Route du Vin Luxembourg 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/ing-route-du-vin-2024.pdf",
+        "filename": "ing-route-du-vin-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      },
+      {
+        "path": "Résultats/2024/remich-2024.jpg",
+        "filename": "remich-2024.jpg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "la-boussoise-2024": {
+    "race_label": "La Boussoise 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/la-boussoise-2024.pdf",
+        "filename": "la-boussoise-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-conviviale-2024": {
+    "race_label": "La Conviviale 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/la-conviviale-2024.pdf",
+        "filename": "la-conviviale-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ronde-hivernale-2024": {
+    "race_label": "La Ronde Hivernale Saulnes 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/la-ronde-hivernale-2024-classement-categories.pdf",
+        "filename": "la-ronde-hivernale-2024-classement-categories.pdf",
+        "type": "pdf",
+        "label": "Classement par catégorie (PDF)"
+      },
+      {
+        "path": "Résultats/2024/la-ronde-hivernale-2024-classement-general.pdf",
+        "filename": "la-ronde-hivernale-2024-classement-general.pdf",
+        "type": "pdf",
+        "label": "Classement général (PDF)"
+      }
+    ]
+  },
+  "la-ronde-nocturne-clouange-2024": {
+    "race_label": "La Ronde Nocturne Clouange 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/la-ronde-nocturne-2024.pdf",
+        "filename": "la-ronde-nocturne-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "marathon-paris-2024": {
+    "race_label": "Marathon de Paris 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/paris-2024-1.jpeg",
+        "filename": "paris-2024-1.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2024/paris-2024-2.jpeg",
+        "filename": "paris-2024-2.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2024/paris-2024-3.jpeg",
+        "filename": "paris-2024-3.jpeg",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "postlaf-2024": {
+    "race_label": "Postlaf 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/postlaf-2024.pdf",
+        "filename": "postlaf-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "sedan-charleville-2024": {
+    "race_label": "Sedan-Charleville 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/sedan-charleville-2024.pdf",
+        "filename": "sedan-charleville-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "semi-thionville-2024": {
+    "race_label": "Semi-Marathon de Thionville 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/semi-de-thionville-2024.jpg",
+        "filename": "semi-de-thionville-2024.jpg",
+        "type": "photo",
+        "label": "Photo"
+      },
+      {
+        "path": "Résultats/2024/semi-de-thionville-2024.pdf",
+        "filename": "semi-de-thionville-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2024": {
+    "race_label": "SMIVO 2024",
+    "year": 2024,
+    "files": [
+      {
+        "path": "Résultats/2024/smivo-2024.pdf",
+        "filename": "smivo-2024.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ing-night-marathon-2025": {
+    "race_label": "ING Night Marathon Luxembourg 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/ing-night-marathon-luxembourg-2025.png",
+        "filename": "ing-night-marathon-luxembourg-2025.png",
+        "type": "photo",
+        "label": "Photo"
+      }
+    ]
+  },
+  "route-du-vin-2025": {
+    "race_label": "ING Route du Vin Luxembourg 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/route-du-vin-2025.pdf",
+        "filename": "route-du-vin-2025.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "ronde-hivernale-2025": {
+    "race_label": "La Ronde Hivernale Saulnes 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/la-ronde-hivernale-2025.pdf",
+        "filename": "la-ronde-hivernale-2025.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "marathon-annecy-2025": {
+    "race_label": "Marathon d'Annecy 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/marathon-annecy-2025.pdf",
+        "filename": "marathon-annecy-2025.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "sedan-charleville-2025": {
+    "race_label": "Sedan-Charleville 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/sedan-charleville-2025.pdf",
+        "filename": "sedan-charleville-2025.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2025": {
+    "race_label": "SMIVO 2025",
+    "year": 2025,
+    "files": [
+      {
+        "path": "Résultats/2025/smivo-2025.pdf",
+        "filename": "smivo-2025.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "la-conviviale-2026": {
+    "race_label": "La Conviviale 2026",
+    "year": 2026,
+    "files": [
+      {
+        "path": "Résultats/2026/conviviale.pdf",
+        "filename": "conviviale.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "smivo-2026": {
+    "race_label": "SMIVO 2026",
+    "year": 2026,
+    "files": [
+      {
+        "path": "Résultats/2026/smivo-2026.pdf",
+        "filename": "smivo-2026.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      }
+    ]
+  },
+  "marathon-milano-2026": {
+    "race_label": "Wizz Air Milano Marathon 2026",
+    "year": 2026,
+    "files": [
+      {
+        "path": "Résultats/2026/milan-marathon.pdf",
+        "filename": "milan-marathon.pdf",
+        "type": "pdf",
+        "label": "Résultat officiel (PDF)"
+      },
+      {
+        "path": "Résultats/2026/diploma.pdf",
+        "filename": "diploma.pdf",
+        "type": "pdf",
+        "label": "Diplôme finisseur (PDF)"
+      }
+    ]
+  }
+}
