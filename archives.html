@@ -437,7 +437,7 @@ function typeIcon(t){
 
 function shortLabel(label, type, count){
   if (type === 'photo') {
-    return count > 1 ? 'Photos' : 'Photo';
+    return count > 1 ? 'Résultats' : 'Résultat';
   }
   if (type === 'xlsx') return 'Excel';
   // pdf labels
@@ -509,12 +509,12 @@ function buildArchives() {
         </a>`;
       });
       if (photos.length === 1) {
-        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo">
-          <span class="pill-ic">📸</span><span>Photo</span>
+        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo" title="Voir le résultat">
+          <span class="pill-ic">📸</span><span>Résultat</span>
         </a>`;
       } else if (photos.length > 1) {
-        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo">
-          <span class="pill-ic">📸</span><span>Photos</span><span class="photo-count">${photos.length}</span>
+        pillsHtml += `<a class="f-pill t-photo" href="javascript:void(0)" onclick="openLightbox(${JSON.stringify(photos.map(p => p.path)).replace(/"/g, '&quot;')}, 0, ${JSON.stringify(r.race_label).replace(/"/g, '&quot;')})" data-type="photo" title="Voir les ${photos.length} résultats">
+          <span class="pill-ic">📸</span><span>Résultats</span><span class="photo-count">${photos.length}</span>
         </a>`;
       }
 
