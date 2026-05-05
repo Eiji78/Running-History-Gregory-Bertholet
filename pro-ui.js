@@ -16,6 +16,10 @@
         'meteo.html':       { label: 'Météo & perfs', parent: null },
         'galerie.html':     { label: 'Galerie', parent: null },
         'wrapped.html':     { label: 'Wrapped', parent: null },
+        'adn.html':         { label: 'ADN du coureur', parent: null },
+        'age-grading.html': { label: 'Age Grading', parent: null },
+        'trophees.html':    { label: 'Mur des trophées', parent: null },
+        'archives.html':    { label: 'Archives', parent: null },
         '404.html':         { label: '404', parent: null },
     };
 
