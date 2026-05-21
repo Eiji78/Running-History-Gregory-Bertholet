@@ -279,6 +279,11 @@ html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-
   border-radius:9px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.1em;
   text-transform:uppercase;font-size:.78rem;text-align:center;width:100%;}
 .modal-strava:hover{filter:brightness(1.15);}
+
+/* Counter-invert drapeaux en mode clair */
+html[data-theme="light"] .race-flag {
+  filter: invert(1) hue-rotate(180deg);
+}
 </style>
 </head>
 <body>
@@ -360,6 +365,7 @@ html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-
 <script>
 /* ─── DATA ─────────────────────────────────────────── */
 const RACES = [
+  {date:"2026-05-16",course:"ING Night Semi Marathon Luxembourg",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:27:23",allure:"4:08",classement:"195/9345",fc:167,strava:"https://www.strava.com/activities/18533433786/overview",bib:"14437",note:"Top 2,1% · Course de nuit"},
   {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:38:43",allure:"3:52",classement:"12/389",fc:174,strava:"https://strava.app.link/X3NCSNYtN2b",bib:"438",note:"Top 12 · Reprise post-Milano"},
   {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",pays:"IT",flag:"🇮🇹",km:42.195,perf:"02:59:51",allure:"4:15",classement:"1017/15050",record:true,fc:167,strava:"https://www.strava.com/activities/18075963697",note:"SUB-3H ! 🚀"},
   {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:52",allure:"4:04",classement:"48/673",fc:162,strava:"https://www.strava.com/activities/17561583056"},
@@ -684,7 +690,7 @@ function showRace(r){
       </div>
     </div>
     <h3>${r.course}</h3>
-    <div style="text-align:center;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;font-size:.85rem;">${r.flag} ${r.ville} · ${formatFullDate(r.date)}</div>
+    <div style="text-align:center;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;font-size:.85rem;"><span class="race-flag">${r.flag}</span> ${r.ville} · ${formatFullDate(r.date)}</div>
     ${r.note?`<div style="text-align:center;color:var(--gold);font-family:'Orbitron',sans-serif;letter-spacing:.1em;font-size:.8rem;margin-top:.6rem;">⭐ ${r.note}</div>`:''}
     <div class="modal-stats">
       <div class="modal-stat"><div class="modal-stat-label">Temps</div><div class="modal-stat-val">${r.perf}</div></div>
