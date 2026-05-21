@@ -557,6 +557,7 @@
 // Each race: date, course, ville, km, classement, perf, allure, lat, lng, strava, record
 // Hour is estimated: most road races start 9h-10h
 const RACES = [
+  {date:"2026-05-16",course:"Ing Night Semi Luxembourg",ville:"Luxembourg",km:21.1,classement:"195/9345",perf:"01:27:23",allure:"4:08",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/18533433786/overview",fc:167},
   {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"12/389",perf:"00:38:43",allure:"3:52",lat:49.2582,lng:6.0681,hour:10,strava:"https://strava.app.link/X3NCSNYtN2b",fc:174},
   {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",km:42.195,classement:"1017/15050",perf:"02:59:51",allure:"4:15",lat:45.4654,lng:9.1859,hour:10,strava:"https://www.strava.com/activities/18075963697",record:true,fc:167},
   {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/17561583056",fc:162},
@@ -921,7 +922,7 @@ function buildCharts(races) {
     if(chartTemp) chartTemp.destroy();
     chartTemp = new Chart(document.getElementById('chartTemp'), {
         type:'bubble',
-        data:{ datasets:[{ data:pts.map(p=>({x:p.x,y:p.y,r:5,course:p.course,date:p.date,perf:p.perf})), backgroundColor:pts.map(p=>p.color), borderColor:'transparent' }] },
+        data:{ datasets:[{ data:pts.map(p=>({x:p.x,y:p.y,r:3,course:p.course,date:p.date,perf:p.perf})), backgroundColor:pts.map(p=>p.color), borderColor:'transparent' }] },
         options:{ ...commonOpts, scales:{ ...commonOpts.scales, x:{ ...commonOpts.scales.x, title:{display:true,text:'Température ressentie (°C)',color:'rgba(255,255,255,.3)',font:{size:10}} } } }
     });
 
@@ -930,7 +931,7 @@ function buildCharts(races) {
         const w = getW(r);
         const km = r.km;
         const col = km>=42?'rgba(188,19,254,.8)':km>=21?'rgba(0,255,249,.8)':km<=10?'rgba(0,255,136,.8)':'rgba(255,107,53,.8)';
-        return { x:w.wind, y:allureToSec(r.allure), r:Math.max(4,w.rain*4+4), course:r.course, date:r.date, color:col, perf:r.perf };
+        return { x:w.wind, y:allureToSec(r.allure), r:3, course:r.course, date:r.date, color:col, perf:r.perf };
     });
     if(chartWind) chartWind.destroy();
     chartWind = new Chart(document.getElementById('chartWind'), {
@@ -948,7 +949,7 @@ function buildCharts(races) {
     if(chartFC) chartFC.destroy();
     chartFC = new Chart(document.getElementById('chartFC'), {
         type:'bubble',
-        data:{ datasets:[{ data:ptsFC.map(p=>({x:p.x,y:p.y,r:5,course:p.course,date:p.date,perf:p.perf})), backgroundColor:ptsFC.map(p=>p.color), borderColor:'transparent' }] },
+        data:{ datasets:[{ data:ptsFC.map(p=>({x:p.x,y:p.y,r:3,course:p.course,date:p.date,perf:p.perf})), backgroundColor:ptsFC.map(p=>p.color), borderColor:'transparent' }] },
         options:{
             ...commonOpts,
             plugins:{ ...commonOpts.plugins, tooltip:{ ...commonOpts.plugins.tooltip,
