@@ -654,8 +654,9 @@ function achCard(a){
     progressBar=`<div class="ach-progress"><div class="ach-progress-bar" style="width:${Math.min(a.progress,100)}%"></div></div>
       <div class="ach-meta">${a.current!==undefined?a.current+(a.unit||''):''}${a.target?' / '+a.target+(a.unit||''):''}</div>`;
   }
+  const iconIsFlag=/[\u{1F1E6}-\u{1F1FF}]/u.test(a.icon);
   return `<div class="ach-card ${u?'unlocked':'locked'}">
-    <div class="ach-icon">${a.icon}</div>
+    <div class="ach-icon">${iconIsFlag?`<span class="race-flag">${a.icon}</span>`:a.icon}</div>
     <div class="ach-title">${a.title}</div>
     <div class="ach-desc">${a.desc}</div>
     ${u && a.proof?`<div class="ach-meta">${a.proof}</div>`:''}
