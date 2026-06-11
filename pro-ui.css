@@ -395,45 +395,76 @@ html[data-theme="light"] .pro-theme-toggle {
 /* État .active : style timeline, simple et cohérent (cf. nav.site-nav a.active en tête) */
 
 /* Hamburger button (invisible par défaut, visible <= 1024px via @media — iPad inclus) */
+/* Style accentué « tape à l'œil » : gradient néon + halo pulsé, partout où il apparaît */
 .pro-hamburger {
     display: none;
     position: fixed;
     top: 18px;
     left: 18px;
     z-index: 952;
-    width: 44px;
-    height: 44px;
-    border-radius: 13px;
-    background: rgba(0, 0, 0, 0.55);
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(0,255,249,0.20), rgba(188,19,254,0.24));
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1.5px solid rgba(255, 255, 255, 0.12);
+    border: 1.6px solid rgba(0,255,249,0.6);
     cursor: pointer;
     padding: 0;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-    transition: all .25s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 0 22px rgba(0,255,249,0.38), 0 4px 16px rgba(0,0,0,0.45);
+    transition: transform .25s cubic-bezier(.4,0,.2,1), border-color .25s, box-shadow .25s;
+    animation: pro-ham-glow 2.2s ease-in-out infinite;
 }
 .pro-hamburger:hover {
-    border-color: rgba(0,255,249,0.45);
-    box-shadow: 0 6px 20px rgba(0,255,249,0.3);
+    transform: scale(1.12);
+    border-color: rgba(0,255,249,0.95);
+    box-shadow: 0 0 40px rgba(0,255,249,0.7), 0 0 64px rgba(188,19,254,0.45), 0 6px 22px rgba(0,0,0,0.5);
 }
 .pro-hamburger:active { transform: scale(0.94); }
+
+/* Anneaux « radar » qui se propagent vers l'extérieur — signal « clique-moi » */
+.pro-hamburger::before,
+.pro-hamburger::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 18px;
+    border: 2px solid rgba(0,255,249,0.75);
+    pointer-events: none;
+    opacity: 0;
+    animation: pro-ham-ping 2.4s cubic-bezier(.15,.6,.3,1) infinite;
+}
+.pro-hamburger::after {
+    animation-delay: 1.2s;
+    border-color: rgba(188,19,254,0.75);
+}
+
+/* Pendant l'ouverture, on fige tout (le bouton devient une croix nette) */
+.pro-hamburger[aria-expanded="true"],
+.pro-hamburger[aria-expanded="true"] .pro-ham-bars,
+.pro-hamburger[aria-expanded="true"] .pro-ham-bars span { animation: none !important; }
+.pro-hamburger[aria-expanded="true"]::before,
+.pro-hamburger[aria-expanded="true"]::after { display: none; }
 .pro-hamburger .pro-ham-bars {
     position: relative;
     width: 20px;
     height: 14px;
     display: block;
+    animation: pro-ham-wiggle 3.6s ease-in-out infinite;
 }
 .pro-hamburger .pro-ham-bars span {
     position: absolute;
     left: 0;
     width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, #00fff9, #bc13fe);
+    height: 2.5px;
+    background: linear-gradient(90deg, #00fff9, #bc13fe, #ff006e, #00fff9);
+    background-size: 300% 100%;
     border-radius: 2px;
+    box-shadow: 0 0 10px rgba(0,255,249,0.6);
     transition: all .3s cubic-bezier(.4,0,.2,1);
+    animation: pro-ham-flow 2.6s linear infinite;
 }
 .pro-hamburger .pro-ham-bars span:nth-child(1) { top: 0; }
 .pro-hamburger .pro-ham-bars span:nth-child(2) { top: 6px; }
@@ -541,4 +572,124 @@ body.pro-mobile-nav-open {
 @media (prefers-reduced-motion: reduce) {
     .pro-mobile-nav { transition: opacity .05s, transform .05s; }
     .pro-hamburger .pro-ham-bars span { transition: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SOUS-PAGES — Burger à la place de la nav horizontale (toutes tailles)
+   En dehors de l'accueil, la barre de nav devenait trop longue : on la
+   remplace par un hamburger bien visible (gradient néon + pulsation) et un
+   menu qui se révèle en cascade — effet « tape à l'œil ».
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* On masque la nav horizontale et on force le burger à toutes les tailles */
+body.pro-subpage nav.site-nav,
+body.pro-subpage .site-nav {
+    display: none !important;
+}
+/* Le burger (déjà stylé/accentué globalement) est simplement affiché ici */
+body.pro-subpage .pro-hamburger {
+    display: flex;
+}
+
+/* Le breadcrumb se cale à droite du burger sur toutes les tailles */
+body.pro-subpage .pro-breadcrumb {
+    top: 26px;
+    left: 80px;
+}
+
+/* Animations du burger « tape à l'œil » — appliquées partout où l'icône apparaît */
+/* Halo qui respire */
+@keyframes pro-ham-glow {
+    0%, 100% { box-shadow: 0 0 18px rgba(0,255,249,0.40), 0 4px 16px rgba(0,0,0,0.45); }
+    50%      { box-shadow: 0 0 40px rgba(0,255,249,0.75), 0 0 64px rgba(188,19,254,0.45), 0 4px 16px rgba(0,0,0,0.45); }
+}
+/* Anneaux radar qui s'étendent vers l'extérieur */
+@keyframes pro-ham-ping {
+    0%   { transform: scale(1);   opacity: 0.85; }
+    60%  { opacity: 0; }
+    100% { transform: scale(2.1); opacity: 0; }
+}
+/* Flux de couleurs néon qui circule dans les barres */
+@keyframes pro-ham-flow {
+    0%   { background-position: 0% 0; }
+    100% { background-position: 300% 0; }
+}
+/* Léger frétillement périodique pour attirer le regard */
+@keyframes pro-ham-wiggle {
+    0%, 84%, 100% { transform: rotate(0deg); }
+    88% { transform: rotate(-8deg); }
+    92% { transform: rotate(7deg); }
+    96% { transform: rotate(-3deg); }
+}
+
+/* ── Reveal « tape à l'œil » : halo animé + liens en cascade ─────────── */
+.pro-mobile-nav::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(ellipse at 50% -10%, rgba(0,255,249,0.16), transparent 55%),
+        radial-gradient(ellipse at 50% 110%, rgba(188,19,254,0.16), transparent 55%);
+    opacity: 0;
+    transition: opacity .45s ease;
+}
+.pro-mobile-nav.open::before {
+    opacity: 1;
+    animation: pro-menu-glow 5s ease-in-out infinite;
+}
+@keyframes pro-menu-glow {
+    0%, 100% { transform: scale(1); opacity: 0.85; }
+    50%      { transform: scale(1.06); opacity: 1; }
+}
+
+/* Chaque lien entre en cascade (translation + fondu + léger zoom) */
+.pro-mobile-nav a {
+    opacity: 0;
+    transform: translateY(22px) scale(0.95);
+    transition:
+        opacity .42s ease,
+        transform .46s cubic-bezier(.2,.85,.25,1.05),
+        background .2s ease,
+        border-color .2s ease,
+        color .2s ease,
+        box-shadow .2s ease !important;
+}
+.pro-mobile-nav.open a {
+    opacity: 1;
+    transition-delay: calc(var(--i, 0) * 45ms + 90ms) !important;
+}
+.pro-mobile-nav.open a:not(:hover) {
+    transform: translateY(0) scale(1);
+}
+
+/* Sur tablette/desktop : le menu devient une grappe de pastilles centrée */
+@media (min-width: 720px) {
+    .pro-mobile-nav {
+        flex-flow: row wrap;
+        align-content: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 96px 6vw 48px;
+    }
+    .pro-mobile-nav a {
+        flex: 0 1 auto;
+        min-width: 210px;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pro-hamburger,
+    .pro-hamburger .pro-ham-bars,
+    .pro-hamburger .pro-ham-bars span { animation: none !important; }
+    .pro-hamburger::before,
+    .pro-hamburger::after { display: none !important; }
+    .pro-mobile-nav.open::before { animation: none; }
+    .pro-mobile-nav a { transform: none; }
+    .pro-mobile-nav.open a,
+    .pro-mobile-nav.open a:not(:hover) {
+        transform: none;
+        transition-delay: 0ms !important;
+    }
 }
