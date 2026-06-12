@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⏳ Machine à Remonter le Temps — Greg</title>
+<meta name="description" content="Le marathon sub-3h de Gregory Bertholet (2:59:51, Milano 2026) transposé dans l'histoire : JO 1896, Boston 1897, Paris 1900, Londres 1908... Où aurait-il fini ?">
+<link rel="stylesheet" href="pro-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<script defer src="pro-ui.js"></script>
+<style>
+    :root {
+        --neon-cyan: #00fff9;
+        --neon-magenta: #ff00d4;
+        --neon-gold: #ffd700;
+        --neon-green: #00ff88;
+        --neon-orange: #ff8800;
+        --neon-violet: #b347ff;
+        --neon-red: #ff3366;
+        --neon-blue: #4da6ff;
+        --sepia: #d4a96a;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: #fff;
+        background: radial-gradient(ellipse at top, #1a0f02 0%, #0a0508 55%, #000 100%);
+        min-height: 100vh;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
+
+    .page-header { text-align: center; margin-bottom: .8rem; }
+    .page-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(1.7rem, 5vw, 3.2rem);
+        font-weight: 900;
+        letter-spacing: .06em;
+        background: linear-gradient(135deg, #ffd700, #ff8800, #ff00d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        filter: drop-shadow(0 0 18px rgba(255,136,0,.5)) drop-shadow(0 0 40px rgba(255,0,212,.25));
+        margin: 0;
+    }
+    .page-sub { color: rgba(255,255,255,.55); font-size: .85rem; letter-spacing: .08em; margin-top: .5rem; }
+    .page-sub b { color: var(--neon-cyan); font-weight: 700; }
+
+    /* ── Flux capacitor : année courante sticky ── */
+    .flux {
+        position: sticky;
+        top: 46px;
+        z-index: 900;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        margin: 1.2rem 0 1.6rem;
+    }
+    .flux-inner {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: clamp(1.4rem, 4vw, 2.2rem);
+        letter-spacing: .25em;
+        padding: .35rem 1.4rem .35rem 1.65rem;
+        border-radius: 14px;
+        color: var(--neon-gold);
+        background: rgba(15,8,2,.85);
+        border: 1.5px solid rgba(255,215,0,.45);
+        box-shadow: 0 0 22px rgba(255,215,0,.3), inset 0 0 18px rgba(255,136,0,.12);
+        backdrop-filter: blur(10px);
+        text-shadow: 0 0 14px rgba(255,215,0,.7);
+        transition: transform .3s;
+    }
+    .flux-inner.tick { transform: scale(1.08); }
+
+    /* ── Intro ── */
+    .intro {
+        max-width: 640px;
+        margin: 0 auto 2.5rem;
+        text-align: center;
+        color: rgba(255,255,255,.7);
+        font-size: .95rem;
+        line-height: 1.65;
+    }
+    .intro .chrono {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 700;
+        color: var(--neon-cyan);
+        text-shadow: 0 0 12px rgba(0,255,249,.6);
+    }
+
+    /* ── Timeline ── */
+    .timeline { position: relative; }
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 0; bottom: 0;
+        width: 2px;
+        transform: translateX(-50%);
+        background: linear-gradient(to bottom, rgba(255,215,0,.6), rgba(255,0,212,.4), rgba(0,255,249,.6));
+        box-shadow: 0 0 10px rgba(255,215,0,.35);
+    }
+    @media (max-width: 760px) { .timeline::before { left: 14px; } }
+
+    .era {
+        position: relative;
+        margin: 0 0 3.2rem;
+        opacity: 0;
+        transform: translateY(35px);
+        transition: opacity .7s ease, transform .7s ease;
+    }
+    .era.visible { opacity: 1; transform: translateY(0); }
+    .era-dot {
+        position: absolute;
+        left: 50%; top: 26px;
+        width: 14px; height: 14px;
+        transform: translate(-50%, 0);
+        border-radius: 50%;
+        background: var(--neon-gold);
+        box-shadow: 0 0 14px var(--neon-gold), 0 0 30px rgba(255,215,0,.5);
+        z-index: 2;
+    }
+    @media (max-width: 760px) { .era-dot { left: 14px; } }
+
+    .era-card {
+        width: calc(50% - 38px);
+        background: linear-gradient(160deg, rgba(255,255,255,.05), rgba(255,255,255,.015));
+        border: 1px solid rgba(255,215,0,.18);
+        border-radius: 18px;
+        padding: 1.3rem 1.4rem 1.4rem;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 32px rgba(0,0,0,.45);
+    }
+    .era:nth-child(odd) .era-card { margin-left: auto; }
+    @media (max-width: 760px) {
+        .era-card, .era:nth-child(odd) .era-card { width: auto; margin-left: 38px; }
+    }
+
+    .era-year {
+        font-family: 'Orbitron', sans-serif;
+        font-weight: 900;
+        font-size: 1.7rem;
+        color: var(--neon-gold);
+        text-shadow: 0 0 14px rgba(255,215,0,.55);
+        margin: 0;
+    }
+    .era-name { font-weight: 700; font-size: 1.02rem; margin: .15rem 0 0; color: #fff; }
+    .era-meta { font-size: .72rem; letter-spacing: .07em; color: rgba(255,255,255,.45); margin-top: .25rem; text-transform: uppercase; }
+    .era-story {
+        font-size: .85rem;
+        line-height: 1.6;
+        color: rgba(255,255,255,.72);
+        margin: .85rem 0 1rem;
+        border-left: 2px solid rgba(255,215,0,.3);
+        padding-left: .75rem;
+    }
+
+    .podium { display: flex; flex-direction: column; gap: .3rem; margin-bottom: 1rem; }
+    .podium-row {
+        display: flex; align-items: center; gap: .55rem;
+        font-size: .82rem;
+        padding: .32rem .6rem;
+        border-radius: 9px;
+        background: rgba(255,255,255,.045);
+    }
+    .podium-row .pos { width: 1.5rem; text-align: center; flex-shrink: 0; }
+    .podium-row .name { flex: 1; color: rgba(255,255,255,.85); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .podium-row .t { font-family: 'Orbitron', sans-serif; font-size: .75rem; color: rgba(255,255,255,.6); }
+    .podium-row.greg {
+        background: rgba(0,255,249,.09);
+        border: 1px solid rgba(0,255,249,.45);
+        box-shadow: 0 0 14px rgba(0,255,249,.18);
+    }
+    .podium-row.greg .name { color: var(--neon-cyan); font-weight: 700; }
+    .podium-row.greg .t { color: var(--neon-cyan); }
+
+    /* ── Duel animé ── */
+    .duel { margin: .9rem 0 .9rem; }
+    .duel-track {
+        position: relative;
+        height: 34px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.1);
+        overflow: hidden;
+    }
+    .duel-finish {
+        position: absolute; right: 10px; top: 0; bottom: 0;
+        display: flex; align-items: center;
+        font-size: .85rem; opacity: .65;
+    }
+    .runner {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translate(0, -50%);
+        font-size: 1.05rem;
+        transition: left linear;
+        display: flex; align-items: center; gap: .25rem;
+        will-change: left;
+    }
+    .runner .tag {
+        font-family: 'Orbitron', sans-serif;
+        font-size: .55rem;
+        font-weight: 700;
+        letter-spacing: .05em;
+        padding: .1rem .35rem;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
+    .runner.r-greg .tag { background: rgba(0,255,249,.15); color: var(--neon-cyan); border: 1px solid rgba(0,255,249,.4); }
+    .runner.r-win  .tag { background: rgba(255,215,0,.13); color: var(--neon-gold); border: 1px solid rgba(255,215,0,.4); }
+    .duel-caption { font-size: .68rem; color: rgba(255,255,255,.4); margin-top: .35rem; letter-spacing: .04em; }
+
+    /* ── Verdict ── */
+    .verdict {
+        display: flex; align-items: center; gap: .7rem;
+        padding: .7rem .9rem;
+        border-radius: 12px;
+        font-size: .85rem;
+        line-height: 1.45;
+    }
+    .verdict .medal { font-size: 1.6rem; flex-shrink: 0; filter: drop-shadow(0 0 8px rgba(255,215,0,.5)); }
+    .verdict.gold   { background: rgba(255,215,0,.08);  border: 1px solid rgba(255,215,0,.4); }
+    .verdict.silver { background: rgba(200,200,210,.07); border: 1px solid rgba(200,200,210,.35); }
+    .verdict.none   { background: rgba(255,51,102,.07);  border: 1px solid rgba(255,51,102,.35); }
+    .verdict b { color: var(--neon-gold); }
+    .verdict.none b { color: var(--neon-red); }
+
+    .adj-note {
+        font-size: .68rem;
+        color: rgba(255,255,255,.38);
+        margin-top: .55rem;
+        font-style: italic;
+    }
+
+    /* ── Bilan ── */
+    .bilan {
+        margin-top: 3.5rem;
+        text-align: center;
+        background: linear-gradient(160deg, rgba(255,215,0,.07), rgba(255,0,212,.05));
+        border: 1px solid rgba(255,215,0,.3);
+        border-radius: 22px;
+        padding: 2rem 1.5rem;
+        box-shadow: 0 0 40px rgba(255,136,0,.12);
+    }
+    .bilan h2 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.3rem;
+        letter-spacing: .12em;
+        color: var(--neon-gold);
+        text-shadow: 0 0 16px rgba(255,215,0,.5);
+        margin: 0 0 1.2rem;
+    }
+    .bilan-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    .bilan-item {
+        background: rgba(255,255,255,.05);
+        border: 1px solid rgba(255,255,255,.12);
+        border-radius: 14px;
+        padding: .8rem 1.1rem;
+        min-width: 110px;
+    }
+    .bilan-item .big { font-size: 1.7rem; }
+    .bilan-item .lbl { font-size: .68rem; letter-spacing: .08em; color: rgba(255,255,255,.5); text-transform: uppercase; margin-top: .3rem; }
+    .bilan p { color: rgba(255,255,255,.65); font-size: .88rem; line-height: 1.6; max-width: 560px; margin: 1.3rem auto 0; }
+    .bilan p b { color: var(--neon-cyan); }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="trophees.html">🏆 TROPHÉES</a>
+    <a href="archives.html">📂 ARCHIVES</a>
+    <a href="#" class="active">⏳ TIME MACHINE</a>
+</nav>
+
+<div class="wrap">
+
+    <header class="page-header">
+        <h1 class="page-title">⏳ MACHINE À REMONTER LE TEMPS</h1>
+        <div class="page-sub">Ton <b>2:59:51</b> (Milano Marathon, avril 2026) voyage à travers 130 ans de marathon</div>
+    </header>
+
+    <div class="flux"><div class="flux-inner" id="fluxYear">2026</div></div>
+
+    <p class="intro">
+        Embarque ton chrono dans la machine. À chaque époque, on te place sur la ligne de départ
+        avec les coureurs du jour. Quand la distance n'était pas encore les 42,195 km officiels,
+        ton temps est transposé sur la distance réelle de l'épreuve (formule de Riegel) —
+        affiché à côté de ton chrono brut <span class="chrono">2:59:51</span>. Bon voyage. 🛸
+    </p>
+
+    <div class="timeline" id="timeline">
+
+        <!-- 1896 -->
+        <section class="era" data-year="1896">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1896</h2>
+                <p class="era-name">Jeux Olympiques d'Athènes — le tout premier marathon</p>
+                <p class="era-meta">≈ 40 km · Marathon → Athènes · 17 partants</p>
+                <p class="era-story">
+                    La toute première édition de l'histoire, sur les traces du messager Philippidès.
+                    Spyridon Louis, un porteur d'eau grec, entre dans la légende devant 70 000 spectateurs
+                    en délire au stade Panathénaïque.
+                </p>
+                <div class="podium">
+                    <div class="podium-row greg"><span class="pos">🥇</span><span class="name">TOI (Greg)</span><span class="t">≈ 2:49:58*</span></div>
+                    <div class="podium-row"><span class="pos">2</span><span class="name">Spyridon Louis 🇬🇷</span><span class="t">2:58:50</span></div>
+                    <div class="podium-row"><span class="pos">3</span><span class="name">Charilaos Vasilakos 🇬🇷</span><span class="t">3:06:03</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-greg" data-time="10198">🏃<span class="tag">GREG</span></div>
+                        <div class="runner r-win" data-time="10730">🏃<span class="tag">LOUIS</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle — 1 seconde réelle ≈ 30 min de course</div>
+                </div>
+                <div class="verdict gold">
+                    <span class="medal">🥇</span>
+                    <span><b>CHAMPION OLYMPIQUE.</b> Avec ~9 minutes d'avance sur Spyridon Louis, c'est toi que la Grèce porte en triomphe. Une rue d'Athènes porte ton nom.</span>
+                </div>
+                <p class="adj-note">* 2:59:51 transposé sur ~40 km. Même brut, ton chrono battrait Louis de 59 secondes.</p>
+            </div>
+        </section>
+
+        <!-- 1897 -->
+        <section class="era" data-year="1897">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1897</h2>
+                <p class="era-name">Premier Marathon de Boston</p>
+                <p class="era-meta">≈ 39,4 km · Ashland → Boston · 15 partants</p>
+                <p class="era-story">
+                    La première édition de la plus vieille course annuelle du monde. John McDermott
+                    s'impose… en marchant à plusieurs reprises dans les côtes, escorté par des
+                    cyclistes qui lui ouvrent la route.
+                </p>
+                <div class="podium">
+                    <div class="podium-row greg"><span class="pos">🥇</span><span class="name">TOI (Greg)</span><span class="t">≈ 2:47:16*</span></div>
+                    <div class="podium-row"><span class="pos">2</span><span class="name">John J. McDermott 🇺🇸</span><span class="t">2:55:10</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-greg" data-time="10036">🏃<span class="tag">GREG</span></div>
+                        <div class="runner r-win" data-time="10510">🏃<span class="tag">McDERMOTT</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict gold">
+                    <span class="medal">🥇</span>
+                    <span><b>VAINQUEUR DU PREMIER BOSTON.</b> Ton nom ouvre le palmarès le plus prestigieux du running mondial. Pas mal pour un gars de Moselle.</span>
+                </div>
+                <p class="adj-note">* 2:59:51 transposé sur ~39,4 km.</p>
+            </div>
+        </section>
+
+        <!-- 1900 -->
+        <section class="era" data-year="1900">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1900</h2>
+                <p class="era-name">Jeux Olympiques de Paris</p>
+                <p class="era-meta">40,26 km · Dans les rues de Paris, en pleine canicule</p>
+                <p class="era-story">
+                    Clin d'œil du destin : le vainqueur, Michel Théato, est né au <b style="color:var(--neon-gold)">Luxembourg</b> —
+                    sur tes terres de course. Son chrono ? 2:59:45. Six petites secondes plus rapide
+                    que ton brut, mais sur 2 km de moins.
+                </p>
+                <div class="podium">
+                    <div class="podium-row greg"><span class="pos">🥇</span><span class="name">TOI (Greg)</span><span class="t">≈ 2:51:07*</span></div>
+                    <div class="podium-row"><span class="pos">2</span><span class="name">Michel Théato 🇱🇺</span><span class="t">2:59:45</span></div>
+                    <div class="podium-row"><span class="pos">3</span><span class="name">Émile Champion 🇫🇷</span><span class="t">3:04:17</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-greg" data-time="10267">🏃<span class="tag">GREG</span></div>
+                        <div class="runner r-win" data-time="10785">🏃<span class="tag">THÉATO</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict gold">
+                    <span class="medal">🥇</span>
+                    <span><b>OR OLYMPIQUE À PARIS</b> — en battant le héros local… du Luxembourg. L'histoire aurait adoré ce duel frontalier.</span>
+                </div>
+                <p class="adj-note">* 2:59:51 transposé sur 40,26 km. En chrono brut, Théato te devance de 6 secondes : argent au sprint.</p>
+            </div>
+        </section>
+
+        <!-- 1904 -->
+        <section class="era" data-year="1904">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1904</h2>
+                <p class="era-name">Jeux Olympiques de Saint-Louis — le marathon le plus fou de l'histoire</p>
+                <p class="era-meta">≈ 40 km · 32 °C, routes poussiéreuses, un seul point d'eau</p>
+                <p class="era-story">
+                    Le chaos absolu : Fred Lorz « gagne »… après 17 km en voiture (disqualifié).
+                    Le vrai vainqueur, Thomas Hicks, finit dopé à la strychnine et au brandy,
+                    porté par ses soigneurs. 14 finishers sur 32 partants.
+                </p>
+                <div class="podium">
+                    <div class="podium-row greg"><span class="pos">🥇</span><span class="name">TOI (Greg)</span><span class="t">≈ 2:49:58*</span></div>
+                    <div class="podium-row"><span class="pos">2</span><span class="name">Thomas Hicks 🇺🇸</span><span class="t">3:28:53</span></div>
+                    <div class="podium-row"><span class="pos">3</span><span class="name">Albert Corey 🇫🇷</span><span class="t">3:34:52</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-greg" data-time="10198">🏃<span class="tag">GREG</span></div>
+                        <div class="runner r-win" data-time="12533">🏃<span class="tag">HICKS</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle — oui, l'écart est réel</div>
+                </div>
+                <div class="verdict gold">
+                    <span class="medal">🥇</span>
+                    <span><b>VICTOIRE PAR K.O. : ~39 minutes d'avance.</b> Tu as le temps de finir, te doucher et revenir applaudir Hicks. Le plus grand écart de ton voyage temporel.</span>
+                </div>
+                <p class="adj-note">* Et encore, sans tenir compte des 32 °C — toi qui as une page météo, tu sais ce que ça vaut.</p>
+            </div>
+        </section>
+
+        <!-- 1908 -->
+        <section class="era" data-year="1908">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1908</h2>
+                <p class="era-name">Jeux Olympiques de Londres — naissance des 42,195 km</p>
+                <p class="era-meta">42,195 km · Château de Windsor → stade de White City</p>
+                <p class="era-story">
+                    La distance mythique naît ici, fixée pour partir des fenêtres du château royal et
+                    finir devant la loge de la Reine. Dorando Pietri s'écroule 5 fois dans le stade,
+                    franchit la ligne porté par les juges… et est disqualifié. Première édition sur
+                    TA distance : la comparaison est enfin brute, sans astérisque.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Johnny Hayes 🇺🇸</span><span class="t">2:55:18</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Charles Hefferon 🇿🇦</span><span class="t">2:56:06</span></div>
+                    <div class="podium-row"><span class="pos">🥉</span><span class="name">Joseph Forshaw 🇺🇸</span><span class="t">2:57:10</span></div>
+                    <div class="podium-row"><span class="pos">4</span><span class="name">Alton Welton 🇺🇸</span><span class="t">2:59:45</span></div>
+                    <div class="podium-row greg"><span class="pos">5</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="10518">🏃<span class="tag">HAYES</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict silver">
+                    <span class="medal">5️⃣</span>
+                    <span><b>5ᵉ des Jeux Olympiques</b> — à 6 secondes du 4ᵉ et à 4:33 du titre. Encore tes 6 secondes maudites ! Diplôme olympique pour ton chrono brut, sans aucun ajustement.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1920 -->
+        <section class="era" data-year="1920">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1920</h2>
+                <p class="era-name">Jeux Olympiques d'Anvers — l'ère moderne commence</p>
+                <p class="era-meta">42,75 km · Le plus long marathon olympique de l'histoire</p>
+                <p class="era-story">
+                    En 24 ans, le niveau a explosé : le Finlandais Hannes Kolehmainen s'impose
+                    en 2:32:35 sur une distance rallongée. La fenêtre magique se referme —
+                    les « Finlandais volants » ont fait entrer le marathon dans une autre dimension.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Hannes Kolehmainen 🇫🇮</span><span class="t">2:32:35</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Jüri Lossmann 🇪🇪</span><span class="t">2:32:48</span></div>
+                    <div class="podium-row greg"><span class="pos">—</span><span class="name">TOI (Greg)</span><span class="t">≈ 3:02:21*</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="9155">🏃<span class="tag">KOLEHMAINEN</span></div>
+                        <div class="runner r-greg" data-time="10941">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">⏱️</span>
+                    <span><b>Hors podium, à ~30 min du titre.</b> Honorable finisher au milieu du peloton olympique. Ta fenêtre de gloire : 1896 – 1908. Douze ans où ton chrono valait l'or.</span>
+                </div>
+                <p class="adj-note">* 2:59:51 transposé sur 42,75 km.</p>
+            </div>
+        </section>
+
+        <!-- 1952 -->
+        <section class="era" data-year="1952">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1952</h2>
+                <p class="era-name">Jeux Olympiques d'Helsinki — le marathon de Zátopek</p>
+                <p class="era-meta">42,195 km · La « Locomotive tchèque » découvre la distance</p>
+                <p class="era-story">
+                    Le coup le plus fou de l'histoire : Emil Zátopek vient de remporter le 5000 m
+                    ET le 10000 m… puis s'aligne sur SON tout premier marathon — et le gagne aussi.
+                    Triplé inégalé, signé par un homme qui demandait conseil à ses adversaires en pleine course.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Emil Zátopek 🇨🇿</span><span class="t">2:23:03</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Reinaldo Gorno 🇦🇷</span><span class="t">2:25:35</span></div>
+                    <div class="podium-row"><span class="pos">🥉</span><span class="name">Gustaf Jansson 🇸🇪</span><span class="t">2:26:07</span></div>
+                    <div class="podium-row greg"><span class="pos">—</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="8583">🏃<span class="tag">ZÁTOPEK</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">🚂</span>
+                    <span><b>Hors podium, à ~37 min du génie.</b> Aucune honte : tu cours contre l'homme qui a gagné trois titres olympiques en une semaine. Personne au monde ne le bat ce jour-là.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1960 -->
+        <section class="era" data-year="1960">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1960</h2>
+                <p class="era-name">Jeux Olympiques de Rome — Abebe Bikila, pieds nus</p>
+                <p class="era-meta">42,195 km · La nuit, sous les torches de la Via Appia</p>
+                <p class="era-story">
+                    Abebe Bikila court <b style="color:var(--neon-gold)">pieds nus</b> sur les pavés romains
+                    et devient le premier champion olympique d'Afrique noire, sous l'arc de Constantin.
+                    Le départ d'une domination est-africaine qui ne s'est jamais arrêtée depuis.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Abebe Bikila 🇪🇹</span><span class="t">2:15:16</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Rhadi Ben Abdesselam 🇲🇦</span><span class="t">2:15:41</span></div>
+                    <div class="podium-row"><span class="pos">🥉</span><span class="name">Barry Magee 🇳🇿</span><span class="t">2:17:18</span></div>
+                    <div class="podium-row greg"><span class="pos">—</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="8116">🏃<span class="tag">BIKILA</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">🦶</span>
+                    <span><b>À ~45 min — et lui sans chaussures.</b> Toi avec tes carbone dernier cri, lui pieds nus sur les pavés : la machine a un sacré sens de l'humour. L'écart le plus humble de ton voyage.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1984 -->
+        <section class="era" data-year="1984">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">1984</h2>
+                <p class="era-name">Los Angeles — le premier marathon olympique féminin</p>
+                <p class="era-meta">42,195 km · Joan Benoit ouvre une porte fermée depuis 1896</p>
+                <p class="era-story">
+                    88 ans après Athènes, les femmes ont enfin le droit de courir le marathon aux JO.
+                    Joan Benoit s'échappe dès le 5ᵉ km et entre seule dans le Colisée de Los Angeles —
+                    une victoire qui change le sport pour toujours.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Joan Benoit 🇺🇸</span><span class="t">2:24:52</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Grete Waitz 🇳🇴</span><span class="t">2:26:18</span></div>
+                    <div class="podium-row"><span class="pos">🥉</span><span class="name">Rosa Mota 🇵🇹</span><span class="t">2:26:57</span></div>
+                    <div class="podium-row greg"><span class="pos">—</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="8692">🏃<span class="tag">BENOIT</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">🚪</span>
+                    <span><b>Distancé de ~35 min par la pionnière.</b> Joan Benoit ne gagne pas qu'une médaille : elle ouvre le marathon à la moitié de l'humanité. Tu finis bien après elle — et tu applaudis.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2023 -->
+        <section class="era" data-year="2023">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">2023</h2>
+                <p class="era-name">Chicago — le record du monde de Kelvin Kiptum</p>
+                <p class="era-meta">42,195 km · 2:00:35 · 2:51/km de moyenne</p>
+                <p class="era-story">
+                    Retour brutal au présent. Quand Kiptum franchit la ligne de son record du monde,
+                    toi, parti en même temps que lui à ton allure de Milano, tu es au
+                    <b style="color:var(--neon-cyan)">kilomètre 28,3</b> — il te reste 14 km, soit pratiquement un semi de Thionville.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Kelvin Kiptum 🇰🇪</span><span class="t">2:00:35</span></div>
+                    <div class="podium-row greg"><span class="pos">∞</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="7235">🏃<span class="tag">KIPTUM</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle — l'humilité en barre de progression</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">🌍</span>
+                    <span>Mais remets ça en perspective : ton 2:59:51 reste plus rapide que <b>~98 %</b> des marathoniens actuels. Et surtout… que 100 % des champions olympiques d'avant 1908.</span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Bilan -->
+    <div class="bilan era" data-year="2026">
+        <h2>🧾 BILAN DU VOYAGE TEMPOREL</h2>
+        <div class="bilan-grid">
+            <div class="bilan-item"><div class="big">🥇🥇🥇🥇</div><div class="lbl">Titres (1896–1904)</div></div>
+            <div class="bilan-item"><div class="big">5ᵉ</div><div class="lbl">JO 1908 · chrono brut</div></div>
+            <div class="bilan-item"><div class="big">12 ans</div><div class="lbl">de règne possible</div></div>
+            <div class="bilan-item"><div class="big">+59 min</div><div class="lbl">sur Kiptum 2023</div></div>
+        </div>
+        <p>
+            Verdict de la machine : né 130 ans trop tard pour l'or olympique,
+            mais pile à temps pour le chronométrage électronique, les chaussures carbone…
+            et un <b>sub-3h</b> qui aurait fait de toi une légende à Athènes.
+            Retour vers le futur : prochaine course, prochain chrono. 🛸
+        </p>
+    </div>
+
+</div>
+
+<script>
+(function () {
+    // ── Reveal + flux année ──
+    const fluxEl = document.getElementById('fluxYear');
+    const eras = document.querySelectorAll('.era');
+
+    const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                startDuel(e.target);
+            }
+        });
+    }, { threshold: 0.25 });
+
+    const yearObs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                const y = e.target.dataset.year;
+                if (y && fluxEl.textContent !== y) {
+                    animateYear(parseInt(fluxEl.textContent, 10), parseInt(y, 10));
+                }
+            }
+        });
+    }, { threshold: 0.5, rootMargin: '-20% 0px -50% 0px' });
+
+    eras.forEach(el => { revealObs.observe(el); yearObs.observe(el); });
+
+    // ── Compteur d'année qui défile ──
+    let yearAnim = null;
+    function animateYear(from, to) {
+        if (isNaN(from)) from = 2026;
+        cancelAnimationFrame(yearAnim);
+        const dur = 700, t0 = performance.now();
+        fluxEl.classList.add('tick');
+        function step(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            const eased = 1 - Math.pow(1 - p, 3);
+            fluxEl.textContent = Math.round(from + (to - from) * eased);
+            if (p < 1) yearAnim = requestAnimationFrame(step);
+            else fluxEl.classList.remove('tick');
+        }
+        yearAnim = requestAnimationFrame(step);
+    }
+
+    // ── Duels animés ──
+    const SIM_SECONDS_PER_REAL = 1800; // 1 s réelle = 30 min de course
+    function startDuel(era) {
+        era.querySelectorAll('.duel-track').forEach(track => {
+            if (track.dataset.done) return;
+            track.dataset.done = '1';
+            const runners = track.querySelectorAll('.runner');
+            const trackW = track.clientWidth;
+            runners.forEach(r => {
+                const tSec = parseInt(r.dataset.time, 10);
+                const durMs = (tSec / SIM_SECONDS_PER_REAL) * 1000;
+                const dest = trackW - r.offsetWidth - 34;
+                r.style.transitionDuration = durMs + 'ms';
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    r.style.left = dest + 'px';
+                }));
+            });
+        });
+    }
+})();
+</script>
+
+</body>
+</html>

@@ -310,7 +310,7 @@
   }
   .card-adn .card-title{background:linear-gradient(90deg,#00fff9,#b347ff,#ff00d4);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-adn .card-icon{filter:drop-shadow(0 0 12px rgba(179,71,255,.5))}
-  .card-age-grading{grid-column:span 3;--card-accent:#ffd700;background:linear-gradient(135deg,#1a1405 0%,var(--bg-card) 60%,#0a0903 100%);position:relative;overflow:hidden}
+  .card-age-grading{grid-column:span 4;--card-accent:#ffd700;background:linear-gradient(135deg,#1a1405 0%,var(--bg-card) 60%,#0a0903 100%);position:relative;overflow:hidden}
   .card-age-grading::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -319,7 +319,7 @@
   }
   .card-age-grading .card-title{background:linear-gradient(90deg,#ffd700,#ffb347,#ff9500);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-age-grading .card-icon{filter:drop-shadow(0 0 12px rgba(255,215,0,.5))}
-  .card-trophees{grid-column:span 3;--card-accent:#ffae00;background:linear-gradient(135deg,#1d1207 0%,var(--bg-card) 60%,#0a0703 100%);position:relative;overflow:hidden}
+  .card-trophees{grid-column:span 5;--card-accent:#ffae00;background:linear-gradient(135deg,#1d1207 0%,var(--bg-card) 60%,#0a0703 100%);position:relative;overflow:hidden}
   .card-trophees::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -329,7 +329,7 @@
   .card-trophees .card-title{background:linear-gradient(90deg,#ffd700,#ff8800,#ff006e);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-trophees .card-icon{filter:drop-shadow(0 0 12px rgba(255,174,0,.55))}
 
-  .card-archives{grid-column:span 3;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
+  .card-archives{grid-column:span 6;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
   .card-archives::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -338,6 +338,16 @@
   }
   .card-archives .card-title{background:linear-gradient(90deg,#7df7f7,#4da6ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-archives .card-icon{filter:drop-shadow(0 0 12px rgba(77,166,255,.55))}
+
+  .card-machine-temps{grid-column:span 6;--card-accent:#9b8cff;background:linear-gradient(135deg,#0c0820 0%,var(--bg-card) 60%,#06040f 100%);position:relative;overflow:hidden}
+  .card-machine-temps::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 78% 28%, rgba(155,140,255,.16) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(0,255,249,.09) 0%, transparent 60%);
+  }
+  .card-machine-temps .card-title{background:linear-gradient(90deg,#9b8cff,#5ad1ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card-machine-temps .card-icon{filter:drop-shadow(0 0 12px rgba(155,140,255,.55))}
 
   /* Featured card visual */
   .card-timeline .card-viz{
@@ -407,6 +417,7 @@
     .card-age-grading{grid-column:span 6}
     .card-trophees{grid-column:span 6}
     .card-archives{grid-column:span 6}
+    .card-machine-temps{grid-column:span 6}
     .recent{padding:48px 20px}
     .race{grid-template-columns:1fr auto;gap:12px}
     .race-date,.race-dist{display:none}
@@ -428,7 +439,7 @@
     .card{min-height:auto;padding:22px}
     .card-progression,.card-radar,.card-comparaison,
     .card-timeline,.card-carte,
-    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives{grid-column:span 1}
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives,.card-machine-temps{grid-column:span 1}
     .card-title{font-size:22px}
     .card-icon{font-size:22px;margin-bottom:12px}
     .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
@@ -462,6 +473,7 @@
   <a href="age-grading.html">⚖️ AGE GRADING</a>
   <a href="trophees.html">🏆 TROPHÉES</a>
   <a href="archives.html">📂 ARCHIVES</a>
+  <a href="machine-temps.html">⏳ TIME MACHINE</a>
 </nav>
 
 <!-- TOP BAR -->
@@ -760,6 +772,16 @@
         <div class="card-desc">Classements PDF, photos et tableaux Excel depuis 2019. 55 courses, 65 documents.</div>
       </div>
       <div class="card-preview">Consulter les archives</div>
+    </a>
+
+    <a class="card card-machine-temps" href="machine-temps.html">
+      <span class="card-num">14</span>
+      <div>
+        <div class="card-icon">⏳</div>
+        <div class="card-title">Machine à<br/>Remonter le Temps</div>
+        <div class="card-desc">Et si tu courais ton sub-3h en 1896 ? Ton chrono transposé sur les marathons de l'histoire : JO d'Athènes, Boston, Paris 1900…</div>
+      </div>
+      <div class="card-preview">Embarquer dans la machine</div>
     </a>
 
   </div>

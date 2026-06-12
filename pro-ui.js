@@ -20,6 +20,7 @@
         'age-grading.html': { label: 'Age Grading', parent: null },
         'trophees.html':    { label: 'Mur des trophées', parent: null },
         'archives.html':    { label: 'Archives', parent: null },
+        'machine-temps.html': { label: 'Machine à Remonter le Temps', parent: null },
         '404.html':         { label: '404', parent: null },
     };
 
@@ -236,13 +237,15 @@
 
         const cur = currentPageFile();
         const links = sourceNav.querySelectorAll('a');
-        links.forEach(function (src) {
+        links.forEach(function (src, idx) {
             const a = document.createElement('a');
             let href = src.getAttribute('href') || '#';
             // Les liens "#" = page courante → les remplacer
             if (href === '#') href = cur;
             a.href = href;
             a.textContent = src.textContent.trim();
+            // Index pour l'apparition en cascade (effet "tape à l'œil")
+            a.style.setProperty('--i', idx);
             const hrefFile = href.split('#')[0].split('?')[0];
             if (hrefFile === cur) a.classList.add('active');
             panel.appendChild(a);
@@ -289,9 +292,47 @@
     function setupNav() {
         const nav = document.querySelector('.site-nav');
         if (!nav) return;
+        // Sur les sous-pages : le burger remplace la nav horizontale à toutes
+        // les tailles (la barre devenait trop longue). L'accueil garde sa nav.
+        if (currentPageFile() !== 'index.html') {
+            document.body.classList.add('pro-subpage');
+        }
         syncActiveLink(nav);
         bindNavScrollState(nav);
         injectHamburger(nav);
+    }
+
+    // ── Drapeaux : neutralise l'inversion des couleurs en mode clair ────
+    // Le mode clair inverse tout le <html> (filter invert+hue-rotate). Les
+    // medias sont contre-inversés via .pro-no-invert, mais les emoji drapeaux
+    // sont du texte : on les enveloppe pour restaurer leurs vraies couleurs.
+    function keepFlagColors(root) {
+        const FLAG = /[\u{1F1E6}-\u{1F1FF}]{2}/gu;
+        const walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT);
+        const targets = [];
+        let node;
+        while ((node = walker.nextNode())) {
+            const parent = node.parentNode;
+            if (parent && parent.classList && parent.classList.contains('pro-no-invert')) continue;
+            FLAG.lastIndex = 0;
+            if (FLAG.test(node.nodeValue)) targets.push(node);
+        }
+        targets.forEach(function (textNode) {
+            const s = textNode.nodeValue;
+            const frag = document.createDocumentFragment();
+            let last = 0, m;
+            FLAG.lastIndex = 0;
+            while ((m = FLAG.exec(s)) !== null) {
+                if (m.index > last) frag.appendChild(document.createTextNode(s.slice(last, m.index)));
+                const span = document.createElement('span');
+                span.className = 'pro-no-invert';
+                span.textContent = m[0];
+                frag.appendChild(span);
+                last = m.index + m[0].length;
+            }
+            if (last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+            textNode.parentNode.replaceChild(frag, textNode);
+        });
     }
 
     // ── Init ───────────────────────────────────────────────────────────
@@ -303,6 +344,7 @@
         injectThemeToggle();
         applyTheme(getSavedTheme());
         setupNav();
+        keepFlagColors();
     }
 
     if (document.readyState === 'loading') {
