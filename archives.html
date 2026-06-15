@@ -412,20 +412,22 @@ const RESULTS_MANIFEST = {
   "smivo-2025": {race_label:"SMIVO 2025",year:2025,files:[
     {path:"resultats/2025/smivo-2025.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
   ]},
-  "la-conviviale-2026": {race_label:"La Conviviale 2026",year:2026,files:[
+  "la-conviviale-2026": {race_label:"La Conviviale 2026",year:2026,date:"2026-05-01",files:[
     {path:"resultats/2026/conviviale.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
   ]},
-  "smivo-2026": {race_label:"SMIVO 2026",year:2026,files:[
+  "smivo-2026": {race_label:"SMIVO 2026",year:2026,date:"2026-03-01",files:[
     {path:"resultats/2026/smivo-2026.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
   ]},
-  "marathon-milano-2026": {race_label:"Wizz Air Milano Marathon 2026",year:2026,files:[
+  "marathon-milano-2026": {race_label:"Wizz Air Milano Marathon 2026",year:2026,date:"2026-04-12",files:[
     {path:"resultats/2026/milan-marathon.pdf",type:"pdf",label:"Résultat officiel (PDF)"},
     {path:"resultats/2026/diploma.pdf",type:"pdf",label:"Diplôme finisseur (PDF)"}
   ]},
-  "ing-luxembourg-2026": {race_label:"ING Luxembourg 2026",year:2026,files:[
+  "ing-luxembourg-2026": {race_label:"ING Luxembourg 2026",year:2026,date:"2026-05-16",files:[
     {path:"resultats/2026/ING Luxembourg.png",type:"photo",label:"Photo"}
   ]},
-  "la-ronde-nocturne-clouange-2026": {race_label:"La Ronde Nocturne Clouange 2026",year:2026,files:[]}
+  "la-ronde-nocturne-clouange-2026": {race_label:"La Ronde Nocturne Clouange 2026",year:2026,date:"2026-06-05",files:[
+    {path:"resultats/2026/Resultats ronde nocturne Clouange2026.pdf",type:"pdf",label:"Résultat officiel (PDF)"}
+  ]}
 };
 
 // ═══════════════════════════════════════════════════════════════════════
@@ -491,7 +493,10 @@ function buildArchives() {
 
   let html = '';
   years.forEach(year => {
-    const races = byYear[year].sort((a, b) => a.race_label.localeCompare(b.race_label, 'fr'));
+    const races = byYear[year].sort((a, b) => {
+      if (a.date && b.date) return b.date.localeCompare(a.date);
+      return a.race_label.localeCompare(b.race_label, 'fr');
+    });
     const docCount = races.reduce((s, r) => s + r.files.length, 0);
     html += `
       <section class="year-section" data-year="${year}">
