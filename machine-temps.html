@@ -31,6 +31,9 @@
     .wrap { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1rem 5rem; }
 
     .page-header { text-align: center; margin-bottom: .8rem; }
+    @media (max-width: 760px) {
+        .page-header { padding-top: 3.4rem; }
+    }
     .page-title {
         font-family: 'Orbitron', sans-serif;
         font-size: clamp(1.7rem, 5vw, 3.2rem);
@@ -294,7 +297,7 @@
         <div class="page-sub">Ton <b>2:59:51</b> (Milano Marathon, avril 2026) voyage à travers 130 ans de marathon</div>
     </header>
 
-    <div class="flux"><div class="flux-inner" id="fluxYear">2026</div></div>
+    <div class="flux"><div class="flux-inner" id="fluxYear">1896</div></div>
 
     <p class="intro">
         Embarque ton chrono dans la machine. À chaque époque, on te place sur la ligne de départ
@@ -679,9 +682,18 @@
                 }
             }
         });
-    }, { threshold: 0.5, rootMargin: '-20% 0px -50% 0px' });
+    }, { threshold: 0, rootMargin: '-45% 0px -45% 0px' });
 
     eras.forEach(el => { revealObs.observe(el); yearObs.observe(el); });
+
+    // Tout en haut de la page, l'année affichée doit rester celle de la première époque (1896)
+    const firstYear = eras[0] && eras[0].dataset.year;
+    window.addEventListener('scroll', () => {
+        if (firstYear && window.scrollY < 120 && fluxEl.textContent !== firstYear) {
+            cancelAnimationFrame(yearAnim);
+            fluxEl.textContent = firstYear;
+        }
+    }, { passive: true });
 
     // ── Compteur d'année qui défile ──
     let yearAnim = null;
