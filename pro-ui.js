@@ -21,6 +21,7 @@
         'trophees.html':    { label: 'Mur des trophées', parent: null },
         'archives.html':    { label: 'Archives', parent: null },
         'machine-temps.html': { label: 'Machine à Remonter le Temps', parent: null },
+        'entrainements.html': { label: 'Évolution des Préparations', parent: null },
         '404.html':         { label: '404', parent: null },
     };
 

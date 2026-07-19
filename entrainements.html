@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Évolution des Préparations Marathon — Gregory Bertholet Running</title>
+    <meta name="description" content="Évolution des cycles d'entraînement marathon de Gregory Bertholet entre 2021 et 2026 : volume, séances, allure et dénivelé, cycle par cycle, jusqu'au sub-3h de Milan." />
+<meta name="keywords" content="Gregory Bertholet, entrainement marathon, plan marathon, volume kilométrique, Strava, marathon Paris, marathon Amsterdam, marathon Luxembourg, marathon Annecy, marathon Milan, sub 3h" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/entrainements.html" />
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#07070e">
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Running — Gregory Bertholet">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:title" content="Évolution des Préparations Marathon — Running History">
+    <meta property="og:description" content="6 cycles d'entraînement marathon disséqués : volume, séances, allure, dénivelé. De 472 km à 1047 km, de 3h29 à 2h59.">
+    <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Running — Gregory Bertholet">
+    <meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/entrainements.html">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Évolution des Préparations Marathon — Running History">
+    <meta name="twitter:description" content="6 cycles d'entraînement marathon disséqués : volume, séances, allure, dénivelé. De 472 km à 1047 km, de 3h29 à 2h59.">
+    <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --neon-cyan: #00fff9;
+            --neon-purple: #bc13fe;
+            --neon-orange: #ff6b35;
+            --neon-pink: #ff006e;
+            --neon-green: #00ff88;
+        }
+        body { font-family: 'Space Grotesk', sans-serif; background: #0a0a0f; color: white; overflow-x: clip; }
+        .animated-bg {
+            position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: 0;
+            background: radial-gradient(ellipse at top, #1a0f2e 0%, #0a0a0f 50%);
+        }
+        .animated-bg::before {
+            content: ''; position: absolute; width: 200%; height: 200%; top: -50%; left: -50%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(188, 19, 254, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 249, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 107, 53, 0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+        .grain { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.03; z-index: 1; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+        .neon-border { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--neon-cyan) 0%, var(--neon-purple) 25%, var(--neon-pink) 50%, var(--neon-orange) 75%, var(--neon-cyan) 100%); background-size: 200% 100%; animation: gradientSlide 4s linear infinite; z-index: 1000; box-shadow: 0 0 20px var(--neon-cyan), 0 0 40px var(--neon-purple); }
+        @keyframes gradientSlide { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+        .container { position: relative; z-index: 2; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+        .main-title { font-family: 'Orbitron', sans-serif; font-size: clamp(1.6rem, 4vw, 3.2rem); font-weight: 900; background: linear-gradient(135deg, #c6ff00 0%, #00e676 50%, #00b0ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: 0.06em; filter: drop-shadow(0 0 20px rgba(160,255,0,0.7)) drop-shadow(0 0 40px rgba(0,176,255,0.5)); }
+        .glass-card { background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02)); backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; position: relative; overflow: hidden; transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); }
+        .home-btn-fixed { position: fixed; top: 20px; left: 20px; z-index: 999; width: 46px; height: 46px; border-radius: 14px; background: linear-gradient(135deg, rgba(0,255,249,0.15), rgba(188,19,254,0.15)); border: 1.5px solid rgba(0,255,249,0.4); display: flex; align-items: center; justify-content: center; text-decoration: none; backdrop-filter: blur(20px); box-shadow: 0 0 18px rgba(0,255,249,0.25); transition: all 0.3s; }
+        .home-btn-fixed:hover { transform: scale(1.15); box-shadow: 0 0 30px rgba(0,255,249,0.55); }
+        .cycle-btn { position: relative; padding: 0.55rem 1.1rem; border-radius: 12px; font-family: 'Orbitron', sans-serif; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; transition: all 0.3s; border: 2px solid; background: transparent; user-select: none; display: flex; align-items: center; gap: 6px; }
+        .cycle-btn .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .cycle-btn.active { transform: translateY(-2px); }
+        .cycle-btn:hover:not(.active) { transform: translateY(-1px); opacity: 0.9; }
+        .stat-mini { border-radius: 14px; padding: 0.9rem 1rem; border: 1px solid; transition: all 0.4s; }
+        .fade-in { animation: fadeIn 0.9s ease-out forwards; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+        .axis-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.7rem 1rem; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); transition: background 0.3s; }
+        .axis-item:hover { background: rgba(255,255,255,0.06); }
+        .shortcut-btn { font-size: 0.68rem; padding: 0.35rem 1rem; border-radius: 8px; cursor: pointer; letter-spacing: 0.08em; font-weight: 600; transition: all 0.2s; border: 1px solid; }
+        .chart-wrap { position: relative; width: 100%; height: 380px; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, rgba(188,19,254,0.5), rgba(0,255,249,0.5)); border-radius: 8px; }
+
+        /* ── MOBILE RESPONSIVE ─────────────────────────────────────── */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            body { overflow-x: clip; }
+            .main-title { font-size: 1.4rem !important; letter-spacing: 0.02em !important; }
+            .glass-card { border-radius: 16px; }
+            .py-20 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+            .mb-14, .mb-12, .mb-10 { margin-bottom: 1.5rem !important; }
+            .p-8 { padding: 1.2rem !important; }
+            .p-7 { padding: 1rem !important; }
+            .grid.grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+            .grid.md\:grid-cols-4 { grid-template-columns: 1fr 1fr !important; }
+            .grid.md\:grid-cols-2 { grid-template-columns: 1fr !important; }
+            .cycle-btn { font-size: 0.68rem; padding: 0.45rem 0.8rem; }
+            .home-btn-fixed { top: 12px; left: 12px; width: 40px; height: 40px; }
+            .chart-wrap { height: 280px; }
+        }
+        @media (max-width: 480px) {
+            .main-title { font-size: 1.1rem !important; }
+            .flex.flex-wrap.justify-center.gap-3 { gap: 0.4rem; }
+            .grid.grid-cols-2 { grid-template-columns: 1fr 1fr !important; gap: 0.4rem !important; }
+        }
+
+    /* ── Mobile responsiveness patch ─────────────────────────── */
+    @media (max-width: 768px) {
+        .container, [class*="container"] {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+        .site-nav { justify-content: flex-start !important; }
+    }
+    @media (max-width: 480px) {
+        h1, .main-title { font-size: 1.1rem !important; }
+        .subtitle { font-size: 0.7rem !important; }
+    }
+</style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F7JZPPYNEK');
+    </script>
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/entrainements.html",
+  "name": "Évolution des Préparations Marathon — Gregory Bertholet Running",
+  "description": "Évolution des cycles d'entraînement marathon de Gregory Bertholet entre 2021 et 2026 : volume, séances, allure et dénivelé, cycle par cycle, jusqu'au sub-3h de Milan.",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "name": "Running History — Gregory Bertholet"
+  },
+  "about": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/",
+    "jobTitle": "Coureur à pied / Marathonien"
+  },
+  "primaryImageOfPage": "https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg"
+}
+</script>
+
+<script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<link rel="stylesheet" href="pro-ui.css">
+<script defer src="pro-ui.js"></script>
+</head>
+<body>
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="#" class="active">🏋️ PRÉPA MARATHON</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="trophees.html">🏆 TROPHÉES</a>
+    <a href="archives.html">📂 ARCHIVES</a>
+    <a href="machine-temps.html">⏳ TIME MACHINE</a>
+</nav>
+    <div class="animated-bg"></div>
+    <div class="grain"></div>
+    <div class="neon-border"></div>
+
+    <a href="index.html" title="Tableau de bord" class="home-btn-fixed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00fff9" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"/>
+            <polyline points="9 21 9 12 15 12 15 21"/>
+        </svg>
+    </a>
+
+    <div class="container py-20">
+
+        <!-- Header -->
+        <div class="text-center mb-12 fade-in">
+            <h1 class="main-title mb-3">🏋️ ÉVOLUTION DES PRÉPARATIONS MARATHON</h1>
+            <p style="font-family:'Montserrat',sans-serif;font-size:0.85rem;font-weight:300;letter-spacing:0.25em;color:rgba(255,255,255,0.4);" class="mb-8">6 CYCLES MARATHON · 2021 → 2026 · DONNÉES STRAVA</p>
+        </div>
+            <style>
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 940;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0.3rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0.55rem 0.5rem;
+    background: rgba(10, 10, 18, 0.85);
+    backdrop-filter: blur(16px) saturate(160%);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.site-nav::-webkit-scrollbar { display: none; }
+.site-nav a {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.32rem 0.55rem;
+    border-radius: 10px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.75);
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.site-nav a:hover {
+    background: rgba(255,255,255,0.14);
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+}
+.site-nav a.active {
+    border-color: var(--neon-cyan, #00fff9);
+    color: var(--neon-cyan, #00fff9);
+    background: rgba(0,255,249,0.1);
+    box-shadow: 0 0 12px rgba(0,255,249,0.25);
+}
+@media (max-width: 600px) {
+    .site-nav { justify-content: flex-start; padding: 0.25rem 1rem; }
+}
+</style>
+
+        <!-- Progression summary strip -->
+        <div class="glass-card p-7 mb-8 fade-in" style="animation-delay:0.05s;">
+            <div class="text-xs font-bold tracking-widest mb-5 text-center" style="color:rgba(255,255,255,0.3);letter-spacing:0.2em;">DE PARIS 2021 À MILAN 2026 — LA PROGRESSION</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div style="text-align:center;">
+                    <div style="font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-bottom:4px;">VOLUME CYCLE</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:800;color:var(--neon-cyan);">472,7 → 1047,6 km</div>
+                    <div style="font-size:0.65rem;color:rgba(0,255,136,0.8);margin-top:2px;">+121,6%</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-bottom:4px;">SÉANCES</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:800;color:var(--neon-purple);">34 → 80</div>
+                    <div style="font-size:0.65rem;color:rgba(0,255,136,0.8);margin-top:2px;">+135%</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-bottom:4px;">ALLURE MOYENNE</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:800;color:var(--neon-orange);">5'25" → 4'53"/km</div>
+                    <div style="font-size:0.65rem;color:rgba(0,255,136,0.8);margin-top:2px;">-32 sec/km</div>
+                </div>
+                <div style="text-align:center;">
+                    <div style="font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.1em;margin-bottom:4px;">CHRONO OFFICIEL</div>
+                    <div style="font-family:'Orbitron',sans-serif;font-size:1.15rem;font-weight:800;color:var(--neon-pink);">3:29:02 → 2:59:51</div>
+                    <div style="font-size:0.65rem;color:rgba(0,255,136,0.8);margin-top:2px;">-29 min 11 sec</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cycle selector -->
+        <div class="glass-card p-6 mb-8 fade-in" style="animation-delay:0.1s;">
+            <div class="text-xs font-bold tracking-widest mb-5 text-center" style="color:rgba(255,255,255,0.3);letter-spacing:0.2em;">SÉLECTIONNE LES CYCLES À AFFICHER — CLIQUE POUR ACTIVER / DÉSACTIVER</div>
+            <div id="cycle-buttons" class="flex flex-wrap justify-center gap-3 mb-5"></div>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="shortcut-btn" onclick="selectLast2()" style="background:rgba(0,255,249,0.07);border-color:rgba(0,255,249,0.25);color:rgba(0,255,249,0.7);" onmouseover="this.style.background='rgba(0,255,249,0.14)'" onmouseout="this.style.background='rgba(0,255,249,0.07)'">⚡ 2 DERNIERS CYCLES</button>
+                <button class="shortcut-btn" onclick="selectAll()" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">TOUT SÉLECTIONNER</button>
+                <button class="shortcut-btn" onclick="selectNone()" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">TOUT DÉSÉLECTIONNER</button>
+            </div>
+        </div>
+
+        <!-- Chart: weekly volume aligned by weeks before race -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.2s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:var(--neon-cyan);">VOLUME HEBDOMADAIRE — ALIGNÉ SUR LES SEMAINES AVANT COURSE</h3>
+            <p class="text-center text-xs mb-8" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Chaque cycle recalé pour que la semaine de course tombe au même point (à droite) — permet de comparer des blocs de longueurs différentes</p>
+            <div class="chart-wrap">
+                <canvas id="volumeChart" role="img" aria-label="Graphique en courbes du volume hebdomadaire de course à pied (en km) pour les 6 cycles d'entraînement marathon, alignés sur le nombre de semaines avant la course."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(0,255,249,0.06);border:1px solid rgba(0,255,249,0.2);border-radius:8px;color:rgba(0,255,249,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Données brutes par cycle — 6 marathons (2021-2026), sorties course à pied uniquement</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#00fff9;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:left;">Période</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Semaines</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Séances</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Volume total</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Km/semaine</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Plus longue sortie</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">D+ total</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Allure moy.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Chrono officiel</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Dynamic stats cards -->
+        <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8 fade-in" style="animation-delay:0.3s;"></div>
+
+        <!-- Chart: session type breakdown -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.25s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:var(--neon-purple);">RÉPARTITION PAR TYPE DE SÉANCE</h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Volume par catégorie d'entraînement, cycle par cycle — classification basée sur les titres Strava (EF, Fartlek, Tempo, Intervalles, Récup, Sortie Longue, Courses &amp; Tests)</p>
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <button id="type-toggle-km" class="shortcut-btn" onclick="setTypeUnit('km')" style="background:rgba(188,19,254,0.14);border-color:rgba(188,19,254,0.4);color:#bc13fe;">KILOMÈTRES</button>
+                <button id="type-toggle-pct" class="shortcut-btn" onclick="setTypeUnit('pct')" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);">% DU VOLUME</button>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="typeChart" role="img" aria-label="Graphique en barres empilées de la répartition du volume d'entraînement par type de séance, pour chaque cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(188,19,254,0.06);border:1px solid rgba(188,19,254,0.2);border-radius:8px;color:rgba(188,19,254,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Répartition du volume (km) par type de séance et par cycle</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#bc13fe;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Sortie Longue</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Endurance Fond.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Fartlek</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Tempo</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Intervalles</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Récup.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Courses &amp; Tests</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="type-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Chart: weekly frequency & rest days -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.28s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:#00fff9;">FRÉQUENCE & RÉGULARITÉ</h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Nombre de séances par semaine et repos moyen entre les sorties — la régularité du cycle, cycle par cycle</p>
+            <div class="chart-wrap">
+                <canvas id="freqChart" role="img" aria-label="Graphique combiné montrant la fréquence hebdomadaire de séances et le repos moyen entre les sorties, pour chaque cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(0,255,249,0.06);border:1px solid rgba(0,255,249,0.2);border-radius:8px;color:rgba(0,255,249,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Fréquence d'entraînement et repos entre les séances, par cycle (jours calendaires, sorties "Run" uniquement)</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#00fff9;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Jours du cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Jours courus</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Jours de repos</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Séances/sem.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Jours courus/sem.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Repos moy. entre séances</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Repos max</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Jours consécutifs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="freq-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Chart: taper / affûtage -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.3s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:#ff6b35;">AFFÛTAGE (TAPER)</h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Baisse du volume dans les dernières semaines avant la course, par rapport à la semaine la plus chargée du cycle (le « pic »)</p>
+            <div class="chart-wrap">
+                <canvas id="taperChart" role="img" aria-label="Graphique de la baisse de volume d'entraînement pendant l'affûtage (taper), pour chaque cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(255,107,53,0.06);border:1px solid rgba(255,107,53,0.2);border-radius:8px;color:rgba(255,107,53,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Volume des dernières semaines et profondeur de l'affûtage (baisse en % vs semaine pic, hors semaine de course)</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#ff6b35;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Pic hebdo</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">S-3</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">S-2</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">S-1</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Baisse 2 dern. sem.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Baisse 3 dern. sem.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Baisse dernière sem.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taper-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Chart: volume regularity -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.32s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:#ffd700;">RÉGULARITÉ DU VOLUME</h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Variabilité du volume d'une semaine à l'autre — un cycle « stable » (faible écart-type) vs « en dents de scie » (fort écart-type). Calculé sur les semaines d'entraînement, hors semaine de course.</p>
+            <div class="chart-wrap">
+                <canvas id="regularityChart" role="img" aria-label="Graphique de la régularité du volume hebdomadaire (écart-type et coefficient de variation), pour chaque cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.2);border-radius:8px;color:rgba(255,215,0,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Régularité du volume hebdomadaire (semaines d'entraînement, hors semaine de course)</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#ffd700;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Sem. d'entraîn.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Volume moyen/sem.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Écart-type</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Coeff. de variation</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Écart moyen sem.-à-sem.</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regularity-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Chart: gear / shoe wear -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.36s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:#00ff88;">USURE DU MATÉRIEL</h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Kilomètres parcourus par paire de chaussures sur chaque cycle — rotation du matériel et paire portée le jour de la course (🏆). Données Strava (get_gear).</p>
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <button id="gear-toggle-km" class="shortcut-btn" onclick="setGearUnit('km')" style="background:rgba(0,255,136,0.14);border-color:rgba(0,255,136,0.4);color:#00ff88;">KILOMÈTRES</button>
+                <button id="gear-toggle-pct" class="shortcut-btn" onclick="setGearUnit('pct')" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);">% DU CYCLE</button>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="gearChart" role="img" aria-label="Graphique en barres empilées des kilomètres parcourus par paire de chaussures, pour chaque cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(0,255,136,0.06);border:1px solid rgba(0,255,136,0.2);border-radius:8px;color:rgba(0,255,136,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Kilomètres par paire de chaussures et par cycle (🏆 = paire portée le jour de la course)</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#00ff88;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:left;">Chaussure</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Distance</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Part du cycle</th>
+                            </tr>
+                        </thead>
+                        <tbody id="gear-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Chart: cross-training / Apple Fitness+ -->
+        <div class="glass-card p-8 mb-8 fade-in" style="animation-delay:0.38s;">
+            <h3 class="text-lg font-bold mb-1 tracking-wider text-center" style="color:#ff006e;">RENFORCEMENT &amp; CROSS-TRAINING <span style="font-size:0.7rem;opacity:0.6;"> APPLE FITNESS+</span></h3>
+            <p class="text-center text-xs mb-4" style="color:rgba(255,255,255,0.3);letter-spacing:0.1em;">Séances de renforcement musculaire, récupération en pleine conscience et entraînement aux poids réalisées en parallèle de la course — apparues à partir du cycle Annecy 2025. Données Strava (activités hors "Run").</p>
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <button id="cross-toggle-min" class="shortcut-btn" onclick="setCrossUnit('min')" style="background:rgba(255,0,110,0.14);border-color:rgba(255,0,110,0.4);color:#ff006e;">MINUTES</button>
+                <button id="cross-toggle-sessions" class="shortcut-btn" onclick="setCrossUnit('sessions')" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);">SÉANCES</button>
+                <button id="cross-toggle-cal" class="shortcut-btn" onclick="setCrossUnit('cal')" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);">CALORIES</button>
+            </div>
+            <div class="chart-wrap">
+                <canvas id="crossChart" role="img" aria-label="Graphique en barres empilées des séances de renforcement et cross-training (Apple Fitness+) par type et par cycle marathon."></canvas>
+            </div>
+            <details class="data-toggle" style="margin-top:28px;">
+                <summary style="cursor:pointer;padding:10px 16px;background:rgba(255,0,110,0.06);border:1px solid rgba(255,0,110,0.2);border-radius:8px;color:rgba(255,0,110,0.85);font-size:0.8rem;letter-spacing:0.1em;font-weight:600;text-transform:uppercase;display:inline-block;list-style:none;">📊 Voir les données</summary>
+                <div style="margin-top:18px;overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.85rem;color:rgba(255,255,255,0.8);">
+                        <caption style="caption-side:top;text-align:left;padding:6px 0 12px;color:rgba(255,255,255,0.5);font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;">Séances de renforcement &amp; cross-training (Apple Fitness+) par type et par cycle — séances · minutes</caption>
+                        <thead>
+                            <tr style="border-bottom:1px solid rgba(255,255,255,0.15);">
+                                <th scope="col" style="padding:8px 10px;text-align:left;color:#ff006e;font-weight:700;">Cycle</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Renforcement musc.</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Récup. pleine conscience</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Entraînement aux poids</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Total séances</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Durée totale</th>
+                                <th scope="col" style="padding:8px 10px;text-align:right;">Calories</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cross-table-body"></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+
+        <!-- Methodology -->
+        <div class="glass-card p-7 fade-in" style="animation-delay:0.4s;">
+            <h3 class="text-base font-bold mb-5 tracking-wider" style="color:var(--neon-cyan);">MÉTHODOLOGIE</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="axis-item"><span style="font-size:1.2rem;flex-shrink:0;">📆</span><div><div class="text-sm font-bold" style="color:#00fff9;">PÉRIODE DE CYCLE</div><div class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Bloc d'entraînement spécifique, du début de la préparation jusqu'au jour de la course, tel que défini pour chaque marathon.</div></div></div>
+                <div class="axis-item"><span style="font-size:1.2rem;flex-shrink:0;">🏃</span><div><div class="text-sm font-bold" style="color:#bc13fe;">SORTIES COURSE À PIED UNIQUEMENT</div><div class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Seules les activités Strava de type "Run" sont comptabilisées. Marche, rando et renfo musculaire sont exclus du volume.</div></div></div>
+                <div class="axis-item"><span style="font-size:1.2rem;flex-shrink:0;">📏</span><div><div class="text-sm font-bold" style="color:#ff6b35;">SEMAINES AVANT COURSE</div><div class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Le graphique recale chaque cycle pour que la semaine de course soit alignée, malgré des durées de préparation différentes (8 à 16 semaines).</div></div></div>
+                <div class="axis-item"><span style="font-size:1.2rem;flex-shrink:0;">⏱️</span><div><div class="text-sm font-bold" style="color:#ffd700;">CHRONO OFFICIEL</div><div class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Le temps affiché est le temps officiel chronométré en course (chip time), pas le temps Strava qui peut inclure des arrêts.</div></div></div>
+                <div class="axis-item"><span style="font-size:1.2rem;flex-shrink:0;">💪</span><div><div class="text-sm font-bold" style="color:#ff006e;">RENFORCEMENT &amp; CROSS-TRAINING</div><div class="text-xs mt-1" style="color:rgba(255,255,255,0.4);">Séances Apple Fitness+ (renforcement, gainage, récup. pleine conscience) et entraînement aux poids, comptabilisées à part du volume course. Apparues à partir d'Annecy 2025.</div></div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // ── DATA ───────────────────────────────────────────────────────────────────
+    const cycleStats = {
+        paris2021: { label:'Marathon de Paris 2021', officialTime:'3:29:02', raceDate:'2021-10-17', start:'2021-08-21', end:'2021-10-17', totalKm:472.7, sessions:34, hours:42.8, elev:1645, longestKm:32.2, avgPace:"5'25\"", weeks:8.1, kmPerWeek:58.1, weeklyBeforeRace:[10.8,60.3,57.5,64.0,60.4,67.6,52.9,36.9,62.2] },
+        amsterdam2022: { label:'Marathon Amsterdam 2022', officialTime:'3:13:45', raceDate:'2022-10-16', start:'2022-08-15', end:'2022-10-16', totalKm:523.6, sessions:37, hours:46.2, elev:1709, longestKm:32.4, avgPace:"5'17\"", weeks:8.9, kmPerWeek:59.1, weeklyBeforeRace:[55.0,60.9,59.4,67.6,58.7,68.4,54.3,38.0,61.4] },
+        luxembourg2023: { label:'Marathon de Luxembourg 2023', officialTime:'3:47:13', raceDate:'2023-05-20', start:'2023-03-22', end:'2023-05-20', totalKm:502.1, sessions:36, hours:45.1, elev:1466, longestKm:32.2, avgPace:"5'23\"", weeks:8.4, kmPerWeek:59.6, weeklyBeforeRace:[41.4,30.8,59.9,65.5,62.7,58.4,86.0,25.0,72.4] },
+        paris2024: { label:'Marathon de Paris 2024', officialTime:'3:06:21', raceDate:'2024-04-07', start:'2024-01-16', end:'2024-04-07', totalKm:809.9, sessions:63, hours:67.1, elev:1926, longestKm:36.9, avgPace:"4'58\"", weeks:11.7, kmPerWeek:69.1, weeklyBeforeRace:[64.5,67.3,71.6,40.8,75.1,76.7,80.2,41.7,83.3,85.5,57.3,65.8] },
+        annecy2025: { label:'Marathon de Annecy 2025', officialTime:'3:26:08', raceDate:'2025-04-27', start:'2025-02-04', end:'2025-04-27', totalKm:808.2, sessions:61, hours:65.8, elev:1861, longestKm:37.6, avgPace:"4'53\"", weeks:11.7, kmPerWeek:69.0, weeklyBeforeRace:[67.3,68.5,71.8,38.8,75.7,67.3,80.9,42.9,84.8,87.1,58.1,65.0] },
+        milan2026: { label:'Marathon de Milan 2026', officialTime:'2:59:51', raceDate:'2026-04-12', start:'2025-12-23', end:'2026-04-12', totalKm:1047.6, sessions:80, hours:85.5, elev:2558, longestKm:37.7, avgPace:"4'53\"", weeks:15.7, kmPerWeek:66.7, weeklyBeforeRace:[57.9,57.8,51.9,40.4,69.5,71.2,73.7,38.4,77.8,68.6,82.7,52.6,85.6,87.4,61.7,70.3] },
+    };
+
+    const ALL_CYCLES = ['paris2021','amsterdam2022','luxembourg2023','paris2024','annecy2025','milan2026'];
+
+    // Répartition du volume (km) par type de séance, classée à partir des titres Strava.
+    // SL = sortie longue (inclut les sorties longues avec segment à allure marathon, ex-"AS42").
+    // Compet = jour de course + courses de préparation + tests chronométrés + échauffements de course.
+    const sessionTypeData = {
+        paris2021:      { SL:139.0, EF:21.2,  Fartlek:111.2, Tempo:33.9,  Intervalles:35.3,  Recup:64.3, Compet:67.9  },
+        amsterdam2022:  { SL:153.8, EF:38.7,  Fartlek:123.8, Tempo:45.9,  Intervalles:35.3,  Recup:61.0, Compet:65.1  },
+        luxembourg2023: { SL:163.0, EF:15.7,  Fartlek:133.1, Tempo:40.1,  Intervalles:26.1,  Recup:58.4, Compet:65.6  },
+        paris2024:      { SL:229.9, EF:145.5, Fartlek:18.5,  Tempo:133.3, Intervalles:100.0, Recup:72.9, Compet:109.7 },
+        annecy2025:     { SL:239.4, EF:128.4, Fartlek:18.8,  Tempo:123.9, Intervalles:113.4, Recup:77.8, Compet:106.5 },
+        milan2026:      { SL:317.3, EF:194.8, Fartlek:60.1,  Tempo:138.9, Intervalles:136.7, Recup:94.2, Compet:105.6 },
+    };
+
+    const TYPE_CATS = ['SL','EF','Fartlek','Tempo','Intervalles','Recup','Compet'];
+    const TYPE_LABELS = {
+        SL: 'Sortie Longue', EF: 'Endurance Fondamentale',
+        Fartlek: 'Fartlek', Tempo: 'Tempo', Intervalles: 'Intervalles',
+        Recup: 'Récupération', Compet: 'Courses & Tests',
+    };
+    const TYPE_COLORS = {
+        SL: {r:0, g:255, b:249}, EF: {r:0, g:255, b:136},
+        Fartlek: {r:255, g:215, b:0}, Tempo: {r:255, g:107, b:53}, Intervalles: {r:255, g:0, b:110},
+        Recup: {r:120, g:170, b:255}, Compet: {r:201, g:184, b:255},
+    };
+    let typeUnit = 'km';
+
+    // Fréquence d'entraînement et repos entre séances, calculés à partir des dates réelles
+    // des sorties Strava (activités "Run" uniquement, dédupliquées par jour calendaire).
+    const frequencyData = {
+        paris2021:      { totalDays:58,  nSessions:34, runningDays:33, restDaysTotal:25, freqSessionsPerWeek:4.10, freqDaysPerWeek:3.98, avgRestDays:0.78, maxRestDays:2, backToBackDays:9  },
+        amsterdam2022:  { totalDays:63,  nSessions:37, runningDays:36, restDaysTotal:27, freqSessionsPerWeek:4.11, freqDaysPerWeek:4.00, avgRestDays:0.77, maxRestDays:2, backToBackDays:10 },
+        luxembourg2023: { totalDays:60,  nSessions:36, runningDays:35, restDaysTotal:25, freqSessionsPerWeek:4.20, freqDaysPerWeek:4.08, avgRestDays:0.74, maxRestDays:2, backToBackDays:11 },
+        paris2024:      { totalDays:83,  nSessions:63, runningDays:60, restDaysTotal:23, freqSessionsPerWeek:5.31, freqDaysPerWeek:5.06, avgRestDays:0.39, maxRestDays:1, backToBackDays:36 },
+        annecy2025:     { totalDays:83,  nSessions:61, runningDays:60, restDaysTotal:23, freqSessionsPerWeek:5.14, freqDaysPerWeek:5.06, avgRestDays:0.39, maxRestDays:1, backToBackDays:36 },
+        milan2026:      { totalDays:111, nSessions:80, runningDays:79, restDaysTotal:32, freqSessionsPerWeek:5.05, freqDaysPerWeek:4.98, avgRestDays:0.41, maxRestDays:1, backToBackDays:46 },
+    };
+
+    // Affûtage : volume des dernières semaines et baisse (%) par rapport à la semaine pic du cycle.
+    // peak = plus gros volume hebdo (hors semaine de course) ; taperN = baisse moyenne des N dernières semaines vs pic ; taperFinal = baisse de la dernière semaine (S-1) vs pic.
+    const taperData = {
+        paris2021:      { peak:67.6, s3:67.6, s2:52.9, s1:36.9, taper2:33.6, taper3:22.4, taperFinal:45.4 },
+        amsterdam2022:  { peak:68.4, s3:68.4, s2:54.3, s1:38.0, taper2:32.5, taper3:21.7, taperFinal:44.4 },
+        luxembourg2023: { peak:86.0, s3:58.4, s2:86.0, s1:25.0, taper2:35.5, taper3:34.3, taperFinal:70.9 },
+        paris2024:      { peak:85.5, s3:83.3, s2:85.5, s1:57.3, taper2:16.5, taper3:11.9, taperFinal:33.0 },
+        annecy2025:     { peak:87.1, s3:84.8, s2:87.1, s1:58.1, taper2:16.6, taper3:12.0, taperFinal:33.3 },
+        milan2026:      { peak:87.4, s3:85.6, s2:87.4, s1:61.7, taper2:14.7, taper3:10.5, taperFinal:29.4 },
+    };
+
+    // Régularité du volume : dispersion des volumes hebdomadaires (semaines d'entraînement, hors semaine de course).
+    // std = écart-type (km) ; cv = coefficient de variation (%) = std / moyenne ; avgJump = écart absolu moyen d'une semaine à l'autre (km).
+    const volumeRegularityData = {
+        paris2021:      { nWeeks:8,  meanWeek:51.3, std:17.6, cv:34.3, avgJump:14.3 },
+        amsterdam2022:  { nWeeks:8,  meanWeek:57.8, std:8.9,  cv:15.4, avgJump:9.2  },
+        luxembourg2023: { nWeeks:8,  meanWeek:53.7, std:18.8, cv:35.0, avgJump:20.1 },
+        paris2024:      { nWeeks:11, meanWeek:67.6, std:14.7, cv:21.8, avgJump:18.8 },
+        annecy2025:     { nWeeks:11, meanWeek:67.6, std:15.0, cv:22.2, avgJump:20.8 },
+        milan2026:      { nWeeks:15, meanWeek:65.1, std:14.8, cv:22.8, avgJump:17.1 },
+    };
+
+    // Usure du matériel : km parcourus par paire de chaussures sur chaque cycle (get_gear).
+    // Total par cycle validé au km près contre le volume total du cycle. raceShoe = paire portée le jour de la course.
+    const gearData = {
+        paris2021:      { raceShoe:'Vaporfly Grises', shoes:[ {name:'Nike Bleue (Peg Turbo 2)',km:180.4}, {name:'Pegasus 37 Premium',km:168.5}, {name:'Vaporfly Grises',km:67.9}, {name:'Pegasus 38',km:56.0} ] },
+        amsterdam2022:  { raceShoe:'Alphafly bleue', shoes:[ {name:'Zoom Fly 4 jaune',km:291.0}, {name:'Pegasus 39 grise',km:101.0}, {name:'Air Zoom Tempo noire',km:50.0}, {name:'Alphafly bleue',km:48.6}, {name:'Vaporfly Grises',km:22.9}, {name:'Nike Bleue (Peg Turbo 2)',km:10.1} ] },
+        luxembourg2023: { raceShoe:'Alphafly bleue', shoes:[ {name:'Zoom Fly 5',km:186.0}, {name:'Pegasus 39 grise',km:120.3}, {name:'Zoom Fly 4 jaune',km:84.6}, {name:'Alphafly bleue',km:43.3}, {name:'Vaporfly Grises',km:32.2}, {name:'Vaporfly rouge',km:22.2}, {name:'Invincible 3',km:13.3} ] },
+        paris2024:      { raceShoe:'Alphafly bleue', shoes:[ {name:'Next Nature bleue',km:267.0}, {name:'Invincible 3',km:211.6}, {name:'Vaporfly Grises',km:186.5}, {name:'Pegasus Trail 4 GTX',km:64.5}, {name:'Alphafly bleue',km:43.3}, {name:'Vaporfly rouge',km:37.0} ] },
+        annecy2025:     { raceShoe:'Vaporfly 3', shoes:[ {name:'Invincible 3 (2025)',km:280.0}, {name:'Pegasus 40 rouge',km:166.9}, {name:'Vaporfly Grises',km:111.0}, {name:'Vaporfly 3',km:107.1}, {name:'Vaporfly rouge',km:103.8}, {name:'Pegasus 41',km:39.3} ] },
+        milan2026:      { raceShoe:'Alphafly 3', shoes:[ {name:'Zoom Fly 6',km:349.4}, {name:'Pegasus 41 bleues',km:291.3}, {name:'Vaporfly rouge',km:278.9}, {name:'Alphafly 3',km:64.8}, {name:'Pegasus Trail 4 GTX',km:51.3}, {name:'Vaporfly 3',km:12.0} ] },
+    };
+
+    // Couleur stable par paire de chaussures (une paire garde la même couleur d'un cycle à l'autre).
+    const GEAR_COLORS = {
+        'Vaporfly Grises':          {r:201, g:184, b:255},
+        'Vaporfly rouge':           {r:255, g:0,   b:110},
+        'Vaporfly 3':               {r:255, g:77,  b:77},
+        'Alphafly bleue':           {r:62,  g:166, b:255},
+        'Alphafly 3':               {r:255, g:107, b:168},
+        'Invincible 3':             {r:0,   g:255, b:136},
+        'Invincible 3 (2025)':      {r:107, g:255, b:207},
+        'Pegasus 41':               {r:255, g:215, b:0},
+        'Pegasus 41 bleues':        {r:107, g:168, b:255},
+        'Pegasus 40 rouge':         {r:255, g:140, b:66},
+        'Pegasus 39 grise':         {r:176, g:255, b:107},
+        'Pegasus 38':               {r:140, g:255, b:60},
+        'Pegasus 37 Premium':       {r:255, g:230, b:107},
+        'Nike Bleue (Peg Turbo 2)': {r:0,   g:255, b:249},
+        'Zoom Fly 4 jaune':         {r:255, g:207, b:107},
+        'Zoom Fly 5':               {r:255, g:107, b:53},
+        'Zoom Fly 6':               {r:255, g:168, b:216},
+        'Next Nature bleue':        {r:107, g:255, b:224},
+        'Air Zoom Tempo noire':     {r:232, g:107, b:255},
+        'Pegasus Trail 4 GTX':      {r:168, g:121, b:79},
+    };
+    let gearUnit = 'km';
+
+    // Renforcement & cross-training (Apple Fitness+), agrégé depuis Strava (activités hors "Run" sur chaque cycle).
+    // renf = "Apple Fitness+ Renforcement" + "Apple Fitness+ Gainage" (renforcement musculaire / gainage).
+    // recup = "Apple Fitness+ Récupération en pleine conscience". poids = "Entraînement aux poids".
+    // Chaque catégorie : n = nombre de séances, min = durée totale (min), cal = calories.
+    const crossTrainingData = {
+        paris2021:      { renf:{n:0,min:0,cal:0},     recup:{n:0,min:0,cal:0},   poids:{n:0,min:0,cal:0}   },
+        amsterdam2022:  { renf:{n:0,min:0,cal:0},     recup:{n:0,min:0,cal:0},   poids:{n:0,min:0,cal:0}   },
+        luxembourg2023: { renf:{n:0,min:0,cal:0},     recup:{n:0,min:0,cal:0},   poids:{n:0,min:0,cal:0}   },
+        paris2024:      { renf:{n:0,min:0,cal:0},     recup:{n:0,min:0,cal:0},   poids:{n:0,min:0,cal:0}   },
+        annecy2025:     { renf:{n:16,min:301.2,cal:1562}, recup:{n:9,min:61.0,cal:193}, poids:{n:2,min:42.0,cal:218} },
+        milan2026:      { renf:{n:16,min:170.2,cal:907},  recup:{n:2,min:11.6,cal:27},  poids:{n:1,min:11.0,cal:59}  },
+    };
+    const CROSS_CATS = ['renf','recup','poids'];
+    const CROSS_LABELS = { renf:'Renforcement musculaire', recup:'Récupération pleine conscience', poids:'Entraînement aux poids' };
+    const CROSS_COLORS = { renf:{r:255,g:0,b:110}, recup:{r:0,g:255,b:136}, poids:{r:255,g:107,b:53} };
+    const CROSS_UNIT_SUFFIX = { min:' min', sessions:'', cal:' cal' };
+    const CROSS_UNIT_TITLE  = { min:'DURÉE (min)', sessions:'NOMBRE DE SÉANCES', cal:'CALORIES' };
+    const CROSS_UNIT_KEY    = { min:'min', sessions:'n', cal:'cal' };
+    let crossUnit = 'min';
+
+    const CYCLE_COLORS = {
+        paris2021: {r:140, g:255, b:60},
+        amsterdam2022: {r:40,  g:200, b:255},
+        luxembourg2023: {r:247, g:184, b:1},
+        paris2024: {r:188, g:19,  b:254},
+        annecy2025: {r:0,   g:255, b:249},
+        milan2026: {r:255, g:0,   b:110},
+    };
+
+    function rgbaColor(cycle, alpha) {
+        const c = CYCLE_COLORS[cycle];
+        return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+    }
+
+    function hexColor(cycle) {
+        const {r,g,b} = CYCLE_COLORS[cycle];
+        return '#' + [r,g,b].map(v => v.toString(16).padStart(2,'0')).join('');
+    }
+
+    function fmtDate(d){if(!d)return'';const p=d.split('-');return p[2]+'/'+p[1]+'/'+p[0];}
+
+    // ── STATE ──────────────────────────────────────────────────────────────────
+    let activeCycles = new Set(['paris2024','annecy2025','milan2026']);
+
+    // ── CHART ──────────────────────────────────────────────────────────────────
+    const ctx = document.getElementById('volumeChart').getContext('2d');
+    const isMobile = window.innerWidth <= 600;
+    const volumeChart = new Chart(ctx, {
+        type: 'line',
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.35)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' } },
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    title: { display: !isMobile, text: 'SEMAINES AVANT COURSE (0 = semaine de course)', color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: 'rgba(255,255,255,0.35)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' }, callback: v => v + ' km' },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: 'VOLUME HEBDOMADAIRE (km)', color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : ${ctx.raw === null ? '—' : ctx.raw.toFixed(1) + ' km'}`
+                    }
+                },
+            },
+        },
+    });
+
+    // ── STACKED BAR: SESSION TYPE BREAKDOWN ──────────────────────────────────────
+    const typeCtx = document.getElementById('typeChart').getContext('2d');
+    const typeChart = new Chart(typeCtx, {
+        type: 'bar',
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'rgba(255,255,255,0.35)',
+                        font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' },
+                        callback: v => typeUnit === 'pct' ? v + '%' : v + ' km',
+                    },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: typeUnit === 'pct' ? '% DU VOLUME DU CYCLE' : 'VOLUME (km)', color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 12 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : ${typeUnit === 'pct' ? ctx.raw.toFixed(1) + '%' : ctx.raw.toFixed(1) + ' km'}`
+                    }
+                },
+            },
+        },
+    });
+
+    // ── STACKED BAR CHART: CROSS-TRAINING (APPLE FITNESS+) ───────────────────────
+    const crossCtx = document.getElementById('crossChart').getContext('2d');
+    const crossChart = new Chart(crossCtx, {
+        type: 'bar',
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'rgba(255,255,255,0.35)',
+                        font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' },
+                        callback: v => v + CROSS_UNIT_SUFFIX[crossUnit],
+                    },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: CROSS_UNIT_TITLE[crossUnit], color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 12 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : ${ctx.raw}${CROSS_UNIT_SUFFIX[crossUnit]}`
+                    }
+                },
+            },
+        },
+    });
+
+    // ── COMBO CHART: WEEKLY FREQUENCY & REST DAYS ────────────────────────────────
+    const freqCtx = document.getElementById('freqChart').getContext('2d');
+    const freqChart = new Chart(freqCtx, {
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    beginAtZero: true,
+                    position: 'left',
+                    ticks: { color: 'rgba(0,255,249,0.6)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' } },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: 'SÉANCES / SEMAINE', color: 'rgba(0,255,249,0.5)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+                y1: {
+                    beginAtZero: true,
+                    position: 'right',
+                    ticks: { color: 'rgba(255,107,53,0.7)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' }, callback: v => v + ' j' },
+                    grid: { display: false },
+                    title: { display: !isMobile, text: 'REPOS MOYEN (jours)', color: 'rgba(255,107,53,0.6)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 12 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : ${ctx.raw.toFixed(2)}${ctx.dataset.yAxisID === 'y1' ? ' j' : ' séances/sem.'}`
+                    }
+                },
+            },
+        },
+    });
+
+    function updateFreqChart(sorted) {
+        freqChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        freqChart.data.datasets = [
+            {
+                type: 'bar',
+                label: 'Séances / semaine',
+                data: sorted.map(c => frequencyData[c].freqSessionsPerWeek),
+                backgroundColor: 'rgba(0,255,249,0.55)',
+                borderColor: 'rgba(0,255,249,0.9)',
+                borderWidth: 1,
+                borderRadius: 4,
+                maxBarThickness: 60,
+                yAxisID: 'y',
+                order: 2,
+            },
+            {
+                type: 'line',
+                label: 'Repos moyen entre séances (jours)',
+                data: sorted.map(c => frequencyData[c].avgRestDays),
+                borderColor: 'rgba(255,107,53,0.95)',
+                backgroundColor: 'rgba(255,107,53,0.15)',
+                borderWidth: 2.5,
+                pointBackgroundColor: 'rgba(255,107,53,0.95)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1.5,
+                pointRadius: isMobile ? 3 : 4.5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: false,
+                yAxisID: 'y1',
+                order: 1,
+            },
+        ];
+        freqChart.update();
+    }
+
+    // ── FREQUENCY DATA TABLE ───────────────────────────────────────────────────
+    function renderFreqTable() {
+        const body = document.getElementById('freq-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = frequencyData[cycle];
+            const col = hexColor(cycle);
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${cycleStats[cycle].label}</th>
+                <td style="padding:8px 10px;text-align:right;">${d.totalDays} j</td>
+                <td style="padding:8px 10px;text-align:right;">${d.runningDays} j</td>
+                <td style="padding:8px 10px;text-align:right;">${d.restDaysTotal} j</td>
+                <td style="padding:8px 10px;text-align:right;">${d.freqSessionsPerWeek.toFixed(2)}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.freqDaysPerWeek.toFixed(2)}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.avgRestDays.toFixed(2)} j</td>
+                <td style="padding:8px 10px;text-align:right;">${d.maxRestDays} j</td>
+                <td style="padding:8px 10px;text-align:right;">${d.backToBackDays}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── COMBO CHART: TAPER / AFFÛTAGE ────────────────────────────────────────────
+    const taperCtx = document.getElementById('taperChart').getContext('2d');
+    const taperChart = new Chart(taperCtx, {
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    beginAtZero: true,
+                    ticks: { color: 'rgba(255,255,255,0.35)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' }, callback: v => v + '%' },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: 'BAISSE DE VOLUME vs PIC (%)', color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 12 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : -${ctx.raw.toFixed(1)}%`
+                    }
+                },
+            },
+        },
+    });
+
+    function updateTaperChart(sorted) {
+        taperChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        taperChart.data.datasets = [
+            {
+                type: 'bar',
+                label: 'Baisse sur les 2 dernières semaines',
+                data: sorted.map(c => taperData[c].taper2),
+                backgroundColor: 'rgba(255,107,53,0.55)',
+                borderColor: 'rgba(255,107,53,0.9)',
+                borderWidth: 1,
+                borderRadius: 4,
+                maxBarThickness: 60,
+                order: 2,
+            },
+            {
+                type: 'line',
+                label: 'Baisse la dernière semaine (S-1)',
+                data: sorted.map(c => taperData[c].taperFinal),
+                borderColor: 'rgba(255,215,0,0.95)',
+                backgroundColor: 'rgba(255,215,0,0.15)',
+                borderWidth: 2.5,
+                pointBackgroundColor: 'rgba(255,215,0,0.95)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1.5,
+                pointRadius: isMobile ? 3 : 4.5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: false,
+                order: 1,
+            },
+        ];
+        taperChart.update();
+    }
+
+    function renderTaperTable() {
+        const body = document.getElementById('taper-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = taperData[cycle];
+            const col = hexColor(cycle);
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${cycleStats[cycle].label}</th>
+                <td style="padding:8px 10px;text-align:right;">${d.peak.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.s3.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.s2.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.s1.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;color:#ff6b35;font-weight:600;">-${d.taper2.toFixed(1)} %</td>
+                <td style="padding:8px 10px;text-align:right;">-${d.taper3.toFixed(1)} %</td>
+                <td style="padding:8px 10px;text-align:right;color:#ffd700;font-weight:600;">-${d.taperFinal.toFixed(1)} %</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── COMBO CHART: VOLUME REGULARITY ───────────────────────────────────────────
+    const regCtx = document.getElementById('regularityChart').getContext('2d');
+    const regularityChart = new Chart(regCtx, {
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            interaction: { mode: 'index', intersect: false },
+            scales: {
+                x: {
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    beginAtZero: true,
+                    position: 'left',
+                    ticks: { color: 'rgba(255,215,0,0.6)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' }, callback: v => v + ' km' },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: 'ÉCART-TYPE HEBDO (km)', color: 'rgba(255,215,0,0.5)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+                y1: {
+                    beginAtZero: true,
+                    position: 'right',
+                    ticks: { color: 'rgba(255,0,110,0.7)', font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' }, callback: v => v + '%' },
+                    grid: { display: false },
+                    title: { display: !isMobile, text: 'COEFF. DE VARIATION (%)', color: 'rgba(255,0,110,0.6)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 12 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => ` ${ctx.dataset.label} : ${ctx.raw.toFixed(1)}${ctx.dataset.yAxisID === 'y1' ? '%' : ' km'}`
+                    }
+                },
+            },
+        },
+    });
+
+    function updateRegularityChart(sorted) {
+        regularityChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        regularityChart.data.datasets = [
+            {
+                type: 'bar',
+                label: 'Écart-type hebdomadaire (km)',
+                data: sorted.map(c => volumeRegularityData[c].std),
+                backgroundColor: 'rgba(255,215,0,0.5)',
+                borderColor: 'rgba(255,215,0,0.9)',
+                borderWidth: 1,
+                borderRadius: 4,
+                maxBarThickness: 60,
+                yAxisID: 'y',
+                order: 2,
+            },
+            {
+                type: 'line',
+                label: 'Coefficient de variation (%)',
+                data: sorted.map(c => volumeRegularityData[c].cv),
+                borderColor: 'rgba(255,0,110,0.95)',
+                backgroundColor: 'rgba(255,0,110,0.15)',
+                borderWidth: 2.5,
+                pointBackgroundColor: 'rgba(255,0,110,0.95)',
+                pointBorderColor: '#fff',
+                pointBorderWidth: 1.5,
+                pointRadius: isMobile ? 3 : 4.5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                fill: false,
+                yAxisID: 'y1',
+                order: 1,
+            },
+        ];
+        regularityChart.update();
+    }
+
+    function renderRegularityTable() {
+        const body = document.getElementById('regularity-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = volumeRegularityData[cycle];
+            const col = hexColor(cycle);
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${cycleStats[cycle].label}</th>
+                <td style="padding:8px 10px;text-align:right;">${d.nWeeks}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.meanWeek.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;color:#ffd700;font-weight:600;">${d.std.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;color:#ff006e;font-weight:600;">${d.cv.toFixed(1)} %</td>
+                <td style="padding:8px 10px;text-align:right;">${d.avgJump.toFixed(1)} km</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── STACKED BAR CHART: GEAR / SHOE WEAR ──────────────────────────────────────
+    const gearCtx = document.getElementById('gearChart').getContext('2d');
+    const gearChart = new Chart(gearCtx, {
+        type: 'bar',
+        data: { labels: [], datasets: [] },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            animation: { duration: 500, easing: 'easeInOutQuart' },
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: { color: 'rgba(255,255,255,0.5)', font: { size: isMobile ? 8 : 11, family: 'Orbitron', weight: 700 } },
+                    grid: { display: false },
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true,
+                    ticks: {
+                        color: 'rgba(255,255,255,0.35)',
+                        font: { size: isMobile ? 8 : 10, family: 'Space Grotesk' },
+                        callback: v => gearUnit === 'pct' ? v + '%' : v + ' km',
+                    },
+                    grid: { color: 'rgba(255,255,255,0.07)' },
+                    title: { display: !isMobile, text: gearUnit === 'pct' ? '% DU VOLUME DU CYCLE' : 'DISTANCE (km)', color: 'rgba(255,255,255,0.3)', font: { size: 10, family: 'Space Grotesk' } },
+                },
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: 'rgba(255,255,255,0.6)', font: { size: 10, family: 'Space Grotesk' }, boxWidth: 12, padding: 10 },
+                },
+                tooltip: {
+                    backgroundColor: 'rgba(10,10,20,0.93)',
+                    borderColor: 'rgba(255,255,255,0.12)',
+                    borderWidth: 1,
+                    titleColor: 'rgba(255,255,255,0.9)',
+                    bodyColor: 'rgba(255,255,255,0.65)',
+                    titleFont: { family: 'Orbitron', size: 11 },
+                    bodyFont: { family: 'Space Grotesk', size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: ctx => {
+                            const cycle = ALL_CYCLES.filter(c => activeCycles.has(c))[ctx.dataIndex];
+                            const isRace = cycle && gearData[cycle].raceShoe === ctx.dataset.label;
+                            const val = gearUnit === 'pct' ? ctx.raw.toFixed(1) + '%' : ctx.raw.toFixed(1) + ' km';
+                            return ` ${ctx.dataset.label}${isRace ? ' 🏆' : ''} : ${val}`;
+                        }
+                    }
+                },
+            },
+        },
+    });
+
+    function gearRgba(name, alpha) {
+        const c = GEAR_COLORS[name] || {r:150, g:150, b:150};
+        return `rgba(${c.r},${c.g},${c.b},${alpha})`;
+    }
+
+    function updateGearChart(sorted) {
+        gearChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        // Union ordonnée des chaussures présentes dans les cycles sélectionnés (km total décroissant).
+        const totals = {};
+        sorted.forEach(c => gearData[c].shoes.forEach(s => { totals[s.name] = (totals[s.name] || 0) + s.km; }));
+        const shoeNames = Object.keys(totals).sort((a, b) => totals[b] - totals[a]);
+        gearChart.data.datasets = shoeNames.map(name => ({
+            label: name,
+            data: sorted.map(c => {
+                const shoe = gearData[c].shoes.find(s => s.name === name);
+                if (!shoe) return 0;
+                if (gearUnit === 'pct') {
+                    const cycleTotal = gearData[c].shoes.reduce((sum, s) => sum + s.km, 0);
+                    return +(shoe.km / cycleTotal * 100).toFixed(1);
+                }
+                return shoe.km;
+            }),
+            backgroundColor: gearRgba(name, 0.82),
+            borderColor: gearRgba(name, 1),
+            borderWidth: 1,
+            borderRadius: 2,
+            maxBarThickness: 70,
+        }));
+        gearChart.options.scales.y.ticks.callback = v => gearUnit === 'pct' ? v + '%' : v + ' km';
+        gearChart.options.scales.y.title.text = gearUnit === 'pct' ? '% DU VOLUME DU CYCLE' : 'DISTANCE (km)';
+        gearChart.update();
+    }
+
+    function setGearUnit(unit) {
+        gearUnit = unit;
+        const kmBtn = document.getElementById('gear-toggle-km');
+        const pctBtn = document.getElementById('gear-toggle-pct');
+        const on = 'background:rgba(0,255,136,0.14);border-color:rgba(0,255,136,0.4);color:#00ff88;';
+        const off = 'background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);';
+        kmBtn.style.cssText = (unit === 'km' ? on : off);
+        pctBtn.style.cssText = (unit === 'pct' ? on : off);
+        updateGearChart(ALL_CYCLES.filter(c => activeCycles.has(c)));
+    }
+
+    function renderGearTable() {
+        const body = document.getElementById('gear-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const g = gearData[cycle];
+            const col = hexColor(cycle);
+            const cycleTotal = g.shoes.reduce((s, x) => s + x.km, 0);
+            return g.shoes.map((s, i) => {
+                const isRace = s.name === g.raceShoe;
+                const dot = `<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${gearRgba(s.name,0.9)};margin-right:8px;vertical-align:middle;"></span>`;
+                const cycleCell = i === 0
+                    ? `<th scope="row" rowspan="${g.shoes.length}" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;vertical-align:top;border-right:1px solid rgba(255,255,255,0.06);">${cycleStats[cycle].label}</th>`
+                    : '';
+                return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                    ${cycleCell}
+                    <td style="padding:8px 10px;text-align:left;">${dot}${s.name}${isRace ? ' <span title="Chaussure portée le jour de la course">🏆</span>' : ''}</td>
+                    <td style="padding:8px 10px;text-align:right;font-weight:${isRace ? '700' : '400'};color:${isRace ? '#00ff88' : 'inherit'};">${s.km.toFixed(1)} km</td>
+                    <td style="padding:8px 10px;text-align:right;color:rgba(255,255,255,0.55);">${(s.km / cycleTotal * 100).toFixed(1)} %</td>
+                </tr>`;
+            }).join('');
+        }).join('');
+    }
+
+    function updateTypeChart(sorted) {
+        typeChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        typeChart.data.datasets = TYPE_CATS.map(cat => ({
+            label: TYPE_LABELS[cat],
+            data: sorted.map(c => {
+                const d = sessionTypeData[c];
+                const total = TYPE_CATS.reduce((s, k) => s + d[k], 0);
+                return typeUnit === 'pct' ? +(d[cat] / total * 100).toFixed(1) : d[cat];
+            }),
+            backgroundColor: `rgba(${TYPE_COLORS[cat].r},${TYPE_COLORS[cat].g},${TYPE_COLORS[cat].b},0.82)`,
+            borderColor: `rgba(${TYPE_COLORS[cat].r},${TYPE_COLORS[cat].g},${TYPE_COLORS[cat].b},1)`,
+            borderWidth: 1,
+            borderRadius: 2,
+            maxBarThickness: 70,
+        }));
+        typeChart.options.scales.y.ticks.callback = v => typeUnit === 'pct' ? v + '%' : v + ' km';
+        typeChart.options.scales.y.title.text = typeUnit === 'pct' ? '% DU VOLUME DU CYCLE' : 'VOLUME (km)';
+        typeChart.update();
+    }
+
+    function setTypeUnit(unit) {
+        typeUnit = unit;
+        const kmBtn = document.getElementById('type-toggle-km');
+        const pctBtn = document.getElementById('type-toggle-pct');
+        const on = 'background:rgba(188,19,254,0.14);border-color:rgba(188,19,254,0.4);color:#bc13fe;';
+        const off = 'background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);';
+        kmBtn.style.cssText = (unit === 'km' ? on : off);
+        pctBtn.style.cssText = (unit === 'pct' ? on : off);
+        updateTypeChart(ALL_CYCLES.filter(c => activeCycles.has(c)));
+    }
+
+    // ── TYPE DATA TABLE ────────────────────────────────────────────────────────
+    function renderTypeTable() {
+        const body = document.getElementById('type-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = sessionTypeData[cycle];
+            const col = hexColor(cycle);
+            const total = TYPE_CATS.reduce((s, k) => s + d[k], 0);
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${cycleStats[cycle].label}</th>
+                <td style="padding:8px 10px;text-align:right;">${d.SL.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.EF.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.Fartlek.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.Tempo.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.Intervalles.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.Recup.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.Compet.toFixed(1)} km</td>
+                <td style="padding:8px 10px;text-align:right;font-weight:700;color:${col};">${total.toFixed(1)} km</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── CROSS-TRAINING CHART & TABLE ───────────────────────────────────────────
+    function updateCrossChart(sorted) {
+        crossChart.data.labels = sorted.map(c => cycleStats[c].label.replace('Marathon de ', '').replace('Marathon ', ''));
+        crossChart.data.datasets = CROSS_CATS.map(cat => ({
+            label: CROSS_LABELS[cat],
+            data: sorted.map(c => crossTrainingData[c][cat][CROSS_UNIT_KEY[crossUnit]]),
+            backgroundColor: `rgba(${CROSS_COLORS[cat].r},${CROSS_COLORS[cat].g},${CROSS_COLORS[cat].b},0.82)`,
+            borderColor: `rgba(${CROSS_COLORS[cat].r},${CROSS_COLORS[cat].g},${CROSS_COLORS[cat].b},1)`,
+            borderWidth: 1,
+            borderRadius: 2,
+            maxBarThickness: 70,
+        }));
+        crossChart.options.scales.y.ticks.callback = v => v + CROSS_UNIT_SUFFIX[crossUnit];
+        crossChart.options.scales.y.title.text = CROSS_UNIT_TITLE[crossUnit];
+        crossChart.update();
+    }
+
+    function setCrossUnit(unit) {
+        crossUnit = unit;
+        const on = 'background:rgba(255,0,110,0.14);border-color:rgba(255,0,110,0.4);color:#ff006e;';
+        const off = 'background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.45);';
+        document.getElementById('cross-toggle-min').style.cssText = (unit === 'min' ? on : off);
+        document.getElementById('cross-toggle-sessions').style.cssText = (unit === 'sessions' ? on : off);
+        document.getElementById('cross-toggle-cal').style.cssText = (unit === 'cal' ? on : off);
+        updateCrossChart(ALL_CYCLES.filter(c => activeCycles.has(c)));
+    }
+
+    function renderCrossTable() {
+        const body = document.getElementById('cross-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = crossTrainingData[cycle];
+            const col = hexColor(cycle);
+            const totN = CROSS_CATS.reduce((s, k) => s + d[k].n, 0);
+            const totMin = CROSS_CATS.reduce((s, k) => s + d[k].min, 0);
+            const totCal = CROSS_CATS.reduce((s, k) => s + d[k].cal, 0);
+            const cell = k => d[k].n === 0 ? '—' : `${d[k].n} · ${d[k].min.toFixed(0)} min`;
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${cycleStats[cycle].label}</th>
+                <td style="padding:8px 10px;text-align:right;">${cell('renf')}</td>
+                <td style="padding:8px 10px;text-align:right;">${cell('recup')}</td>
+                <td style="padding:8px 10px;text-align:right;">${cell('poids')}</td>
+                <td style="padding:8px 10px;text-align:right;font-weight:700;color:${col};">${totN === 0 ? '—' : totN}</td>
+                <td style="padding:8px 10px;text-align:right;">${totMin === 0 ? '—' : totMin.toFixed(0) + ' min'}</td>
+                <td style="padding:8px 10px;text-align:right;">${totCal === 0 ? '—' : totCal + ' cal'}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    function updateChart() {
+        const sorted = ALL_CYCLES.filter(c => activeCycles.has(c));
+        const maxLen = Math.max(...sorted.map(c => cycleStats[c].weeklyBeforeRace.length), 1);
+        volumeChart.data.labels = Array.from({length: maxLen}, (_, i) => {
+            const weeksBefore = maxLen - i - 1;
+            return weeksBefore === 0 ? 'COURSE' : `S-${weeksBefore}`;
+        });
+        volumeChart.data.datasets = sorted.map(cycle => {
+            const arr = cycleStats[cycle].weeklyBeforeRace;
+            const pad = maxLen - arr.length;
+            const padded = Array(pad).fill(null).concat(arr);
+            return {
+                label: cycleStats[cycle].label,
+                data: padded,
+                borderColor: rgbaColor(cycle, 0.95),
+                backgroundColor: rgbaColor(cycle, 0.12),
+                borderWidth: 2.5,
+                pointBackgroundColor: rgbaColor(cycle, 0.9),
+                pointBorderColor: rgbaColor(cycle, 1),
+                pointBorderWidth: 1.5,
+                pointRadius: isMobile ? 2 : 3.5,
+                pointHoverRadius: 7,
+                tension: 0.3,
+                spanGaps: true,
+                fill: false,
+            };
+        });
+        volumeChart.update();
+        renderStatsGrid(sorted);
+        renderDataTable();
+        updateTypeChart(sorted);
+        renderTypeTable();
+        updateFreqChart(sorted);
+        renderFreqTable();
+        updateTaperChart(sorted);
+        renderTaperTable();
+        updateRegularityChart(sorted);
+        renderRegularityTable();
+        updateGearChart(sorted);
+        renderGearTable();
+        updateCrossChart(sorted);
+        renderCrossTable();
+    }
+
+    // ── STATS GRID ─────────────────────────────────────────────────────────────
+    function renderStatsGrid(cycles) {
+        const grid = document.getElementById('stats-grid');
+        grid.innerHTML = cycles.map(cycle => {
+            const d = cycleStats[cycle];
+            const col = rgbaColor(cycle, 1);
+            const bg  = rgbaColor(cycle, 0.07);
+            const bdr = rgbaColor(cycle, 0.28);
+            return `
+            <div class="stat-mini" style="background:${bg};border-color:${bdr};">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                    <span style="font-family:'Orbitron',sans-serif;font-size:1.05rem;font-weight:800;color:${col};">${d.label}</span>
+                </div>
+                <div style="font-size:0.6rem;color:rgba(255,255,255,0.35);letter-spacing:0.05em;margin-bottom:10px;">${fmtDate(d.start)} → ${fmtDate(d.end)} · ${d.weeks} sem.</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;">
+                    ${[
+                        ['SÉANCES', d.sessions],
+                        ['VOLUME', d.totalKm+' km'],
+                        ['KM/SEM.', d.kmPerWeek+' km'],
+                        ['HEURES', d.hours+' h'],
+                        ['PLUS LONGUE', d.longestKm+' km'],
+                        ['D+ TOTAL', d.elev+' m'],
+                        ['ALLURE MOY.', d.avgPace+'/km'],
+                        ['CHRONO OFFICIEL', d.officialTime],
+                    ].map(([label, val]) => `
+                        <div>
+                            <div style="font-size:0.55rem;color:rgba(255,255,255,0.3);letter-spacing:0.1em;margin-bottom:1px;">${label}</div>
+                            <div style="font-size:0.9rem;font-weight:700;color:${col};">${val}</div>
+                        </div>`).join('')}
+                </div>
+            </div>`;
+        }).join('');
+    }
+
+    // ── DATA TABLE ─────────────────────────────────────────────────────────────
+    function renderDataTable() {
+        const body = document.getElementById('data-table-body');
+        body.innerHTML = ALL_CYCLES.map(cycle => {
+            const d = cycleStats[cycle];
+            const col = hexColor(cycle);
+            return `<tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
+                <th scope="row" style="padding:8px 10px;text-align:left;color:${col};font-weight:700;">${d.label}</th>
+                <td style="padding:8px 10px;text-align:left;">${fmtDate(d.start)} → ${fmtDate(d.end)}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.weeks}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.sessions}</td>
+                <td style="padding:8px 10px;text-align:right;">${d.totalKm} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.kmPerWeek} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.longestKm} km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.elev} m</td>
+                <td style="padding:8px 10px;text-align:right;">${d.avgPace}/km</td>
+                <td style="padding:8px 10px;text-align:right;">${d.officialTime}</td>
+            </tr>`;
+        }).join('');
+    }
+
+    // ── CYCLE BUTTONS ──────────────────────────────────────────────────────────
+    function buildCycleButtons() {
+        document.getElementById('cycle-buttons').innerHTML = ALL_CYCLES.map(cycle => {
+            const active = activeCycles.has(cycle);
+            const c = hexColor(cycle);
+            const {r,g,b} = CYCLE_COLORS[cycle];
+            const d = cycleStats[cycle];
+            return `<button
+                id="btn-${cycle}"
+                class="cycle-btn ${active ? 'active' : ''}"
+                style="border-color:${active ? c : 'rgba(255,255,255,0.14)'};color:${active ? c : 'rgba(255,255,255,0.38)'};background:${active ? `rgba(${r},${g},${b},0.12)` : 'transparent'};box-shadow:${active ? `0 0 16px rgba(${r},${g},${b},0.35)` : 'none'};"
+                onclick="toggleCycle('${cycle}')"
+            >
+                <span class="dot" style="background:${active ? c : 'rgba(255,255,255,0.18)'};"></span>
+                ${d.label.replace('Marathon de ', '').replace('Marathon ', '')}
+                <span style="font-size:0.58rem;opacity:0.55;font-family:'Space Grotesk',sans-serif;font-weight:400;">${d.officialTime}</span>
+            </button>`;
+        }).join('');
+    }
+
+    function refreshBtn(cycle) {
+        const btn = document.getElementById(`btn-${cycle}`);
+        if (!btn) return;
+        const active = activeCycles.has(cycle);
+        const c = hexColor(cycle);
+        const {r,g,b} = CYCLE_COLORS[cycle];
+        btn.classList.toggle('active', active);
+        btn.style.borderColor = active ? c : 'rgba(255,255,255,0.14)';
+        btn.style.color = active ? c : 'rgba(255,255,255,0.38)';
+        btn.style.background = active ? `rgba(${r},${g},${b},0.12)` : 'transparent';
+        btn.style.boxShadow = active ? `0 0 16px rgba(${r},${g},${b},0.35)` : 'none';
+        btn.querySelector('.dot').style.background = active ? c : 'rgba(255,255,255,0.18)';
+    }
+
+    function toggleCycle(cycle) {
+        if (activeCycles.has(cycle)) {
+            if (activeCycles.size === 1) return;
+            activeCycles.delete(cycle);
+        } else {
+            activeCycles.add(cycle);
+        }
+        refreshBtn(cycle);
+        updateChart();
+    }
+
+    function selectAll() {
+        ALL_CYCLES.forEach(c => activeCycles.add(c));
+        buildCycleButtons(); updateChart();
+    }
+
+    function selectNone() {
+        activeCycles.clear();
+        activeCycles.add(ALL_CYCLES[ALL_CYCLES.length - 1]);
+        buildCycleButtons(); updateChart();
+    }
+
+    function selectLast2() {
+        activeCycles.clear();
+        activeCycles.add(ALL_CYCLES[ALL_CYCLES.length - 1]);
+        activeCycles.add(ALL_CYCLES[ALL_CYCLES.length - 2]);
+        buildCycleButtons(); updateChart();
+    }
+
+    // ── INIT ───────────────────────────────────────────────────────────────────
+    buildCycleButtons();
+    updateChart();
+    </script>
+</body>
+</html>
