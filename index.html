@@ -329,7 +329,7 @@
   .card-trophees .card-title{background:linear-gradient(90deg,#ffd700,#ff8800,#ff006e);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-trophees .card-icon{filter:drop-shadow(0 0 12px rgba(255,174,0,.55))}
 
-  .card-archives{grid-column:span 6;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
+  .card-archives{grid-column:span 4;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
   .card-archives::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -339,7 +339,7 @@
   .card-archives .card-title{background:linear-gradient(90deg,#7df7f7,#4da6ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-archives .card-icon{filter:drop-shadow(0 0 12px rgba(77,166,255,.55))}
 
-  .card-machine-temps{grid-column:span 6;--card-accent:#9b8cff;background:linear-gradient(135deg,#0c0820 0%,var(--bg-card) 60%,#06040f 100%);position:relative;overflow:hidden}
+  .card-machine-temps{grid-column:span 4;--card-accent:#9b8cff;background:linear-gradient(135deg,#0c0820 0%,var(--bg-card) 60%,#06040f 100%);position:relative;overflow:hidden}
   .card-machine-temps::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -348,6 +348,16 @@
   }
   .card-machine-temps .card-title{background:linear-gradient(90deg,#9b8cff,#5ad1ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-machine-temps .card-icon{filter:drop-shadow(0 0 12px rgba(155,140,255,.55))}
+
+  .card-entrainements{grid-column:span 4;--card-accent:#00ff88;background:linear-gradient(135deg,#031a10 0%,var(--bg-card) 60%,#020f0a 100%);position:relative;overflow:hidden}
+  .card-entrainements::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 78% 28%, rgba(0,255,136,.16) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(0,255,249,.09) 0%, transparent 60%);
+  }
+  .card-entrainements .card-title{background:linear-gradient(90deg,#00ff88,#00fff9,#5ad1ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card-entrainements .card-icon{filter:drop-shadow(0 0 12px rgba(0,255,136,.55))}
 
   /* Featured card visual */
   .card-timeline .card-viz{
@@ -418,6 +428,7 @@
     .card-trophees{grid-column:span 6}
     .card-archives{grid-column:span 6}
     .card-machine-temps{grid-column:span 6}
+    .card-entrainements{grid-column:span 6}
     .recent{padding:48px 20px}
     .race{grid-template-columns:1fr auto;gap:12px}
     .race-date,.race-dist{display:none}
@@ -439,7 +450,7 @@
     .card{min-height:auto;padding:22px}
     .card-progression,.card-radar,.card-comparaison,
     .card-timeline,.card-carte,
-    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives,.card-machine-temps{grid-column:span 1}
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives,.card-machine-temps,.card-entrainements{grid-column:span 1}
     .card-title{font-size:22px}
     .card-icon{font-size:22px;margin-bottom:12px}
     .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
@@ -462,6 +473,7 @@
   <a href="index.html" class="active">🏠 ACCUEIL</a>
   <a href="timeline.html">📅 TIMELINE</a>
   <a href="progression.html">📊 PROGRESSION</a>
+    <a href="entrainements.html">🏋️ PRÉPA MARATHON</a>
   <a href="radar.html">🕸️ RADAR</a>
   <a href="elite.html">🏅 ÉLITE</a>
   <a href="carte.html">🗺️ CARTE</a>
@@ -484,7 +496,7 @@
   </div>
   <div class="status">
     <span class="live-dot"></span>
-    DERNIÈRE MAJ · JUIN 2026
+    DERNIÈRE MAJ · JUILLET 2026
   </div>
 </div>
 
@@ -522,7 +534,7 @@
   </a>
   <a class="kpi fade-up d3" href="progression.html#training">
     <div class="kpi-label">Km cumulés</div>
-    <div class="kpi-value">18 448</div>
+    <div class="kpi-value">18 648</div>
     <div class="kpi-unit">à l'entraînement</div>
   </a>
   <a class="kpi fade-up d4" href="carte.html">
@@ -627,7 +639,7 @@
 <section class="explorer">
   <div class="section-head">
     <h2 class="section-title">Explorer</h2>
-    <div class="section-count">13 VUES · TOUS LES ANGLES</div>
+    <div class="section-count">15 VUES · TOUS LES ANGLES</div>
   </div>
 
   <div class="grid">
@@ -782,6 +794,16 @@
         <div class="card-desc">Et si tu courais ton sub-3h en 1896 ? Ton chrono transposé sur les marathons de l'histoire : JO d'Athènes, Boston, Paris 1900…</div>
       </div>
       <div class="card-preview">Embarquer dans la machine</div>
+    </a>
+
+    <a class="card card-entrainements" href="entrainements.html">
+      <span class="card-num">15</span>
+      <div>
+        <div class="card-icon">🏋️</div>
+        <div class="card-title">Évolution des<br/>Préparations Marathon</div>
+        <div class="card-desc">6 cycles marathon disséqués : volume, séances, allure et dénivelé, semaine par semaine, de Paris 2021 à Milan 2026.</div>
+      </div>
+      <div class="card-preview">Voir les cycles</div>
     </a>
 
   </div>
