@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🏆 Mur des Trophées — Greg</title>
-<meta name="description" content="Mur des dossards et quêtes débloquées : 55 courses, 4 pays, sub-3h marathon, semi sous 1:25, podiums et achievements."/>
+<meta name="description" content="Mur des dossards et quêtes débloquées : 58 courses, 4 pays, sub-3h marathon, semi sous 1:25, podiums et achievements."/>
 <meta name="author" content="Gregory Bertholet"/>
 <meta name="theme-color" content="#0a0a0b">
 <link rel="manifest" href="manifest.webmanifest"/>
@@ -281,10 +281,10 @@ html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-
   text-transform:uppercase;font-size:.78rem;text-align:center;width:100%;}
 .modal-strava:hover{filter:brightness(1.15);}
 
-/* Counter-invert drapeaux en mode clair */
-html[data-theme="light"] .race-flag {
-  filter: invert(1) hue-rotate(180deg);
-}
+/* Drapeaux en <img> SVG : en mode clair, pro-ui.css ré-inverse déjà toutes les <img>,
+   ce qui marche aussi dans Safari (les emoji drapeaux restaient inversés, blanc → noir). */
+.flag-img{display:inline-block;width:1.4em;height:.95em;vertical-align:-.12em;
+  border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.18);}
 </style>
 </head>
 <body>
@@ -349,7 +349,7 @@ html[data-theme="light"] .race-flag {
         <button class="f-btn fd-pr" data-dist="pr" onclick="filterDist('pr',this)">⭐ RP</button>
       </div>
     </div>
-    <div class="bib-count"><span id="visible-count">52</span> dossards</div>
+    <div class="bib-count"><span id="visible-count">55</span> dossards</div>
     <div class="bib-grid" id="bib-grid"></div>
   </section>
 
@@ -366,14 +366,35 @@ html[data-theme="light"] .race-flag {
 </div>
 
 <script>
+/* ─── DRAPEAUX (SVG) ─────────────────────────────── */
+const FLAG_SVG = {
+  "🇫🇷": ['v', '#002395', '#ffffff', '#ED2939', 'France'],
+  "🇮🇹": ['v', '#009246', '#ffffff', '#CE2B37', 'Italie'],
+  "🇱🇺": ['h', '#ED2939', '#ffffff', '#00A1DE', 'Luxembourg'],
+  "🇳🇱": ['h', '#AE1C28', '#ffffff', '#21468B', 'Pays-Bas'],
+};
+function flagImg(emoji) {
+  const f = FLAG_SVG[emoji];
+  if (!f) return emoji;
+  const [dir, a, b, c, name] = f;
+  const bands = dir === 'v'
+    ? `<rect width="1" height="2" fill="${a}"/><rect x="1" width="1" height="2" fill="${b}"/><rect x="2" width="1" height="2" fill="${c}"/>`
+    : `<rect width="3" height="0.667" fill="${a}"/><rect y="0.667" width="3" height="0.667" fill="${b}"/><rect y="1.333" width="3" height="0.667" fill="${c}"/>`;
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3 2" preserveAspectRatio="none">${bands}</svg>`;
+  return `<img class="flag-img" alt="${name}" title="${name}" src="data:image/svg+xml,${encodeURIComponent(svg)}">`;
+}
+
 /* ─── DATA ─────────────────────────────────────────── */
 const RACES = [
+  {date:"2026-10-04",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:48:56",allure:"4:37",classement:"376/3768",fc:168,strava:"https://www.strava.com/activities/20447374867/overview",bib:"2128",note:"Top 10% · 5e Sedan-Charleville"},
+  {date:"2026-09-27",course:"Semi Route du Vin",ville:"Remich",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:24:29",allure:"4:00",classement:"191/2822",fc:174,strava:"https://www.strava.com/activities/20346796556/overview",bib:"304",note:"Top 6,8% · 4e Route du Vin"},
+  {date:"2026-09-19",course:"Les Foulées de Saint Hubert",ville:"Gandrange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:41:58",allure:"4:12",classement:"13/100",fc:163,strava:"https://www.strava.com/activities/20242824184/overview",bib:"123",note:"Top 13 · 5e participation"},
   {date:"2026-06-05",course:"La Ronde Nocturne Clouange",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:38:04",allure:"3:48",classement:"12/213",fc:169,strava:"https://www.strava.com/activities/18800444684/overview",bib:"260",note:"Top 12 · Course de nuit"},
   {date:"2026-05-16",course:"ING Night Semi Marathon Luxembourg",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:27:23",allure:"4:08",classement:"195/9345",fc:167,strava:"https://www.strava.com/activities/18533433786/overview",bib:"14437",note:"Top 2,1% · Course de nuit"},
   {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",pays:"FR",flag:"🇫🇷",km:10,perf:"00:38:43",allure:"3:52",classement:"12/389",fc:174,strava:"https://strava.app.link/X3NCSNYtN2b",bib:"438",note:"Top 12 · Reprise post-Milano"},
   {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",pays:"IT",flag:"🇮🇹",km:42.195,perf:"02:59:51",allure:"4:15",classement:"1017/15050",record:true,fc:167,strava:"https://www.strava.com/activities/18075963697",note:"SUB-3H ! 🚀"},
   {date:"2026-03-01",course:"Semi Vallée de l'Orne",ville:"Clouange",pays:"FR",flag:"🇫🇷",km:21.1,perf:"01:25:52",allure:"4:04",classement:"48/673",fc:162,strava:"https://www.strava.com/activities/17561583056"},
-  {date:"2025-09-28",course:"Semi Route du Vin",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:23:48",allure:"3:58",classement:"145/2499",record:true,fc:172,strava:"https://www.strava.com/activities/15961102163",note:"PR Semi"},
+  {date:"2025-09-28",course:"Semi Route du Vin",ville:"Remich",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:23:48",allure:"3:58",classement:"145/2499",record:true,fc:172,strava:"https://www.strava.com/activities/15961102163",note:"PR Semi"},
   {date:"2025-05-31",course:"ING Night Semi",ville:"Luxembourg",pays:"LU",flag:"🇱🇺",km:21.1,perf:"01:29:51",allure:"4:14",classement:"181/8646",fc:174,strava:"https://www.strava.com/activities/14654980086"},
   {date:"2025-10-05",course:"Sedan-Charleville",ville:"Sedan",pays:"FR",flag:"🇫🇷",km:23.6,perf:"01:38:50",allure:"4:11",classement:"178/3365",fc:171,strava:"https://www.strava.com/activities/16041281275"},
   {date:"2025-04-27",course:"Marathon du Lac d'Annecy",ville:"Annecy",pays:"FR",flag:"🇫🇷",km:42.195,perf:"03:26:08",allure:"4:53",classement:"583/3845",fc:167,strava:"https://www.strava.com/activities/14299457228"},
@@ -489,7 +510,7 @@ function renderBibs(){
       ${r.record?'<div class="pr-stamp">⭐ PR</div>':''}
       ${r.unofficial?'<div class="test-stamp">TEST</div>':''}
       <div class="bib-top">
-        <span><span class="race-flag">${r.flag}</span> ${r.ville}</span>
+        <span><span class="race-flag">${flagImg(r.flag)}</span> ${r.ville}</span>
         <span class="race-yr">${yr}</span>
       </div>
       <div class="bib-body">
@@ -574,7 +595,7 @@ function renderStatsBanner(){
 const ACHIEVEMENTS=[
   /* ─── Records ─── */
   {cat:'records',icon:'🚀',title:'Sub-3h Marathon',desc:'Casser le mur des 3 heures sur marathon',unlocked:true,date:'12 avr. 2026',proof:'02:59:51 · Milano'},
-  {cat:'records',icon:'⚡',title:'Sub-1:25 Semi',desc:'Semi-marathon sous 1h25',unlocked:true,date:'28 sep. 2025',proof:'01:23:48 · Luxembourg'},
+  {cat:'records',icon:'⚡',title:'Sub-1:25 Semi',desc:'Semi-marathon sous 1h25',unlocked:true,date:'28 sep. 2025',proof:'01:23:48 · Remich'},
   {cat:'records',icon:'💨',title:'Sub-1:30 Semi',desc:'Semi-marathon sous 1h30',unlocked:true,date:'19 mar. 2023',proof:'01:28:36 · Rombas'},
   {cat:'records',icon:'🏃',title:'Sub-40 sur 10K',desc:'10 km sous les 40 minutes',unlocked:true,date:'5 août 2024',proof:'00:37:41 · Course du Muguet'},
   {cat:'records',icon:'🔥',title:'Sub-19 sur 5K',desc:'5 km sous 19 minutes',unlocked:true,date:'30 mar. 2025',proof:'00:18:36'},
@@ -601,10 +622,10 @@ const ACHIEVEMENTS=[
   /* ─── Quantité ─── */
   {cat:'quantite',icon:'🎖️',title:'10 dossards',desc:'10 courses terminées',unlocked:true,date:'2022'},
   {cat:'quantite',icon:'🎫',title:'25 dossards',desc:'25 courses terminées',unlocked:true,date:'2023'},
-  {cat:'quantite',icon:'📜',title:'50 dossards',desc:'50 courses terminées',unlocked:true,date:'2025',proof:'55 dossards au compteur'},
-  {cat:'quantite',icon:'💯',title:'100 dossards',desc:'100 courses terminées',unlocked:false,target:100,current:55,progress:55},
-  {cat:'quantite',icon:'🛣️',title:'1000 km en course',desc:'Cumuler 1000 km en compétition',unlocked:true,date:'2026',proof:'1043 km cumulés'},
-  {cat:'quantite',icon:'🌐',title:'2000 km en course',desc:'Cumuler 2000 km en compétition',unlocked:false,target:2000,current:1043,progress:52},
+  {cat:'quantite',icon:'📜',title:'50 dossards',desc:'50 courses terminées',unlocked:true,date:'2025',proof:'58 dossards au compteur'},
+  {cat:'quantite',icon:'💯',title:'100 dossards',desc:'100 courses terminées',unlocked:false,target:100,current:58,progress:58},
+  {cat:'quantite',icon:'🛣️',title:'1000 km en course',desc:'Cumuler 1000 km en compétition',unlocked:true,date:'2026',proof:'1098 km cumulés'},
+  {cat:'quantite',icon:'🌐',title:'2000 km en course',desc:'Cumuler 2000 km en compétition',unlocked:false,target:2000,current:1098,progress:55},
 
   /* ─── Spéciales ─── */
   {cat:'speciales',icon:'🔁',title:'Récidiviste',desc:'5 éditions de la même course',unlocked:true,proof:'Semi Vallée de l\'Orne · 5 fois'},
@@ -659,7 +680,7 @@ function achCard(a){
   }
   const iconIsFlag=/[\u{1F1E6}-\u{1F1FF}]/u.test(a.icon);
   return `<div class="ach-card ${u?'unlocked':'locked'}">
-    <div class="ach-icon">${iconIsFlag?`<span class="race-flag">${a.icon}</span>`:a.icon}</div>
+    <div class="ach-icon">${iconIsFlag?`<span class="race-flag">${flagImg(a.icon)}</span>`:a.icon}</div>
     <div class="ach-title">${a.title}</div>
     <div class="ach-desc">${a.desc}</div>
     ${u && a.proof?`<div class="ach-meta">${a.proof}</div>`:''}
@@ -681,7 +702,7 @@ function showRace(r){
       ${r.record?'<div class="pr-stamp">⭐ PR</div>':''}
       ${r.unofficial?'<div class="test-stamp">TEST</div>':''}
       <div class="bib-top">
-        <span><span class="race-flag">${r.flag}</span> ${r.ville}</span>
+        <span><span class="race-flag">${flagImg(r.flag)}</span> ${r.ville}</span>
         <span class="race-yr">${r.date.slice(0,4)}</span>
       </div>
       <div class="bib-body">
@@ -695,7 +716,7 @@ function showRace(r){
       </div>
     </div>
     <h3>${r.course}</h3>
-    <div style="text-align:center;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;font-size:.85rem;"><span class="race-flag">${r.flag}</span> ${r.ville} · ${formatFullDate(r.date)}</div>
+    <div style="text-align:center;color:rgba(255,255,255,.6);font-family:'Barlow Condensed',sans-serif;letter-spacing:.1em;font-size:.85rem;"><span class="race-flag">${flagImg(r.flag)}</span> ${r.ville} · ${formatFullDate(r.date)}</div>
     ${r.note?`<div style="text-align:center;color:var(--gold);font-family:'Orbitron',sans-serif;letter-spacing:.1em;font-size:.8rem;margin-top:.6rem;">⭐ ${r.note}</div>`:''}
     <div class="modal-stats">
       <div class="modal-stat"><div class="modal-stat-label">Temps</div><div class="modal-stat-val">${r.perf}</div></div>

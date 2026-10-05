@@ -217,6 +217,9 @@ body {
 
 .calendar-section {
     position: relative; z-index: 2;
+    /* Wider than the 1100px wrapper so every month fits on one line */
+    width: min(1320px, calc(100vw - 32px));
+    left: 50%; transform: translateX(-50%);
     margin: 0.2rem 0 1.2rem;
     padding: 0.85rem 0.95rem 0.7rem;
     border-radius: 12px;
@@ -239,14 +242,12 @@ body {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.2) transparent;
-    /* Fade on the right edge when overflowing */
-    mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 14px), transparent 100%);
-    -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 14px), transparent 100%);
 }
 .calendar-scroll::-webkit-scrollbar { height: 5px; }
 .calendar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 3px; }
 .calendar-grid {
-    display: inline-flex; align-items: flex-start; gap: 0.7rem;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    align-items: flex-start; gap: 0.7rem; row-gap: 0.75rem;
     padding: 0.15rem 0.05rem 0.25rem;
     min-height: 70px;
 }
@@ -994,12 +995,12 @@ body {
     <!-- Header -->
     <div class="text-center mb-3 fade-in">
         <span class="page-title"><svg class="title-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="cal-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fefce8"/><stop offset="100%" stop-color="#e7e5e4"/></linearGradient><linearGradient id="cal-band" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444"/><stop offset="100%" stop-color="#b91c1c"/></linearGradient></defs><rect x="8" y="14" width="50" height="46" rx="4" fill="rgba(0,0,0,0.45)"/><rect x="6" y="12" width="50" height="46" rx="4" fill="url(#cal-paper)" stroke="#78716c" stroke-width="0.8"/><path d="M6 16 Q6 12 10 12 H52 Q56 12 56 16 V24 H6 Z" fill="url(#cal-band)"/><rect x="16" y="6" width="3.2" height="11" rx="1.6" fill="#44403c"/><rect x="42" y="6" width="3.2" height="11" rx="1.6" fill="#44403c"/><g stroke="#a8a29e" stroke-width="0.5" opacity="0.7"><line x1="18" y1="28" x2="18" y2="56"/><line x1="30" y1="28" x2="30" y2="56"/><line x1="42" y1="28" x2="42" y2="56"/><line x1="10" y1="36" x2="52" y2="36"/><line x1="10" y1="44" x2="52" y2="44"/><line x1="10" y1="52" x2="52" y2="52"/></g><g fill="#78716c" opacity="0.55"><circle cx="14" cy="32" r="0.9"/><circle cx="24" cy="32" r="0.9"/><circle cx="36" cy="32" r="0.9"/><circle cx="48" cy="32" r="0.9"/><circle cx="14" cy="40" r="0.9"/><circle cx="24" cy="40" r="0.9"/><circle cx="48" cy="40" r="0.9"/><circle cx="14" cy="48" r="0.9"/><circle cx="24" cy="48" r="0.9"/><circle cx="36" cy="48" r="0.9"/><circle cx="48" cy="48" r="0.9"/></g><circle cx="36" cy="40" r="3.6" fill="#ef4444"/><circle cx="36" cy="40" r="3.6" fill="none" stroke="#fbbf24" stroke-width="0.7"/></svg>TIMELINE</span>
-        <p class="page-sub">55 COURSES · 2019 → 2026</p>
+        <p class="page-sub">58 COURSES · 2019 → 2026</p>
     </div>
 
     <!-- Summary bar -->
     <div class="summary-bar" id="summary-bar">
-        <div class="sum-item"><div class="sum-val" id="sum-count">55</div><div class="sum-label">COURSES</div></div>
+        <div class="sum-item"><div class="sum-val" id="sum-count">58</div><div class="sum-label">COURSES</div></div>
         <div class="sum-item"><div class="sum-val" id="sum-km">—</div><div class="sum-label">KM CUMULÉS</div></div>
         <div class="sum-item"><div class="sum-val" id="sum-pr">—</div><div class="sum-label">RECORDS PERSO</div></div>
         <div class="sum-item"><div class="sum-val" id="sum-years">—</div><div class="sum-label">ANNÉES</div></div>
@@ -1107,7 +1108,10 @@ const BIB_NUMS = {
   "2026-04-12":685,
   "2026-05-01":438,
   "2026-05-16":14437,
-  "2026-06-05":260
+  "2026-06-05":260,
+  "2026-09-19":123,
+  "2026-09-27":304,
+  "2026-10-04":2128
 };
 
 // ── Mapping date course → clé manifeste résultats ─────────────────
@@ -1158,6 +1162,9 @@ const RACE_DOCS_KEY = {
     "2025-05-31": "ing-night-marathon-2025",
     "2025-04-27": "marathon-annecy-2025",
     "2025-03-16": "smivo-2025",
+    "2026-10-04": "sedan-charleville-2026",
+    "2026-09-27": "route-du-vin-2026",
+    "2026-09-19": "foulees-saint-hubert-2026",
     "2026-06-05": "la-ronde-nocturne-clouange-2026",
     "2026-05-16": "ing-night-marathon-2026",
     "2026-05-01": "la-conviviale-2026",
@@ -1246,7 +1253,11 @@ const RACE_DOCS_FILES = {
         {path:"resultats/2026/milan-marathon.pdf",type:"pdf"},
         {path:"resultats/2026/diploma.pdf",type:"pdf",label:"Diplôme"}
     ],
-    "ing-night-marathon-2026":[{path:"resultats/2026/ING Luxembourg.png",type:"photo"}]
+    "ing-night-marathon-2026":[{path:"resultats/2026/ING Luxembourg.png",type:"photo"}],
+    "la-ronde-nocturne-clouange-2026":[{path:"resultats/2026/Resultats ronde nocturne Clouange2026.pdf",type:"pdf"}],
+    "foulees-saint-hubert-2026":[{path:"resultats/2026/foulees-saint-hubert-2026.pdf",type:"pdf"}],
+    "route-du-vin-2026":[{path:"resultats/2026/route-du-vin-2026.pdf",type:"pdf"}],
+    "sedan-charleville-2026":[{path:"resultats/2026/sedan-charleville-2026.pdf",type:"pdf"}]
 };
 
 function getRaceFiles(date) {
@@ -1284,13 +1295,16 @@ function openTimelinePhotoSet(photos, caption) {
 }
 
 const racesData = [
+    {date:"2026-10-04",course:"Sedan-Charleville",ville:"Sedan",dept:"08",km:"23.6",classement:"376/3768",indice:"9.98",perf:"01:48:56",tempsMoyenKm:"4:37",strava:"https://www.strava.com/activities/20447374867/overview",fc:168},
+    {date:"2026-09-27",course:"Semi-Marathon - Route Du Vin",ville:"Remich",dept:"0",km:"21.1",classement:"191/2822",indice:"6.77",perf:"01:24:29",tempsMoyenKm:"4:00",strava:"https://www.strava.com/activities/20346796556/overview",fc:174},
+    {date:"2026-09-19",course:"Les Foulées de Saint Hubert",ville:"Gandrange",dept:"57",km:"10",classement:"13/100",indice:"13",perf:"00:41:58",tempsMoyenKm:"4:12",strava:"https://www.strava.com/activities/20242824184/overview",fc:163},
     {date:"2026-06-05",course:"La Ronde Nocturne Clouange",ville:"Clouange",dept:"57",km:"10",classement:"12/213",indice:"5.63",perf:"00:38:04",tempsMoyenKm:"3:48",strava:"https://www.strava.com/activities/18800444684/overview",fc:169},
     {date:"2026-05-16",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",dept:"0",km:"21.1",classement:"195/9345",indice:"2.09",perf:"01:27:23",tempsMoyenKm:"4:08",strava:"https://www.strava.com/activities/18533433786/overview",fc:167},
     {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",dept:"57",km:"10",classement:"12/389",indice:"3.08",perf:"00:38:43",tempsMoyenKm:"3:52",strava:"https://strava.app.link/X3NCSNYtN2b",fc:174},
     {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",dept:"0",km:"42.195",classement:"1017/15050",indice:"6.76",perf:"02:59:51",tempsMoyenKm:"4:15",record:true,strava:"https://www.strava.com/activities/18075963697/overview",fc:167},
     {date:"2026-03-01",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Clouange",dept:"57",km:"21.1",classement:"48/673",indice:"7.13",perf:"01:25:52",tempsMoyenKm:"4:04",strava:"https://www.strava.com/activities/17561583056",fc:162},
     {date:"2025-10-05",course:"Sedan-Charleville",ville:"Sedan",dept:"08",km:"23.6",classement:"178/3365",indice:"5.29",perf:"01:38:50",tempsMoyenKm:"4:11",strava:"https://www.strava.com/activities/16041281275",fc:171},
-    {date:"2025-09-28",course:"Semi-Marathon - Route Du Vin",ville:"Luxembourg",dept:"0",km:"21.1",classement:"145/2499",indice:"5.8",perf:"01:23:48",tempsMoyenKm:"3:58",record:true,strava:"https://www.strava.com/activities/15961102163",fc:172},
+    {date:"2025-09-28",course:"Semi-Marathon - Route Du Vin",ville:"Remich",dept:"0",km:"21.1",classement:"145/2499",indice:"5.8",perf:"01:23:48",tempsMoyenKm:"3:58",record:true,strava:"https://www.strava.com/activities/15961102163",fc:172},
     {date:"2025-05-31",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",dept:"0",km:"21.1",classement:"181/8646",indice:"2.09",perf:"01:29:51",tempsMoyenKm:"4:14",strava:"https://www.strava.com/activities/14654980086",fc:174},
     {date:"2025-04-27",course:"Marathon du lac d'Annecy",ville:"Annecy",dept:"74",km:"42.195",classement:"583/3845",indice:"15.16",perf:"03:26:08",tempsMoyenKm:"4:53",strava:"https://www.strava.com/activities/14299457228",fc:167},
     {date:"2025-03-30",course:"Test à l'entraînement",ville:"Solo",dept:"—",km:"5",classement:"—",indice:"—",perf:"00:18:36",tempsMoyenKm:"3:43",record:true,strava:"https://www.strava.com/activities/14028111935/overview",fc:173,unofficial:true},
@@ -1687,6 +1701,7 @@ function buildCalendar() {
         root.appendChild(yearCol);
     });
 }
+
 
 function scrollToRace(race) {
     const key = race.date + '|' + race.course;
