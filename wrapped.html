@@ -536,19 +536,19 @@ body.story-paused .slide{filter:brightness(.85);}
     <div class="teaser-subtitle">La meilleure saison · Marathon sub-3h</div>
     <div class="teaser-stats">
       <div class="teaser-stat">
-        <div class="teaser-stat-val accent">5</div>
+        <div class="teaser-stat-val accent" id="teaser-races">8</div>
         <div class="teaser-stat-label">Courses</div>
       </div>
       <div class="teaser-stat">
-        <div class="teaser-stat-val">104.4</div>
+        <div class="teaser-stat-val" id="teaser-km">159.1</div>
         <div class="teaser-stat-label">km cumulés</div>
       </div>
       <div class="teaser-stat">
-        <div class="teaser-stat-val gold">1</div>
+        <div class="teaser-stat-val gold" id="teaser-prs">1</div>
         <div class="teaser-stat-label">Record perso</div>
       </div>
       <div class="teaser-stat">
-        <div class="teaser-stat-val pink">4:01</div>
+        <div class="teaser-stat-val pink" id="teaser-pace">4:07</div>
         <div class="teaser-stat-label">Allure moy.</div>
       </div>
     </div>
@@ -568,13 +568,16 @@ body.story-paused .slide{filter:brightness(.85);}
 <script>
 // ── DATA ────────────────────────────────────────────────────────────────────
 const ALL_RACES = [
+  {date:"2026-10-04",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"376/3768",perf:"01:48:56",allure:"4:37",fc:168},
+  {date:"2026-09-27",course:"Semi-Marathon Route Du Vin",ville:"Remich",km:21.1,classement:"191/2822",perf:"01:24:29",allure:"4:00",fc:174},
+  {date:"2026-09-19",course:"Les Foulées de Saint Hubert",ville:"Gandrange",km:10,classement:"13/100",perf:"00:41:58",allure:"4:12",fc:163},
   {date:"2026-06-05",course:"La Ronde Nocturne Clouange",ville:"Clouange",km:10,classement:"12/213",perf:"00:38:04",allure:"3:48",fc:169},
   {date:"2026-05-16",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"195/9345",perf:"01:27:23",allure:"4:08",fc:167},
   {date:"2026-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"12/389",perf:"00:38:43",allure:"3:52",fc:174},
   {date:"2026-04-12",course:"Wizz Air Milano Marathon",ville:"Milan",km:42.195,classement:"1017/15050",perf:"02:59:51",allure:"4:15",record:true,fc:167},
   {date:"2026-03-01",course:"Semi Marathon Intercommunal de la Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"48/673",perf:"01:25:52",allure:"4:04",fc:162},
   {date:"2025-10-05",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"178/3365",perf:"01:38:50",allure:"4:11",fc:171},
-  {date:"2025-09-28",course:"Semi-Marathon Route Du Vin",ville:"Luxembourg",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",record:true,fc:172},
+  {date:"2025-09-28",course:"Semi-Marathon Route Du Vin",ville:"Remich",km:21.1,classement:"145/2499",perf:"01:23:48",allure:"3:58",record:true,fc:172},
   {date:"2025-05-31",course:"Ing Night Semi Marathon Luxembourg",ville:"Luxembourg",km:21.1,classement:"181/8646",perf:"01:29:51",allure:"4:14",fc:174},
   {date:"2025-04-27",course:"Marathon du lac d'Annecy",ville:"Annecy",km:42.195,classement:"583/3845",perf:"03:26:08",allure:"4:53",fc:167},
   {date:"2025-03-16",course:"Semi Marathon Vallée de l'Orne",ville:"Rosselange",km:21.1,classement:"35/538",perf:"01:25:34",allure:"4:03",fc:168},
@@ -666,6 +669,17 @@ YEARS.forEach(y=>{
   btn.onclick=()=>startWrapped(y);
   grid.appendChild(btn);
 });
+
+// ── TEASER (édition en cours) — calculé depuis ALL_RACES pour rester à jour ──
+(function fillTeaser(){
+  const d = computeYear(2026);
+  if(!d) return;
+  const avgAllure = Math.round(d.races.reduce((s,r)=>s+allureToSec(r.allure),0)/d.races.length);
+  document.getElementById('teaser-races').textContent = d.races.length;
+  document.getElementById('teaser-km').textContent = d.km.toFixed(1);
+  document.getElementById('teaser-prs').textContent = d.prs.length;
+  document.getElementById('teaser-pace').textContent = Math.floor(avgAllure/60)+':'+String(avgAllure%60).padStart(2,'0');
+})();
 
 // ── CANVAS BG ─────────────────────────────────────────────────────────────────
 const canvas = document.getElementById('bg-canvas');
