@@ -676,14 +676,14 @@
                     <p style="font-size:0.7rem;color:rgba(255,255,255,0.3);letter-spacing:0.05em;margin-top:0.3rem;line-height:1.5;">Kilomètres parcourus à l'entraînement chaque année — le socle invisible derrière les perfs en course</p>
                 </div>
                 <div style="text-align:right; flex-shrink:0;">
-                    <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:var(--neon-purple); line-height:1;">18 648 km</div>
+                    <div style="font-family:'Archivo Black',sans-serif; font-size:2rem; color:var(--neon-purple); line-height:1;">19 193 km</div>
                     <div style="font-size:0.62rem; color:rgba(255,255,255,0.4); letter-spacing:0.1em; text-transform:uppercase; margin-top:5px;">cumulés depuis 2011</div>
                 </div>
             </div>
             <div style="position:relative; height:340px;">
-                <canvas id="trainingChart" role="img" aria-label="Histogramme du volume d'entraînement annuel de 2011 à 2026 superposé à une courbe cumulée. Volumes par année : 275 km en 2011, 169 en 2012, 53 en 2013, 32 en 2014, 80 en 2015, 546 en 2016, 538 en 2017, 763 en 2018, 1194 en 2019, 2070 en 2020, 2238 en 2021, 2123 en 2022, 2207 en 2023, 2395 en 2024, 2476 en 2025, 1489 en 2026 (en cours). Total cumulé 18 648 km."></canvas>
+                <canvas id="trainingChart" role="img" aria-label="Histogramme du volume d'entraînement annuel de 2011 à 2026 superposé à une courbe cumulée. Volumes par année : 275 km en 2011, 169 en 2012, 53 en 2013, 32 en 2014, 80 en 2015, 546 en 2016, 538 en 2017, 763 en 2018, 1194 en 2019, 2070 en 2020, 2238 en 2021, 2123 en 2022, 2207 en 2023, 2395 en 2024, 2476 en 2025, 2034 en 2026 (en cours). Total cumulé 19 193 km."></canvas>
             </div>
-            <p style="font-size:0.7rem; color:rgba(255,255,255,0.42); margin-top:1rem; padding-left:0.75rem; line-height:1.55; font-style:italic;">2026 en cours — barre hachurée, 1 489 km à ce jour. Le déclic 2016 (546 km) suivi de l'envol 2019 (1 200 km) puis la stabilisation au‑dessus de 2 000 km/an depuis 2020 expliquent largement la trajectoire en compétition.</p>
+            <p style="font-size:0.7rem; color:rgba(255,255,255,0.42); margin-top:1rem; padding-left:0.75rem; line-height:1.55; font-style:italic;">2026 en cours — barre hachurée, 2 034 km à ce jour. Le déclic 2016 (546 km) suivi de l'envol 2019 (1 200 km) puis la stabilisation au‑dessus de 2 000 km/an depuis 2020 expliquent largement la trajectoire en compétition.</p>
         </div>
 
         <!-- Accessible data table -->
@@ -1232,7 +1232,7 @@
             const trainingCtx = document.getElementById('trainingChart')?.getContext('2d');
             if (trainingCtx) {
                 const trainingYears = ['2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021','2022','2023','2024','2025','2026'];
-                const trainingKm = [275,169,53,32,80,546,538,763,1194,2070,2238,2123,2207,2395,2476,1489];
+                const trainingKm = [275,169,53,32,80,546,538,763,1194,2070,2238,2123,2207,2395,2476,2034];
                 const trainingInProgress = ['2026'];
                 const trainingCum = trainingKm.reduce((acc, v, i) => { acc.push((acc[i-1]||0) + v); return acc; }, []);
 
