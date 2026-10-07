@@ -337,7 +337,7 @@
   .card-trophees .card-title{background:linear-gradient(90deg,#ffd700,#ff8800,#ff006e);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-trophees .card-icon{filter:drop-shadow(0 0 12px rgba(255,174,0,.55))}
 
-  .card-archives{grid-column:span 4;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
+  .card-archives{grid-column:span 3;--card-accent:#4da6ff;background:linear-gradient(135deg,#05101a 0%,var(--bg-card) 60%,#020a14 100%);position:relative;overflow:hidden}
   .card-archives::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -347,7 +347,7 @@
   .card-archives .card-title{background:linear-gradient(90deg,#7df7f7,#4da6ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-archives .card-icon{filter:drop-shadow(0 0 12px rgba(77,166,255,.55))}
 
-  .card-machine-temps{grid-column:span 4;--card-accent:#9b8cff;background:linear-gradient(135deg,#0c0820 0%,var(--bg-card) 60%,#06040f 100%);position:relative;overflow:hidden}
+  .card-machine-temps{grid-column:span 3;--card-accent:#9b8cff;background:linear-gradient(135deg,#0c0820 0%,var(--bg-card) 60%,#06040f 100%);position:relative;overflow:hidden}
   .card-machine-temps::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -357,7 +357,7 @@
   .card-machine-temps .card-title{background:linear-gradient(90deg,#9b8cff,#5ad1ff,#b347ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-machine-temps .card-icon{filter:drop-shadow(0 0 12px rgba(155,140,255,.55))}
 
-  .card-entrainements{grid-column:span 4;--card-accent:#00ff88;background:linear-gradient(135deg,#031a10 0%,var(--bg-card) 60%,#020f0a 100%);position:relative;overflow:hidden}
+  .card-entrainements{grid-column:span 3;--card-accent:#00ff88;background:linear-gradient(135deg,#031a10 0%,var(--bg-card) 60%,#020f0a 100%);position:relative;overflow:hidden}
   .card-entrainements::before{
     content:"";position:absolute;inset:0;pointer-events:none;
     background:
@@ -366,6 +366,15 @@
   }
   .card-entrainements .card-title{background:linear-gradient(90deg,#00ff88,#00fff9,#5ad1ff);-webkit-background-clip:text;background-clip:text;color:transparent}
   .card-entrainements .card-icon{filter:drop-shadow(0 0 12px rgba(0,255,136,.55))}
+  .card-tour-du-monde{grid-column:span 3;--card-accent:#00fff9;background:linear-gradient(135deg,#04122a 0%,var(--bg-card) 60%,#0a0414 100%);position:relative;overflow:hidden}
+  .card-tour-du-monde::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:
+      radial-gradient(ellipse at 78% 28%, rgba(0,255,249,.16) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(255,0,212,.10) 0%, transparent 60%);
+  }
+  .card-tour-du-monde .card-title{background:linear-gradient(90deg,#00fff9,#4da6ff,#ff00d4);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .card-tour-du-monde .card-icon{filter:drop-shadow(0 0 12px rgba(0,255,249,.55))}
 
   /* Featured card visual */
   .card-timeline .card-viz{
@@ -437,6 +446,7 @@
     .card-archives{grid-column:span 6}
     .card-machine-temps{grid-column:span 6}
     .card-entrainements{grid-column:span 6}
+    .card-tour-du-monde{grid-column:span 6}
     .recent{padding:48px 20px}
     .race{grid-template-columns:1fr auto;gap:12px}
     .race-date,.race-dist{display:none}
@@ -458,7 +468,7 @@
     .card{min-height:auto;padding:22px}
     .card-progression,.card-radar,.card-comparaison,
     .card-timeline,.card-carte,
-    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives,.card-machine-temps,.card-entrainements{grid-column:span 1}
+    .card-elite,.card-meteo,.card-galerie,.card-wrapped,.card-adn,.card-age-grading,.card-trophees,.card-archives,.card-machine-temps,.card-entrainements,.card-tour-du-monde{grid-column:span 1}
     .card-title{font-size:22px}
     .card-icon{font-size:22px;margin-bottom:12px}
     .card-num{font-size:10px;top:14px;right:14px;letter-spacing:1.5px}
@@ -494,6 +504,7 @@
   <a href="trophees.html">🏆 TROPHÉES</a>
   <a href="archives.html">📂 ARCHIVES</a>
   <a href="machine-temps.html">⏳ TIME MACHINE</a>
+  <a href="tour-du-monde.html">🌍 TOUR DU MONDE</a>
 </nav>
 
 <!-- TOP BAR -->
@@ -647,7 +658,7 @@
 <section class="explorer">
   <div class="section-head">
     <h2 class="section-title">Explorer</h2>
-    <div class="section-count">15 VUES · TOUS LES ANGLES</div>
+    <div class="section-count">16 VUES · TOUS LES ANGLES</div>
   </div>
 
   <div class="grid">
@@ -812,6 +823,16 @@
         <div class="card-desc">6 cycles marathon disséqués : volume, séances, allure et dénivelé, semaine par semaine, de Paris 2021 à Milan 2026.</div>
       </div>
       <div class="card-preview">Voir les cycles</div>
+    </a>
+
+    <a class="card card-tour-du-monde" href="tour-du-monde.html">
+      <span class="card-num">16</span>
+      <div>
+        <div class="card-icon">🌍</div>
+        <div class="card-title">Tour du<br/>Monde</div>
+        <div class="card-desc">19 193 km mis bout à bout depuis Rosselange : Istanbul, Katmandou, Pékin, Tokyo… Déjà 48 % du tour de la Terre.</div>
+      </div>
+      <div class="card-preview">Suivre le voyage</div>
     </a>
 
   </div>

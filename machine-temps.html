@@ -262,6 +262,19 @@
     }
     .runner.r-greg .tag { background: rgba(0,255,249,.15); color: var(--neon-cyan); border: 1px solid rgba(0,255,249,.4); }
     .runner.r-win  .tag { background: rgba(255,215,0,.13); color: var(--neon-gold); border: 1px solid rgba(255,215,0,.4); }
+    .sub2-badge {
+        display: inline-block;
+        font-family: 'Orbitron', sans-serif;
+        font-size: .68rem; font-weight: 900; letter-spacing: .12em;
+        color: var(--neon-gold);
+        background: rgba(255,215,0,.1);
+        border: 1px solid rgba(255,215,0,.45);
+        border-radius: 999px;
+        padding: .3rem .8rem;
+        margin: .2rem 0 .7rem;
+        box-shadow: 0 0 14px rgba(255,215,0,.25);
+        text-shadow: 0 0 10px rgba(255,215,0,.6);
+    }
     .duel-caption { font-size: .68rem; color: rgba(255,255,255,.4); margin-top: .35rem; letter-spacing: .04em; }
 
     /* ── Verdict ── */
@@ -337,12 +350,13 @@
     <a href="trophees.html">🏆 TROPHÉES</a>
     <a href="archives.html">📂 ARCHIVES</a>
     <a href="#" class="active">⏳ TIME MACHINE</a>
+    <a href="tour-du-monde.html">🌍 TOUR DU MONDE</a>
 </nav>
 
 <div class="wrap">
 
     <header class="page-header">
-        <h1 class="page-title">⏳ MACHINE À REMONTER LE TEMPS</h1>
+        <h1 class="page-title"><span class="title-emoji" aria-hidden="true">⏳</span>MACHINE À REMONTER LE TEMPS</h1>
         <div class="page-sub">Ton <b>2:59:51</b> (Milano Marathon, avril 2026) voyage à travers 130 ans de marathon</div>
     </header>
 
@@ -663,7 +677,7 @@
                 <p class="era-name">Chicago — le record du monde de Kelvin Kiptum</p>
                 <p class="era-meta">42,195 km · 2:00:35 · 2:51/km de moyenne</p>
                 <p class="era-story">
-                    Retour brutal au présent. Quand Kiptum franchit la ligne de son record du monde,
+                    Retour vers le présent. Quand Kiptum franchit la ligne de son record du monde,
                     toi, parti en même temps que lui à ton allure de Milano, tu es au
                     <b style="color:var(--neon-cyan)">kilomètre 28,3</b> — il te reste 14 km, soit pratiquement un semi de Thionville.
                 </p>
@@ -686,6 +700,43 @@
             </div>
         </section>
 
+        <!-- 2026 -->
+        <section class="era" data-year="2026">
+            <div class="era-dot"></div>
+            <div class="era-card">
+                <h2 class="era-year">2026</h2>
+                <p class="era-name">Londres — le mur des 2 heures tombe</p>
+                <p class="era-meta">42,195 km · 1:59:30 · 2:50/km de moyenne · nouveau record du monde</p>
+                <div class="sub2-badge">⚡ 2 HOMMES SOUS LES 2 HEURES ⚡</div>
+                <p class="era-story">
+                    Le 26 avril 2026, deux semaines après ton sub-3h à Milan, la barrière mythique tombe enfin
+                    en course officielle — et pas une fois, mais deux. Sabastian Sawe gagne en <b>1:59:30</b>,
+                    65 secondes de mieux que Kiptum ; Yomif Kejelcha le suit 11 secondes plus tard en <b>1:59:41</b>.
+                    Même le 3ᵉ, Jacob Kiplimo, passe sous l'ancien record.
+                    Quand Sawe coupe la ligne, toi, parti avec eux à ton allure de Milano, tu es au
+                    <b style="color:var(--neon-cyan)">kilomètre 28,0</b>.
+                </p>
+                <div class="podium">
+                    <div class="podium-row"><span class="pos">🥇</span><span class="name">Sabastian Sawe 🇰🇪</span><span class="t">1:59:30</span></div>
+                    <div class="podium-row"><span class="pos">🥈</span><span class="name">Yomif Kejelcha 🇪🇹</span><span class="t">1:59:41</span></div>
+                    <div class="podium-row"><span class="pos">🥉</span><span class="name">Jacob Kiplimo 🇺🇬</span><span class="t">2:00:28</span></div>
+                    <div class="podium-row greg"><span class="pos">∞</span><span class="name">TOI (Greg)</span><span class="t">2:59:51</span></div>
+                </div>
+                <div class="duel">
+                    <div class="duel-track">
+                        <div class="duel-finish">🏁</div>
+                        <div class="runner r-win" data-time="7170">🏃🏃<span class="tag">SAWE &amp; KEJELCHA</span></div>
+                        <div class="runner r-greg" data-time="10791">🏃<span class="tag">GREG</span></div>
+                    </div>
+                    <div class="duel-caption">Course simulée à l'échelle — 11 s d'écart entre eux deux : à cette échelle, ils arrivent ensemble</div>
+                </div>
+                <div class="verdict none">
+                    <span class="medal">⏱️</span>
+                    <span><b>Une heure pile d'écart (1 h 00 min 21 s).</b> Pendant que Sawe et Kejelcha entrent dans l'histoire, il te reste 14 km. Mais vous partagez une chose : une barrière symbolique franchie au printemps 2026 — 2 heures pour eux, 3 heures pour toi.</span>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <!-- Bilan -->
@@ -695,7 +746,7 @@
             <div class="bilan-item"><div class="big">🥇🥇🥇🥇</div><div class="lbl">Titres (1896–1904)</div></div>
             <div class="bilan-item"><div class="big">5ᵉ</div><div class="lbl">JO 1908 · chrono brut</div></div>
             <div class="bilan-item"><div class="big">12 ans</div><div class="lbl">de règne possible</div></div>
-            <div class="bilan-item"><div class="big">+59 min</div><div class="lbl">sur Kiptum 2023</div></div>
+            <div class="bilan-item"><div class="big">+1 h 00</div><div class="lbl">sur Sawe 2026 (record du monde)</div></div>
         </div>
         <p>
             Verdict de la machine : né 130 ans trop tard pour l'or olympique,

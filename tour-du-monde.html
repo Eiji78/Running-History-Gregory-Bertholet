@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-F7JZPPYNEK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-F7JZPPYNEK');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tour du Monde — les 19 193 km de Gregory Bertholet autour de la Terre</title>
+<meta name="description" content="Les 19 193 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km." />
+<meta name="keywords" content="Gregory Bertholet, running Moselle, Rosselange, tour du monde en courant, kilomètres cumulés, 40075 km, course à pied, entraînement, marathon" />
+<meta name="author" content="Gregory Bertholet" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<link rel="canonical" href="https://eiji78.github.io/Running-History-Gregory-Bertholet/tour-du-monde.html" />
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Running — Gregory Bertholet">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Tour du Monde — Running History">
+<meta property="og:description" content="19 193 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
+<meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Running — Gregory Bertholet">
+<meta property="og:url" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/tour-du-monde.html">
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tour du Monde — Running History">
+<meta name="twitter:description" content="19 193 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
+<meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Tour du Monde — les 19 193 km de Gregory Bertholet autour de la Terre",
+  "description": "Les 19 193 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km.",
+  "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/tour-du-monde.html",
+  "inLanguage": "fr-FR",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Running History — Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "Gregory Bertholet",
+    "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/"
+  }
+}
+</script>
+<link rel="stylesheet" href="pro-ui.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script defer src="pro-ui.js"></script>
+<style>
+    :root {
+        --neon-cyan: #00fff9;
+        --neon-magenta: #ff00d4;
+        --neon-gold: #ffd700;
+        --neon-green: #00ff88;
+        --neon-violet: #b347ff;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        color: #fff;
+        background: radial-gradient(ellipse at top, #04122a 0%, #070512 55%, #000 100%);
+        min-height: 100vh;
+    }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 1.5rem 16px 5rem; }
+
+    .page-header { text-align: center; margin-bottom: 1.2rem; }
+    @media (max-width: 760px) { .page-header { padding-top: 3.4rem; } }
+    .page-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: clamp(1.7rem, 5vw, 3.2rem);
+        font-weight: 900;
+        letter-spacing: .06em;
+        filter: drop-shadow(0 0 18px rgba(0,255,249,.35)) drop-shadow(0 0 40px rgba(255,0,212,.2));
+        margin: 0;
+    }
+    /* Dégradé sur le texte seulement : l'emoji garde ses vraies couleurs */
+    .page-title .grad {
+        background: linear-gradient(135deg, #00fff9, #4da6ff, #ff00d4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .page-sub { color: rgba(255,255,255,.55); font-size: .85rem; letter-spacing: .08em; margin-top: .5rem; }
+    .page-sub b { color: var(--neon-cyan); font-weight: 700; }
+
+    /* ── Statut ── */
+    .status {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin: 1.4rem 0 1rem;
+    }
+    @media (max-width: 760px) { .status { grid-template-columns: 1fr; } }
+    .stat {
+        background: linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015));
+        border: 1px solid rgba(0,255,249,.18);
+        border-radius: 16px;
+        padding: 1rem 1.2rem;
+        min-width: 0;
+    }
+    .stat .ico { font-size: 1.3rem; }
+    .stat .lbl { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); margin: .35rem 0 .25rem; }
+    .stat .val { font-size: 1.05rem; line-height: 1.4; color: rgba(255,255,255,.92); }
+    .stat .val b { font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); text-shadow: 0 0 12px rgba(0,255,249,.5); }
+    .stat.magenta { border-color: rgba(255,0,212,.22); }
+    .stat.magenta .val b { color: var(--neon-magenta); text-shadow: 0 0 12px rgba(255,0,212,.5); }
+    .stat.gold { border-color: rgba(255,215,0,.22); }
+    .stat.gold .val b { color: var(--neon-gold); text-shadow: 0 0 12px rgba(255,215,0,.5); }
+
+    /* ── Jauge ── */
+    .gauge { margin: 1.4rem 0 1.6rem; }
+    .gauge-track {
+        position: relative;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(255,255,255,.07);
+        border: 1px solid rgba(255,255,255,.1);
+        overflow: visible;
+    }
+    .gauge-fill {
+        position: absolute; left: 0; top: 0; bottom: 0;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #00fff9, #4da6ff, #ff00d4);
+        box-shadow: 0 0 14px rgba(0,255,249,.55), 0 0 30px rgba(255,0,212,.3);
+    }
+    .gauge-dot {
+        position: absolute; top: 50%;
+        width: 20px; height: 20px;
+        margin: -10px 0 0 -10px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 10px #fff, 0 0 24px var(--neon-magenta);
+    }
+    .gauge-legend {
+        display: flex; justify-content: space-between;
+        font-size: .72rem; letter-spacing: .06em; color: rgba(255,255,255,.5);
+        margin-top: .5rem;
+    }
+    @media (max-width: 520px) { .hide-sm { display: none; } }
+    .gauge-legend b { font-family: 'Orbitron', sans-serif; color: rgba(255,255,255,.85); font-weight: 700; }
+
+    /* ── Carte ── */
+    .map-box {
+        position: relative;
+        z-index: 0;
+        isolation: isolate;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(0,255,249,.25);
+        box-shadow: 0 0 30px rgba(0,255,249,.12), inset 0 0 0 1px rgba(255,255,255,.03);
+    }
+    #map { height: 520px; background: #05060d; }
+    @media (max-width: 760px) { #map { height: 380px; } }
+    .map-ctrl {
+        position: absolute; left: 12px; bottom: 12px; z-index: 500;
+        display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    }
+    .btn {
+        font-family: 'Orbitron', sans-serif;
+        font-size: .72rem; font-weight: 700; letter-spacing: .1em;
+        color: var(--neon-cyan);
+        background: rgba(5,8,20,.88);
+        border: 1px solid rgba(0,255,249,.5);
+        border-radius: 999px;
+        padding: .55rem 1rem;
+        cursor: pointer;
+        box-shadow: 0 0 14px rgba(0,255,249,.25);
+        backdrop-filter: blur(8px);
+    }
+    .btn:hover { background: rgba(0,255,249,.12); }
+    .btn:focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 2px; }
+    .year-badge {
+        font-family: 'Orbitron', sans-serif; font-weight: 900;
+        font-size: 1.1rem; letter-spacing: .2em;
+        color: var(--neon-gold);
+        text-shadow: 0 0 12px rgba(255,215,0,.7);
+        background: rgba(5,8,20,.88);
+        border: 1px solid rgba(255,215,0,.4);
+        border-radius: 12px;
+        padding: .3rem .8rem .3rem 1rem;
+    }
+    .year-badge[hidden] { display: none; }
+
+    .leaflet-container { background: #05060d; font-family: inherit; }
+    .leaflet-control-attribution { background: rgba(5,8,20,.8) !important; color: rgba(255,255,255,.35) !important; font-size: 9px !important; }
+    .leaflet-control-attribution a { color: rgba(255,255,255,.5) !important; }
+    .leaflet-control-zoom a { background: rgba(5,8,20,.9) !important; color: var(--neon-cyan) !important; border-color: rgba(0,255,249,.25) !important; }
+    .leaflet-control-zoom a:hover { background: rgba(0,255,249,.12) !important; }
+    .leaflet-tooltip.city-tip {
+        background: rgba(5,8,20,.95); color: #fff;
+        border: 1px solid rgba(0,255,249,.35); border-radius: 10px;
+        box-shadow: 0 0 14px rgba(0,255,249,.2);
+        font-size: .78rem; padding: .35rem .6rem;
+    }
+    .leaflet-tooltip.city-tip::before { display: none; }
+    .city-tip b { color: var(--neon-cyan); }
+    .city-tip .done { color: var(--neon-green); }
+
+    /* Mode clair : pro-ui.css inverse la page mais pas les tuiles (images), la carte reste sombre.
+       On exclut aussi le tracé et les infobulles de l'inversion pour garder le néon d'origine. */
+    html[data-theme="light"] .leaflet-route-pane,
+    html[data-theme="light"] .leaflet-tooltip-pane { filter: invert(1) hue-rotate(180deg); }
+
+    .runner-icon { position: relative; }
+    .runner-icon .core {
+        position: absolute; left: 50%; top: 50%;
+        width: 14px; height: 14px; margin: -7px 0 0 -7px;
+        border-radius: 50%; background: #fff;
+        box-shadow: 0 0 8px #fff, 0 0 18px var(--neon-magenta), 0 0 34px var(--neon-magenta);
+    }
+    .runner-icon .ring {
+        position: absolute; left: 50%; top: 50%;
+        width: 14px; height: 14px; margin: -7px 0 0 -7px;
+        border-radius: 50%; border: 2px solid var(--neon-magenta);
+        animation: pulse 1.8s ease-out infinite;
+    }
+    @keyframes pulse { from { transform: scale(1); opacity: .9; } to { transform: scale(4); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .runner-icon .ring { animation: none; opacity: .5; transform: scale(2); } }
+
+    /* ── Sections ── */
+    h2.sec {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.15rem; letter-spacing: .12em;
+        color: var(--neon-cyan);
+        text-shadow: 0 0 14px rgba(0,255,249,.45);
+        margin: 2.8rem 0 1rem;
+    }
+    .intro { color: rgba(255,255,255,.65); font-size: .9rem; line-height: 1.65; max-width: 760px; }
+
+    .journal { list-style: none; margin: 0; padding: 0; position: relative; }
+    .journal::before {
+        content: ''; position: absolute; left: 62px; top: 6px; bottom: 6px; width: 2px;
+        background: linear-gradient(to bottom, rgba(0,255,249,.6), rgba(255,0,212,.5));
+        box-shadow: 0 0 8px rgba(0,255,249,.35);
+    }
+    .journal li { display: grid; grid-template-columns: 50px 1fr; gap: 26px; padding: .55rem 0; align-items: baseline; }
+    .journal .yr { font-family: 'Orbitron', sans-serif; font-weight: 700; color: var(--neon-gold); font-size: .85rem; text-align: right; }
+    .journal .txt { color: rgba(255,255,255,.8); font-size: .9rem; line-height: 1.5; position: relative; min-width: 0; }
+    .journal .txt::before {
+        content: ''; position: absolute; left: -20px; top: .45em; width: 9px; height: 9px; border-radius: 50%;
+        background: var(--neon-cyan); box-shadow: 0 0 8px var(--neon-cyan);
+    }
+    .journal .km { font-family: 'Orbitron', sans-serif; color: var(--neon-cyan); font-size: .8rem; }
+    .journal .city { color: #fff; font-weight: 600; }
+    .journal .muted { color: rgba(255,255,255,.45); }
+
+    .table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid rgba(255,255,255,.08); }
+    table.etapes { width: 100%; border-collapse: collapse; font-size: .85rem; min-width: 520px; }
+    table.etapes th, table.etapes td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    table.etapes thead th { font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.5); font-weight: 600; background: rgba(255,255,255,.03); }
+    table.etapes td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.etapes tr.ok td { color: rgba(255,255,255,.9); }
+    table.etapes tr.ok .st { color: var(--neon-green); }
+    table.etapes tr.next td { background: rgba(255,0,212,.07); }
+    table.etapes tr.next .st { color: var(--neon-magenta); font-weight: 700; }
+    table.etapes tr.todo td { color: rgba(255,255,255,.45); }
+    .tag { font-size: .68rem; color: var(--neon-gold); margin-left: .35rem; white-space: nowrap; }
+
+    .note { margin-top: 2rem; font-size: .75rem; color: rgba(255,255,255,.4); line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+    <a href="index.html">🏠 ACCUEIL</a>
+    <a href="timeline.html">📅 TIMELINE</a>
+    <a href="progression.html">📊 PROGRESSION</a>
+    <a href="entrainements.html">🏋️ PRÉPA MARATHON</a>
+    <a href="radar.html">🕸️ RADAR</a>
+    <a href="elite.html">🏅 ÉLITE</a>
+    <a href="carte.html">🗺️ CARTE</a>
+    <a href="comparaison.html">⚡ COMPARER</a>
+    <a href="meteo.html">🌤️ MÉTÉO</a>
+    <a href="galerie.html">📸 GALERIE</a>
+    <a href="wrapped.html">🎬 WRAPPED</a>
+    <a href="adn.html">🧬 ADN</a>
+    <a href="age-grading.html">⚖️ AGE GRADING</a>
+    <a href="trophees.html">🏆 TROPHÉES</a>
+    <a href="archives.html">📂 ARCHIVES</a>
+    <a href="machine-temps.html">⏳ TIME MACHINE</a>
+    <a href="#" class="active">🌍 TOUR DU MONDE</a>
+</nav>
+
+<div class="wrap">
+
+    <header class="page-header">
+        <h1 class="page-title"><span class="title-emoji" aria-hidden="true">🌍</span><span class="grad">TOUR DU MONDE</span></h1>
+        <div class="page-sub">Tous mes kilomètres depuis 2011, mis bout à bout au départ de <b>Rosselange</b></div>
+    </header>
+
+    <section class="status" aria-live="polite">
+        <div class="stat">
+            <div class="ico">📍</div>
+            <div class="lbl">Position actuelle</div>
+            <div class="val" id="sWhere">—</div>
+        </div>
+        <div class="stat magenta">
+            <div class="ico">🎯</div>
+            <div class="lbl">Prochaine étape</div>
+            <div class="val" id="sNext">—</div>
+        </div>
+        <div class="stat gold">
+            <div class="ico">🌍</div>
+            <div class="lbl">Tour de la Terre</div>
+            <div class="val" id="sEarth">—</div>
+        </div>
+    </section>
+
+    <div class="gauge" role="img" id="gauge">
+        <div class="gauge-track">
+            <div class="gauge-fill" id="gFill"></div>
+            <div class="gauge-dot" id="gDot"></div>
+        </div>
+        <div class="gauge-legend">
+            <span>Rosselange · <b>0</b></span>
+            <span><b id="gKm">—</b> km</span>
+            <span><b>40 075</b> km<span class="hide-sm"> · retour à Rosselange</span></span>
+        </div>
+    </div>
+
+    <div class="map-box">
+        <div id="map" role="img" aria-label="Carte du monde : itinéraire en boucle au départ de Rosselange, partie parcourue en néon et position actuelle."></div>
+        <div class="map-ctrl">
+            <button class="btn" id="replay" type="button">▶ REJOUER LE VOYAGE</button>
+            <span class="year-badge" id="yearBadge" hidden>2011</span>
+        </div>
+    </div>
+
+    <h2 class="sec">📔 CARNET DE ROUTE</h2>
+    <p class="intro">Chaque année d'entraînement fait avancer le voyage. Les premières saisons, je ne quittais pas la Lorraine ; depuis 2020, je traverse un pays entier chaque année.</p>
+    <ul class="journal" id="journal"></ul>
+
+    <h2 class="sec">🧭 LES ÉTAPES</h2>
+    <div class="table-wrap">
+        <table class="etapes">
+            <thead><tr><th>Étape</th><th style="text-align:right">Km cumulés</th><th>Statut</th></tr></thead>
+            <tbody id="etapes"></tbody>
+        </table>
+    </div>
+
+    <p class="note" id="note"></p>
+
+</div>
+
+<script>
+(function () {
+    // ── Données ──
+    // Volume d'entraînement annuel (km) — même série que `trainingKm` dans progression.html.
+    // À mettre à jour en même temps que le total "Km cumulés" (index, progression).
+    const YEAR0 = 2011;
+    const TRAINING_KM = [275,169,53,32,80,546,538,763,1194,2070,2238,2123,2207,2395,2476,2034];
+    const DATA_DATE = '4 octobre 2026';
+    const EARTH_KM = 40075;
+
+    // Boucle vers l'est, choisie pour faire ~40 100 km à vol d'oiseau.
+    // `zone` décrit le tronçon qui part de cette ville.
+    const CITIES = [
+        { n: 'Rosselange',          f: '🇫🇷', lat: 49.2667, lon: 6.0667,    zone: "à travers l'Allemagne du Sud", tag: 'Départ' },
+        { n: 'Munich',              f: '🇩🇪', lat: 48.1351, lon: 11.5820,   zone: 'le long du Danube' },
+        { n: 'Vienne',              f: '🇦🇹', lat: 48.2082, lon: 16.3738,   zone: 'au cœur des Balkans' },
+        { n: 'Athènes',             f: '🇬🇷', lat: 37.9838, lon: 23.7275,   zone: 'en mer Égée', tag: 'Berceau du marathon' },
+        { n: 'Istanbul',            f: '🇹🇷', lat: 41.0082, lon: 28.9784,   zone: "à travers l'Anatolie" },
+        { n: 'Téhéran',             f: '🇮🇷', lat: 35.6892, lon: 51.3890,   zone: 'dans le désert du Karakoum' },
+        { n: 'Samarcande',          f: '🇺🇿', lat: 39.6542, lon: 66.9597,   zone: "au-dessus de l'Hindou Kouch" },
+        { n: 'Katmandou',           f: '🇳🇵', lat: 27.7172, lon: 85.3240,   zone: 'entre Himalaya et golfe du Bengale' },
+        { n: 'Bangkok',             f: '🇹🇭', lat: 13.7563, lon: 100.5018,  zone: 'au-dessus du Vietnam' },
+        { n: 'Hong Kong',           f: '🇭🇰', lat: 22.3193, lon: 114.1694,  zone: 'à travers la Chine' },
+        { n: 'Pékin',               f: '🇨🇳', lat: 39.9042, lon: 116.4074,  zone: 'en mer Jaune' },
+        { n: 'Séoul',               f: '🇰🇷', lat: 37.5665, lon: 126.9780,  zone: 'en mer du Japon' },
+        { n: 'Tokyo',               f: '🇯🇵', lat: 35.6762, lon: 139.6503,  zone: 'en plein Pacifique Nord', tag: 'Marathon Major' },
+        { n: 'Midway',              f: '🏝️', lat: 28.2072, lon: -177.3735, zone: "le long de l'archipel d'Hawaï" },
+        { n: 'Honolulu',            f: '🌺', lat: 21.3069, lon: -157.8583, zone: 'au milieu du Pacifique' },
+        { n: 'San Francisco',       f: '🇺🇸', lat: 37.7749, lon: -122.4194, zone: 'le long de la Basse-Californie' },
+        { n: 'Mexico',              f: '🇲🇽', lat: 19.4326, lon: -99.1332,  zone: 'au-dessus du golfe du Mexique' },
+        { n: 'La Nouvelle-Orléans', f: '🎷', lat: 29.9511, lon: -90.0715,  zone: 'à travers les Appalaches' },
+        { n: 'New York',            f: '🗽', lat: 40.7128, lon: -74.0060,  zone: 'en Nouvelle-Angleterre', tag: 'Marathon Major' },
+        { n: 'Boston',              f: '🦞', lat: 42.3601, lon: -71.0589,  zone: 'en plein Atlantique Nord', tag: 'Marathon Major' },
+        { n: 'Açores',              f: '🇵🇹', lat: 37.7412, lon: -25.6756,  zone: 'au large du Portugal' },
+        { n: 'Lisbonne',            f: '🇵🇹', lat: 38.7223, lon: -9.1393,   zone: 'sur le plateau ibérique' },
+        { n: 'Madrid',              f: '🇪🇸', lat: 40.4168, lon: -3.7038,   zone: 'par-dessus les Pyrénées' },
+        { n: 'Paris',               f: '🇫🇷', lat: 48.8566, lon: 2.3522,    zone: 'dans la dernière ligne droite lorraine', tag: 'Marathon de Paris' },
+        { n: 'Rosselange',          f: '🏁', lat: 49.2667, lon: 6.0667,    tag: 'Arrivée' }
+    ];
+
+    // ── Géodésie ──
+    const RAD = Math.PI / 180, R = 6371.0088;
+    function hav(a, b) {
+        const dLa = (b.lat - a.lat) * RAD, dLo = (b.lon - a.lon) * RAD;
+        const h = Math.sin(dLa / 2) ** 2 + Math.cos(a.lat * RAD) * Math.cos(b.lat * RAD) * Math.sin(dLo / 2) ** 2;
+        return 2 * R * Math.asin(Math.sqrt(h));
+    }
+    // Point à la fraction t du grand cercle a→b
+    function slerp(a, b, t) {
+        const la1 = a.lat * RAD, lo1 = a.lon * RAD, la2 = b.lat * RAD, lo2 = b.lon * RAD;
+        const d = hav(a, b) / R;
+        if (d === 0) return { lat: a.lat, lon: a.lon };
+        const A = Math.sin((1 - t) * d) / Math.sin(d), B = Math.sin(t * d) / Math.sin(d);
+        const x = A * Math.cos(la1) * Math.cos(lo1) + B * Math.cos(la2) * Math.cos(lo2);
+        const y = A * Math.cos(la1) * Math.sin(lo1) + B * Math.cos(la2) * Math.sin(lo2);
+        const z = A * Math.sin(la1) + B * Math.sin(la2);
+        return { lat: Math.atan2(z, Math.hypot(x, y)) / RAD, lon: Math.atan2(y, x) / RAD };
+    }
+    // Longitudes continues (le trajet franchit l'antiméridien puis revient en Europe à +360°)
+    function unwrap(lon, prev) {
+        while (lon - prev > 180) lon -= 360;
+        while (lon - prev < -180) lon += 360;
+        return lon;
+    }
+
+    // La boucle est ramenée à exactement 40 075 km (écart réel < 0,2 %)
+    const rawLegs = CITIES.slice(0, -1).map((c, i) => hav(c, CITIES[i + 1]));
+    const SCALE = EARTH_KM / rawLegs.reduce((s, x) => s + x, 0);
+    const cum = [0];
+    rawLegs.forEach((d, i) => cum.push(cum[i] + d * SCALE));
+
+    // Tracé échantillonné tous les ~40 km : [lat, lon déroulée, km]
+    const PTS = [];
+    let prevLon = CITIES[0].lon;
+    rawLegs.forEach((d, i) => {
+        const steps = Math.max(2, Math.ceil(d / 40));
+        for (let s = (i === 0 ? 0 : 1); s <= steps; s++) {
+            const p = slerp(CITIES[i], CITIES[i + 1], s / steps);
+            prevLon = unwrap(p.lon, prevLon);
+            PTS.push([p.lat, prevLon, cum[i] + (cum[i + 1] - cum[i]) * s / steps]);
+        }
+    });
+    // Longitude déroulée de chaque ville
+    CITIES.forEach((c, i) => {
+        const p = PTS.find(q => Math.abs(q[2] - cum[i]) < 1e-6);
+        c.ulon = p ? p[1] : c.lon;
+    });
+
+    function pointAt(km) {
+        if (!(km > 0)) return PTS[0];
+        if (km >= EARTH_KM) return PTS[PTS.length - 1];
+        let i = PTS.findIndex(p => p[2] >= km);
+        const a = PTS[i - 1], b = PTS[i], t = (km - a[2]) / (b[2] - a[2]);
+        return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, km];
+    }
+    function legAt(km) {
+        for (let i = 0; i < cum.length - 1; i++) if (km < cum[i + 1]) return i;
+        return cum.length - 2;
+    }
+
+    // Cumul par fin d'année
+    const yearCum = [];
+    TRAINING_KM.reduce((s, k, i) => (yearCum[i] = s + k), 0);
+    const TOTAL = yearCum[yearCum.length - 1];
+    const yearReached = km => {
+        const i = yearCum.findIndex(c => c >= km);
+        return i < 0 ? null : YEAR0 + i;
+    };
+
+    const fmt = n => Math.round(n).toLocaleString('fr-FR').replace(/ | /g, ' ');
+    const pct = n => (n * 100).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+
+    // ── Carte ──
+    const map = L.map('map', { worldCopyJump: false, zoomSnap: 0.25, minZoom: 0, scrollWheelZoom: false, attributionControl: true });
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ', maxZoom: 8, minZoom: 0
+    }).addTo(map);
+    map.fitBounds(L.latLngBounds(PTS.map(p => [p[0], p[1]])).pad(0.08));
+
+    const STYLE = {
+        todo: { color: '#8fa3ff', weight: 1.5, opacity: .35 },
+        wide: { color: '#ff00d4', weight: 14, opacity: .12 },
+        mid:  { color: '#00fff9', weight: 6, opacity: .35 },
+        core: { color: '#e9ffff', weight: 2.2, opacity: .95 },
+        cityOn:  { color: '#00fff9', fillColor: '#00fff9', radius: 5 },
+        cityOff: { color: '#8fa3ff', fillColor: '#05060d', radius: 4 }
+    };
+
+    map.createPane('route').style.zIndex = 450;
+    const latlngs = pts => pts.map(p => [p[0], p[1]]);
+    const line = extra => L.polyline([], Object.assign({ pane: 'route', interactive: false }, extra)).addTo(map);
+    const todoLine = line(Object.assign({ dashArray: '4 7' }, STYLE.todo));
+    const glowWide = line(STYLE.wide), glowMid = line(STYLE.mid), doneLine = line(STYLE.core);
+
+    const cityMarkers = CITIES.map((c, i) => {
+        if (i === CITIES.length - 1) return null; // arrivée = départ, marqueur déjà posé
+        const m = L.circleMarker([c.lat, c.ulon], { pane: 'route', radius: 4, weight: 1.5, fillOpacity: 1 }).addTo(map);
+        m.bindTooltip('', { className: 'city-tip', direction: 'top', offset: [0, -6] });
+        return m;
+    });
+
+    const runner = L.marker(PTS[0], {
+        icon: L.divIcon({ className: 'runner-icon', html: '<span class="ring"></span><span class="core"></span>', iconSize: [14, 14] }),
+        pane: 'route', keyboard: false, interactive: false
+    }).addTo(map);
+
+    function render(km) {
+        const done = PTS.filter(p => p[2] < km);
+        const here = pointAt(km);
+        done.push(here);
+        [glowWide, glowMid, doneLine].forEach(l => l.setLatLngs(latlngs(done)));
+        todoLine.setLatLngs(latlngs([here].concat(PTS.filter(p => p[2] > km))));
+        runner.setLatLng([here[0], here[1]]);
+
+        cityMarkers.forEach((m, i) => {
+            if (!m) return;
+            const c = CITIES[i], reached = cum[i] <= km;
+            m.setStyle(reached ? STYLE.cityOn : STYLE.cityOff);
+            const yr = yearReached(cum[i]);
+            const status = i === 0 ? 'Départ · 2011'
+                : reached ? `<span class="done">✓ atteinte en ${yr}</span>`
+                : `encore ${fmt(cum[i] - km)} km`;
+            m.setTooltipContent(`${c.f} <b>${c.n}</b>${c.tag && i ? ' · ' + c.tag : ''}<br>km ${fmt(cum[i])} · ${status}`);
+        });
+
+        const i = legAt(km), from = CITIES[i], to = CITIES[i + 1];
+        document.getElementById('sWhere').innerHTML = `${from.zone ? cap(from.zone) : ''}, entre <b>${from.n}</b> et <b>${to.n}</b>`;
+        document.getElementById('sNext').innerHTML = `${to.f} ${to.n} : encore <b>${fmt(cum[i + 1] - km)}</b> km`;
+        document.getElementById('sEarth').innerHTML = `<b>${pct(km / EARTH_KM)} %</b> parcourus · reste <b>${fmt(EARTH_KM - km)}</b> km`;
+
+        const r = Math.min(km / EARTH_KM, 1) * 100;
+        document.getElementById('gFill').style.width = r + '%';
+        document.getElementById('gDot').style.left = r + '%';
+        document.getElementById('gKm').textContent = fmt(km);
+        document.getElementById('gauge').setAttribute('aria-label', `${fmt(km)} km parcourus sur 40 075, soit ${pct(km / EARTH_KM)} % du tour de la Terre`);
+    }
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+
+    // ── Rejouer le voyage ──
+    const badge = document.getElementById('yearBadge');
+    const btn = document.getElementById('replay');
+    let anim = null;
+    btn.addEventListener('click', () => {
+        if (anim) cancelAnimationFrame(anim);
+        const DUR = 9000;
+        let t0 = null;
+        badge.hidden = false;
+        btn.textContent = '⟲ EN ROUTE…';
+        // Avance année par année : chaque saison a la même durée à l'écran
+        const n = TRAINING_KM.length;
+        function step(now) {
+            if (t0 === null) t0 = now;
+            const p = Math.min(Math.max((now - t0) / DUR, 0), 1);
+            const y = Math.min(Math.floor(p * n), n - 1), f = p * n - y;
+            const km = p >= 1 ? TOTAL : (y ? yearCum[y - 1] : 0) + TRAINING_KM[y] * f;
+            badge.textContent = YEAR0 + y;
+            render(km);
+            if (p < 1) anim = requestAnimationFrame(step);
+            else { anim = null; btn.textContent = '▶ REJOUER LE VOYAGE'; }
+        }
+        anim = requestAnimationFrame(step);
+    });
+
+    // ── Carnet de route ──
+    const journal = document.getElementById('journal');
+    TRAINING_KM.forEach((k, i) => {
+        const start = i ? yearCum[i - 1] : 0, end = yearCum[i];
+        const passed = CITIES.filter((c, j) => j > 0 && cum[j] > start && cum[j] <= end);
+        const leg = legAt(end);
+        let txt;
+        if (passed.length) {
+            txt = 'Je passe ' + passed.map(c => `<span class="city">${c.f} ${c.n}</span>`).join(', ').replace(/, ([^,]*)$/, ' et $1');
+        } else {
+            txt = `Je progresse ${CITIES[leg].zone}`;
+        }
+        const tail = i === TRAINING_KM.length - 1 ? ` <span class="muted">(saison en cours, au ${DATA_DATE})</span>` : '';
+        const li = document.createElement('li');
+        li.innerHTML = `<span class="yr">${YEAR0 + i}</span><span class="txt"><span class="km">+${fmt(k)} km</span> · ${txt}. <span class="muted">Total ${fmt(end)} km.</span>${tail}</span>`;
+        journal.appendChild(li);
+    });
+
+    // ── Tableau des étapes ──
+    const tbody = document.getElementById('etapes');
+    let nextShown = false;
+    CITIES.forEach((c, i) => {
+        if (i === 0) return;
+        const ok = cum[i] <= TOTAL;
+        const isNext = !ok && !nextShown;
+        if (isNext) nextShown = true;
+        const tr = document.createElement('tr');
+        tr.className = ok ? 'ok' : isNext ? 'next' : 'todo';
+        tr.innerHTML = `<td>${c.f} ${c.n}${c.tag ? `<span class="tag">${c.tag}</span>` : ''}</td>`
+            + `<td class="num">${fmt(cum[i])}</td>`
+            + `<td class="st">${ok ? '✓ ' + yearReached(cum[i]) : isNext ? '➜ encore ' + fmt(cum[i] - TOTAL) + ' km' : '…'}</td>`;
+        tbody.appendChild(tr);
+    });
+
+    // ── Projection ──
+    const last3 = TRAINING_KM.slice(-4, -1), pace = last3.reduce((s, x) => s + x, 0) / last3.length;
+    const yearsLeft = (EARTH_KM - TOTAL) / pace;
+    const arrival = Math.round(2026 + 9 / 12 + yearsLeft);
+    document.getElementById('note').innerHTML =
+        `Au rythme moyen de ${YEAR0 + TRAINING_KM.length - 4}–${YEAR0 + TRAINING_KM.length - 2} (${fmt(pace)} km/an), retour à Rosselange vers <b>${arrival}</b>. `
+        + `${fmt(TOTAL)} km, c'est aussi l'équivalent de ${fmt(TOTAL / 42.195)} marathons. `
+        + `Distances à vol d'oiseau entre les villes, ramenées à la circonférence de la Terre (40 075 km). Kilomètres d'entraînement au ${DATA_DATE}.`;
+
+    render(TOTAL);
+})();
+</script>
+
+</body>
+</html>
