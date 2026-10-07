@@ -245,6 +245,21 @@ html[data-theme="light"] [style*="background-image"] {
     filter: invert(1) hue-rotate(180deg);
 }
 
+/* Emoji à gauche des titres en dégradé : on l'exclut du remplissage
+   "background-clip: text" pour qu'il garde ses vraies couleurs */
+.title-emoji {
+    display: inline-block;
+    margin-right: .3em;
+    background: none !important;
+    -webkit-text-fill-color: initial !important;
+    color: initial;
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.5));
+}
+html[data-theme="light"] .title-emoji { filter: invert(1) hue-rotate(180deg); }
+
 /* Le toggle lui-même doit rester lisible en mode clair */
 html[data-theme="light"] .pro-theme-toggle {
     filter: invert(1) hue-rotate(180deg);
