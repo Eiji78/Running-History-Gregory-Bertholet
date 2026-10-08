@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Météo & Perfs Running — Gregory Bertholet (Grand Est)</title>
-    <meta name="description" content="Comment la météo influence les performances running de Gregory Bertholet : température, humidité, vent vs chrono sur 58 courses dans le Grand Est." />
+    <meta name="description" content="Comment la météo influence les performances running de Gregory Bertholet : température idéale, humidité, vent vs chrono sur 58 courses dans le Grand Est." />
 <meta name="keywords" content="Gregory Bertholet, running Moselle, courses à pied Grand Est, marathon Luxembourg, semi-marathon, 10K, trail, Grand Est, Thionville, Clouange, Luxembourg, Milano Marathon, marathon sub 3h" />
 <meta name="author" content="Gregory Bertholet" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -16,7 +16,7 @@
     <meta property="og:site_name" content="Running — Gregory Bertholet">
     <meta property="og:locale" content="fr_FR">
     <meta property="og:title" content="Météo & Perfs — Running History">
-    <meta property="og:description" content="Comment la météo influence mes performances : température, humidité, vent vs chrono.">
+    <meta property="og:description" content="Comment la météo influence mes performances : température idéale, humidité, vent vs chrono.">
     <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Météo & Perfs — Running History">
-    <meta name="twitter:description" content="Comment la météo influence mes performances : température, humidité, vent vs chrono.">
+    <meta name="twitter:description" content="Comment la météo influence mes performances : température idéale, humidité, vent vs chrono.">
     <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Barlow+Condensed:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -243,8 +243,30 @@
             backdrop-filter:blur(20px); transition:all .3s; }
         .home-btn:hover { transform:scale(1.12); box-shadow:0 0 24px rgba(0,255,249,.4); }
 
+        /* ── Température idéale ── */
+        .ideal-card { padding:1.5rem; margin-bottom:1.5rem; }
+        .ideal-kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:.8rem; margin-bottom:1.2rem; }
+        .ideal-kpi { padding:.9rem .6rem; border-radius:14px; text-align:center;
+            background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); }
+        .ideal-kpi.main { border-color:rgba(0,255,136,.35); background:rgba(0,255,136,.06); }
+        .ideal-grid { display:grid; grid-template-columns:1.6fr 1fr; gap:1.5rem; align-items:start; }
+        .ideal-grid > * { min-width:0; }
+        .ideal-chart-wrap { position:relative; height:280px; }
+        .ideal-sim { padding:1.1rem; border-radius:14px; background:rgba(0,255,249,.04); border:1px solid rgba(0,255,249,.15); }
+        .ideal-sim label { display:block; font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:.4rem; }
+        .ideal-sim input[type=range] { width:100%; accent-color:var(--cyan); margin-bottom:.9rem; }
+        .ideal-sim .dist-btns { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:1rem; }
+        .sim-temp { font-family:'Orbitron',sans-serif; font-size:1.6rem; font-weight:800; color:#fff; margin-bottom:.6rem; }
+        .sim-out { font-size:.8rem; line-height:1.55; color:rgba(255,255,255,.75); }
+        .sim-out strong { font-family:'Orbitron',sans-serif; font-size:1.05rem; }
+        .ideal-method { margin-top:1.1rem; font-size:.72rem; color:rgba(255,255,255,.5); line-height:1.6; }
+        .ideal-method summary { cursor:pointer; color:rgba(0,255,249,.75); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; font-weight:700; }
+        .ideal-method p { margin-top:.5rem; }
+
         /* Mobile */
         @media(max-width:900px) {
+            .ideal-kpis { grid-template-columns:1fr 1fr; }
+            .ideal-grid { grid-template-columns:1fr; }
             .insights { grid-template-columns:1fr 1fr; gap:.6rem; }
             .charts-grid { grid-template-columns:1fr; }
             .conditions-grid { grid-template-columns:1fr; }
@@ -335,7 +357,7 @@
   "@type": "WebPage",
   "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/meteo.html",
   "name": "Météo & Perfs Running — Gregory Bertholet (Grand Est)",
-  "description": "Comment la météo influence les performances running de Gregory Bertholet : température, humidité, vent vs chrono sur 58 courses dans le Grand Est.",
+  "description": "Comment la météo influence les performances running de Gregory Bertholet : température idéale, humidité, vent vs chrono sur 58 courses dans le Grand Est.",
   "inLanguage": "fr-FR",
   "isPartOf": {
     "@type": "WebSite",
@@ -501,6 +523,36 @@
             <!-- Insight cards -->
             <div class="insights" id="insights"></div>
 
+            <!-- Température idéale -->
+            <section class="card ideal-card" id="ideal-section" aria-labelledby="ideal-title">
+                <div class="sec-title" id="ideal-title" style="color:#00ff88;">🎯 Ta température idéale</div>
+                <div class="chart-sub">Ton allure corrigée de la distance et de ta forme de l'année, selon la température ressentie au départ. Sous 0 = plus rapide que prévu.</div>
+                <div class="ideal-kpis" id="ideal-kpis"></div>
+                <div class="ideal-grid">
+                    <div class="ideal-chart-wrap">
+                        <canvas id="chartIdeal" role="img" aria-label="Écart d'allure par rapport à ta forme du moment (secondes par km, équivalent semi) en fonction de la température ressentie, avec la courbe lissée et la zone de température idéale."></canvas>
+                    </div>
+                    <div class="ideal-sim">
+                        <div class="cond-title" style="color:var(--cyan);">🔮 Simulateur prochaine course</div>
+                        <label for="sim-temp">Température ressentie prévue</label>
+                        <div class="sim-temp" id="sim-temp-val">18 °C</div>
+                        <input type="range" id="sim-temp" min="-5" max="32" step="1" value="18">
+                        <label>Distance</label>
+                        <div class="dist-btns" id="sim-dist">
+                            <button class="fbtn" data-km="10">10 km</button>
+                            <button class="fbtn active" data-km="21.0975">Semi</button>
+                            <button class="fbtn" data-km="42.195">Marathon</button>
+                        </div>
+                        <div class="sim-out" id="sim-out" aria-live="polite"></div>
+                    </div>
+                </div>
+                <details class="ideal-method">
+                    <summary>Comment c'est calculé ?</summary>
+                    <p>Comparer les allures brutes n'a pas de sens : un 10 km se court plus vite qu'un marathon, et tu as beaucoup progressé depuis 2019. Chaque allure est donc d'abord comparée à une allure « attendue » selon la distance (loi de puissance type Riegel, ajustée sur tes propres courses) et l'année (ta forme du moment), via une régression robuste qui limite le poids des jours sans.</p>
+                    <p>L'écart restant est ensuite lissé en fonction de la température ressentie à l'heure du départ (Open-Meteo, lissage gaussien de 3 °C). Le creux de la courbe donne ta température idéale ; la zone de confort regroupe les températures où tu perds moins de 1 % par rapport à cet idéal. Les trails sont exclus (dénivelé). Exprimé en s/km sur ton allure semi actuelle.</p>
+                </details>
+            </section>
+
             <!-- Correlation charts -->
             <div class="charts-grid" style="margin-bottom:1.5rem;">
                 <div class="card chart-card">
@@ -578,7 +630,7 @@ const RACES = [
   {date:"2024-09-29",course:"Route du Vin",ville:"Remich",km:21.1,classement:"178/1895",perf:"01:26:33",allure:"4:06",lat:49.5474,lng:6.3624,hour:10,strava:"https://www.strava.com/activities/12530152817",fc:174},
   {date:"2024-08-25",course:"La Boussoise",ville:"Bousse",km:11.8,classement:"59/433",perf:"01:00:59",allure:"5:10",lat:49.2754,lng:6.2055,hour:10,strava:"https://www.strava.com/activities/12235936176",fc:168},
   {date:"2024-05-08",course:"Course du Muguet",ville:"Vitry-sur-Orne",km:10,classement:"10/134",perf:"00:37:41",allure:"3:46",lat:49.2687,lng:6.1055,hour:10,strava:"https://www.strava.com/activities/11359052509",record:true,fc:181},
-  {date:"2024-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/11597795067",fc:179},
+  {date:"2024-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"20/161",perf:"00:38:18",allure:"3:50",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/11597795067",fc:179},
   {date:"2024-04-07",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"3058/54175",perf:"03:06:21",allure:"4:24",lat:48.8575,lng:2.3514,hour:10,strava:"https://www.strava.com/activities/11124704539",fc:174},
   {date:"2024-10-06",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"217/2734",perf:"01:40:51",allure:"4:16",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/12589698929",fc:170},
   {date:"2024-04-21",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"80/1089",perf:"01:25:30",allure:"4:03",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/11229080745",fc:171},
@@ -592,7 +644,7 @@ const RACES = [
   {date:"2023-05-20",course:"Ing Night Marathon Luxembourg",ville:"Luxembourg",km:42.195,classement:"222/1046",perf:"03:47:13",allure:"5:23",lat:49.6106,lng:6.1299,hour:19,strava:"https://www.strava.com/activities/9108818382",fc:175},
   {date:"2023-04-23",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"82/690",perf:"01:27:20",allure:"4:08",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/8940931342",fc:178},
   {date:"2023-03-19",course:"Semi Vallée de l'Orne",ville:"Rombas",km:21.1,classement:"33/395",perf:"01:28:36",allure:"4:12",lat:49.2513,lng:6.0934,hour:10,strava:"https://www.strava.com/activities/8739505302",fc:179},
-  {date:"2023-06-02",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/9189866875",fc:184},
+  {date:"2023-06-02",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"18/119",perf:"00:40:17",allure:"4:02",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/9189866875",fc:184},
   {date:"2023-10-01",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"259/2171",perf:"01:48:54",allure:"4:36",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/9955737974",fc:182},
   {date:"2022-10-16",course:"Amsterdam Marathon",ville:"Amsterdam",km:42.195,classement:"1630/12658",perf:"03:13:45",allure:"4:35",lat:52.3676,lng:4.9041,hour:10,strava:"https://www.strava.com/activities/7970754505",fc:173},
   {date:"2022-09-18",course:"Semi Fensch et Moselle",ville:"Uckange",km:21.1,classement:"30/124",perf:"01:32:20",allure:"4:23",lat:49.3038,lng:6.1540,hour:10,strava:"https://www.strava.com/activities/7826241352",fc:178},
@@ -601,7 +653,7 @@ const RACES = [
   {date:"2022-05-15",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"289/798",perf:"01:51:28",allure:"5:17",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/7145622553",fc:177},
   {date:"2022-03-27",course:"Boucles de l'Acier",ville:"Florange",km:10,classement:"77/325",perf:"00:40:16",allure:"4:02",lat:49.3214,lng:6.1183,hour:10,strava:"https://www.strava.com/activities/6889279481",fc:186},
   {date:"2022-03-20",course:"Semi Vallée de l'Orne",ville:"Gandrange",km:21.1,classement:"82/309",perf:"01:33:58",allure:"4:27",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/6852262326",fc:179},
-  {date:"2022-06-03",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/7249627360",fc:182},
+  {date:"2022-06-03",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"28/100",perf:"00:40:05",allure:"4:01",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/7249627360",fc:182},
   {date:"2022-05-01",course:"La Conviviale",ville:"Rosselange",km:10,classement:"21/136",perf:"00:40:34",allure:"4:03",lat:49.2582,lng:6.0681,hour:10,strava:"https://www.strava.com/activities/7068557851",fc:176},
   {date:"2021-10-17",course:"Marathon de Paris",ville:"Paris",km:42.195,classement:"4587/27071",perf:"03:29:02",allure:"4:57",lat:48.8575,lng:2.3514,hour:10,strava:"https://www.strava.com/activities/6125599297",fc:172},
   {date:"2021-09-19",course:"Semi Val de Fensch",ville:"Uckange",km:21.1,classement:"60/188",perf:"01:33:14",allure:"4:25",lat:49.3038,lng:6.1540,hour:10,strava:"https://www.strava.com/activities/5983824622",fc:178},
@@ -609,7 +661,7 @@ const RACES = [
   {date:"2020-03-01",course:"Semi Vallée de l'Orne",ville:"Vitry-Sur-Orne",km:21.1,classement:"247/582",perf:"01:42:59",allure:"4:53",lat:49.2687,lng:6.1055,hour:10,strava:"https://www.strava.com/activities/3144210898",fc:178},
   {date:"2019-10-21",course:"Sedan-Charleville",ville:"Sedan",km:23.6,classement:"2083/7623",perf:"01:59:38",allure:"5:04",lat:49.7035,lng:4.9386,hour:10,strava:"https://www.strava.com/activities/2767774831",fc:182},
   {date:"2019-08-25",course:"La Boussoise",ville:"Bousse",km:15,classement:"96/289",perf:"01:15:11",allure:"5:01",lat:49.2754,lng:6.2055,hour:10,strava:"https://www.strava.com/activities/2649386092",fc:185},
-  {date:"2019-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/2431537538",fc:181},
+  {date:"2019-06-07",course:"Ronde Nocturne",ville:"Clouange",km:10,classement:"58/131",perf:"00:45:11",allure:"4:31",lat:49.2662,lng:6.0894,hour:20,strava:"https://www.strava.com/activities/2431537538",fc:181},
   {date:"2019-06-30",course:"Foulées Saint-Hubert",ville:"Gandrange",km:10,classement:"73/234",perf:"00:46:42",allure:"4:40",lat:49.2722,lng:6.1353,hour:10,strava:"https://www.strava.com/activities/2491818770",fc:185},
   {date:"2019-04-28",course:"Semi Thionville",ville:"Thionville",km:21.1,classement:"521/987",perf:"01:49:48",allure:"5:12",lat:49.3573,lng:6.1686,hour:10,strava:"https://www.strava.com/activities/2325102723",fc:186},
   {date:"2019-03-17",course:"Semi Vallée de l'Orne",ville:"Clouange",km:21.1,classement:"314/456",perf:"01:53:04",allure:"5:22",lat:49.2662,lng:6.0894,hour:10,strava:"https://www.strava.com/activities/2220974946"},
@@ -745,6 +797,7 @@ function buildUI() {
     const races = RACES.filter(r => getW(r));
     buildFeatured(races);
     buildInsights(races);
+    buildIdealTemp(races);
     buildCharts(races);
     buildConditions(races);
     buildFilters();
@@ -891,6 +944,202 @@ function buildInsights(races) {
             <div class="insight-label">FC la plus basse</div>
             <div class="insight-sub">${fcWithData.length ? (() => { const r=fcWithData.sort((a,b)=>a.fc-b.fc)[0]; return r.course+' · '+r.date.slice(0,4); })() : ''}</div>
         </div>`;
+}
+
+// ── Température idéale : allure corrigée (distance + forme) vs température ──
+let chartIdeal, idealModel = null, simKm = 21.0975;
+const IDEAL_BW = 3;          // largeur du lissage gaussien (°C)
+const IDEAL_TOL = 1;         // zone de confort : ≤ +1 % vs l'idéal
+const isTrail = r => r.km === 15 || r.km === 11.8 || r.course === 'La Forestière';
+
+function wlsSolve(X, y, w) {
+    const n = X[0].length;
+    const A = Array.from({length:n}, (_, i) => {
+        const row = new Array(n + 1).fill(0);
+        X.forEach((x, k) => { for (let j = 0; j < n; j++) row[j] += w[k]*x[i]*x[j]; row[n] += w[k]*x[i]*y[k]; });
+        return row;
+    });
+    for (let i = 0; i < n; i++) {
+        let p = i;
+        for (let k = i + 1; k < n; k++) if (Math.abs(A[k][i]) > Math.abs(A[p][i])) p = k;
+        [A[i], A[p]] = [A[p], A[i]];
+        for (let k = 0; k < n; k++) if (k !== i) {
+            const f = A[k][i] / A[i][i];
+            for (let j = i; j <= n; j++) A[k][j] -= f * A[i][j];
+        }
+    }
+    return A.map((row, i) => row[n] / row[i]);
+}
+const median = arr => { const a = [...arr].sort((x,y)=>x-y), m = a.length >> 1; return a.length % 2 ? a[m] : (a[m-1]+a[m])/2; };
+function fmtDur(sec) {
+    sec = Math.round(sec);
+    const h = Math.floor(sec/3600), m = Math.floor(sec%3600/60), s = sec%60;
+    return (h ? h + ':' + String(m).padStart(2,'0') : m) + ':' + String(s).padStart(2,'0');
+}
+
+function computeIdealModel(races) {
+    // Une année avec une seule course est entièrement absorbée par son effet « forme » → on l'écarte
+    const byYear = {};
+    races.forEach(r => { if (!isTrail(r)) (byYear[r.date.slice(0,4)] ||= []).push(r); });
+    const pool = Object.values(byYear).filter(a => a.length >= 2).flat();
+    if (pool.length < 12) return null;
+    const years = [...new Set(pool.map(r => r.date.slice(0,4)))].sort();
+    const feat = (km, year) => [1, Math.log(km), ...years.slice(1).map(y => y === year ? 1 : 0)];
+    const X = pool.map(r => feat(r.km, r.date.slice(0,4)));
+    const y = pool.map(r => Math.log(allureToSec(r.allure)));
+
+    // Régression robuste (Huber, moindres carrés repondérés)
+    let w = pool.map(() => 1), b, res;
+    for (let it = 0; it < 20; it++) {
+        b = wlsSolve(X, y, w);
+        res = X.map((x, i) => y[i] - x.reduce((s, v, j) => s + v*b[j], 0));
+        const k = 1.345 * median(res.map(Math.abs)) / 0.6745;
+        w = res.map(e => Math.abs(e) <= k ? 1 : k / Math.abs(e));
+    }
+    const lastYear = years[years.length - 1];
+    const expectedPace = km => Math.exp(feat(km, lastYear).reduce((s, v, j) => s + v*b[j], 0)); // s/km, forme actuelle
+    const refPace = expectedPace(21.0975);
+
+    const pts = pool.map((r, i) => ({ r, T: getW(r).apparent, pctv: (Math.exp(res[i]) - 1) * 100, w: w[i] }));
+
+    // Lissage gaussien des écarts (pondéré par les poids robustes)
+    const curve = [];
+    for (let T = -4; T <= 32; T += 0.5) {
+        let W = 0, S = 0;
+        pts.forEach(p => { const g = p.w * Math.exp(-0.5 * ((p.T - T) / IDEAL_BW) ** 2); W += g; S += g * p.pctv; });
+        if (W >= 4) curve.push({ T, pct: S / W, W });
+    }
+    if (curve.length < 5) return null;
+    let iMin = 0;
+    curve.forEach((c, i) => { if (c.pct < curve[iMin].pct) iMin = i; });
+    const best = curve[iMin];
+    let lo = iMin, hi = iMin;
+    while (lo > 0 && curve[lo-1].pct <= best.pct + IDEAL_TOL) lo--;
+    while (hi < curve.length - 1 && curve[hi+1].pct <= best.pct + IDEAL_TOL) hi++;
+
+    // Pénalité (en %) à une température donnée par rapport à l'idéal
+    const penalty = T => {
+        const c = curve.reduce((a, c) => Math.abs(c.T - T) < Math.abs(a.T - T) ? c : a);
+        return { pct: c.pct - best.pct, extrapolated: Math.abs(c.T - T) > 0.5 };
+    };
+    return { pts, curve, best, zone: [curve[lo].T, curve[hi].T], refPace, expectedPace, penalty, lastYear, n: pool.length };
+}
+
+function buildIdealTemp(races) {
+    const section = document.getElementById('ideal-section');
+    idealModel = computeIdealModel(races);
+    if (!idealModel) { section.style.display = 'none'; return; }
+    const M = idealModel;
+    const toSec = pctv => pctv / 100 * M.refPace;
+    const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v);
+
+    const hot = M.curve.filter(c => c.T >= 20);
+    const hotPen = hot.length ? M.penalty(22).pct : null;
+    const bestRace = [...M.pts].sort((a, b) => a.pctv - b.pctv)[0];
+    document.getElementById('ideal-kpis').innerHTML = `
+        <div class="ideal-kpi main">
+            <div class="insight-val" style="color:#00ff88;">${M.best.T} °C</div>
+            <div class="insight-label">Température idéale (ressentie)</div>
+            <div class="insight-sub">${sgn(Math.round(toSec(M.best.pct)))} s/km vs ta moyenne</div>
+        </div>
+        <div class="ideal-kpi">
+            <div class="insight-val" style="color:var(--cyan);">${M.zone[0]}–${M.zone[1]} °C</div>
+            <div class="insight-label">Zone de confort</div>
+            <div class="insight-sub">moins de ${IDEAL_TOL} % de perte</div>
+        </div>
+        <div class="ideal-kpi">
+            <div class="insight-val" style="color:#ff6b35;">${hotPen !== null ? sgn(Math.round(toSec(hotPen))) + ' s/km' : '—'}</div>
+            <div class="insight-label">Coût d'une course à 22 °C</div>
+            <div class="insight-sub">${hotPen !== null ? '≈ ' + sgn(+hotPen.toFixed(1)) + ' % · +' + fmtDur(hotPen/100 * M.expectedPace(42.195) * 42.195) + ' sur marathon' : 'pas assez de courses chaudes'}</div>
+        </div>
+        <div class="ideal-kpi">
+            <div class="insight-val" style="color:#ffd700;font-size:1.05rem;">${bestRace.r.course}</div>
+            <div class="insight-label">Course la plus au-dessus de ta forme</div>
+            <div class="insight-sub">${bestRace.r.date.slice(0,4)} · ${bestRace.T} °C · ${sgn(Math.round(toSec(bestRace.pctv)))} s/km</div>
+        </div>`;
+
+    // Graphique : points + courbe lissée + zone idéale
+    const zonePlugin = {
+        id: 'idealZone',
+        beforeDatasetsDraw(chart) {
+            const { ctx, chartArea: a, scales: { x } } = chart;
+            const x0 = x.getPixelForValue(M.zone[0]), x1 = x.getPixelForValue(M.zone[1]), xb = x.getPixelForValue(M.best.T);
+            ctx.save();
+            ctx.fillStyle = 'rgba(0,255,136,.07)';
+            ctx.fillRect(x0, a.top, x1 - x0, a.bottom - a.top);
+            ctx.strokeStyle = 'rgba(0,255,136,.5)'; ctx.setLineDash([4,4]);
+            ctx.beginPath(); ctx.moveTo(xb, a.top); ctx.lineTo(xb, a.bottom); ctx.stroke();
+            ctx.setLineDash([]); ctx.fillStyle = 'rgba(0,255,136,.8)'; ctx.font = '600 10px "Space Grotesk",sans-serif';
+            ctx.fillText('idéal ' + M.best.T + ' °C', Math.min(xb + 5, a.right - 60), a.top + 12);
+            ctx.restore();
+        }
+    };
+    const distCol = km => km>=42?'rgba(188,19,254,.85)':km>=21?'rgba(0,255,249,.85)':km<=10?'rgba(0,255,136,.85)':'rgba(255,107,53,.85)';
+    if (chartIdeal) chartIdeal.destroy();
+    chartIdeal = new Chart(document.getElementById('chartIdeal'), {
+        type: 'scatter',
+        data: { datasets: [
+            { type:'line', label:'Tendance', data: M.curve.map(c => ({ x:c.T, y:+toSec(c.pct).toFixed(1) })),
+              borderColor:'#00ff88', borderWidth:2.5, pointRadius:0, tension:.35, order:0 },
+            { label:'Courses', data: M.pts.map(p => ({ x:p.T, y:+toSec(p.pctv).toFixed(1), p })),
+              backgroundColor: M.pts.map(p => distCol(p.r.km)), pointRadius:4, pointHoverRadius:6, order:1 },
+        ]},
+        options: {
+            responsive:true, maintainAspectRatio:false,
+            plugins: {
+                legend:{ display:false },
+                tooltip:{
+                    backgroundColor:'rgba(7,7,14,.95)', titleColor:'#00fff9', bodyColor:'#fff',
+                    borderColor:'rgba(0,255,249,.25)', borderWidth:1, padding:10,
+                    filter: it => it.datasetIndex === 1,
+                    callbacks:{
+                        title: items => items[0]?.raw.p ? items[0].raw.p.r.course : '',
+                        label: ctx => {
+                            const p = ctx.raw.p; if (!p) return '';
+                            return [` ${fmtDate(p.r.date)} · ${p.T} °C ressentie`, ` Allure ${p.r.allure}/km`,
+                                    ` ${sgn(Math.round(ctx.raw.y))} s/km vs attendu (${sgn(+p.pctv.toFixed(1))} %)`];
+                        }
+                    }
+                }
+            },
+            scales: {
+                x:{ type:'linear', min:-4, max:32, ticks:{color:'rgba(255,255,255,.4)',font:{size:9},callback:v=>v+'°'}, grid:{color:'rgba(255,255,255,.04)'},
+                    title:{display:true,text:'Température ressentie au départ (°C)',color:'rgba(255,255,255,.3)',font:{size:10}} },
+                y:{ ticks:{color:'rgba(255,255,255,.4)',font:{size:9},callback:v=>sgn(v)}, grid:{color:c=>c.tick.value===0?'rgba(255,255,255,.25)':'rgba(255,255,255,.04)'},
+                    title:{display:true,text:'Écart vs attendu (s/km, équiv. semi)',color:'rgba(255,255,255,.3)',font:{size:10}} }
+            }
+        },
+        plugins:[zonePlugin]
+    });
+
+    // Simulateur
+    const slider = document.getElementById('sim-temp');
+    slider.oninput = updateIdealSim;
+    document.querySelectorAll('#sim-dist .fbtn').forEach(btn => btn.onclick = () => {
+        document.querySelectorAll('#sim-dist .fbtn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active'); simKm = +btn.dataset.km; updateIdealSim();
+    });
+    updateIdealSim();
+}
+
+function updateIdealSim() {
+    const M = idealModel; if (!M) return;
+    const T = +document.getElementById('sim-temp').value;
+    document.getElementById('sim-temp-val').textContent = T + ' °C';
+    const pen = M.penalty(T);
+    const pace = M.expectedPace(simKm);
+    const ideal = pace * (1 + M.best.pct/100);                 // allure attendue à la température idéale
+    const atT = ideal * (1 + pen.pct/100);
+    const lossKm = Math.round(atT - ideal), lossTot = (atT - ideal) * simKm;
+    const label = simKm < 11 ? '10 km' : simKm < 30 ? 'semi' : 'marathon';
+    const verdict = pen.pct < IDEAL_TOL ? '<span style="color:#00ff88;">✅ Dans ta zone de confort</span>'
+                  : pen.pct < 3 ? '<span style="color:#ffd700;">⚠️ Impact modéré</span>'
+                  : '<span style="color:#ff6b35;">🔥 Pénalité nette : pars prudemment</span>';
+    document.getElementById('sim-out').innerHTML = `
+        ${verdict}<br>
+        <strong style="color:${lossKm > 0 ? '#ff6b35' : '#00ff88'};">${lossKm > 0 ? '+' : ''}${lossKm} s/km</strong> par rapport à ${M.best.T} °C
+        → <strong style="color:#fff;">${lossTot >= 1 ? '+' + fmtDur(lossTot) : '±0'}</strong> sur ${label === '10 km' ? 'un 10 km' : 'un ' + label}.<br>
+        <span style="color:rgba(255,255,255,.4);font-size:.7rem;">Base : ta forme ${M.lastYear}, ≈ ${fmtDur(ideal * simKm)} (${secToAllure(Math.round(ideal))}/km) dans des conditions idéales.${pen.extrapolated ? ' Température hors de tes courses connues : estimation extrapolée.' : ''}</span>`;
 }
 
 function buildCharts(races) {
