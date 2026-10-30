@@ -233,6 +233,9 @@ html,body{min-height:100%;background:var(--bg);font-family:'Space Grotesk',sans-
 <script>try{if(localStorage.getItem('running-history-theme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <link rel="stylesheet" href="pro-ui.css">
 <script defer src="pro-ui.js"></script>
+<script>(function(d){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("mo");var l=sessionStorage.getItem("mo-nav");if(l){sessionStorage.removeItem("mo-nav");d.setAttribute("data-mo-label",l);d.classList.add("mo-cover");}setTimeout(function(){d.classList.add("mo-done");},3000);}catch(e){}})(document.documentElement);</script>
+<link rel="stylesheet" href="motion.css">
+<script defer src="motion.js"></script>
 </head>
 <body>
 <nav class="site-nav">

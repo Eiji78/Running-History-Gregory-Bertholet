@@ -1,0 +1,403 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   MOTION.CSS — couche motion design commune à toutes les pages
+   Rideau de transition · titres cinétiques · révélations au scroll
+   Ne modifie aucun contenu : tout état caché est réversible et a un failsafe.
+   ═══════════════════════════════════════════════════════════════════ */
+
+:root {
+    --mo-ink: #07070d;
+    --mo-cyan: #00fff9;
+    --mo-pink: #ff00c8;
+    --mo-yellow: #ffe600;
+    --mo-ease-out: cubic-bezier(.16, 1, .3, 1);      /* expo.out — arrivées */
+    --mo-ease-inout: cubic-bezier(.76, 0, .24, 1);   /* power4.inOut — rideau */
+    --mo-ease-back: cubic-bezier(.34, 1.56, .64, 1); /* back.out — icônes */
+}
+
+/* Le rideau remplace la view-transition native de pro-ui.css (évite le double fondu) */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition { navigation: none; }
+}
+
+/* ── Rideau CSS posé dès le premier paint (rempli par la page précédente) ── */
+html.mo-cover::after {
+    content: attr(data-mo-label);
+    position: fixed;
+    inset: 0;
+    z-index: 2147483000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6vw;
+    text-align: center;
+    background: linear-gradient(rgba(7, 7, 13, 0.5), rgba(7, 7, 13, 0.5)), url(media/rideau-coureur.jpg) center / cover no-repeat, var(--mo-ink);
+    color: #fff;
+    font: 900 clamp(2.4rem, 8vw, 7.5rem)/0.95 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    animation: mo-cover-failsafe 0.3s 2.8s forwards;
+}
+@keyframes mo-cover-failsafe { to { opacity: 0; visibility: hidden; } }
+
+/* Titres masqués jusqu'au démarrage de leur animation (failsafe 3 s via le boot) */
+html.mo:not(.mo-done) :is(h1, .page-title, .main-title) { opacity: 0; }
+
+/* ── Rideau animé ─────────────────────────────────────────────────────── */
+#mo-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483001;
+    display: flex;
+    pointer-events: none;
+    visibility: hidden;
+}
+#mo-curtain.mo-on { visibility: visible; pointer-events: auto; }
+#mo-curtain .mo-slat {
+    flex: 1 1 0;
+    height: 100%;
+    margin-right: -1px;
+    background: var(--mo-ink);
+    transform: scaleY(0);
+    will-change: transform;
+}
+#mo-curtain .mo-slat::after {
+    content: '';
+    display: block;
+    height: 3px;
+    background: linear-gradient(90deg, var(--mo-cyan), var(--mo-pink), var(--mo-yellow));
+    opacity: 0.85;
+}
+/* Image Higgsfield du coureur néon, posée sur les lamelles fermées */
+#mo-curtain .mo-cur-art {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: linear-gradient(rgba(7, 7, 13, 0.5), rgba(7, 7, 13, 0.5)), url(media/rideau-coureur.jpg) center / cover no-repeat;
+    will-change: transform, opacity;
+}
+#mo-curtain .mo-cur-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.1rem;
+    padding: 0 6vw;
+    text-align: center;
+}
+#mo-curtain .mo-cur-kicker {
+    font: 700 0.78rem/1 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: 0.42em;
+    color: rgba(255, 255, 255, 0.55);
+}
+#mo-curtain .mo-cur-title {
+    font: 900 clamp(2.4rem, 8vw, 7.5rem)/0.95 'Archivo Black', 'Arial Black', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    color: #fff;
+}
+#mo-curtain .mo-cur-title .mo-c { will-change: transform, opacity, filter; }
+#mo-curtain .mo-cur-line {
+    width: min(46vw, 520px);
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--mo-cyan), var(--mo-pink), var(--mo-yellow));
+    transform-origin: left center;
+    box-shadow: 0 0 18px rgba(0, 255, 249, 0.55);
+}
+
+/* ── Décor des titres (étincelles, anneaux, tracés) ───────────────────── */
+.mo-fx {
+    position: absolute;
+    z-index: 2147480000;
+    pointer-events: none;
+    overflow: visible;
+}
+.mo-fx > * { position: absolute; display: block; }
+.mo-fx .mo-spark, .mo-fx .mo-ring { border-radius: 50%; }
+.mo-fx .mo-ring { background: transparent; }
+.mo-screenflash {
+    position: fixed;
+    inset: 0;
+    z-index: 2147480500;
+    pointer-events: none;
+    opacity: 0;
+    background: radial-gradient(circle at 30% 20%, #fff, rgba(255, 255, 255, 0.85) 45%, rgba(255, 250, 230, 0.6));
+}
+body.mo-fxing { overflow-x: clip; }
+
+/* Étincelles au clic sur les boutons */
+.mo-clickfx {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 2147482100;
+    pointer-events: none;
+}
+.mo-clickfx i {
+    position: absolute;
+    border-radius: 50%;
+}
+
+/* ── Découpage des titres ─────────────────────────────────────────────── */
+.mo-split { display: inline; }
+.mo-w { display: inline-block; white-space: nowrap; }
+.mo-c { display: inline-block; white-space: pre; }
+
+/* ── Révélations au scroll ────────────────────────────────────────────── */
+html.mo .mo-hide {
+    opacity: 0;
+    translate: var(--mo-x, 0px) var(--mo-y, 46px);
+    scale: var(--mo-s, 0.94);
+}
+html.mo:not([data-theme="light"]) .mo-hide:not(img) { filter: blur(var(--mo-b, 10px)); }
+html.mo .mo-hide.mo-k-slide { --mo-y: 0px; --mo-x: -36px; --mo-s: 1; --mo-b: 6px; }
+html.mo .mo-hide.mo-k-zoom  { --mo-y: 24px; --mo-s: 0.86; --mo-b: 14px; }
+html.mo .mo-hide.mo-k-wipe  { --mo-y: 0px; --mo-s: 1; --mo-b: 8px; clip-path: inset(0 100% 0 0); }
+html.mo .mo-hide.mo-k-img   { --mo-y: 0px; --mo-s: 1.14; clip-path: inset(100% 0 0 0); }
+
+html.mo .mo-hide.mo-in {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    clip-path: inset(0 0 0 0);
+    transition:
+        opacity 0.75s ease var(--mo-d, 0s),
+        translate 1.15s var(--mo-ease-out) var(--mo-d, 0s),
+        scale 1.15s var(--mo-ease-out) var(--mo-d, 0s),
+        filter 0.85s var(--mo-ease-out) var(--mo-d, 0s),
+        clip-path 1.05s var(--mo-ease-out) var(--mo-d, 0s);
+}
+html.mo:not([data-theme="light"]) .mo-hide.mo-in:not(img) { filter: blur(0); }
+
+/* ── Glare des cartes au survol ───────────────────────────────────────── */
+.mo-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    background: radial-gradient(420px circle at var(--mo-mx, 50%) var(--mo-my, 50%),
+        rgba(255, 255, 255, 0.16), rgba(0, 255, 249, 0.06) 35%, transparent 62%);
+    mix-blend-mode: screen;
+}
+.mo-glare.mo-on { opacity: 1; }
+
+/* ── Curseur lumineux ─────────────────────────────────────────────────── */
+#mo-glow, #mo-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 2147482000;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+#mo-glow {
+    width: 560px;
+    height: 560px;
+    margin: -280px 0 0 -280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 255, 249, 0.10), rgba(255, 0, 200, 0.05) 40%, transparent 68%);
+    mix-blend-mode: screen;
+}
+#mo-ring {
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0, 255, 249, 0.75);
+    box-shadow: 0 0 14px rgba(0, 255, 249, 0.45);
+    transition: opacity 0.4s ease, width 0.3s var(--mo-ease-out), height 0.3s var(--mo-ease-out),
+        margin 0.3s var(--mo-ease-out), border-color 0.3s ease, background 0.3s ease;
+}
+#mo-ring.mo-hot {
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    border-color: rgba(255, 0, 200, 0.9);
+    background: rgba(255, 0, 200, 0.08);
+}
+html.mo-pointer #mo-glow, html.mo-pointer #mo-ring { opacity: 1; }
+
+/* ── Barre de progression de lecture ──────────────────────────────────── */
+#mo-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 2147482500;
+    pointer-events: none;
+    transform-origin: left center;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--mo-cyan), var(--mo-pink), var(--mo-yellow));
+    box-shadow: 0 0 12px rgba(255, 0, 200, 0.6);
+}
+
+/* ── Fond animé (traînées de vitesse) ─────────────────────────────────── */
+#mo-bg {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.9;
+}
+html[data-theme="light"] #mo-bg { opacity: 0.45; }
+
+/* ── Accueil : fond Higgsfield (coureur dans la brume) derrière le héros ── */
+.mo-hero-host { position: relative; isolation: isolate; }
+.mo-hero-bg {
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: 50%;
+    width: 100vw;
+    margin-left: -50vw;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(180deg, #000 72%, transparent);
+            mask-image: linear-gradient(180deg, #000 72%, transparent);
+}
+.mo-hero-bg img {
+    position: absolute;
+    inset: -8%;
+    width: 116%;
+    height: 116%;
+    object-fit: cover;
+    object-position: 75% 28%;
+    opacity: 0.9;
+    translate: var(--mo-px, 0px) calc(var(--mo-py, 0px) + var(--mo-pyx, 0px));
+    transition: translate 0.6s cubic-bezier(.16, 1, .3, 1);
+    animation: mo-kenburns 36s ease-in-out infinite alternate;
+}
+.mo-hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(10, 10, 11, 0.85) 0%, rgba(10, 10, 11, 0.45) 40%, rgba(10, 10, 11, 0.18) 68%, rgba(10, 10, 11, 0.55) 100%),
+        linear-gradient(180deg, rgba(10, 10, 11, 0.5), transparent 40%);
+}
+/* Mode clair : la photo reste un filigrane discret pour garder le texte lisible */
+html[data-theme="light"] .mo-hero-bg img { opacity: 0.45; }
+@keyframes mo-kenburns { from { scale: 1.03; } to { scale: 1.09; } }
+
+/* ── Accueil : bandeau défilant ────────────────────────────────── */
+.mo-ticker {
+    position: relative;
+    overflow: hidden;
+    padding: 18px 0;
+    margin: 0 0 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: linear-gradient(90deg, rgba(0, 255, 249, 0.05), rgba(255, 0, 200, 0.05), rgba(255, 230, 0, 0.04));
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.mo-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: mo-ticker 38s linear infinite;
+}
+.mo-ticker:hover .mo-ticker-track { animation-play-state: paused; }
+.mo-ticker-item {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding: 0 2.2rem;
+    white-space: nowrap;
+    font: 900 clamp(1.4rem, 3vw, 2.4rem)/1 'Archivo Black', 'Arial Black', sans-serif;
+    color: #fff;
+}
+.mo-ticker-item small {
+    font: 700 0.72rem/1 'JetBrains Mono', monospace;
+    letter-spacing: 0.25em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+}
+.mo-ticker-item::after {
+    content: '✦';
+    margin-left: 2.2rem;
+    font-size: 0.7em;
+    color: var(--mo-pink);
+}
+.mo-ticker-item:nth-child(3n+1) b { color: var(--mo-cyan); }
+.mo-ticker-item:nth-child(3n+2) b { color: var(--mo-yellow); }
+.mo-ticker-item b { font-weight: inherit; }
+@keyframes mo-ticker { to { transform: translateX(-50%); } }
+
+/* ── ADN : hélice construite au défilement ─────────────────────────────── */
+#dna-svg .mo-dna-el {
+    transition: opacity .5s ease, transform .7s cubic-bezier(.34, 1.56, .64, 1);
+    transform-box: fill-box;
+    transform-origin: center;
+}
+#dna-svg .mo-dna-off { opacity: 0 !important; transform: scale(.15); }
+#dna-svg .mo-dna-fade.mo-dna-off { transform: none; }
+#dna-svg .mo-dna-pop { animation: mo-dna-pop .7s ease-out; }
+@keyframes mo-dna-pop { 0% { filter: brightness(3) drop-shadow(0 0 8px #fff); } 100% { filter: none; } }
+#dna-svg .mo-dna-head {
+    pointer-events: none;
+    filter: drop-shadow(0 0 6px #00fff9) drop-shadow(0 0 14px #ff00d4);
+    transition: opacity .3s ease;
+}
+
+/* ── Age grading : Hall of Fame ───────────────────────────────────────── */
+@property --mo-hof-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.mo-hof-card { overflow: visible; transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s ease; }
+.mo-hof-card:hover { transform: translateY(-5px); box-shadow: 0 14px 34px -14px var(--item-accent, #ffd700); }
+.mo-hof-sweep {
+    position: absolute; inset: 0; width: 40%;
+    pointer-events: none; border-radius: inherit; opacity: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+    mix-blend-mode: screen;
+}
+.top-item .rank.mo-hof-medal-1 { background: radial-gradient(circle at 32% 30%, #fffbe0, #ffd700 45%, #a87600) !important; color: #3a2800 !important; border-color: #fff3a0 !important; box-shadow: 0 0 16px rgba(255, 215, 0, .8); }
+.top-item .rank.mo-hof-medal-2 { background: radial-gradient(circle at 32% 30%, #ffffff, #c9cbd4 45%, #6f727c) !important; color: #1f2128 !important; border-color: #f2f3f7 !important; box-shadow: 0 0 12px rgba(220, 220, 235, .6); }
+.top-item .rank.mo-hof-medal-3 { background: radial-gradient(circle at 32% 30%, #ffe0c0, #cd7f32 45%, #6e3f14) !important; color: #2a1404 !important; border-color: #f5c08e !important; box-shadow: 0 0 12px rgba(205, 127, 50, .6); }
+.mo-hof-champ { box-shadow: 0 0 34px -8px rgba(255, 215, 0, .55); }
+.mo-hof-champ::after {
+    content: '';
+    position: absolute; inset: -2px;
+    border-radius: 13px; padding: 2px;
+    pointer-events: none;
+    background: conic-gradient(from var(--mo-hof-a), #ffd700, #fff6b0, #ff9d00, transparent 55%, #ffd700);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: mo-hof-spin 4s linear infinite;
+}
+.mo-hof-crown {
+    position: absolute; top: -40px; right: 9px;
+    font-size: 1.5rem; line-height: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, .8));
+}
+html[data-theme="light"] .mo-hof-crown { filter: invert(1) hue-rotate(180deg) drop-shadow(0 0 8px rgba(255, 215, 0, .8)); }
+@keyframes mo-hof-spin { to { --mo-hof-a: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .mo-hof-champ::after { animation: none; } }
+
+/* ── Tour du monde : halo pendant que le voyage se rejoue ─────────────── */
+#map.mo-tour-live { animation: mo-tour-glow 1.6s ease-in-out infinite alternate; }
+@keyframes mo-tour-glow {
+    from { box-shadow: 0 0 0 1px rgba(0, 255, 249, .35), 0 0 22px -6px rgba(0, 255, 249, .5); }
+    to   { box-shadow: 0 0 0 1px rgba(255, 0, 200, .45), 0 0 38px -4px rgba(255, 0, 200, .55); }
+}
+.mo-clickfx i { border-radius: 50%; }
+/* Deux lignes réservées dès le chargement : les textes qui changent pendant le voyage ne poussent plus la carte */
+html.mo section.status[aria-live] .val { min-height: 2.8em; }
+
+/* ── Sécurités ────────────────────────────────────────────────────────── */
+@media print {
+    #mo-curtain, #mo-glow, #mo-ring, #mo-progress, #mo-bg, .mo-glare, .mo-fx, .mo-hero-bg, .mo-clickfx { display: none !important; }
+    html.mo .mo-hide { opacity: 1 !important; translate: none !important; scale: none !important; filter: none !important; clip-path: none !important; }
+    html.mo :is(h1, .page-title, .main-title) { opacity: 1 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .mo-ticker-track, .mo-hero-bg img { animation: none; }
+}
