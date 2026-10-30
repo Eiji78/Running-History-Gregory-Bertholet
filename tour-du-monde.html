@@ -11,8 +11,8 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tour du Monde — les 19 193 km de Gregory Bertholet autour de la Terre</title>
-<meta name="description" content="Les 19 193 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km." />
+<title>Tour du Monde — les 19 313 km de Gregory Bertholet autour de la Terre</title>
+<meta name="description" content="Les 19 313 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km." />
 <meta name="keywords" content="Gregory Bertholet, running Moselle, Rosselange, tour du monde en courant, kilomètres cumulés, 40075 km, course à pied, entraînement, marathon" />
 <meta name="author" content="Gregory Bertholet" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Running — Gregory Bertholet">
 <meta property="og:locale" content="fr_FR">
 <meta property="og:title" content="Tour du Monde — Running History">
-<meta property="og:description" content="19 193 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
+<meta property="og:description" content="19 313 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
 <meta property="og:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -31,14 +31,14 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tour du Monde — Running History">
-<meta name="twitter:description" content="19 193 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
+<meta name="twitter:description" content="19 313 km courus depuis 2011, placés sur un tour de la Terre au départ de Rosselange. Où en suis-je ?">
 <meta name="twitter:image" content="https://eiji78.github.io/Running-History-Gregory-Bertholet/og-cover.jpg">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  "name": "Tour du Monde — les 19 193 km de Gregory Bertholet autour de la Terre",
-  "description": "Les 19 193 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km.",
+  "name": "Tour du Monde — les 19 313 km de Gregory Bertholet autour de la Terre",
+  "description": "Les 19 313 km courus par Gregory Bertholet depuis 2011, placés sur un tour du monde au départ de Rosselange (Moselle) : Istanbul, Katmandou, Pékin, Tokyo… objectif 40 075 km.",
   "url": "https://eiji78.github.io/Running-History-Gregory-Bertholet/tour-du-monde.html",
   "inLanguage": "fr-FR",
   "isPartOf": {
@@ -58,6 +58,9 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script defer src="pro-ui.js"></script>
+<script>(function(d){try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;d.classList.add("mo");var l=sessionStorage.getItem("mo-nav");if(l){sessionStorage.removeItem("mo-nav");d.setAttribute("data-mo-label",l);d.classList.add("mo-cover");}setTimeout(function(){d.classList.add("mo-done");},3000);}catch(e){}})(document.documentElement);</script>
+<link rel="stylesheet" href="motion.css">
+<script defer src="motion.js"></script>
 <style>
     :root {
         --neon-cyan: #00fff9;
@@ -346,7 +349,7 @@
     <h2 class="sec">🧭 LES ÉTAPES</h2>
     <div class="table-wrap">
         <table class="etapes">
-            <thead><tr><th>Étape</th><th style="text-align:right">Km cumulés</th><th>Statut</th></tr></thead>
+            <thead><tr><th>Étape</th><th style="text-align:right">Distance depuis Rosselange</th><th>Statut</th></tr></thead>
             <tbody id="etapes"></tbody>
         </table>
     </div>
@@ -361,8 +364,8 @@
     // Volume d'entraînement annuel (km) — même série que `trainingKm` dans progression.html.
     // À mettre à jour en même temps que le total "Km cumulés" (index, progression).
     const YEAR0 = 2011;
-    const TRAINING_KM = [275,169,53,32,80,546,538,763,1194,2070,2238,2123,2207,2395,2476,2034];
-    const DATA_DATE = '4 octobre 2026';
+    const TRAINING_KM = [275,169,53,32,80,546,538,763,1194,2070,2238,2123,2207,2395,2476,2154];
+    const DATA_DATE = '29 octobre 2026';
     const EARTH_KM = 40075;
 
     // Boucle vers l'est, choisie pour faire ~40 100 km à vol d'oiseau.
